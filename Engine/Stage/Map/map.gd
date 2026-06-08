@@ -92,6 +92,7 @@ func IsLava(Pos : Vector3i) -> bool:
 		return false
 	return Data.cells[Pos].type == CellData.CELLTYPE.LAVA
 
+
 func TimePassed(T : int) -> void:
 	AccumulatedHours += T
 	
@@ -125,9 +126,11 @@ func GetMonsterHouseForPosition(Pos : Vector3i) -> MonsterGroup:
 
 	return MonsterActorOnPosition
 
+
 func GetRoomStressLevel(Pos : Vector3i) -> int:
 	var cell = Data.cells[Pos]
 	return cell.stressLevel
+
 
 func GetClosestPit(Pos : Vector3i, dist : int) -> Vector3i:
 	var Closest : Vector3i = Vector3i(999999,99999,99999)
@@ -142,6 +145,7 @@ func GetClosestPit(Pos : Vector3i, dist : int) -> Vector3i:
 				Closest = mapPos
 	
 	return Closest
+
 
 func get_points_in_square(center: Vector3i, distance: int) -> Array[Vector3i]:
 	var points : Array[Vector3i]
@@ -159,6 +163,7 @@ func get_points_in_square(center: Vector3i, distance: int) -> Array[Vector3i]:
 
 	return points
 
+
 func GetVisible(Pos : Vector3i) -> Array:
 	var Suroundings : Array[Vector2i]
 	var CurrentRow = -1
@@ -169,9 +174,12 @@ func GetVisible(Pos : Vector3i) -> Array:
 			Suroundings.append(Loc)
 			CurrentCollumn += 1
 		CurrentRow += 1
-		
-	var room = flood_fill_ranged(Vector2i(Pos.x, Pos.z), Suroundings, 2, {}, Pos.y)
+	
+	var mazeLayer : MazeFloorLayer = GetFloor(Pos.y).GetLayer(FloorLayer.LayerType.MAZE)
+	
+	var room = mazeLayer.flood_fill_ranged(Vector2i(Pos.x, Pos.z), Suroundings, 2, {})
 	return room
+
 
 func LoadMapData(MData : MapData) -> void:
 	Data = MData
@@ -272,11 +280,10 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 						cellDat.floorAsCeiling = Floor.UseFloorAsCeiling
 
 				row[x] = cell
-
-		var AllTiles = Floor.GetLayer(FloorLayer.LayerType.MAZE).get_used_cells()
 		
+		var mazeLayer : MazeFloorLayer = Floor.GetLayer(FloorLayer.LayerType.MAZE)
 		#Monster Spawning
-		var rooms = separate_into_rooms(AllTiles, FloorIndex)
+		var rooms =  mazeLayer.separate_into_rooms()
 		for room in rooms:
 			var StressLevel = 1
 			for g in room:
@@ -288,30 +295,34 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 				cell.stressLevel = StressLevel
 			if (!spawnMons):
 				continue
-			var Spawns = GetMonsterSpawnsOnRoom(room, FloorIndex)
+				
+			var monsterLayer : MonsterLayer = Floor.GetLayer(FloorLayer.LayerType.MONSTERS)
 			
-			for spn in Spawns:
+			var Spawns = monsterLayer.GetMonsterSpawnsOnRoom(room)
+			
+			for spn : Vector2i in Spawns:
+				var spawnPosition = Vector3i(spn.x, FloorIndex, spn.y)
 				var monsterActor = MonsterGroup.new()
 				if (Spawns.size() == 1):
 					monsterActor.Tiles = room
 				else:
-					monsterActor.Tiles = flood_fill_ranged(Vector2i(spn.x, spn.z), room, 5, {}, FloorIndex)
+					monsterActor.Tiles = mazeLayer.flood_fill_ranged(Vector2i(spn.x, spn.y), room, 5, {})
 					
-				monsterActor.OriginalPos = spn
+				monsterActor.OriginalPos = spawnPosition
 				
 				#for g in randi_range(1, 1):
-				var MonsterID = Floor.GetLayer(FloorLayer.LayerType.MONSTERS).get_cell_atlas_coords(Vector2i(spn.x, spn.z)).x
+				var MonsterID = Floor.GetLayer(FloorLayer.LayerType.MONSTERS).get_cell_atlas_coords(Vector2i(spn.x, spn.y)).x
 				if (MonsterID != -1 and MonsterCatalogue.size() > MonsterID):
 					var Mon = load(MonsterCatalogue[MonsterID])
 					
-					var spawnCell = Data.cells[spn]
+					var spawnCell = Data.cells[spawnPosition]
 					if (spawnCell.HasData("Item")):
 						monsterActor.RegisterMonster(Mon, r, spawnCell.Custom_Data["Item"])
 						spawnCell.Custom_Data.erase("Item")
 					else:
 						monsterActor.RegisterMonster(Mon, r)
 					
-					var cell = Data.GetCell(spn)
+					var cell = Data.GetCell(spawnPosition)
 					cell.AddData("MonsterSpawn", monsterActor)
 	
 	#Back walls
@@ -396,267 +407,7 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 	call_deferred("ThreadedGenerationFinished", Thr)
 
 
-func GetFinalRotation(Dir : Vector2i, Rot : float) -> float:
-	var FinalRot : float
-	match Dir:
-		Vector2i.RIGHT:
-			FinalRot =  Rot + PI
-		Vector2i.LEFT:
-			FinalRot = Rot
-		Vector2i.UP:
-			FinalRot = Rot - PI / 2
-		Vector2i.DOWN:
-			FinalRot = Rot + PI / 2
-	return wrapf(FinalRot, -PI, PI)
 
-
-func GetMonsterSpawnsOnRoom(room : Array, Floor : int) -> Array[Vector3i]:
-	var Spawns : Array[Vector3i]
-	for g : Vector2i in GetFloor(Floor).GetLayer(FloorLayer.LayerType.MONSTERS).get_used_cells():
-		var ID = GetFloor(Floor).GetLayer(FloorLayer.LayerType.MONSTERS).get_cell_atlas_coords(g)
-		if (ID.x == -1):
-			continue
-		if (room.has(g)):
-			Spawns.append(Vector3i(g.x, Floor, g.y))
-	return Spawns
-
-
-func separate_into_rooms(tile_coords: Array, Floor : int) -> Array:
-	var rooms := []
-	var visited := {}
-
-	for coord in tile_coords:
-		if coord in visited:
-			continue
-		var room = flood_fill(coord, tile_coords, visited, Floor)
-		rooms.append(room)
-
-	return rooms
-
-
-func SeparateIntoCorridors(tile_coords: Array, Floor : int) -> Array:
-	var Corridors := []
-	var visited := {}
-
-	for coord in tile_coords:
-		if coord in visited:
-			continue
-		var room = flood_fill_ranged(coord, tile_coords, 5, visited, Floor)
-		Corridors.append(room)
-
-	return Corridors
-
-
-func flood_fill(start: Vector2i, tile_coords: Array, visited: Dictionary, Floor : int) -> Array:
-	var room : Array = []
-	var stack := [start]
-
-	while stack.size() > 0:
-		var current = stack.pop_back()
-
-		if current in visited:
-			continue
-
-		visited[current] = true
-		room.append(current)
-
-		# Get neighboring tiles (4-directional)
-		var neighbors : Array[Vector2i] = [
-			Vector2i.LEFT,
-			Vector2i.RIGHT,
-			Vector2i.UP,
-			Vector2i.DOWN
-		]
-
-		for neighbor in neighbors:
-			if current + neighbor in tile_coords and neighbor + current not in visited and !CantReach(current, neighbor, Floor) and !CantReach(current + neighbor, neighbor * -1, Floor):
-				stack.push_back(neighbor + current)
-	
-	return room
-
-
-func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visited: Dictionary, Floor : int) -> Array:
-	var room : Array = []
-	var stack := [start]
-
-	while stack.size() > 0:
-		var current = stack.pop_back()
-
-		if current in visited:
-			continue
-
-		visited[current] = true
-		room.append(current)
-
-		# Get neighboring tiles (4-directional)
-		var neighbors : Array[Vector2i] = [
-			Vector2i.LEFT,
-			Vector2i.RIGHT,
-			Vector2i.UP,
-			Vector2i.DOWN
-		]
-
-		for neighbor in neighbors:
-			if start.distance_to(current + neighbor) < dist and current + neighbor in tile_coords and neighbor + current not in visited and !CantReach(current, neighbor, Floor) and !CantReach(current + neighbor, neighbor * -1, Floor):
-				stack.push_back(neighbor + current)
-	
-	return room
-	
-##Used to declare the blocking direction of each of the MAZE tiles
-func CantReach(tilecoords : Vector2, dir : Vector2, Floor : int) -> bool:
-	var index = GetFloor(Floor).GetLayer(FloorLayer.LayerType.MAZE).get_cell_atlas_coords(tilecoords).x
-	var tilerotation = GetTileRotationRadians(tilecoords, Floor)
-	var resault : bool
-	match index:
-		0:
-			resault = false
-		1:
-			var rotatedv = Vector2.LEFT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rotatedv)
-		2:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.DOWN.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		3:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.DOWN.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		4:
-			resault = false
-		5:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.RIGHT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot2) or dir.is_equal_approx(rot1)
-		6:
-			var rot1 = Vector2.DOWN.rotated(tilerotation)
-			resault = !dir.is_equal_approx(rot1)
-		7:
-			var rot1 = Vector2.UP.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		8:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		9:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.DOWN.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		10:
-			var rot1 = Vector2.RIGHT.rotated(tilerotation)
-			resault = !dir.is_equal_approx(rot1)
-		11:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.UP.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		12:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.RIGHT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		13:
-			resault = true
-		14:
-			var rot1 = Vector2.DOWN.rotated(tilerotation)
-			resault = !dir.is_equal_approx(rot1)
-		15:
-			resault = true
-		16:
-			resault = true
-		17:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.RIGHT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot2) or dir.is_equal_approx(rot1)
-		18:
-			var rot1 = Vector2.DOWN.rotated(tilerotation)
-			resault = !dir.is_equal_approx(rot1)
-		19:
-			var rot1 = Vector2.UP.rotated(tilerotation)
-			resault = !dir.is_equal_approx(rot1)
-		20:
-			resault = false
-		21:
-			resault = false
-		22:
-			var rot1 = Vector2.UP.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		23:
-			var rot1 = Vector2.UP.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		24:
-			resault = false
-		25:
-			resault = false
-		26:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.DOWN.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		27:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.UP.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		28:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		29:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		30:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-	return resault
-
-
-#TODO fix this, we dont need all those separate functions
-#----------------------------------------------------------------
-func Testtile(pos : Vector2i, Floor : int) -> int:
-	var tile_alternate : int = 0
-	var rot = GetTileRotationDegrees(pos, Floor)
-	match rot:
-		-90.0:
-			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H
-		180.0:
-			tile_alternate = TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V
-		90.0:
-			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V
-	return tile_alternate
-
-#----------------------------------------------------------------
-func GetTileRotationDegrees(pos : Vector2i, Floor : int, Layer : FloorLayer.LayerType = FloorLayer.LayerType.MAZE) -> float:
-	var rot : float = 0
-
-	if GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == false and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == false:
-		rot = 0
-	elif GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == true and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == false:
-		rot = -90
-	elif GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == false and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == true:
-		rot = 90
-	elif GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == true and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == true:
-		rot = 180
-	return rot
-
-#----------------------------------------------------------------
-func GetTileRotationRadians(pos : Vector2i, Floor : int, Layer : FloorLayer.LayerType = FloorLayer.LayerType.MAZE) -> float:
-	var rot : float = 0
-	if GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == false and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == false:
-		rot = 0
-	elif GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == true and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == false:
-		rot = PI/2
-	elif GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == false and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == true:
-		rot = -PI/2
-	elif GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == true and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == true:
-		rot = PI
-	return rot
-
-#----------------------------------------------------------------
-func GetTileDirection(pos : Vector2i, Floor : int, Layer : FloorLayer.LayerType = FloorLayer.LayerType.MAZE) -> Vector2:
-	var Dir : Vector2 = Vector2.RIGHT
-	if GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == false and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == false:
-		Dir = Vector2.RIGHT
-	elif GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == true and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == false:
-		Dir = Vector2.DOWN
-	elif GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == false and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == true:
-		Dir = Vector2.UP
-	elif GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == true and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == true:
-		Dir = Vector2.LEFT
-	return Dir
 
 
 #----------------------- EDITOR -----------------------------#

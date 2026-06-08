@@ -10,8 +10,8 @@ func HandleCell(cell : CellData, Pos : Vector3i, map : Map, tempLayerData : Temp
 	var index = get_cell_atlas_coords(Vector2i(Pos.x, Pos.z)).x
 
 	var pos = Pos * map.WorldScale
-	var rot = deg_to_rad(map.GetTileRotationDegrees(Vector2i(Pos.x, Pos.z), Pos.y))
-	var rot2 = map.GetTileRotationRadians(Vector2i(Pos.x, Pos.z), Pos.y)
+	var rot = deg_to_rad(GetTileRotationDegrees(Vector2i(Pos.x, Pos.z)))
+	var rot2 = GetTileRotationRadians(Vector2i(Pos.x, Pos.z))
 	match (index):
 	#Wall
 		1:
@@ -221,3 +221,187 @@ func CheckForDoors(cell : CellData, MapPos : Vector3i, LevelPos : Vector3, rot :
 		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, rot, Vector3i(0,1,0))
 		var DoorD = LightDoorData.NewData(GetMeshPlecement(MeshPlecement, rot, LevelPos), OppositeLocation)
 		cell.AddData("LightDoor", DoorD)
+
+#----------------------------------------------------------------
+func separate_into_rooms() -> Array:
+	var rooms := []
+	var visited := {}
+	
+	var usedCells = get_used_cells()
+
+	for coord in usedCells:
+		if coord in visited:
+			continue
+		var room = flood_fill(coord, usedCells, visited)
+		rooms.append(room)
+
+	return rooms
+
+func SeparateIntoCorridors() -> Array:
+	var Corridors := []
+	var visited := {}
+
+	var usedCells = get_used_cells()
+
+	for coord in usedCells:
+		if coord in visited:
+			continue
+		var room = flood_fill_ranged(coord, usedCells, 5, visited)
+		Corridors.append(room)
+
+	return Corridors
+
+func flood_fill(start: Vector2i, tile_coords: Array, visited: Dictionary) -> Array:
+	var room : Array = []
+	var stack := [start]
+
+	while stack.size() > 0:
+		var current = stack.pop_back()
+
+		if current in visited:
+			continue
+
+		visited[current] = true
+		room.append(current)
+
+		# Get neighboring tiles (4-directional)
+		var neighbors : Array[Vector2i] = [
+			Vector2i.LEFT,
+			Vector2i.RIGHT,
+			Vector2i.UP,
+			Vector2i.DOWN
+		]
+
+		for neighbor in neighbors:
+			if current + neighbor in tile_coords and neighbor + current not in visited and !CantReach(current, neighbor) and !CantReach(current + neighbor, neighbor * -1):
+				stack.push_back(neighbor + current)
+	
+	return room
+
+func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visited: Dictionary) -> Array:
+	var room : Array = []
+	var stack := [start]
+
+	while stack.size() > 0:
+		var current = stack.pop_back()
+
+		if current in visited:
+			continue
+
+		visited[current] = true
+		room.append(current)
+
+		# Get neighboring tiles (4-directional)
+		var neighbors : Array[Vector2i] = [
+			Vector2i.LEFT,
+			Vector2i.RIGHT,
+			Vector2i.UP,
+			Vector2i.DOWN
+		]
+
+		for neighbor in neighbors:
+			if start.distance_to(current + neighbor) < dist and current + neighbor in tile_coords and neighbor + current not in visited and !CantReach(current, neighbor) and !CantReach(current + neighbor, neighbor * -1):
+				stack.push_back(neighbor + current)
+	
+	return room
+
+##Used to declare the blocking direction of each of the MAZE tiles
+func CantReach(tilecoords : Vector2, dir : Vector2) -> bool:
+	var index = get_cell_atlas_coords(tilecoords).x
+	var tilerotation = GetTileRotationRadians(tilecoords)
+	var resault : bool
+	match index:
+		0:
+			resault = false
+		1:
+			var rotatedv = Vector2.LEFT.rotated(tilerotation)
+			resault = dir.is_equal_approx(rotatedv)
+		2:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			var rot2 = Vector2.DOWN.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
+		3:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			var rot2 = Vector2.DOWN.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
+		4:
+			resault = false
+		5:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			var rot2 = Vector2.RIGHT.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot2) or dir.is_equal_approx(rot1)
+		6:
+			var rot1 = Vector2.DOWN.rotated(tilerotation)
+			resault = !dir.is_equal_approx(rot1)
+		7:
+			var rot1 = Vector2.UP.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1)
+		8:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1)
+		9:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			var rot2 = Vector2.DOWN.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
+		10:
+			var rot1 = Vector2.RIGHT.rotated(tilerotation)
+			resault = !dir.is_equal_approx(rot1)
+		11:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			var rot2 = Vector2.UP.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
+		12:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			var rot2 = Vector2.RIGHT.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
+		13:
+			resault = true
+		14:
+			var rot1 = Vector2.DOWN.rotated(tilerotation)
+			resault = !dir.is_equal_approx(rot1)
+		15:
+			resault = true
+		16:
+			resault = true
+		17:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			var rot2 = Vector2.RIGHT.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot2) or dir.is_equal_approx(rot1)
+		18:
+			var rot1 = Vector2.DOWN.rotated(tilerotation)
+			resault = !dir.is_equal_approx(rot1)
+		19:
+			var rot1 = Vector2.UP.rotated(tilerotation)
+			resault = !dir.is_equal_approx(rot1)
+		20:
+			resault = false
+		21:
+			resault = false
+		22:
+			var rot1 = Vector2.UP.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1)
+		23:
+			var rot1 = Vector2.UP.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1)
+		24:
+			resault = false
+		25:
+			resault = false
+		26:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			var rot2 = Vector2.DOWN.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
+		27:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			var rot2 = Vector2.UP.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
+		28:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1)
+		29:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1)
+		30:
+			var rot1 = Vector2.LEFT.rotated(tilerotation)
+			resault = dir.is_equal_approx(rot1)
+	return resault

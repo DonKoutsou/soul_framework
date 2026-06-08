@@ -22,7 +22,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 			ChestDat.ChestMapPosition = Pos
 			ChestDat.ContainedItem = it
 			
-			var rot = deg_to_rad(map.GetTileRotationDegrees(Vector2i(Pos.x, Pos.z), Pos.y, FloorLayer.LayerType.LOCKS))
+			var rot = deg_to_rad(map.GetFloor(Pos.y).GetLayer(FloorLayer.LayerType.LOCKS).GetTileRotationDegrees(Vector2i(Pos.x, Pos.z)))
 			var Trans = Transform3D(Basis().rotated(Vector3(0,1,0), rot), Pos * map.WorldScale).translated(Vector3(0,0.1,0))
 			
 			ChestDat.ChestTransform = Trans

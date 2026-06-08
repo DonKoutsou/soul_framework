@@ -16,6 +16,7 @@
 [ext_resource type="TileSet" uid="uid://b2a3qsskxrnji" path="res://Engine/Stage/Map/MapPieces/LocksTileset.tres" id="9_4ocsu"]
 [ext_resource type="Script" uid="uid://xlofl1v5yxpb" path="res://Engine/Stage/Map/Floor/Layers/Item_Layer.gd" id="9_qx8oq"]
 [ext_resource type="TileSet" uid="uid://tsanyvcnsban" path="res://Engine/Stage/Map/MapPieces/PreassurePlatesTileset.tres" id="10_7ac8e"]
+[ext_resource type="Script" uid="uid://dk41xu4wxr8ky" path="res://Engine/Stage/Map/Floor/Layers/Monster_Layer.gd" id="11_y2gm3"]
 [ext_resource type="Script" uid="uid://dcdbc4gyr73yl" path="res://Engine/Stage/Map/Floor/Layers/Lever_Layer.gd" id="13_cnxu7"]
 [ext_resource type="Script" uid="uid://bvyonvsyoqkv3" path="res://Engine/Stage/Map/Floor/Layers/Lock_Layer.gd" id="15_y2gm3"]
 [ext_resource type="Script" uid="uid://b1os8pmvps1uy" path="res://Engine/Stage/Map/Floor/Layers/PreassurePlate_Layer.gd" id="17_wyyvq"]
@@ -79,7 +80,7 @@ tile_set = ExtResource("5_mco7m")
 occlusion_enabled = false
 collision_enabled = false
 navigation_enabled = false
-script = ExtResource("3_15ls4")
+script = ExtResource("11_y2gm3")
 layerType = 3
 
 [node name="LEVERS" type="TileMapLayer" parent="." unique_id=521985993]

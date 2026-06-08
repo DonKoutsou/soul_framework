@@ -54,7 +54,7 @@ func LoadWorldData(CurrentWorldName : Map.LocationName) -> void:
 			var LayerData : Dictionary[Vector2i, int] = FloorData[Layer]
 			for CellCoords in LayerData.keys():
 				var Value = LayerData[CellCoords]
-				var TileRotation = Stage.CurrentWorld.MData.Testtile(CellCoords, Floor)
+				var TileRotation = Stage.CurrentWorld.MData.GetFloor(Floor).GetLayer(FloorLayer.LayerType.MAZE).Testtile(CellCoords)
 				if (Layer == 0):
 					get_node(TileLayers[Floor][Layer]).set_cell(CellCoords, 10 , Vector2i(Value, 0), TileRotation)
 				else:
@@ -87,7 +87,7 @@ func OnPositionSeen(Pos : Vector3i) -> void:
 		return
 	#Get index of texture in atlas
 	var TileIndex = Vector2i(AtlasCoords.x, 0)
-	var TileRotation = Mp.Testtile(mappos, Floor)
+	var TileRotation = Mp.GetFloor(Floor).GetLayer(FloorLayer.LayerType.MAZE).Testtile(mappos)
 	get_node(TileLayers[CurrentFloor][0]).set_cell(mappos, 10, TileIndex, TileRotation)
 	
 	#Check if lock
