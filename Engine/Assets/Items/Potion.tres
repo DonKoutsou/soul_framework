@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://gn0dpu371111"]
+
+[ext_resource type="Shader" uid="uid://b54eeobua2m2s" path="res://Engine/Shaders/BaseMat/Base_ORM_Transparent_Mat.gdshader" id="1_fommn"]
+[ext_resource type="Texture2D" uid="uid://dobd2pa212qd0" path="res://Engine/Assets/Items/Textures/VialLow_VialLow_defaultMat1_BaseColor.png" id="1_mclld"]
+[ext_resource type="Texture2D" uid="uid://bp4cqsx6ooo4s" path="res://Engine/Assets/Items/Textures/VialLow_VialLow_defaultMat1_OcclusionRoughnessMetallic.png" id="3_1aw8o"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_fommn")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("1_mclld")
+shader_parameter/normal_scale = 1.000000807500001
+shader_parameter/texture_orm = ExtResource("3_1aw8o")
+shader_parameter/roughness = 1.0
+shader_parameter/metal = 0.0
+shader_parameter/specular = 0.0
+shader_parameter/ao_light_affect = 0.0

@@ -1,0 +1,288 @@
+[gd_scene format=3 uid="uid://bbdkk3wj35li5"]
+
+[ext_resource type="Script" uid="uid://dfswr6v1lnt0k" path="res://Engine/Puzzles/Lock/lock.gd" id="1_2c8ga"]
+[ext_resource type="ArrayMesh" uid="uid://t13kyuibghfd" path="res://Engine/Puzzles/Lock/Lock_Body.obj" id="1_34bqn"]
+[ext_resource type="ArrayMesh" uid="uid://bmauetmjlchh1" path="res://Engine/Puzzles/Lock/Lock_Rotating.obj" id="2_c5kxq"]
+[ext_resource type="ArrayMesh" uid="uid://c7j5ya28ag0y0" path="res://Engine/Puzzles/Lock/Tool1.obj" id="3_7eq7t"]
+[ext_resource type="ArrayMesh" uid="uid://b8q71i8yomvt" path="res://Engine/Puzzles/Lock/Tool2.obj" id="4_g3ufa"]
+[ext_resource type="Material" uid="uid://dln4m74uowja4" path="res://Engine/Puzzles/Lock/LockMat.tres" id="5_et3g1"]
+[ext_resource type="ArrayMesh" uid="uid://q4wjg3sh4bn2" path="res://Assets/Weapons/Hand.obj" id="6_c6o0u"]
+[ext_resource type="Material" uid="uid://h27tjhkufvx5" path="res://Shaders/HandMaterial.tres" id="7_gu56o"]
+[ext_resource type="AudioStream" uid="uid://13w8lv1lio8u" path="res://Engine/Assets/Sounds/LockStop.mp3" id="7_o0qqj"]
+[ext_resource type="AudioStream" uid="uid://krclhgy67png" path="res://Engine/Assets/Sounds/LockOpen.mp3" id="8_jjtwf"]
+[ext_resource type="AudioStream" uid="uid://35a0e2wnij2a" path="res://Engine/Assets/Sounds/Scrape4.mp3" id="8_omw47"]
+[ext_resource type="ArrayMesh" uid="uid://b42pcmm1e2nlh" path="res://Engine/Assets/Items/Key.obj" id="9_ul7ml"]
+[ext_resource type="Material" uid="uid://y7elw5svrerg" path="res://Engine/Shaders/Materials/Metal.tres" id="10_et3g1"]
+
+[sub_resource type="Animation" id="Animation_c6o0u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.13352521, 0.22396521, -0.3554647)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.70850927, 3.1148796, -2.794575)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D2/Node3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D2/Node3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gu56o"]
+resource_name = "RemovePicks"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D2/Node3D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-2.3841858e-07, 3.0132332, -2.9246836)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D2/Node3D:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.9615717, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.13352521, 0.22396521, -0.3554647), Vector3(1.8115797, 3.8621967, 4.236229)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D:rotation")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.70850927, 3.1148796, -2.794575), Vector3(-0.9978475, 2.9187741, -2.6450732)]
+}
+
+[sub_resource type="Animation" id="Animation_omw47"]
+resource_name = "Twitch"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.13352521, 0.22396521, -0.3554647)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.70850927, 3.1148796, -2.794575), Vector3(-0.7086037, 2.958333, -2.7942722), Vector3(-0.7086037, 3.255039, -2.7942722), Vector3(-0.70850927, 3.1148796, -2.794575)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D2/Node3D:rotation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.10000001, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.10471976, 0), Vector3(0, 0.10471976, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c6o0u"]
+_data = {
+&"RESET": SubResource("Animation_c6o0u"),
+&"RemovePicks": SubResource("Animation_gu56o"),
+&"Twitch": SubResource("Animation_omw47")
+}
+
+[node name="Node3D" type="SubViewportContainer" unique_id=801130855 node_paths=PackedStringArray("KeyHand", "LockpickHands", "LockPick", "LockRotatingBody", "Anim", "Sounds")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = ExtResource("1_2c8ga")
+KeyHand = NodePath("SubViewport/Node3D/MeshInstance3D2/KeyHand")
+LockpickHands = [NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D"), NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D2")]
+LockPick = NodePath("SubViewport/Node3D/MeshInstance3D2/Node3D2")
+LockRotatingBody = NodePath("SubViewport/Node3D/MeshInstance3D2")
+Anim = NodePath("SubViewport/Node3D/AnimationPlayer")
+Sounds = {
+"OpenLockSound": NodePath("SubViewport/Node3D/Open"),
+"SolvedSound": NodePath("SubViewport/Node3D/Solved"),
+"StopLockSound": NodePath("SubViewport/Node3D/Stop")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1560471145]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=193303368]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.90000004)
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=490002595]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+size = Vector2i(640, 480)
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="SubViewport" unique_id=1240689976]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/Node3D" unique_id=920114593]
+transform = Transform3D(1, 0, 0, 0, 0.21483761, 0.97664976, 0, -0.97664976, 0.21483761, 0, 4.545937, 0.8279394)
+current = true
+fov = 45.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Node3D" unique_id=806816106]
+mesh = ExtResource("1_34bqn")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("5_et3g1")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewport/Node3D" unique_id=1411429385]
+mesh = ExtResource("2_c5kxq")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("5_et3g1")
+
+[node name="Node3D" type="Node3D" parent="SubViewport/Node3D/MeshInstance3D2" unique_id=188689411]
+transform = Transform3D(0.9459667, -0.32362926, 0.020281674, -0.2582451, -0.7140698, 0.6507025, -0.19610389, -0.62078047, -0.7590617, -0.13352521, 0.22396521, -0.3554647)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewport/Node3D/MeshInstance3D2/Node3D" unique_id=293661153]
+transform = Transform3D(0.9101638, 0, 0.4142485, 0, 1, 0, -0.4142485, 0, 0.9101638, 0, -2.6506271, 2.9802322e-08)
+mesh = ExtResource("4_g3ufa")
+skeleton = NodePath("../../Node3D2")
+surface_material_override/0 = ExtResource("5_et3g1")
+
+[node name="e" type="MeshInstance3D" parent="SubViewport/Node3D/MeshInstance3D2/Node3D/MeshInstance3D2" unique_id=687464210]
+transform = Transform3D(-0.18722296, -4.2270937, -5.576436, -2.8341355, 5.146208, -3.8058138, 6.3978605, 2.1559768, -1.8490918, 0.1967559, 0.68973494, 0.022828292)
+mesh = ExtResource("6_c6o0u")
+surface_material_override/0 = ExtResource("7_gu56o")
+
+[node name="Node3D2" type="Node3D" parent="SubViewport/Node3D/MeshInstance3D2" unique_id=452936916]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.40681356, -0.32620436)
+
+[node name="Node3D" type="Node3D" parent="SubViewport/Node3D/MeshInstance3D2/Node3D2" unique_id=1612617139]
+transform = Transform3D(0.9999998, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Node3D/MeshInstance3D2/Node3D2/Node3D" unique_id=674848772]
+transform = Transform3D(0.096900284, 0.038357712, 0.99455476, 0.36805958, -0.92980224, 7.450581e-09, 0.9247391, 0.36605534, -0.104216024, -0.10633134, 2.5744667, -1.0147413)
+mesh = ExtResource("3_7eq7t")
+skeleton = NodePath("../../../Node3D")
+surface_material_override/0 = ExtResource("5_et3g1")
+
+[node name="e" type="MeshInstance3D" parent="SubViewport/Node3D/MeshInstance3D2/Node3D2/Node3D/MeshInstance3D" unique_id=340396406]
+transform = Transform3D(2.6081293, 4.3531456, 4.821595, -6.37604, 0.72173405, 2.7973573, -1.2424852, 5.4340796, -4.2340302, -0.14308959, 0.84057266, -0.20853996)
+mesh = ExtResource("6_c6o0u")
+surface_material_override/0 = ExtResource("7_gu56o")
+
+[node name="KeyHand" type="Node3D" parent="SubViewport/Node3D/MeshInstance3D2" unique_id=391418082]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="e" type="MeshInstance3D" parent="SubViewport/Node3D/MeshInstance3D2/KeyHand" unique_id=384468438]
+transform = Transform3D(3.059797e-07, 0, 7.000001, 0, -6.9999995, 0, -7, 0, 3.0597977e-07, 0.018458992, 1.8369831, -0.1734701)
+mesh = ExtResource("6_c6o0u")
+surface_material_override/0 = ExtResource("7_gu56o")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Node3D/MeshInstance3D2/KeyHand/e" unique_id=209330956]
+transform = Transform3D(-0.9, 0, -1.3589622e-07, 0, 0.9, 0, 1.3589622e-07, 0, -0.9, 0, 0.1247017, -7.450581e-09)
+mesh = ExtResource("9_ul7ml")
+surface_material_override/0 = ExtResource("10_et3g1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport/Node3D" unique_id=462308047]
+transform = Transform3D(1, 0, 0, 0, -0.04096906, 0.9991604, 0, -0.9991604, -0.04096906, 0, 0, 0)
+
+[node name="Stop" type="AudioStreamPlayer" parent="SubViewport/Node3D" unique_id=204563263]
+stream = ExtResource("7_o0qqj")
+bus = &"SFX"
+
+[node name="Open" type="AudioStreamPlayer" parent="SubViewport/Node3D" unique_id=525644244]
+stream = ExtResource("8_omw47")
+volume_db = -20.0
+pitch_scale = 0.5
+bus = &"SFX"
+
+[node name="Solved" type="AudioStreamPlayer" parent="SubViewport/Node3D" unique_id=1297621774]
+stream = ExtResource("8_jjtwf")
+bus = &"SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport/Node3D" unique_id=1884183766]
+root_node = NodePath("../../..")
+libraries/ = SubResource("AnimationLibrary_c6o0u")

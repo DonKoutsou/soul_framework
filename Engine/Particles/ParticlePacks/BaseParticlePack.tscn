@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cnge62u6oksn7"]
+
+[ext_resource type="PackedScene" uid="uid://dlcgsp7s3485r" path="res://Engine/Particles/AmbientDrops.tscn" id="1_mwgjw"]
+[ext_resource type="PackedScene" uid="uid://cy7ue74koc5a0" path="res://Engine/Particles/AmbientLights.tscn" id="2_qrq28"]
+[ext_resource type="Material" uid="uid://dt6eg4tfdsftg" path="res://Engine/Shaders/Materials/ShineMat.tres" id="3_2gdjy"]
+
+[node name="Node3D" type="Node3D" unique_id=245324869]
+
+[node name="GPUParticles3D2" parent="." unique_id=196926212 instance=ExtResource("1_mwgjw")]
+
+[node name="GPUParticles3D" parent="." unique_id=2044671724 instance=ExtResource("2_qrq28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+material_override = ExtResource("3_2gdjy")

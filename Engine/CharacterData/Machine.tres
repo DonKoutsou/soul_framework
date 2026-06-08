@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="Character" format=3 uid="uid://b77cqjrh45r8b"]
+
+[ext_resource type="Script" uid="uid://bel483m12cmq1" path="res://Engine/CharacterData/CharacterStat.gd" id="1_rocim"]
+[ext_resource type="Script" uid="uid://daawuqdug2njs" path="res://Engine/Dialogue/RecruitStage.gd" id="3_fbsse"]
+[ext_resource type="Resource" uid="uid://btpko76rq38uv" path="res://Engine/Items/ItemConfigs/Potion.tres" id="4_5u6go"]
+[ext_resource type="Script" uid="uid://cjl5h1roxmuag" path="res://Engine/Dialogue/RecruitStage_ItemGive.gd" id="5_8edqe"]
+[ext_resource type="Script" uid="uid://dwqnoamdvs5gm" path="res://Engine/CharacterData/Character.gd" id="6_nqnij"]
+
+[sub_resource type="Resource" id="Resource_3qyhm"]
+script = ExtResource("1_rocim")
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
+[sub_resource type="Resource" id="Resource_s0kal"]
+script = ExtResource("1_rocim")
+StatName = 1
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
+[sub_resource type="Resource" id="Resource_llydp"]
+script = ExtResource("1_rocim")
+StatName = 2
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
+[sub_resource type="Resource" id="Resource_8oq6v"]
+script = ExtResource("1_rocim")
+StatName = 3
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
+[sub_resource type="Resource" id="Resource_ae4k4"]
+script = ExtResource("5_8edqe")
+ItemToGive = ExtResource("4_5u6go")
+Dialogue = "Take this potion bitch"
+metadata/_custom_type_script = "uid://cjl5h1roxmuag"
+
+[resource]
+script = ExtResource("6_nqnij")
+CharacterName = "Machine"
+CharacterStats = Array[ExtResource("1_rocim")]([SubResource("Resource_3qyhm"), SubResource("Resource_s0kal"), SubResource("Resource_llydp"), SubResource("Resource_8oq6v")])
+Visuals = "uid://bnp4n8obpr70v"
+Stages = Array[ExtResource("3_fbsse")]([SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4"), SubResource("Resource_ae4k4")])
+metadata/_custom_type_script = "uid://dwqnoamdvs5gm"

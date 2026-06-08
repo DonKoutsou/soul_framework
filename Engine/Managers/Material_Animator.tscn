@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://mrs3mnaxwmvl"]
+
+[ext_resource type="Script" uid="uid://birk0llcjpurv" path="res://Engine/Managers/Material_Animator.gd" id="1_s0eh5"]
+[ext_resource type="Script" uid="uid://gi66y2s2g6wr" path="res://Engine/Managers/MaterialAnimationData.gd" id="2_c3whx"]
+[ext_resource type="Material" path="res://Engine/Shaders/Materials/ItemMa.tres" id="4_jsop0"]
+[ext_resource type="Material" path="res://Engine/Shaders/Materials/LocationMarkerMat.tres" id="6_cskgj"]
+[ext_resource type="Material" path="res://Engine/Shaders/Materials/LanternLight.tres" id="7_m38dq"]
+[ext_resource type="Material" uid="uid://12vsdljd0kly" path="res://Engine/Shaders/Materials/Water.tres" id="8_o07bi"]
+[ext_resource type="Material" uid="uid://c6edfmjpyt8as" path="res://Engine/Shaders/Materials/Lava.tres" id="9_48abe"]
+[ext_resource type="Material" uid="uid://2p82bw8skjky" path="res://Engine/Shaders/Materials/TransitionMaterial.tres" id="11_ovlfi"]
+
+[sub_resource type="Resource" id="Resource_tjkmu"]
+script = ExtResource("2_c3whx")
+Mat = ExtResource("4_jsop0")
+VarName = "shader_parameter/emission_energy_multiplier"
+MinRange = 4.0
+MaxRange = 8.0
+AnimationSpeed = 10.0
+metadata/_custom_type_script = "uid://gi66y2s2g6wr"
+
+[sub_resource type="Resource" id="Resource_o07bi"]
+script = ExtResource("2_c3whx")
+Mat = ExtResource("6_cskgj")
+VarName = "shader_parameter/grow_amount"
+MaxRange = 0.1
+AnimationSpeed = 0.5
+metadata/_custom_type_script = "uid://gi66y2s2g6wr"
+
+[sub_resource type="Resource" id="Resource_48abe"]
+script = ExtResource("2_c3whx")
+Mat = ExtResource("7_m38dq")
+VarName = "shader_parameter/TimeOffset"
+MaxRange = 1.0
+AnimationSpeed = 0.5
+Random = false
+Loop = true
+metadata/_custom_type_script = "uid://gi66y2s2g6wr"
+
+[sub_resource type="Resource" id="Resource_s30uh"]
+script = ExtResource("2_c3whx")
+Mat = ExtResource("8_o07bi")
+VarName = "shader_parameter/TimeOffset"
+MaxRange = 100.0
+AnimationSpeed = 1.0
+Random = false
+Loop = true
+metadata/_custom_type_script = "uid://gi66y2s2g6wr"
+
+[sub_resource type="Resource" id="Resource_ovlfi"]
+script = ExtResource("2_c3whx")
+Mat = ExtResource("9_48abe")
+VarName = "shader_parameter/TimeOffset"
+MaxRange = 100.0
+AnimationSpeed = 1.0
+Random = false
+Loop = true
+metadata/_custom_type_script = "uid://gi66y2s2g6wr"
+
+[sub_resource type="Resource" id="Resource_5aky8"]
+script = ExtResource("2_c3whx")
+Mat = ExtResource("11_ovlfi")
+VarName = "shader_parameter/TimeOffset"
+MaxRange = 100.0
+AnimationSpeed = 50.0
+Random = false
+Loop = true
+metadata/_custom_type_script = "uid://gi66y2s2g6wr"
+
+[node name="AnimatedMaterialScene" type="Node" unique_id=1698842217]
+script = ExtResource("1_s0eh5")
+MatData = Array[ExtResource("2_c3whx")]([SubResource("Resource_tjkmu"), SubResource("Resource_o07bi"), SubResource("Resource_48abe"), SubResource("Resource_s30uh"), SubResource("Resource_ovlfi"), SubResource("Resource_5aky8")])

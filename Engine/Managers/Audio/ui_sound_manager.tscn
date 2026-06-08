@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://diy64pkiu30uf"]
+
+[ext_resource type="Script" uid="uid://cfr4mdeapej6c" path="res://Engine/Managers/Audio/UISoundManager.gd" id="1_p2ql0"]
+[ext_resource type="AudioStream" uid="uid://67iihb2t3d37" path="res://Engine/Assets/Sounds/MetalClick.mp3" id="2_bf5ub"]
+[ext_resource type="AudioStream" uid="uid://wdeal525qv2n" path="res://Engine/Assets/Sounds/Hover2.mp3" id="5_u1rpw"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bf5ub"]
+random_pitch = 1.3348398
+random_volume_offset_db = 0.5
+streams_count = 1
+stream_0/stream = ExtResource("2_bf5ub")
+
+[node name="UISoundManager" type="Node" unique_id=416673559]
+script = ExtResource("1_p2ql0")
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="." unique_id=804986607]
+stream = SubResource("AudioStreamRandomizer_bf5ub")
+pitch_scale = 0.5
+bus = &"UI"
+
+[node name="HoverSound" type="AudioStreamPlayer" parent="." unique_id=765652851]
+stream = ExtResource("5_u1rpw")
+volume_db = -10.0
+bus = &"Music"

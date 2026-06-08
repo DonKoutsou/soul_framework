@@ -1,0 +1,189 @@
+[gd_scene format=3 uid="uid://324c0rciguol"]
+
+[ext_resource type="PackedScene" uid="uid://cx8606l0bax3g" path="res://Engine/Controllers/Fight_Characters/EnemyRig/EnemyRigSkeleton.tscn" id="2_5mrp1"]
+[ext_resource type="Script" uid="uid://02rqqby41hlv" path="res://Engine/Controllers/Fight_Characters/Fight_Enemy.gd" id="2_kw201"]
+[ext_resource type="PackedScene" uid="uid://wt8wxj87hese" path="res://Engine/Particles/DamagePart.tscn" id="3_eattp"]
+[ext_resource type="Curve" uid="uid://htwdrptip8gv" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/WeaponCurve.tres" id="4_5mrp1"]
+[ext_resource type="Material" uid="uid://c8xpah88sw5yu" path="res://Engine/Shaders/Materials/SwipeMeshShader.tres" id="4_84woi"]
+[ext_resource type="ArrayMesh" uid="uid://djcb40udi2miv" path="res://Engine/Assets/Particles/SwipeMesh.res" id="5_66mam"]
+[ext_resource type="Script" uid="uid://bl0vbdv76yftl" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/AnimationInfo.gd" id="6_c3124"]
+[ext_resource type="Resource" uid="uid://b5vqjjy1pi4ci" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Idle.tres" id="7_fxlpe"]
+[ext_resource type="Resource" uid="uid://cdyg6ufhgxywx" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Walk.tres" id="8_idwut"]
+[ext_resource type="Resource" uid="uid://duv7d5qm5xwti" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Right.tres" id="9_346la"]
+[ext_resource type="Script" uid="uid://2o6tgcat6qck" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Fight_Animation_Modifier.gd" id="10_84woi"]
+[ext_resource type="Resource" uid="uid://c0jflo3f0vfd3" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Right_Recover.tres" id="10_u1yga"]
+[ext_resource type="Resource" uid="uid://evvg7ku0qg1b" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Left.tres" id="11_6amx8"]
+[ext_resource type="Resource" uid="uid://cu22ae73unhvs" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Left_Recover.tres" id="12_54r4c"]
+[ext_resource type="Resource" uid="uid://cbohbq1f4vtwx" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Middle.tres" id="13_rsh0k"]
+[ext_resource type="Resource" uid="uid://c1tt5bvga8iop" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Atack_Middle.tres" id="14_i0p3c"]
+[ext_resource type="Resource" uid="uid://ct3xp725bja6k" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Middle_Reversed.tres" id="15_cd1oo"]
+[ext_resource type="Resource" uid="uid://kp0uqqa5jxek" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Left.tres" id="16_j76hl"]
+[ext_resource type="Resource" uid="uid://cl8rkv7tndpsf" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Atack_Left.tres" id="17_rhc6q"]
+[ext_resource type="Resource" uid="uid://cdr7rvqg2fflh" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Left_Reversed.tres" id="18_e5vxb"]
+[ext_resource type="Resource" uid="uid://4a6ocedwmlxy" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Right.tres" id="19_imyf8"]
+[ext_resource type="Resource" uid="uid://c4dpg8h6mhxog" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Atack_Right.tres" id="20_7p8ku"]
+[ext_resource type="Resource" uid="uid://bgvrgcfnurir3" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Right_Reversed.tres" id="21_ifhe0"]
+[ext_resource type="Resource" uid="uid://b4fvf6byailc0" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_LOw.tres" id="22_42pm0"]
+[ext_resource type="Resource" uid="uid://b03u8sbdx1bsq" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Atack_Low.tres" id="23_i7be4"]
+[ext_resource type="Resource" uid="uid://kp8pub07rv8" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Low_Reversed.tres" id="24_2d3ej"]
+[ext_resource type="Resource" uid="uid://b1e506c7ccgdk" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Top.tres" id="25_07b8e"]
+[ext_resource type="Resource" uid="uid://c5gcxtp77vm1m" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Atack_Top.tres" id="26_3qlyl"]
+[ext_resource type="Resource" uid="uid://jicws5gnp0h7" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Top_Reversed.tres" id="27_xdwjo"]
+[ext_resource type="Resource" uid="uid://cbe2074luep4t" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Parry.tres" id="28_ed8mm"]
+[ext_resource type="Resource" uid="uid://c1o5sfqhixftq" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Hit_Left.tres" id="29_ya6kn"]
+[ext_resource type="Resource" uid="uid://byop72t00ntqn" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Hit_Right.tres" id="30_iepkp"]
+[ext_resource type="Resource" uid="uid://bq2dox6y3wm44" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/HitMid.tres" id="30_ohxwn"]
+[ext_resource type="Resource" uid="uid://dow2t0bu5ba6n" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Hit_Right_Retaliation.tres" id="32_7dhat"]
+[ext_resource type="Resource" uid="uid://ch16mqvgbjpp4" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Hit_Left_Retaliation.tres" id="33_1nfmo"]
+[ext_resource type="Resource" uid="uid://bg4gjsi8u2f3a" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Hit_Mid_Retaliation.tres" id="34_msqrw"]
+[ext_resource type="Resource" uid="uid://do5uxwtrkt31b" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Stun.tres" id="35_rif2c"]
+[ext_resource type="Resource" uid="uid://dfwyrnlf06arg" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Death.tres" id="36_ynkxg"]
+[ext_resource type="Script" uid="uid://bj3feok1xkxq" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/MomentumModifier.gd" id="38_5mrp1"]
+[ext_resource type="AnimationLibrary" uid="uid://dkpao1mofh7ko" path="res://Engine/Controllers/Fight_Characters/EnemyRig/EnemyRigAnimationLib.tres" id="40_5mrp1"]
+
+[sub_resource type="Curve" id="Curve_kw201"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.49842733), 1.57173, 0.0, 0, 0]
+point_count = 2
+
+[node name="EnemyFighter" type="Node3D" unique_id=1459353260 node_paths=PackedStringArray("LookAtNode", "HitParticles", "Anim", "WeaponPlecement", "WeaponPlecement2", "SwipeShape", "SwipeShape2", "sk", "SkeletonModif")]
+script = ExtResource("2_kw201")
+LookAtNode = NodePath("GeneralSkeleton/HeadLookModifier")
+HitParticles = NodePath("GeneralSkeleton/BoneAttachment3D/HitParticles")
+Anim = NodePath("AnimationPlayer")
+WeaponPlecement = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement")
+WeaponPlecement2 = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement")
+SwipeShape = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh")
+SwipeShape2 = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh")
+sk = NodePath("GeneralSkeleton")
+SkeletonModif = NodePath("GeneralSkeleton/MyModifier")
+Can_Retaliate = true
+
+[node name="GeneralSkeleton" parent="." unique_id=1868505070 instance=ExtResource("2_5mrp1")]
+bones/1/position = Vector3(0.011416708, 0.44754893, 0.0051369555)
+bones/1/rotation = Quaternion(0.09446339, 0.3407318, 0.06873589, 0.93287396)
+bones/2/rotation = Quaternion(-0.41472304, 0.36813924, 0.83034164, -0.05487346)
+bones/3/rotation = Quaternion(-0.50195855, -0.0013933755, -0.33874404, 0.79579407)
+bones/4/rotation = Quaternion(0.54641545, -0.42794055, 0.44350904, 0.5670951)
+bones/6/rotation = Quaternion(-0.11369752, 0.35842595, 0.8147433, 0.4413584)
+bones/7/rotation = Quaternion(-0.56044984, 0.0012890012, 0.37821794, 0.7367806)
+bones/8/rotation = Quaternion(0.5979394, 0.043295905, -0.38834295, 0.6998456)
+bones/10/rotation = Quaternion(0.047672145, 0.05524611, 0.0061554713, 0.9973151)
+bones/11/rotation = Quaternion(0.10919237, 0.3066222, 0.03615566, 0.94485587)
+bones/13/rotation = Quaternion(-0.33684456, -0.5296016, 0.14270702, 0.76530564)
+bones/13/scale = Vector3(1.0000001, 1, 0.99999994)
+bones/14/rotation = Quaternion(0.9998618, -1.6075019e-08, 2.3785074e-07, -0.016626822)
+bones/15/rotation = Quaternion(-0.5263849, -0.002469265, -0.0023564068, 0.8502396)
+bones/15/scale = Vector3(0.5490162, 0.54901624, 0.5490162)
+bones/16/rotation = Quaternion(-0.2028381, 0.16705047, -0.7733472, 0.5769619)
+bones/17/rotation = Quaternion(0.46775764, -0.13055527, -0.41073054, 0.7716597)
+bones/18/rotation = Quaternion(0.269697, -0.67926574, -0.46819445, 0.49664423)
+bones/19/rotation = Quaternion(0.07259307, -0.12128322, -0.08714107, 0.9861172)
+bones/20/position = Vector3(-0.036399245, -0.083173, -0.22009581)
+bones/20/rotation = Quaternion(0.0003062501, 0.00018927203, -9.8936725e-06, 0.99999994)
+bones/22/rotation = Quaternion(0.65463716, -0.060489576, 0.39070484, 0.64431435)
+bones/23/rotation = Quaternion(0.58838236, -0.17035522, 0.1518327, 0.7757139)
+bones/24/rotation = Quaternion(-0.7007901, -0.043942474, -0.19028674, 0.6861146)
+
+[node name="MyModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=118797013 node_paths=PackedStringArray("animator")]
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+rotation_edit_mode = 0
+rotation_order = 2
+top_level = false
+visible = true
+visibility_parent = NodePath("")
+active = true
+influence = 1.0
+script = ExtResource("10_84woi")
+WeaponCurve = ExtResource("4_5mrp1")
+currentWeaponSpeed = 0.6
+RecoilCurve = SubResource("Curve_kw201")
+animator = NodePath("../../AnimationPlayer")
+anims = Array[ExtResource("6_c3124")]([ExtResource("7_fxlpe"), ExtResource("8_idwut"), ExtResource("9_346la"), ExtResource("10_u1yga"), ExtResource("11_6amx8"), ExtResource("12_54r4c"), ExtResource("13_rsh0k"), ExtResource("16_j76hl"), ExtResource("19_imyf8"), ExtResource("22_42pm0"), ExtResource("25_07b8e"), ExtResource("14_i0p3c"), ExtResource("17_rhc6q"), ExtResource("20_7p8ku"), ExtResource("23_i7be4"), ExtResource("26_3qlyl"), ExtResource("15_cd1oo"), ExtResource("18_e5vxb"), ExtResource("21_ifhe0"), ExtResource("24_2d3ej"), ExtResource("27_xdwjo"), ExtResource("28_ed8mm"), ExtResource("29_ya6kn"), ExtResource("30_iepkp"), ExtResource("30_ohxwn"), ExtResource("32_7dhat"), ExtResource("33_1nfmo"), ExtResource("34_msqrw"), ExtResource("35_rif2c"), ExtResource("36_ynkxg")])
+metadata/_custom_type_script = "uid://2o6tgcat6qck"
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=352902681]
+transform = Transform3D(0.9611044, -0.00033834577, 0.27618518, 0.08208701, 0.9551593, -0.28448576, -0.2637046, 0.29609162, 0.91803557, 0.083079465, 0.7706631, 0.14103855)
+bone_name = "Head"
+bone_idx = 13
+
+[node name="HitParticles" parent="GeneralSkeleton/BoneAttachment3D" unique_id=1099426263 instance=ExtResource("3_eattp")]
+transform = Transform3D(1, 0, 0, 0, 0.9999996, 0, 0, 0, 0.9999999, 0, 0, 0)
+
+[node name="Palm_L" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1614551408]
+transform = Transform3D(-0.38510036, 0.9227857, 0.012804084, 0.88963467, 0.3675042, 0.2710911, 0.24545309, 0.115788594, -0.96246845, 0.21641111, 0.5528347, 0.105626546)
+bone_name = "WeaponPlacement.L"
+bone_idx = 20
+
+[node name="WeaponPlacement" type="Node3D" parent="GeneralSkeleton/Palm_L" unique_id=501842641]
+transform = Transform3D(-0.15100369, 0.12252966, -0.98090994, -0.92727983, 0.32630777, 0.18350817, 0.3425637, 0.9372885, 0.064345635, 0, 0.045, 0)
+
+[node name="SwipeMesh" type="MeshInstance3D" parent="GeneralSkeleton/Palm_L/WeaponPlacement" unique_id=1253460155]
+transform = Transform3D(125.00001, 0, 0, 0, 44.999992, 0, 0, 0, 125.00001, 0, 0, 0)
+visible = false
+material_override = ExtResource("4_84woi")
+mesh = ExtResource("5_66mam")
+blend_shapes/blendShape1.Closed = 1.0
+
+[node name="Palm_L2" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=480455727]
+transform = Transform3D(-0.026398813, 0.66803145, 0.7436644, 0.64821666, -0.55488247, 0.52146, 0.7609981, 0.4958213, -0.4183809, 0.23640867, 0.60052395, 0.099738486)
+bone_name = "WeaponPlacement.R"
+bone_idx = 25
+
+[node name="WeaponPlacement" type="Node3D" parent="GeneralSkeleton/Palm_L2" unique_id=1765529614]
+transform = Transform3D(-0.15100369, 0.12252966, -0.98090994, -0.92727983, 0.32630777, 0.18350817, 0.3425637, 0.9372885, 0.064345635, 0, 0.045, 0)
+
+[node name="SwipeMesh" type="MeshInstance3D" parent="GeneralSkeleton/Palm_L2/WeaponPlacement" unique_id=1282154268]
+transform = Transform3D(125.00001, 0, 0, 0, 44.999992, 0, 0, 0, 125.00001, 0, 0, 0)
+visible = false
+material_override = ExtResource("4_84woi")
+mesh = ExtResource("5_66mam")
+blend_shapes/blendShape1.Closed = 1.0
+
+[node name="HeadLookModifier" type="LookAtModifier3D" parent="GeneralSkeleton" unique_id=1306085533]
+active = false
+bone_name = "Head"
+bone = 13
+primary_rotation_axis = 0
+duration = 0.3
+transition_type = 10
+ease_type = 1
+use_angle_limitation = true
+symmetry_limitation = true
+primary_limit_angle = 6.2831855
+primary_damp_threshold = 1.0
+secondary_limit_angle = 0.7853982
+secondary_damp_threshold = 1.0
+
+[node name="MomentumModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=1195575254]
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+rotation_edit_mode = 0
+rotation_order = 2
+top_level = false
+visible = true
+visibility_parent = NodePath("")
+active = true
+influence = 1.0
+script = ExtResource("38_5mrp1")
+metadata/_custom_type_script = "uid://bj3feok1xkxq"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=844508464]
+active = false
+libraries/ = ExtResource("40_5mrp1")
+
+[connection signal="AnimationFinished" from="GeneralSkeleton/MyModifier" to="." method="AnimTreeFinished"]

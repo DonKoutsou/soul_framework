@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="KeyItem" format=3 uid="uid://blfnacfyi8fyb"]
+
+[ext_resource type="Script" uid="uid://l1yv1ffimeej" path="res://Engine/Items/Effects/ItemEffect.gd" id="1_cyca3"]
+[ext_resource type="ArrayMesh" uid="uid://c1lhyd5f67lw1" path="res://Engine/Assets/Weapons/Shovel.res" id="2_4pard"]
+[ext_resource type="Script" uid="uid://wjryc5t7vwtw" path="res://Engine/Items/KeyItem.gd" id="3_3jej2"]
+
+[resource]
+script = ExtResource("3_3jej2")
+ItemDesc = "Digs a whole"
+Type = 7
+ItemName = "Shovel"
+Value = -1
+Model = ExtResource("2_4pard")
+metadata/_custom_type_script = "uid://dnwn8l0kfkmcy"

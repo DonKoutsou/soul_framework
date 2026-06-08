@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CombatAnimationInfo" format=3 uid="uid://evvg7ku0qg1b"]
+
+[ext_resource type="Script" uid="uid://bkqk3nyk4pe2r" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/CombatAnimationInfo.gd" id="1_3vs87"]
+
+[resource]
+script = ExtResource("1_3vs87")
+AlwaysR = true
+AnimName = "Duck_Left"
+Blend_Duration = 0.15
+Blend_Out_Duration = 0.3
+AutoComplete = false
+ValidStates = Array[int]([18])
+metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

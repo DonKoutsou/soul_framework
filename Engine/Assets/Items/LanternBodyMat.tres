@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://c3dr87khiawcx"]
+
+[ext_resource type="Shader" uid="uid://b37uwj05g58yj" path="res://Engine/Shaders/BaseMat/Base_ORM_Mat.gdshader" id="1_eayvc"]
+[ext_resource type="Texture2D" uid="uid://4vq1gl4pi3oi" path="res://Engine/Assets/Items/Textures/Lant_Lantern_BaseColor.png" id="1_kc87v"]
+[ext_resource type="Texture2D" uid="uid://bwf02ss2k55rg" path="res://Engine/Assets/Items/Textures/Lant_Lantern_Normal.png" id="2_eayvc"]
+[ext_resource type="Texture2D" uid="uid://dfdket7q27con" path="res://Engine/Assets/Items/Textures/Lant_Lantern_OcclusionRoughnessMetallic.png" id="3_p7fei"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_eayvc")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/roughness = 0.6499999854712
+shader_parameter/metal = 0.999999977648
+shader_parameter/specular = 0.999999977648
+shader_parameter/ao = 1.0
+shader_parameter/ao_light_affect = 1.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("1_kc87v")
+shader_parameter/texture_normal = ExtResource("2_eayvc")
+shader_parameter/normal_scale = 1.000000807500001
+shader_parameter/texture_orm = ExtResource("3_p7fei")

@@ -1,0 +1,402 @@
+[gd_scene format=3 uid="uid://dglmivlkftc77"]
+
+[ext_resource type="StyleBox" uid="uid://bbk2ps7ndxsxo" path="res://Theme/Panel_Trans.tres" id="1_2hjaa"]
+[ext_resource type="Script" uid="uid://b8do2b84siv52" path="res://Engine/UI/Inventory/inventory.gd" id="1_qkvr7"]
+[ext_resource type="PackedScene" uid="uid://cghlhcpcsa23u" path="res://Engine/UI/Inventory/Container.tscn" id="3_f1uin"]
+[ext_resource type="Script" uid="uid://dnwn8l0kfkmcy" path="res://Engine/Items/Item.gd" id="3_qkvr7"]
+[ext_resource type="Texture2D" uid="uid://dycxbxars5j0b" path="res://Assets/ItemIcons/Gold.png" id="4_1pi3o"]
+[ext_resource type="Script" uid="uid://sqkiv7wopot6" path="res://Engine/Items/CombinationData.gd" id="4_08plh"]
+[ext_resource type="Environment" uid="uid://bwrhss8cb37v4" path="res://Enviroments/Mobile_InventorySceneEnviroment.tres" id="5_yeyjc"]
+[ext_resource type="Texture2D" uid="uid://c0p4ljqa2oswd" path="res://Assets/UIIcons/InventoryItems/Weapons.png" id="6_6faio"]
+[ext_resource type="Texture2D" uid="uid://dikj5mm317m81" path="res://Assets/UIIcons/InventoryItems/Consumables.png" id="7_tqkc6"]
+[ext_resource type="Texture2D" uid="uid://cgl7v3l3p28ft" path="res://Assets/UIIcons/InventoryItems/KeyItems.png" id="8_6faio"]
+[ext_resource type="Resource" uid="uid://btpko76rq38uv" path="res://Resources/Items/Potion.tres" id="8_12p1a"]
+[ext_resource type="Texture2D" uid="uid://cl2qv0ll6nher" path="res://Assets/UIIcons/ui_button 9.png" id="9_08plh"]
+[ext_resource type="Texture2D" uid="uid://besoj7tmqe0os" path="res://Assets/UIIcons/Retro_Menu_Arrow01.png" id="9_jvvyu"]
+[ext_resource type="Texture2D" uid="uid://c8xmw3icpgjf" path="res://Assets/UIIcons/ScreenLong3.png" id="10_ggo5s"]
+[ext_resource type="PackedScene" uid="uid://d3y14mj73hu81" path="res://Engine/UI/Inventory/ItemOptions.tscn" id="12_tto5d"]
+[ext_resource type="Texture2D" uid="uid://c0p6xcpo20vmq" path="res://Assets/UIIcons/ui_button 35.png" id="14_08plh"]
+
+[sub_resource type="Resource" id="Resource_xusjw"]
+script = ExtResource("4_08plh")
+CombinationItem = Array[ExtResource("3_qkvr7")]([])
+CombinationResault = ExtResource("8_12p1a")
+metadata/_custom_type_script = "uid://sqkiv7wopot6"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jvvyu"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yeyjc"]
+content_margin_left = 4.0
+content_margin_top = 8.0
+content_margin_right = 4.0
+content_margin_bottom = 8.0
+texture = ExtResource("9_08plh")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tqkc6"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("14_08plh")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="World3D" id="World3D_yeyjc"]
+environment = ExtResource("5_yeyjc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xtp45"]
+texture = ExtResource("10_ggo5s")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[node name="InventoryScreen" type="Control" unique_id=218409842 node_paths=PackedStringArray("Cont", "CharacterSheetPlecement", "InventoryContainerPlecement", "SelectedItemNameLabel", "SelectedItemDescriptionLabel", "GoldLabel", "ItemDescr", "ItemOpts", "weapon_preview_position")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_qkvr7")
+Cont = NodePath("HBoxContainer2/VBoxContainer/PanelContainer")
+CharacterSheetPlecement = NodePath("HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer")
+InventoryContainerPlecement = NodePath("VBoxContainer2/HBoxContainer/VBoxContainer/NinePatchRect/ScrollContainer/VBoxContainer")
+SelectedItemNameLabel = NodePath("NinePatchRect/VBoxContainer/Label")
+SelectedItemDescriptionLabel = NodePath("NinePatchRect/VBoxContainer/Label2")
+GoldLabel = NodePath("VBoxContainer2/HBoxContainer/VBoxContainer2/PanelContainer/HBoxContainer/Label")
+ItemDescr = NodePath("NinePatchRect")
+ItemOpts = NodePath("HBoxContainer2/VBoxContainer/Options")
+weapon_preview_position = NodePath("HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer/SubViewportContainer/SubViewport2")
+CombinationPossibilities = Array[ExtResource("4_08plh")]([SubResource("Resource_xusjw")])
+
+[node name="PanelContainer2" type="Panel" parent="." unique_id=1996461900]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jvvyu")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=206738964]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2" unique_id=822624781]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" parent="HBoxContainer2/VBoxContainer" unique_id=1901808776 instance=ExtResource("3_f1uin")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Options" parent="HBoxContainer2/VBoxContainer" unique_id=20261669 instance=ExtResource("12_tto5d")]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer2/VBoxContainer" unique_id=1638604666]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Next" type="Button" parent="HBoxContainer2/VBoxContainer/HBoxContainer" unique_id=1864874595]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NEXT"
+icon = ExtResource("9_jvvyu")
+icon_alignment = 2
+
+[node name="UsePressed" type="Button" parent="HBoxContainer2/VBoxContainer/HBoxContainer" unique_id=2029573547]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "USE"
+icon_alignment = 2
+
+[node name="Button3" type="Button" parent="HBoxContainer2/VBoxContainer/HBoxContainer" unique_id=660520365]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "COMBINE"
+icon_alignment = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=1072915980]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2" unique_id=597127684]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer2/HBoxContainer" unique_id=1285759249]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 0
+
+[node name="AllItemsShow" type="Button" parent="VBoxContainer2/HBoxContainer/VBoxContainer2" unique_id=932848522 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+text = "ALL"
+
+[node name="WeaponItemsShow" type="Button" parent="VBoxContainer2/HBoxContainer/VBoxContainer2" unique_id=71162700 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("6_6faio")
+
+[node name="ConsumableItemsShow" type="Button" parent="VBoxContainer2/HBoxContainer/VBoxContainer2" unique_id=1177182720 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("7_tqkc6")
+
+[node name="KeyItemsShow" type="Button" parent="VBoxContainer2/HBoxContainer/VBoxContainer2" unique_id=15736694 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("8_6faio")
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer2/HBoxContainer/VBoxContainer2" unique_id=575406665]
+visible = false
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 10
+theme_override_styles/panel = SubResource("StyleBoxTexture_yeyjc")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2/HBoxContainer/VBoxContainer2/PanelContainer" unique_id=846019275]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer2/HBoxContainer/VBoxContainer2/PanelContainer/HBoxContainer" unique_id=1102974148]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("4_1pi3o")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer/VBoxContainer2/PanelContainer/HBoxContainer" unique_id=323691942]
+layout_mode = 2
+text = ": 1"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2/HBoxContainer" unique_id=1263008342]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="VBoxContainer2/HBoxContainer/VBoxContainer" unique_id=2107257401]
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+texture = ExtResource("14_08plh")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer/VBoxContainer/NinePatchRect2" unique_id=1594807897]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 14
+text = "Inventory"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="NinePatchRect" type="PanelContainer" parent="VBoxContainer2/HBoxContainer/VBoxContainer" unique_id=1111306817]
+show_behind_parent = true
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_tqkc6")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer2/HBoxContainer/VBoxContainer/NinePatchRect" unique_id=1902325550]
+layout_mode = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+
+[node name="VBoxContainer" type="GridContainer" parent="VBoxContainer2/HBoxContainer/VBoxContainer/NinePatchRect/ScrollContainer" unique_id=370262150]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=766433533]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=837816634]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer" unique_id=883132421]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer" unique_id=553644467]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer3" type="PanelContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer" unique_id=148843402]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("1_2hjaa")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer3" unique_id=873223456]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer3/HBoxContainer" unique_id=1051039015]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer" unique_id=1368124925]
+visible = false
+custom_minimum_size = Vector2(0, 48.635)
+layout_mode = 2
+text = "CHARACTERS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer" unique_id=1555575976]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1253778906]
+custom_minimum_size = Vector2(83.175, 0)
+layout_mode = 2
+
+[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=2047209513]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Control" unique_id=536239551]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.5
+offset_top = -14.5
+offset_right = 33.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_2hjaa")
+
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Control/PanelContainer" unique_id=1748822225]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 14
+text = "Weapon"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1714028424]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("1_2hjaa")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer" unique_id=1242669832]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport2" type="SubViewport" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer/SubViewportContainer" unique_id=1376703408]
+own_world_3d = true
+world_3d = SubResource("World3D_yeyjc")
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(2, 2)
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer/SubViewportContainer/SubViewport2" unique_id=1369675177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.717)
+projection = 1
+current = true
+fov = 45.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer/SubViewportContainer/SubViewport2" unique_id=445413899]
+transform = Transform3D(0.25342596, 0.33837458, -0.9062438, -0.3231743, 0.9126161, 0.25038, 0.91177493, 0.22942193, 0.34063464, 0, 0, 0)
+
+[node name="NinePatchRect" type="PanelContainer" parent="." unique_id=1506293920]
+visible = false
+z_index = 1
+texture_filter = 1
+layout_mode = 0
+offset_top = 96.0
+offset_right = 320.0
+offset_bottom = 192.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_xtp45")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect" unique_id=735455533]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="NinePatchRect/VBoxContainer" unique_id=748699025]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 2
+
+[node name="Label2" type="RichTextLabel" parent="NinePatchRect/VBoxContainer" unique_id=1719006154]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/paragraph_separation = 8
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+
+[connection signal="Combined" from="HBoxContainer2/VBoxContainer/Options" to="." method="_on_options_combined"]
+[connection signal="Next" from="HBoxContainer2/VBoxContainer/Options" to="." method="_on_options_next"]
+[connection signal="Prev" from="HBoxContainer2/VBoxContainer/Options" to="." method="_on_options_prev"]
+[connection signal="Used" from="HBoxContainer2/VBoxContainer/Options" to="." method="_on_options_used"]
+[connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer2/AllItemsShow" to="." method="_on_all_items_show_pressed"]
+[connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer2/WeaponItemsShow" to="." method="_on_weapon_items_show_pressed"]
+[connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer2/ConsumableItemsShow" to="." method="_on_consumable_items_show_pressed"]
+[connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer2/KeyItemsShow" to="." method="_on_key_items_show_pressed"]

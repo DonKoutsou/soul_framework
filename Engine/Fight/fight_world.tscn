@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://leak48jhrcbf"]
+
+[ext_resource type="PackedScene" uid="uid://2p6hli6yrahm" path="res://Engine/Controllers/Fight_Characters/Fight_Player.tscn" id="1_fmg3w"]
+[ext_resource type="Script" uid="uid://dfwgkk1qr6s2d" path="res://Engine/Fight/FightWorld.gd" id="1_pxlco"]
+[ext_resource type="Material" uid="uid://du08rw64jruff" path="res://Engine/Fight/FightBG.tres" id="4_w2p7j"]
+[ext_resource type="Environment" uid="uid://d3s6de5yiplew" path="res://Engine/Enviroments/FightSceneEnviroment.tres" id="5_pxlco"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4x8rd"]
+size = Vector2(40, 40)
+
+[node name="FightWorld" type="Node3D" unique_id=741307255 node_paths=PackedStringArray("Pl", "BGMesh", "env")]
+script = ExtResource("1_pxlco")
+Pl = NodePath("Player")
+BGMesh = NodePath("MeshInstance3D")
+env = NodePath("WorldEnvironment")
+EnemyScene = "uid://324c0rciguol"
+
+[node name="Player" parent="." unique_id=172630672 instance=ExtResource("1_fmg3w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4)
+
+[node name="EnemySpawnLoc" type="Node3D" parent="." unique_id=1759207048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.107, -0.65739554)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1195239368]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00012588501, -0.08019504, -7.982004)
+material_override = ExtResource("4_w2p7j")
+mesh = SubResource("PlaneMesh_4x8rd")
+skeleton = NodePath("../..")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2044444982 groups=["Lights"]]
+transform = Transform3D(1, 0, 0, 0, 0.392931, 0.919568, 0, -0.919568, 0.392931, 0, 0, 0)
+light_color = Color(0.58936477, 0.5893648, 0.58936477, 1)
+light_bake_mode = 0
+light_cull_mask = 4294443521
+directional_shadow_mode = 0
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=1906308274 groups=["Lights"]]
+transform = Transform3D(1, 0, 0, 0, 0.29707497, -0.9548542, 0, 0.9548542, 0.29707497, 0, 0, 0)
+light_color = Color(0.27168176, 0.27168176, 0.27168176, 1)
+light_bake_mode = 0
+light_cull_mask = 4294443521
+directional_shadow_mode = 0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=243444861]
+environment = ExtResource("5_pxlco")

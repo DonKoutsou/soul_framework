@@ -1,0 +1,38 @@
+[gd_resource type="ShaderMaterial" script_class="ShaderChecker" format=3 uid="uid://12vsdljd0kly"]
+
+[ext_resource type="Script" uid="uid://bngw4vdnyn1mi" path="res://Engine/Utils/ShaderChecker.gd" id="1_7lxpg"]
+[ext_resource type="Shader" uid="uid://cm62atu2mo5j0" path="res://Engine/Shaders/BaseMat/Base_Water_Mat.gdshader" id="2_7lxpg"]
+[ext_resource type="Texture2D" uid="uid://bxn2exhhcovqv" path="res://Engine/Assets/Textures/Water.png" id="2_rk6sv"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2sflr"]
+frequency = 0.1077
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_c7fqn"]
+width = 128
+height = 128
+noise = SubResource("FastNoiseLite_2sflr")
+
+[resource]
+render_priority = 0
+shader = ExtResource("2_7lxpg")
+shader_parameter/albedo = Color(0.895857, 0.95411724, 1, 1)
+shader_parameter/blend_value = 0.5
+shader_parameter/roughness = 0.0
+shader_parameter/metal = 0.0
+shader_parameter/specular = 0.0
+shader_parameter/ao = 1.0
+shader_parameter/ao_light_affect = 0.0
+shader_parameter/FoamSize = 0.2
+shader_parameter/FoamGlowIntensity = 0.5
+shader_parameter/noise_strength = 0.01
+shader_parameter/noise_scale = 0.02
+shader_parameter/TimeOffset = 2.72
+shader_parameter/TimeScale = 1.0
+shader_parameter/uv1_scale = Vector3(0.5, 0.5, 0.5)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("2_rk6sv")
+shader_parameter/texture_blend_albedo = ExtResource("2_rk6sv")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_c7fqn")
+script = ExtResource("1_7lxpg")
+ValueToCheck = "FoamGlowIntensity"
+ValueOnMobile = 0.5

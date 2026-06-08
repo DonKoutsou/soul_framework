@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://x3putg6b3vjj"]
+
+[ext_resource type="ArrayMesh" uid="uid://c2gw05vrsuic4" path="res://Engine/Assets/Particles/BarrelPiece.obj" id="1_c3tdb"]
+[ext_resource type="Material" uid="uid://bqd68wlr5r82y" path="res://Engine/Shaders/Materials/TestMatUV.tres" id="1_rujsp"]
+[ext_resource type="Script" path="res://Engine/Utils/SubEmmiterParticle3D.gd" id="3_y5nqr"]
+[ext_resource type="Material" uid="uid://b4e0fnnsxq4gf" path="res://Engine/Shaders/Materials/WoodBreakDust.tres" id="4_y5nqr"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_66x6s"]
+particle_flag_align_y = true
+emission_shape_offset = Vector3(0, 0.2, 0)
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+radial_velocity_min = 0.99997765
+radial_velocity_max = 0.99997765
+gravity = Vector3(0, -6, 0)
+radial_accel_min = 3.1999977
+radial_accel_max = 3.1999977
+
+[sub_resource type="Curve" id="Curve_66x6s"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2jf2g"]
+curve = SubResource("Curve_66x6s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2jf2g"]
+particle_flag_align_y = true
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, 1, 0)
+spread = 90.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 0.99999774
+linear_accel_max = 0.99999774
+scale_curve = SubResource("CurveTexture_2jf2g")
+
+[sub_resource type="QuadMesh" id="QuadMesh_y5nqr"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" unique_id=2114858932 node_paths=PackedStringArray("SubEmmiters") groups=["Particles"]]
+material_override = ExtResource("1_rujsp")
+emitting = false
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource("ParticleProcessMaterial_66x6s")
+draw_pass_1 = ExtResource("1_c3tdb")
+script = ExtResource("3_y5nqr")
+SubEmmiters = [NodePath("GPUParticles3D")]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=166267736 groups=["Particles"]]
+material_override = ExtResource("4_y5nqr")
+emitting = false
+amount = 30
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_2jf2g")
+draw_pass_1 = SubResource("QuadMesh_y5nqr")

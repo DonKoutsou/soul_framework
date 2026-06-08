@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://csq7mqpe7fyd0"]
+
+[ext_resource type="Script" uid="uid://dyawl5cygqo1w" path="res://Engine/Managers/monster_manager.gd" id="1_aihty"]
+
+[node name="MonsterManager" type="Node3D" unique_id=2022367630]
+script = ExtResource("1_aihty")

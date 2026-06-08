@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bmp53oiroonbo"]
+
+[ext_resource type="Script" uid="uid://cw27nokt5gxpi" path="res://Engine/Managers/Traps/trap_manager.gd" id="1_fnxp6"]
+[ext_resource type="Script" uid="uid://dd35hcw6d7m6y" path="res://Engine/Managers/Traps/TrapSettings.gd" id="3_7ajbk"]
+
+[sub_resource type="Resource" id="Resource_vvhql"]
+resource_local_to_scene = true
+script = ExtResource("3_7ajbk")
+TrapType = 1
+Cooldown = 2.0
+CustomData = {
+"Range": 20.0,
+"Speed": 3.0
+}
+metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
+
+[sub_resource type="Resource" id="Resource_fnxp6"]
+resource_local_to_scene = true
+script = ExtResource("3_7ajbk")
+Cooldown = 3.0
+CustomData = {
+"Speed": 15.0
+}
+metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
+
+[sub_resource type="Resource" id="Resource_7ajbk"]
+resource_local_to_scene = true
+script = ExtResource("3_7ajbk")
+TrapType = 2
+Cooldown = 1.0
+CustomData = {
+"Speed": 1.0
+}
+metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
+
+[sub_resource type="Resource" id="Resource_d87ld"]
+script = ExtResource("3_7ajbk")
+TrapType = 3
+Cooldown = 3.0
+CustomData = {
+"Lifetime": 1.0
+}
+metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
+
+[node name="TrapManager" type="Node3D" unique_id=973696422]
+script = ExtResource("1_fnxp6")
+TrapSetting = Array[ExtResource("3_7ajbk")]([SubResource("Resource_vvhql"), SubResource("Resource_fnxp6"), SubResource("Resource_7ajbk"), SubResource("Resource_d87ld")])

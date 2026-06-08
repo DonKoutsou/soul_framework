@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bsutxifqrokua"]
+
+[ext_resource type="PackedScene" uid="uid://ca14mcyfwm5si" path="res://Engine/Weapons/Scenes/BaseWeapon.tscn" id="1_5a7fc"]
+[ext_resource type="Material" uid="uid://cavltigxfech8" path="res://Engine/Shaders/Materials/Dummy.tres" id="2_se51p"]
+[ext_resource type="ArrayMesh" uid="uid://1wkr77rh1r27" path="res://Engine/Assets/Weapons/Axe.res" id="3_254bb"]
+
+[node name="FightWeapon" unique_id=114680310 instance=ExtResource("1_5a7fc")]
+
+[node name="MeshInstance3D" parent="." index="0" unique_id=787913972]
+material_override = ExtResource("2_se51p")
+mesh = ExtResource("3_254bb")

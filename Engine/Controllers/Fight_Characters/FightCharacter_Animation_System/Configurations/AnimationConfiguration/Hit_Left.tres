@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CombatAnimationInfo" format=3 uid="uid://c1o5sfqhixftq"]
+
+[ext_resource type="Script" uid="uid://bkqk3nyk4pe2r" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/CombatAnimationInfo.gd" id="1_2orif"]
+
+[resource]
+script = ExtResource("1_2orif")
+AlwaysR = true
+AnimName = "Hit_Left"
+Blend_Duration = 0.15
+Blend_Out_Duration = 0.15
+ValidStates = Array[int]([27])
+metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://bd878xpthxdj"]
+
+[ext_resource type="Script" uid="uid://dpaaodqmkq3dg" path="res://Engine/Managers/Traps/Traps/guilotine_trap.gd" id="1_41ct1"]
+[ext_resource type="AudioStream" uid="uid://bmse1dsn57m44" path="res://Engine/Assets/Sounds/SpikeOut.mp3" id="2_0g8nv"]
+[ext_resource type="ArrayMesh" uid="uid://wv4c03c3loq2" path="res://Engine/Assets/Map_Geometry/Guilotine.res" id="2_xv0n1"]
+[ext_resource type="Material" uid="uid://c8xpah88sw5yu" path="res://Engine/Shaders/Materials/SwipeMeshShader.tres" id="5_0g8nv"]
+[ext_resource type="ArrayMesh" uid="uid://djcb40udi2miv" path="res://Engine/Assets/Particles/SwipeMesh.res" id="6_goo2o"]
+[ext_resource type="ArrayMesh" uid="uid://udwp6vwejvfi" path="res://Engine/Assets/Map_Geometry/Guilotine_Holder.res" id="6_xv0n1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4o4t7"]
+size = Vector3(1.114, 0.53, 0.5)
+
+[node name="GuilotineTrap" type="Node3D" unique_id=1859677643 node_paths=PackedStringArray("BladeMesh", "SwipeMesh", "BladeSound")]
+script = ExtResource("1_41ct1")
+Speed = 2.0
+BladeMesh = NodePath("MeshInstance3D")
+SwipeMesh = NodePath("MeshInstance3D/MeshInstance3D3")
+BladeSound = NodePath("MeshInstance3D/AudioStreamPlayer3D")
+Damage = 20
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=745807795]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = ExtResource("2_xv0n1")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D" unique_id=19641198]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.619116, 0)
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D" unique_id=74201064]
+shape = SubResource("BoxShape3D_4o4t7")
+debug_color = Color(0, 0.6, 0.7019608, 0.41960785)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="MeshInstance3D" unique_id=232280552]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.70532936, 0)
+stream = ExtResource("2_0g8nv")
+volume_db = -10.0
+unit_size = 3.0
+pitch_scale = 0.45
+bus = &"SFX"
+attenuation_filter_cutoff_hz = 3000.0
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1723727946]
+transform = Transform3D(-31.175734, -28.343603, 0, 18.071938, -48.89529, 0, 0, 0, 36.035, -0.5, -0.614, 0)
+mesh = ExtResource("6_goo2o")
+skeleton = NodePath("../..")
+blend_shapes/blendShape1.Closed = 1.0
+surface_material_override/0 = ExtResource("5_0g8nv")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1060993871]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = ExtResource("6_xv0n1")
+
+[connection signal="area_entered" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_area_entered"]

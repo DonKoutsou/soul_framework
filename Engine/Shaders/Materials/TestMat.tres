@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://opx64qjq6i0l"]
+
+[ext_resource type="Shader" uid="uid://cnqp24xaix1wl" path="res://Engine/Shaders/BaseMat/DungeonGeoMat.gdshader" id="1_f3pax"]
+[ext_resource type="Texture2D" uid="uid://b8b3six76jt7e" path="res://Engine/Assets/Textures/square_gray.png" id="2_bpl4a"]
+[ext_resource type="Texture2D" uid="uid://ctra12qrmko52" path="res://Engine/Assets/Textures/plane_Crack_BaseColor.png" id="2_wthcs"]
+[ext_resource type="Texture2D" uid="uid://ppm8leur277a" path="res://Engine/Assets/Textures/plane_Crack_Normal.png" id="3_wthcs"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_f3pax")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/roughness = 1.0
+shader_parameter/metal = 0.0
+shader_parameter/specular = 0.0
+shader_parameter/ao = 1.0
+shader_parameter/ao_light_affect = 1.0
+shader_parameter/uv1_blend_sharpness = 150.0
+shader_parameter/uv1_scale = Vector3(0.5, 0.5, 0.5)
+shader_parameter/uv1_offset = Vector3(0.5, 0, 0.5)
+shader_parameter/texture_albedo = ExtResource("2_bpl4a")
+shader_parameter/crack_albedo = ExtResource("2_wthcs")
+shader_parameter/normal_scale = 1.000000807500001
+shader_parameter/crack_normal = ExtResource("3_wthcs")

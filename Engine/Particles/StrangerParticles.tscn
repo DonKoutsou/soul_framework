@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://dvqo2x2sd0lri"]
+
+[ext_resource type="Texture2D" uid="uid://bvmii264x7hv6" path="res://Engine/Assets/Textures/smoke_01.png" id="1_5em2i"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vefk7"]
+transparency = 2
+alpha_scissor_threshold = 0.118
+alpha_antialiasing_mode = 0
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 2
+disable_ambient_light = true
+vertex_color_use_as_albedo = true
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture = ExtResource("1_5em2i")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_8iade"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.29005527, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ux3g1"]
+curve = SubResource("Curve_8iade")
+
+[sub_resource type="Curve" id="Curve_vefk7"]
+_data = [Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(0.17127073, 1), 0.0, -1.7683804, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_8iade"]
+curve = SubResource("Curve_vefk7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vefk7"]
+emission_shape_scale = Vector3(0.1, 0, 0.1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 2.0
+initial_velocity_max = 2.0
+angular_velocity_min = -312.0
+angular_velocity_max = 267.43
+radial_velocity_min = 0.99997765
+radial_velocity_max = 0.99997765
+gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 2.5
+scale_curve = SubResource("CurveTexture_8iade")
+alpha_curve = SubResource("CurveTexture_ux3g1")
+
+[sub_resource type="QuadMesh" id="QuadMesh_8iade"]
+
+[node name="GPUParticles3D2" type="GPUParticles3D" unique_id=363059627 groups=["Particles"]]
+material_override = SubResource("StandardMaterial3D_vefk7")
+emitting = false
+lifetime = 1.2
+process_material = SubResource("ParticleProcessMaterial_vefk7")
+draw_pass_1 = SubResource("QuadMesh_8iade")

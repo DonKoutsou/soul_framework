@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://dlobhi4jyff4g"]
+
+[ext_resource type="Script" uid="uid://d3w0l5sbflwuf" path="res://Engine/UI/ui_manager.gd" id="1_laqw3"]
+[ext_resource type="PackedScene" uid="uid://bbr0yg13h0xgc" path="res://Engine/UI/pause_menu.tscn" id="3_qdedj"]
+[ext_resource type="PackedScene" uid="uid://b83syoriw72hu" path="res://Engine/UI/MessageBox/MessageBox.tscn" id="3_wcp00"]
+[ext_resource type="PackedScene" uid="uid://purdosvq2xdp" path="res://Engine/Settings/settings.tscn" id="4_h5t5g"]
+[ext_resource type="PackedScene" uid="uid://db3mah6gf2gqg" path="res://Engine/Stage/Map/Minimap/Minimap.tscn" id="4_pwm6i"]
+[ext_resource type="PackedScene" uid="uid://dglmivlkftc77" path="res://Engine/UI/Inventory/Inventory.tscn" id="5_0cbwa"]
+[ext_resource type="PackedScene" uid="uid://ba83u0ygnks3h" path="res://Engine/Debug/Cheat/CheatMenu.tscn" id="5_ur5k7"]
+[ext_resource type="PackedScene" uid="uid://b63snluv13jfb" path="res://Engine/UI/character_sheet.tscn" id="5_wflq5"]
+[ext_resource type="PackedScene" uid="uid://b5vjfchiemu6t" path="res://Engine/Dialogue/dialogue_box.tscn" id="13_xtsij"]
+
+[node name="UIManager" type="CanvasLayer" unique_id=151584909 node_paths=PackedStringArray("MiniMp", "Inv", "CharacterSheetPlecement", "DiedLabel", "Diag", "MBox")]
+process_mode = 1
+script = ExtResource("1_laqw3")
+RestInterfaceFilePath = "uid://dv6o1vvcipy2u"
+ShopFilePath = "uid://dbecl5n67mfdb"
+FireMenuFilePath = "uid://bd7qdeotnd47i"
+CharacterSheetScene = ExtResource("5_wflq5")
+PauseM = ExtResource("3_qdedj")
+SettingsMenuScene = ExtResource("4_h5t5g")
+CheatMenu = ExtResource("5_ur5k7")
+MiniMp = NodePath("Minimap")
+Inv = NodePath("Inventory")
+CharacterSheetPlecement = NodePath("VBoxContainer/CharacterSheets")
+DiedLabel = NodePath("DiedLabel")
+Diag = NodePath("DialogueBox")
+MBox = NodePath("VBoxContainer/MessageBox")
+
+[node name="Inventory" parent="." unique_id=100274660 instance=ExtResource("5_0cbwa")]
+visible = false
+z_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=726050325]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.5714111
+offset_top = 4.0
+offset_right = -2.5714111
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MessageBox" parent="VBoxContainer" unique_id=1365637999 instance=ExtResource("3_wcp00")]
+custom_minimum_size = Vector2(200, 145)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CharacterSheets" type="HBoxContainer" parent="VBoxContainer" unique_id=1454952540]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DiedLabel" type="Label" parent="." unique_id=111949058]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme_override_colors/font_color = Color(0.8506072, 0.15310982, 9.62615e-08, 1)
+theme_override_font_sizes/font_size = 32
+text = "YOU DIED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minimap" parent="." unique_id=2042013832 instance=ExtResource("4_pwm6i")]
+visible = false
+custom_minimum_size = Vector2(200, 145)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -200.0
+grow_horizontal = 0
+grow_vertical = 1
+size_flags_vertical = 0
+
+[node name="DialogueBox" parent="." unique_id=257815825 instance=ExtResource("13_xtsij")]
+visible = false

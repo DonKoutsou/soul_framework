@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://chnmfgs0215cp"]
+
+[ext_resource type="Script" uid="uid://d2wt4ciiqyekq" path="res://Engine/UI/Utilities/PopMenu.gd" id="1_q4mjw"]
+
+[node name="PopMenu" type="Control" unique_id=94225113 node_paths=PackedStringArray("PopLabel", "YesButton", "NoButton", "OkButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q4mjw")
+PopLabel = NodePath("VBoxContainer/Label")
+YesButton = NodePath("VBoxContainer/HBoxContainer/YesTutorial")
+NoButton = NodePath("VBoxContainer/HBoxContainer/NoTutorial")
+OkButton = NodePath("VBoxContainer/HBoxContainer/Ok")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=795394438]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1773553385]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -108.5
+offset_top = -26.5
+offset_right = 108.5
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=820789223]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 36
+text = "Show Hints"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=551489566]
+custom_minimum_size = Vector2(0, 47)
+layout_mode = 2
+
+[node name="YesTutorial" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=840718175 groups=["DigitalButtons"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Yes"
+
+[node name="NoTutorial" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=347335985 groups=["DigitalButtons"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "NO"
+
+[node name="Ok" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1357107297 groups=["DigitalButtons"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "OK"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/YesTutorial" to="." method="_on_yes_tutorial_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/NoTutorial" to="." method="_on_no_tutorial_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Ok" to="." method="_on_ok_pressed"]

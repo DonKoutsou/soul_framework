@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://xxw3ow6w8g3o"]
+
+[sub_resource type="Curve" id="Curve_nc0ym"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8ukgc"]
+curve = SubResource("Curve_nc0ym")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nc0ym"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 18.44
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+radial_velocity_min = 89.99998
+radial_velocity_max = 99.99998
+gravity = Vector3(0, 0, 0)
+scale_min = 1.8
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_8ukgc")
+
+[node name="GPUParticles2D" type="GPUParticles2D" unique_id=710621088]
+show_behind_parent = true
+emitting = false
+amount = 20
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_nc0ym")

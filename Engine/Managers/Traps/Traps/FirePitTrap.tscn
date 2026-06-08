@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://ugr5isn8bafh"]
+
+[ext_resource type="Script" uid="uid://b01afv026xmcd" path="res://Engine/Managers/Traps/Traps/FirePit_trap.gd" id="1_qdv4e"]
+[ext_resource type="Material" uid="uid://bvu13hby1nd83" path="res://Engine/Shaders/Materials/Bonefire_RedFireMat.tres" id="2_175av"]
+[ext_resource type="AudioStream" uid="uid://clcqqlo6mgyu1" path="res://Engine/Assets/Sounds/Fire.mp3" id="3_7eqnn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rj4u7"]
+size = Vector3(1.7119141, 0.47070313, 1.6933594)
+
+[sub_resource type="Curve" id="Curve_qdv4e"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_megsn"]
+curve = SubResource("Curve_qdv4e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_175av"]
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+emission_shape = 3
+emission_box_extents = Vector3(0.05, 0, 0)
+angle_min = 1.0728835e-05
+angle_max = 720.0
+direction = Vector3(0, 1, 0)
+spread = 5.0
+flatness = 1.0
+initial_velocity_min = 1.5
+initial_velocity_max = 1.5
+angular_velocity_min = -720.0
+angular_velocity_max = 719.99994
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = -2.2351742e-05
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+attractor_interaction_enabled = false
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_megsn")
+
+[sub_resource type="QuadMesh" id="QuadMesh_avmda"]
+
+[node name="SpikeTrap" type="Node3D" unique_id=497111648]
+script = ExtResource("1_qdv4e")
+Speed = 5.0
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1591508831]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=566121219]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23535156, 0)
+shape = SubResource("BoxShape3D_rj4u7")
+
+[node name="DamageBuff" type="GPUParticles3D" parent="." unique_id=123831088 groups=["Particles"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.1546883, -0.5)
+material_override = ExtResource("2_175av")
+amount = 40
+process_material = SubResource("ParticleProcessMaterial_175av")
+draw_pass_1 = SubResource("QuadMesh_avmda")
+
+[node name="DamageBuff2" type="GPUParticles3D" parent="." unique_id=342659522 groups=["Particles"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.1546883, -0.5)
+material_override = ExtResource("2_175av")
+amount = 40
+process_material = SubResource("ParticleProcessMaterial_175av")
+draw_pass_1 = SubResource("QuadMesh_avmda")
+
+[node name="DamageBuff3" type="GPUParticles3D" parent="." unique_id=411169350 groups=["Particles"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.1546883, 0.5)
+material_override = ExtResource("2_175av")
+amount = 40
+process_material = SubResource("ParticleProcessMaterial_175av")
+draw_pass_1 = SubResource("QuadMesh_avmda")
+
+[node name="DamageBuff4" type="GPUParticles3D" parent="." unique_id=1209787285 groups=["Particles"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.1546883, 0.5)
+material_override = ExtResource("2_175av")
+amount = 40
+process_material = SubResource("ParticleProcessMaterial_175av")
+draw_pass_1 = SubResource("QuadMesh_avmda")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=712162340]
+stream = ExtResource("3_7eqnn")
+unit_size = 2.0
+autoplay = true
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

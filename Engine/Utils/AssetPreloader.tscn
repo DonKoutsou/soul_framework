@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://6f15eci71acs"]
+
+[ext_resource type="Script" uid="uid://b7brdqtd18swk" path="res://Engine/Utils/AssetPreloader.gd" id="1_tjtas"]
+[ext_resource type="PackedScene" uid="uid://c5fsohppr7gqk" path="res://Engine/Particles/DeathPart.tscn" id="2_sv3wv"]
+[ext_resource type="PackedScene" uid="uid://cy7ue74koc5a0" path="res://Engine/Particles/AmbientLights.tscn" id="3_nb75d"]
+[ext_resource type="PackedScene" uid="uid://fiuajpm4l4lj" path="res://Engine/Particles/Spark.tscn" id="4_ixiu8"]
+[ext_resource type="PackedScene" uid="uid://chulmp1cvowk1" path="res://Engine/Particles/speed_buff.tscn" id="8_6holp"]
+[ext_resource type="PackedScene" uid="uid://x3putg6b3vjj" path="res://Engine/Particles/WoodbreakParticle.tscn" id="9_vy20i"]
+[ext_resource type="PackedScene" uid="uid://dlcgsp7s3485r" path="res://Engine/Particles/AmbientDrops.tscn" id="10_fe7a1"]
+[ext_resource type="PackedScene" uid="uid://ck2l4kggylthw" path="res://Engine/Particles/WallbreakParticle.tscn" id="11_7bsja"]
+[ext_resource type="PackedScene" uid="uid://brfw7arelgq7l" path="res://Engine/Particles/DragParts.tscn" id="13_cqyax"]
+[ext_resource type="Material" uid="uid://gn0dpu371111" path="res://Engine/Assets/Items/Potion.tres" id="26_1u521"]
+[ext_resource type="ArrayMesh" uid="uid://ckrykityr6g0r" path="res://Engine/Assets/Items/Textures/Potion.obj" id="27_yemyq"]
+[ext_resource type="ArrayMesh" uid="uid://bxy6if6i850s2" path="res://Engine/Assets/Items/LargePotion.obj" id="28_fiwtc"]
+[ext_resource type="Material" uid="uid://w4mudmp4kmjs" path="res://Engine/Assets/Items/BranchGreen.tres" id="29_et7oi"]
+[ext_resource type="ArrayMesh" uid="uid://bu7ifdun0t5e2" path="res://Engine/Assets/Items/Branch.obj" id="30_rc30j"]
+[ext_resource type="Material" uid="uid://dfonlaa4u7jth" path="res://Engine/Assets/Items/BranchRed.tres" id="31_ftyme"]
+[ext_resource type="Material" uid="uid://y7elw5svrerg" path="res://Engine/Shaders/Materials/Metal.tres" id="32_2tw07"]
+[ext_resource type="ArrayMesh" uid="uid://b42pcmm1e2nlh" path="res://Engine/Assets/Items/Key.obj" id="33_13htl"]
+[ext_resource type="PackedScene" uid="uid://xxw3ow6w8g3o" path="res://Engine/UI/Tutorial/Prompts/PromptParticle.tscn" id="34_70fav"]
+
+[node name="ParticleScene" type="Control" unique_id=1442658229]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tjtas")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1126295386]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=572790150]
+handle_input_locally = false
+size = Vector2i(640, 480)
+render_target_update_mode = 4
+
+[node name="GPUParticles3D" parent="SubViewportContainer/SubViewport" unique_id=1534715498 instance=ExtResource("2_sv3wv")]
+
+[node name="GPUParticles3D2" parent="SubViewportContainer/SubViewport" unique_id=1313079060 instance=ExtResource("3_nb75d")]
+
+[node name="Spark" parent="SubViewportContainer/SubViewport" unique_id=1900154082 instance=ExtResource("4_ixiu8")]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport" unique_id=1785054675]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.1142254)
+current = true
+
+[node name="SpeedBuff" parent="SubViewportContainer/SubViewport" unique_id=373528042 instance=ExtResource("8_6holp")]
+
+[node name="GPUParticles3D5" parent="SubViewportContainer/SubViewport" unique_id=147785414 instance=ExtResource("9_vy20i")]
+
+[node name="GPUParticles3D6" parent="SubViewportContainer/SubViewport" unique_id=1137819581 instance=ExtResource("10_fe7a1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="GPUParticles3D7" parent="SubViewportContainer/SubViewport" unique_id=1535672329 instance=ExtResource("11_7bsja")]
+
+[node name="Drag" parent="SubViewportContainer/SubViewport" unique_id=1774005261 instance=ExtResource("13_cqyax")]
+
+[node name="Potion" type="MeshInstance3D" parent="SubViewportContainer/SubViewport" unique_id=101172541]
+material_override = ExtResource("26_1u521")
+mesh = ExtResource("27_yemyq")
+
+[node name="Potion2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport" unique_id=1360614306]
+material_override = ExtResource("26_1u521")
+mesh = ExtResource("28_fiwtc")
+
+[node name="Branch" type="MeshInstance3D" parent="SubViewportContainer/SubViewport" unique_id=896275681]
+material_override = ExtResource("29_et7oi")
+mesh = ExtResource("30_rc30j")
+
+[node name="Branch2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport" unique_id=1679300229]
+material_override = ExtResource("31_ftyme")
+mesh = ExtResource("30_rc30j")
+
+[node name="Key" type="MeshInstance3D" parent="SubViewportContainer/SubViewport" unique_id=102489101]
+material_override = ExtResource("32_2tw07")
+mesh = ExtResource("33_13htl")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1591771196]
+layer = 0
+
+[node name="GPUParticles2D" parent="CanvasLayer" unique_id=909201743 instance=ExtResource("34_70fav")]
+position = Vector2(746, 63)

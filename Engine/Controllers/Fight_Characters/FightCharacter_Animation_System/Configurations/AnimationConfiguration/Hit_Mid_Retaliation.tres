@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AnimationInfo" format=3 uid="uid://bg4gjsi8u2f3a"]
+
+[ext_resource type="Script" uid="uid://bl0vbdv76yftl" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/AnimationInfo.gd" id="1_esw0f"]
+
+[resource]
+script = ExtResource("1_esw0f")
+AnimName = "Hit_Mid_Retaliation"
+Blend_Duration = 0.15
+Blend_Out_Duration = 0.15
+ValidStates = Array[int]([32])
+metadata/_custom_type_script = "uid://bl0vbdv76yftl"

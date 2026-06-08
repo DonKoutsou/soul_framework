@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CombatAnimationInfo" format=3 uid="uid://cf2foygm8meh4"]
+
+[ext_resource type="Script" uid="uid://bkqk3nyk4pe2r" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/CombatAnimationInfo.gd" id="1_s3dah"]
+
+[resource]
+script = ExtResource("1_s3dah")
+AlwaysR = true
+AnimName = "Idle"
+BlendInAnim = "SwordUnseath"
+BlendOutAnim = "SwordSeath"
+Blend_Duration = 0.0
+Blend_Out_Duration = 0.3
+Loop = true
+AutoComplete = false
+ValidStates = Array[int]([0, 2, 3, 4, 5, 6, 7, 18, 19, 13, 14, 15, 16, 17, 8, 9, 10, 11, 12, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39])
+metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

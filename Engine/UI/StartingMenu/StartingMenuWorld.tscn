@@ -1,0 +1,273 @@
+[gd_scene format=3 uid="uid://coslsa2xslu3t"]
+
+[ext_resource type="Script" uid="uid://tr3iguwo5cun" path="res://Engine/UI/StartingMenu/starting_menu_world.gd" id="1_bvnat"]
+[ext_resource type="ArrayMesh" uid="uid://f3ijk187nimo" path="res://Engine/Assets/Map_Geometry/Wall.res" id="2_5pfv0"]
+[ext_resource type="ArrayMesh" uid="uid://0dhrl4xlbxyc" path="res://Engine/Assets/Map_Geometry/DoorFrame.res" id="2_tiktn"]
+[ext_resource type="ArrayMesh" uid="uid://1euw0y0wpf4v" path="res://Engine/Assets/Map_Geometry/Floor.res" id="5_tiktn"]
+[ext_resource type="Material" uid="uid://ciqreujo4w5h6" path="res://Engine/Shaders/Materials/ItemMa.tres" id="8_atcex"]
+[ext_resource type="ArrayMesh" uid="uid://0qnpx7n1fnat" path="res://Engine/Assets/Map_Geometry/DoorIntro.res" id="9_mfb2y"]
+[ext_resource type="CameraAttributesPractical" uid="uid://cdswuribp1orp" path="res://Engine/Enviroments/CameraSettings/StartingWorldCameraAtributes.tres" id="10_rc8gw"]
+[ext_resource type="AudioStream" uid="uid://bq3xxh54rnduw" path="res://Engine/Assets/Sounds/Cave_Ambient.mp3" id="14_820u5"]
+[ext_resource type="PackedScene" uid="uid://dlcgsp7s3485r" path="res://Engine/Particles/AmbientDrops.tscn" id="15_lesta"]
+[ext_resource type="AudioStream" uid="uid://gexa5gsvcd8n" path="res://Engine/Assets/Sounds/DoorWood_Open.mp3" id="17_gpp32"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o0g0j"]
+emission_shape_scale = Vector3(1, 1, 2.38)
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0, 0.5)
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 0.5
+initial_velocity_max = 0.5
+angular_velocity_min = 159.99998
+angular_velocity_max = 252.49998
+gravity = Vector3(0, 0, 0)
+scale_min = 0.01
+scale_max = 0.03
+
+[sub_resource type="QuadMesh" id="QuadMesh_74lhj"]
+
+[sub_resource type="Animation" id="Animation_e6qg4"]
+resource_name = "Intro"
+length = 1.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.8000001),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.41481677, -0.6633744, 0.38084733), Vector3(0.41481677, -0.6633744, 0.38084733), Vector3(-0.78831744, -0.24635172, 4.446833e-08)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D2:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 1.4),
+"transitions": PackedFloat32Array(2.0705297, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -1.2119392, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("Camera3D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.17786388, 1.0464473, 0.010377879), Vector3(0.17802358, 1.5707964, 0.010471975)]
+}
+
+[sub_resource type="Animation" id="Animation_lvuqc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.41481677, -0.6633744, 0.38084733)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("Camera3D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.17786388, 1.0464473, 0.010377879)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lvuqc"]
+_data = {
+&"Intro": SubResource("Animation_e6qg4"),
+&"RESET": SubResource("Animation_lvuqc")
+}
+
+[node name="Node3D" type="Node3D" unique_id=1335346531 node_paths=PackedStringArray("Cam")]
+script = ExtResource("1_bvnat")
+Cam = NodePath("Camera3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1591494481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = ExtResource("2_tiktn")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=1061024559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 2)
+mesh = ExtResource("2_5pfv0")
+
+[node name="MeshInstance3D23" type="MeshInstance3D" parent="." unique_id=2093026753]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2, -1, 0)
+mesh = ExtResource("2_5pfv0")
+
+[node name="MeshInstance3D24" type="MeshInstance3D" parent="." unique_id=1675215422]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, -1, 8.742278e-08)
+mesh = ExtResource("2_5pfv0")
+
+[node name="MeshInstance3D25" type="MeshInstance3D" parent="." unique_id=1404082598]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, 8.742278e-08)
+mesh = ExtResource("2_5pfv0")
+
+[node name="MeshInstance3D26" type="MeshInstance3D" parent="." unique_id=715143072]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, -1, 8.742278e-08)
+mesh = ExtResource("5_tiktn")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=1462037615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -2)
+mesh = ExtResource("2_5pfv0")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="." unique_id=2049096531]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -1, -2)
+mesh = ExtResource("2_5pfv0")
+
+[node name="MeshInstance3D14" type="MeshInstance3D" parent="." unique_id=1784984094]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, -1, -2)
+mesh = ExtResource("2_5pfv0")
+
+[node name="MeshInstance3D15" type="MeshInstance3D" parent="." unique_id=866341750]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, -1, -2)
+mesh = ExtResource("2_5pfv0")
+
+[node name="MeshInstance3D16" type="MeshInstance3D" parent="." unique_id=1305973674]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 1.9996855, -1, -4.339218e-05)
+mesh = ExtResource("2_5pfv0")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=37810533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = ExtResource("5_tiktn")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="." unique_id=1785369547]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -2)
+mesh = ExtResource("5_tiktn")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="." unique_id=290444054]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, 0)
+mesh = ExtResource("5_tiktn")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="." unique_id=1351494920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -2)
+mesh = ExtResource("5_tiktn")
+
+[node name="MeshInstance3D17" type="MeshInstance3D" parent="." unique_id=44633001]
+transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 2, 1, -2)
+mesh = ExtResource("5_tiktn")
+
+[node name="MeshInstance3D18" type="MeshInstance3D" parent="." unique_id=1848204094]
+transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 1, -2)
+mesh = ExtResource("5_tiktn")
+
+[node name="MeshInstance3D28" type="MeshInstance3D" parent="." unique_id=1787638766]
+transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, -2, 1.0000002, 0)
+mesh = ExtResource("5_tiktn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=145218122]
+transform = Transform3D(0.068015195, -0.68676054, 0.7236946, 1.2682848e-07, 0.7253744, 0.68835455, -0.9976843, -0.046818476, 0.049336568, 0, 0, 0)
+shadow_normal_bias = 0.0
+directional_shadow_max_distance = 2.0
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="." unique_id=1197113131]
+transform = Transform3D(1.435, 0, 0, 0, 1.7174103, 0, 0, 0, 2.1806664, -0.9052422, -1.2684474, -0.00023525953)
+material_override = ExtResource("8_atcex")
+mesh = ExtResource("2_5pfv0")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2037671633]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.936287, -0.3426832, -0.37523526)
+mesh = ExtResource("9_mfb2y")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=804553612]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43171096, -1.006162, 0)
+material_override = ExtResource("8_atcex")
+amount = 5
+lifetime = 4.0
+process_material = SubResource("ParticleProcessMaterial_o0g0j")
+draw_pass_1 = SubResource("QuadMesh_74lhj")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=686375852]
+transform = Transform3D(0.5022121, 0.1479535, 0.85199344, 0.010213974, 0.98417073, -0.17692757, -0.86468416, 0.09755739, 0.49275133, 0.41481677, -0.6633744, 0.38084733)
+attributes = ExtResource("10_rc8gw")
+current = true
+
+[node name="CameraPositions" type="Node3D" parent="." unique_id=474631423]
+
+[node name="Node3D" type="Node3D" parent="CameraPositions" unique_id=265950580]
+transform = Transform3D(0.5022121, 0.14795353, 0.85199344, 0.010213974, 0.9841709, -0.17692757, -0.86468416, 0.0975574, 0.49275133, 0.41481677, -0.6633744, 0.38084733)
+
+[node name="Node3D2" type="Node3D" parent="CameraPositions" unique_id=509126741]
+transform = Transform3D(0.9063963, 0, -0.4224285, 0, 1, 0, 0.4224285, 0, 0.9063963, 0.8689054, -0.41637182, -0.30379438)
+
+[node name="Node3D3" type="Node3D" parent="CameraPositions" unique_id=989269477]
+transform = Transform3D(0.0018543492, 0.17707501, 0.9841956, 0.010306282, 0.98414165, -0.17708471, -0.9999451, 0.010471776, -4.2682448e-08, -0.78831744, -0.24635172, 2.9802322e-08)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1259995113]
+process_mode = 3
+stream = ExtResource("14_820u5")
+autoplay = true
+bus = &"SFX"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=332022306]
+process_mode = 3
+stream = ExtResource("17_gpp32")
+pitch_scale = 0.8
+bus = &"SFX"
+
+[node name="GPUParticles3D2" parent="." unique_id=2126115745 instance=ExtResource("15_lesta")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=801933607]
+libraries/ = SubResource("AnimationLibrary_lvuqc")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

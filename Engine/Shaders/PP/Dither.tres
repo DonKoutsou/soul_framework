@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dnk1cwasmbvb1"]
+
+[ext_resource type="Shader" uid="uid://3pk1w225xlvn" path="res://Engine/Shaders/PP/Dither.gdshader" id="1_u14xi"]
+[ext_resource type="Texture2D" uid="uid://de3mndfkefhyj" path="res://Engine/Assets/Textures/psxdither.png" id="2_hdf8t"]
+
+[resource]
+shader = ExtResource("1_u14xi")
+shader_parameter/ColorAmm = 32.0
+shader_parameter/levels = 32
+shader_parameter/dither_texture = ExtResource("2_hdf8t")
+shader_parameter/DitherRes = Vector2(640, 480)
+shader_parameter/threshold = 1.0

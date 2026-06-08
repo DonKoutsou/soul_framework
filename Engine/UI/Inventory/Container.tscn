@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://cghlhcpcsa23u"]
+
+[ext_resource type="Environment" uid="uid://bwrhss8cb37v4" path="res://Engine/Enviroments/InventorySceneEnviroment.tres" id="1_vfa6t"]
+[ext_resource type="Script" uid="uid://53pe3l32u1ru" path="res://Engine/UI/Inventory/inventory_container.gd" id="2_uw4ap"]
+
+[sub_resource type="World3D" id="World3D_rbwg5"]
+environment = ExtResource("1_vfa6t")
+
+[node name="PanelContainer" type="PanelContainer" unique_id=1901808776 node_paths=PackedStringArray("Cam", "EquippedLabel", "amount_label", "CombinationPanel", "desc")]
+texture_filter = 3
+custom_minimum_size = Vector2(64, 64)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+script = ExtResource("2_uw4ap")
+Cam = NodePath("Control/VBoxContainer/SubViewportContainer/SubViewport/Node3D/Camera3D")
+EquippedLabel = NodePath("Control/Label")
+amount_label = NodePath("Control/AmountLabel")
+CombinationPanel = NodePath("ColorRect")
+desc = NodePath("Control/VBoxContainer/Label2")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2058582156]
+visible = false
+layout_mode = 2
+color = Color(1, 0.582, 0.24000001, 0.3372549)
+
+[node name="Control" type="Control" parent="." unique_id=1099034745]
+show_behind_parent = true
+layout_mode = 2
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+
+[node name="VBoxContainer" type="HBoxContainer" parent="Control" unique_id=1799270200]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 22.0
+offset_right = -22.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control/VBoxContainer" unique_id=1972773398]
+show_behind_parent = true
+texture_filter = 3
+custom_minimum_size = Vector2(86, 86)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Control/VBoxContainer/SubViewportContainer" unique_id=2086673135]
+own_world_3d = true
+world_3d = SubResource("World3D_rbwg5")
+transparent_bg = true
+handle_input_locally = false
+anisotropic_filtering_level = 0
+canvas_item_default_texture_filter = 3
+size = Vector2i(396, 436)
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="Control/VBoxContainer/SubViewportContainer/SubViewport" unique_id=1410362393]
+transform = Transform3D(0.93667215, 0, -0.35020754, 0, 1, 0, 0.35020754, 0, 0.93667215, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Control/VBoxContainer/SubViewportContainer/SubViewport/Node3D" unique_id=248569059]
+transform = Transform3D(0.81915206, 0.57357645, 0, -0.57357645, 0.81915206, 0, 0, 0, 1, 0, 0, 1.1435893)
+current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Control/VBoxContainer/SubViewportContainer/SubViewport/Node3D" unique_id=1798926588]
+transform = Transform3D(1, 0, 0, 0, 0.66262007, 0.7489557, 0, -0.7489557, 0.6626201, 0, 0, 0)
+
+[node name="Label2" type="RichTextLabel" parent="Control/VBoxContainer" unique_id=846946001]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+theme_override_constants/paragraph_separation = 8
+bbcode_enabled = true
+text = "dwa"
+fit_content = true
+autowrap_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Control" unique_id=1820713710]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 39.0
+offset_top = 33.0
+offset_right = -39.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 22
+text = "E"
+
+[node name="AmountLabel" type="Label" parent="Control" unique_id=672122230]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 34.0
+offset_top = 30.0
+offset_right = -34.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 22
+text = "1x"
+vertical_alignment = 2

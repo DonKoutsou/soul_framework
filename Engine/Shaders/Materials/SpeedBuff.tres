@@ -1,0 +1,21 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://8mc47yyox6mf"]
+
+[ext_resource type="Texture2D" uid="uid://bvmii264x7hv6" path="res://Engine/Assets/Textures/smoke_01.png" id="1_eau5c"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.254
+alpha_antialiasing_mode = 0
+blend_mode = 1
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.62438977, 1, 0.5974918, 1)
+albedo_texture = ExtResource("1_eau5c")
+emission_enabled = true
+emission = Color(0, 0.8156863, 0.03529412, 1)
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+stencil_flags = 2

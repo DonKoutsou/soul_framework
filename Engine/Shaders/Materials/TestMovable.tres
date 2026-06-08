@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dnueq5u2lpoat"]
+
+[ext_resource type="Shader" uid="uid://b7uo2oynqssyc" path="res://Engine/Shaders/BaseMat/DungeonPreasurePlateMat.gdshader" id="1_iclns"]
+[ext_resource type="Texture2DArray" uid="uid://da3bpdrmopbr7" path="res://Engine/Assets/Textures/Test_Atlas.tres" id="2_d3g4a"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_iclns")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/roughness = 0.0
+shader_parameter/metal = 0.0
+shader_parameter/specular = 0.0
+shader_parameter/ao = 1.0
+shader_parameter/ao_light_affect = 1.0
+shader_parameter/emission = Color(1, 1, 1, 1)
+shader_parameter/emission_energy_multiplier = 99.9999977648
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/texture_array_albedo = ExtResource("2_d3g4a")
+shader_parameter/normal_scale = 1.000000807500001

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="UnlockItem" format=3 uid="uid://7eusou4hbr2u"]
+
+[ext_resource type="Script" uid="uid://l1yv1ffimeej" path="res://Engine/Items/Effects/ItemEffect.gd" id="1_3010m"]
+[ext_resource type="ArrayMesh" uid="uid://b42pcmm1e2nlh" path="res://Engine/Assets/Items/Key.obj" id="3_wyis8"]
+[ext_resource type="Material" uid="uid://y7elw5svrerg" path="res://Engine/Shaders/Materials/Metal.tres" id="4_6417o"]
+[ext_resource type="Script" uid="uid://bru5bpxhowyod" path="res://Engine/Items/UnlockItem.gd" id="5_3t80x"]
+
+[resource]
+script = ExtResource("5_3t80x")
+ItemName = "Metal Key"
+ConsumeOnUse = true
+Value = 30
+Model = ExtResource("3_wyis8")
+ModelMat = ExtResource("4_6417o")
+Stack = true
+metadata/_custom_type_script = "uid://dnwn8l0kfkmcy"

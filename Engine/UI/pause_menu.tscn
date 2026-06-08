@@ -1,0 +1,435 @@
+[gd_scene format=3 uid="uid://bbr0yg13h0xgc"]
+
+[ext_resource type="Script" uid="uid://dhdu21vxfoeyg" path="res://Engine/UI/pause_menu.gd" id="1_emv3i"]
+[ext_resource type="Script" uid="uid://c005168h7m23y" path="res://addons/button_prompts_for_godot/Scripts/ui_button_prompt.gd" id="2_myy0f"]
+
+[node name="PauseMenu" type="Control" unique_id=2086805719 node_paths=PackedStringArray("ControlsPanel")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_emv3i")
+ControlsPanel = NodePath("Control")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=98550914]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.49803922)
+
+[node name="DiedLabel" type="Label" parent="." unique_id=2024094719]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -154.0
+offset_top = -117.0
+offset_right = -8.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme_override_colors/font_color = Color(1, 0.5685205, 0.41148254, 1)
+theme_override_font_sizes/font_size = 32
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=502133241]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -160.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Panel2" type="Panel" parent="VBoxContainer" unique_id=1911966170]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+
+[node name="Resume" type="Button" parent="VBoxContainer" unique_id=1600669626 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Resume"
+
+[node name="Controls" type="Button" parent="VBoxContainer" unique_id=1546342378 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Controls"
+
+[node name="Settings" type="Button" parent="VBoxContainer" unique_id=1010542532 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Settings"
+
+[node name="Exit" type="Button" parent="VBoxContainer" unique_id=1336029437 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Exit To Menu"
+
+[node name="Quit" type="Button" parent="VBoxContainer" unique_id=592628708 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Quit"
+
+[node name="Panel" type="Panel" parent="VBoxContainer" unique_id=738066709]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+
+[node name="Control" type="Control" parent="." unique_id=1458055246]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="Control" unique_id=308345048]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.49803922)
+
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=1872303751]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="Control/PanelContainer" unique_id=329029637]
+layout_mode = 2
+color = Color(0, 0, 0, 0.49803922)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer" unique_id=225426799]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=775195655]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer" unique_id=204603389]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1162206645]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Map Controls"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=100494835]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer" unique_id=866999662]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=538053569]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=228640132]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "Walk Forward"
+
+[node name="ButtonPromptLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1224642622]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+bbcode_enabled = true
+text = "{move_forward}"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_myy0f")
+PROMPT_SCALE = 100.0
+metadata/_custom_type_script = "uid://c005168h7m23y"
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=539386932]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer6" unique_id=1490407411]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 12
+text = "Walk Backward"
+
+[node name="ButtonPromptLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer6" unique_id=1708654107]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 2
+bbcode_enabled = true
+text = "{move_back}"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_myy0f")
+PROMPT_SCALE = 100.0
+metadata/_custom_type_script = "uid://c005168h7m23y"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=24410428]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer5" unique_id=61885997]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 12
+text = "Look Left"
+
+[node name="ButtonPromptLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer5" unique_id=1239832038]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 2
+bbcode_enabled = true
+text = "{look_left}"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_myy0f")
+PROMPT_SCALE = 100.0
+metadata/_custom_type_script = "uid://c005168h7m23y"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=267524237]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer4" unique_id=383501315]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 12
+text = "Look Right"
+
+[node name="ButtonPromptLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer4" unique_id=809288990]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 2
+bbcode_enabled = true
+text = "{look_right}"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_myy0f")
+PROMPT_SCALE = 100.0
+metadata/_custom_type_script = "uid://c005168h7m23y"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1075937034]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3" unique_id=1282285067]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 12
+text = "Freelook"
+
+[node name="ButtonPromptLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3" unique_id=1954239897]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 2
+bbcode_enabled = true
+text = "{Map}"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_myy0f")
+PROMPT_SCALE = 100.0
+metadata/_custom_type_script = "uid://c005168h7m23y"
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=355210665]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer7" unique_id=169281608]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 12
+text = "Inventory"
+
+[node name="ButtonPromptLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer7" unique_id=311675209]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 2
+bbcode_enabled = true
+text = "{Inventory}"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_myy0f")
+PROMPT_SCALE = 100.0
+metadata/_custom_type_script = "uid://c005168h7m23y"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=186931256]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" unique_id=331098655]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 12
+text = "Map"
+
+[node name="ButtonPromptLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" unique_id=415744966]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 2
+bbcode_enabled = true
+text = "{Map}"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_myy0f")
+PROMPT_SCALE = 100.0
+metadata/_custom_type_script = "uid://c005168h7m23y"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer" unique_id=197396110]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1905383336]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Fight Controls"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=147404431]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer" unique_id=1573865721]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer" unique_id=1594953276]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=99159174]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 12
+text = "Atack"
+
+[node name="ButtonPromptLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=588909988]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 2
+bbcode_enabled = true
+text = "{AtackLeft}"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_myy0f")
+PROMPT_SCALE = 100.0
+metadata/_custom_type_script = "uid://c005168h7m23y"
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer" unique_id=246607532]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer6" unique_id=60041]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 12
+text = "Block"
+
+[node name="ButtonPromptLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer6" unique_id=750078436]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 2
+bbcode_enabled = true
+text = "{AtackRight}"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_myy0f")
+PROMPT_SCALE = 100.0
+metadata/_custom_type_script = "uid://c005168h7m23y"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer" unique_id=414810823]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer5" unique_id=1012404449]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 12
+text = "Duck Left"
+
+[node name="ButtonPromptLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer5" unique_id=2135939475]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 2
+bbcode_enabled = true
+text = "{DuckLeft}"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_myy0f")
+PROMPT_SCALE = 100.0
+metadata/_custom_type_script = "uid://c005168h7m23y"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer" unique_id=1298994849]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer4" unique_id=936676584]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 12
+text = "Duck Right"
+
+[node name="ButtonPromptLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer4" unique_id=531417868]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 2
+bbcode_enabled = true
+text = "{DuckRight}"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_myy0f")
+PROMPT_SCALE = 100.0
+metadata/_custom_type_script = "uid://c005168h7m23y"
+
+[node name="Button" type="Button" parent="Control/PanelContainer/VBoxContainer" unique_id=343655233 groups=["DigitalButtons"]]
+layout_mode = 2
+text = "Close"
+
+[connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/Controls" to="." method="_on_controls_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

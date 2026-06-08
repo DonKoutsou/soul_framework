@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://v8llu1tj8fkg"]
+
+[ext_resource type="Script" uid="uid://dhakbosrwrkxf" path="res://Engine/Stage/Map/map.gd" id="1_a5tmp"]
+[ext_resource type="Script" uid="uid://bmlq4msx1a0jq" path="res://Engine/Stage/Level/Prop_Spawner/extra_props.gd" id="3_kekn7"]
+[ext_resource type="PackedScene" uid="uid://sbji8vmb6epv" path="res://Engine/Stage/Map/Floor/FloorLayer.tscn" id="37_oapox"]
+
+[node name="MapGenerator2" type="Node2D" unique_id=1573063644 node_paths=PackedStringArray("Floors")]
+script = ExtResource("1_a5tmp")
+levelScene = "uid://c3v1lq4fsttds"
+Floors = [NodePath("Floor_-1"), NodePath("Floor_0"), NodePath("Floor_1")]
+
+[node name="Floor_-1" parent="." unique_id=383593742 instance=ExtResource("37_oapox")]
+show_behind_parent = true
+FloorNumber = -1
+
+[node name="Floor_0" parent="." unique_id=1743688447 instance=ExtResource("37_oapox")]
+show_behind_parent = true
+
+[node name="Floor_1" parent="." unique_id=906513081 instance=ExtResource("37_oapox")]
+show_behind_parent = true
+FloorNumber = 1
+
+[node name="ExtraProps" type="Node3D" parent="." unique_id=1450707516]
+script = ExtResource("3_kekn7")
+
+[connection signal="child_entered_tree" from="ExtraProps" to="ExtraProps" method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="ExtraProps" to="ExtraProps" method="_on_child_exiting_tree"]
+
+[editable path="Floor_-1"]
+[editable path="Floor_0"]
+[editable path="Floor_1"]

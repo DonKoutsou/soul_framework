@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ciqreujo4w5h6"]
+
+[ext_resource type="Shader" uid="uid://2j3wk2o20qh" path="res://Engine/Shaders/BaseMat/Base_Simple_Emissive_Mat.gdshader" id="1_wfbem"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_wfbem")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/roughness = 1.0
+shader_parameter/metal = 0.0
+shader_parameter/specular = 0.5
+shader_parameter/ao_light_affect = 0.0
+shader_parameter/emission = Color(1, 1, 1, 1)
+shader_parameter/emission_energy_multiplier = 31.999999284736

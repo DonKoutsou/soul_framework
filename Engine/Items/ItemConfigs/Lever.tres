@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UnlockItem" format=3 uid="uid://bffty0t5klswj"]
+
+[ext_resource type="Script" uid="uid://l1yv1ffimeej" path="res://Engine/Items/Effects/ItemEffect.gd" id="1_8gmxx"]
+[ext_resource type="ArrayMesh" uid="uid://6c268gfsbe3b" path="res://Assets/Meshes/Item/Lever.obj" id="3_3i7rw"]
+[ext_resource type="Material" uid="uid://bmqf1gaykno2s" path="res://Engine/Shaders/Materials/Lever.tres" id="4_kc6c7"]
+[ext_resource type="Script" uid="uid://bru5bpxhowyod" path="res://Engine/Items/UnlockItem.gd" id="5_3i7rw"]
+
+[resource]
+script = ExtResource("5_3i7rw")
+ItemName = "Lever"
+ConsumeOnUse = true
+Value = -1
+Model = ExtResource("3_3i7rw")
+ModelMat = ExtResource("4_kc6c7")
+metadata/_custom_type_script = "uid://dnwn8l0kfkmcy"

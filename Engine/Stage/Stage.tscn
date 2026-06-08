@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://c4k4pjxrbh0os"]
+
+[ext_resource type="Script" uid="uid://2qnad1dl8fy0" path="res://Engine/Stage/Base_Stage.gd" id="1_mimum"]
+[ext_resource type="Resource" uid="uid://cf6lnsj7aebuc" path="res://Engine/CharacterData/DummyPlayer.tres" id="2_mimum"]
+[ext_resource type="Script" uid="uid://b751q2r17c8i6" path="res://Engine/Managers/GlobalManager.gd" id="3_a8hsi"]
+[ext_resource type="Script" uid="uid://do5l2r88uu4eu" path="res://Engine/Managers/world_time_manager.gd" id="4_mimum"]
+[ext_resource type="PackedScene" uid="uid://7suvhidbe0hb" path="res://Engine/UI/DungeonLabel/Dungeon_Label.tscn" id="5_a8hsi"]
+[ext_resource type="Material" uid="uid://b4cqpodb86861" path="res://Engine/Shaders/PP/Vignette.tres" id="22_0juxj"]
+
+[node name="Stage" type="Node" unique_id=2104872675 node_paths=PackedStringArray("DungeonL", "Node_Spawn_Loc")]
+process_mode = 1
+script = ExtResource("1_mimum")
+StartingCharacter = ExtResource("2_mimum")
+StartingItems = Array[String](["res://Engine/Items/ItemConfigs/Lantern.tres", "res://Engine/Items/ItemConfigs/Base_Sword.tres"])
+PlayerControllerFilePath = "uid://bv801fylom5yv"
+LockPuzzleFilePath = "uid://bbdkk3wj35li5"
+FightPackedScene = "uid://bdk7tkd10dc1i"
+UIManagerFilePath = "uid://dlobhi4jyff4g"
+DeathParticles = "uid://c5fsohppr7gqk"
+LightPartScene = "uid://dajpxd1pnq28d"
+chest_animation = "uid://cu8g6bbk4xwrd"
+Item_animation = "uid://bfbhibg48legn"
+MapStoreDirs = Array[String](["res://Engine/Stage/Map/Maps/", "res://Scenes/Levels/Maps/"])
+DungeonL = NodePath("CanvasLayer/DungeonLabel")
+StreesVignette = ExtResource("22_0juxj")
+Node_Spawn_Loc = NodePath(".")
+
+[node name="Global_Manager" type="Node" parent="." unique_id=1051339863]
+script = ExtResource("3_a8hsi")
+metadata/_custom_type_script = "uid://b751q2r17c8i6"
+
+[node name="WorldTimeManager" type="Node" parent="." unique_id=2073008050]
+script = ExtResource("4_mimum")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1673946372]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=2082940556]
+material = ExtResource("22_0juxj")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DungeonLabel" parent="CanvasLayer" unique_id=2058667643 instance=ExtResource("5_a8hsi")]

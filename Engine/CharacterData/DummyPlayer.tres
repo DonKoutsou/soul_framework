@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="Character" format=3 uid="uid://cf6lnsj7aebuc"]
+
+[ext_resource type="Script" uid="uid://bel483m12cmq1" path="res://Engine/CharacterData/CharacterStat.gd" id="1_y1a7n"]
+[ext_resource type="Resource" uid="uid://cm0d5gw0kuioa" path="res://Engine/Weapons/Config/Base_Sword.tres" id="2_2a01u"]
+[ext_resource type="Script" uid="uid://daawuqdug2njs" path="res://Engine/Dialogue/RecruitStage.gd" id="2_cx8c7"]
+[ext_resource type="Script" uid="uid://dwqnoamdvs5gm" path="res://Engine/CharacterData/Character.gd" id="3_2a01u"]
+
+[sub_resource type="Resource" id="Resource_y1a7n"]
+script = ExtResource("1_y1a7n")
+StatValue = 80
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
+[sub_resource type="Resource" id="Resource_cx8c7"]
+script = ExtResource("1_y1a7n")
+StatName = 1
+StatValue = 80
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
+[sub_resource type="Resource" id="Resource_2a01u"]
+script = ExtResource("1_y1a7n")
+StatName = 2
+StatValue = 0
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
+[resource]
+script = ExtResource("3_2a01u")
+CharacterName = "Player"
+CharacterStats = Array[ExtResource("1_y1a7n")]([SubResource("Resource_y1a7n"), SubResource("Resource_cx8c7"), SubResource("Resource_2a01u")])
+Visuals = "uid://binsi450punq8"
+CharacterWeapon = ExtResource("2_2a01u")
+metadata/_custom_type_script = "uid://dwqnoamdvs5gm"

@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://wt8wxj87hese"]
+
+[ext_resource type="Material" path="res://Engine/Shaders/Materials/ItemMa.tres" id="1_orupd"]
+
+[sub_resource type="Curve" id="Curve_vldxg"]
+_data = [Vector2(0.1, 0.2), -0.92232, -0.92232, 0, 0, Vector2(0.9980694, 0), -0.10244936, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5qfm4"]
+curve = SubResource("Curve_vldxg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_orupd"]
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, 0.5, -0.5)
+spread = 15.0
+initial_velocity_min = 2.0
+initial_velocity_max = 10.0
+angular_velocity_min = -720.0
+angular_velocity_max = 719.99994
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = 0.99999774
+tangential_accel_max = 0.99999774
+scale_min = 0.049999997
+scale_max = 0.099999994
+scale_curve = SubResource("CurveTexture_5qfm4")
+
+[sub_resource type="SphereMesh" id="SphereMesh_5qfm4"]
+radial_segments = 4
+rings = 2
+
+[node name="GPUParticles3D" type="GPUParticles3D" unique_id=1596052281 groups=["Particles"]]
+material_override = ExtResource("1_orupd")
+cast_shadow = 0
+emitting = false
+amount = 20
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_orupd")
+draw_pass_1 = SubResource("SphereMesh_5qfm4")

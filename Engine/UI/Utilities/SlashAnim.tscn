@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://ckxosup45uawb"]
+
+[ext_resource type="Texture2D" uid="uid://d0ip2o7ek1gld" path="res://Engine/Assets/UI_Icons/Slash.png" id="1_w7rhw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6dm2"]
+atlas = ExtResource("1_w7rhw")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pr7f"]
+atlas = ExtResource("1_w7rhw")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0q024"]
+atlas = ExtResource("1_w7rhw")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rrq78"]
+atlas = ExtResource("1_w7rhw")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vk4co"]
+atlas = ExtResource("1_w7rhw")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnc4s"]
+atlas = ExtResource("1_w7rhw")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdu5m"]
+atlas = ExtResource("1_w7rhw")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xx8lq"]
+atlas = ExtResource("1_w7rhw")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7jtbd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6dm2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pr7f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0q024")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rrq78")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vk4co")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnc4s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hdu5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xx8lq")
+}],
+"loop": false,
+"name": &"default",
+"speed": 24.0
+}]
+
+[node name="SlashAnim" type="AnimatedSprite2D" unique_id=461273147]
+sprite_frames = SubResource("SpriteFrames_7jtbd")
+frame = 7
+frame_progress = 1.0

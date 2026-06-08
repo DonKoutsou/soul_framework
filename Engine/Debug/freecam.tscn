@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bqejpsqsia3vg"]
+
+[ext_resource type="Script" uid="uid://cb7lwfq1oufvn" path="res://Engine/Debug/Freecam.gd" id="1_mlr85"]
+
+[node name="Freecam" type="Node3D" unique_id=1285114128 node_paths=PackedStringArray("MoveLoc", "Cam")]
+script = ExtResource("1_mlr85")
+MoveLoc = NodePath("MoveLoc")
+Cam = NodePath("Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=840731742]
+current = true
+
+[node name="MoveLoc" type="Node3D" parent="." unique_id=1984769108]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1702107479]

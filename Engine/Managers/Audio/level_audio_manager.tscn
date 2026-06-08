@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cs3tu7q65veyc"]
+
+[ext_resource type="Script" uid="uid://crs0t5qpk6kbx" path="res://Engine/Managers/Audio/level_audio_manager.gd" id="1_i27ya"]
+[ext_resource type="AudioStream" uid="uid://r3gba77ri1hh" path="res://Engine/Assets/Sounds/Lake.mp3" id="2_qnq6s"]
+[ext_resource type="AudioStream" uid="uid://cvm61xdqb5hsr" path="res://Engine/Assets/Sounds/Lava.mp3" id="3_7ffi8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i27ya"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_qof0p"]
+material = SubResource("StandardMaterial3D_i27ya")
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="LevelAudioManager" type="Node3D" unique_id=843229058]
+script = ExtResource("1_i27ya")
+DebugMesh = SubResource("BoxMesh_qof0p")
+WaterSound = ExtResource("2_qnq6s")
+LavaSound = ExtResource("3_7ffi8")

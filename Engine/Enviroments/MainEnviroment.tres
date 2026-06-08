@@ -1,0 +1,57 @@
+[gd_resource type="Environment" format=3 uid="uid://d2enr6co805w7"]
+
+[ext_resource type="Material" uid="uid://b8qkgtnvd4u0j" path="res://Engine/Shaders/PP/Sky.tres" id="1_y7lny"]
+
+[sub_resource type="Gradient" id="Gradient_i6qph"]
+colors = PackedColorArray(0, 0, 0, 1, 0.78521717, 0.7852172, 0.78521717, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2yi7o"]
+gradient = SubResource("Gradient_i6qph")
+
+[sub_resource type="Sky" id="Sky_klleu"]
+sky_material = ExtResource("1_y7lny")
+radiance_size = 0
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_klleu")
+ambient_light_source = 2
+ambient_light_color = Color(0.6709645, 0.6709644, 0.67096436, 1)
+reflected_light_source = 1
+tonemap_mode = 4
+ssao_radius = 0.2
+ssao_intensity = 8.27
+ssao_detail = 0.0
+ssao_horizon = 0.0
+ssao_sharpness = 0.0
+ssao_light_affect = 1.0
+ssao_ao_channel_affect = 1.0
+ssil_radius = 50.25
+ssil_intensity = 16.0
+ssil_sharpness = 0.0
+ssil_normal_rejection = 0.0
+sdfgi_use_occlusion = true
+sdfgi_cascades = 1
+sdfgi_y_scale = 0
+sdfgi_energy = 0.5
+glow_enabled = true
+glow_levels/1 = 0.5
+glow_levels/2 = 0.5
+glow_levels/5 = 1.5
+glow_levels/6 = 0.5
+glow_normalized = true
+glow_mix = 1.0
+fog_mode = 1
+fog_light_color = Color(1, 1, 1, 1)
+fog_density = 1.0
+fog_depth_begin = 0.0
+fog_depth_end = 11.9
+volumetric_fog_density = 0.175
+volumetric_fog_albedo = Color(0.15631494, 0.15631497, 0.15631491, 1)
+volumetric_fog_emission = Color(0.15631494, 0.15631497, 0.15631491, 1)
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_gi_inject = 16.0
+volumetric_fog_anisotropy = -0.9
+adjustment_enabled = true
+adjustment_contrast = 1.05
+adjustment_color_correction = SubResource("GradientTexture1D_2yi7o")

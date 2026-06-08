@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://xr2jrubm5uy6"]
+
+[ext_resource type="Material" uid="uid://bqd68wlr5r82y" path="res://Engine/Shaders/Materials/TestMatUV.tres" id="1_7553b"]
+[ext_resource type="ArrayMesh" uid="uid://d0uq0g1n3725q" path="res://Engine/Assets/Particles/Brick.obj" id="3_lypv6"]
+[ext_resource type="Material" uid="uid://b4e0fnnsxq4gf" path="res://Engine/Shaders/Materials/WoodBreakDust.tres" id="4_7553b"]
+[ext_resource type="Script" path="res://Engine/Utils/SubEmmiterParticle3D.gd" id="4_msi6c"]
+[ext_resource type="AudioStream" uid="uid://2cekxmcktfp5" path="res://Engine/Assets/Sounds/WallCrumble.mp3" id="5_kcq05"]
+
+[sub_resource type="Curve" id="Curve_1v7o7"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0, 360), 0.0, 0.0, 0, 0, Vector2(0.3, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_gclay"]
+curve = SubResource("Curve_1v7o7")
+
+[sub_resource type="Curve" id="Curve_2xngc"]
+_data = [Vector2(0, 0), 0.0, 0.18022677, 0, 0, Vector2(0.8949153, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rj6li"]
+curve = SubResource("Curve_2xngc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_k4woy"]
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+emission_shape_scale = Vector3(0.18, 0, 0.2)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+angle_min = -453.0
+angle_max = 209.20001
+direction = Vector3(0, 0, 0)
+spread = 2.5
+angular_velocity_min = 0.9999839
+angular_velocity_max = 0.9999839
+angular_velocity_curve = SubResource("CurveTexture_gclay")
+gravity = Vector3(0, -6, 0)
+radial_accel_min = 3.1999977
+radial_accel_max = 3.1999977
+damping_min = 1.0
+damping_max = 1.0
+damping_curve = SubResource("CurveTexture_rj6li")
+collision_mode = 1
+collision_friction = 0.95
+collision_bounce = 0.5
+
+[sub_resource type="Curve" id="Curve_66x6s"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2jf2g"]
+curve = SubResource("Curve_66x6s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2xngc"]
+angle_min = 149.80002
+angle_max = 149.80002
+direction = Vector3(0, 1, 0)
+spread = 90.0
+initial_velocity_min = 0.5
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 0.99999774
+linear_accel_max = 0.99999774
+scale_curve = SubResource("CurveTexture_2jf2g")
+
+[sub_resource type="QuadMesh" id="QuadMesh_y5nqr"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" unique_id=1539640429 node_paths=PackedStringArray("SubEmmiters")]
+material_override = ExtResource("1_7553b")
+emitting = false
+amount = 10
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_k4woy")
+draw_pass_1 = ExtResource("3_lypv6")
+script = ExtResource("4_msi6c")
+SubEmmiters = [NodePath("GPUParticles3D")]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1947490253]
+material_override = ExtResource("4_7553b")
+emitting = false
+amount = 10
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_2xngc")
+draw_pass_1 = SubResource("QuadMesh_y5nqr")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1854136662]
+stream = ExtResource("5_kcq05")
+volume_db = -10.0
+autoplay = true
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="." unique_id=2110951514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.1, 0)
+size = Vector3(5.51, 0.1, 4.29)

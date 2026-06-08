@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://bdk7tkd10dc1i"]
+
+[ext_resource type="Script" uid="uid://c7q5ux2cuxnbo" path="res://Engine/Fight/Fight.gd" id="1_78axv"]
+[ext_resource type="Script" uid="uid://cv8sypgj72pj0" path="res://Engine/Stage/Level/CustomSubviewPort.gd" id="3_l1ww7"]
+[ext_resource type="PackedScene" uid="uid://my68s44pih7h" path="res://Engine/UI/Tutorial/tutorial_manager.tscn" id="5_11mp3"]
+[ext_resource type="PackedScene" uid="uid://leak48jhrcbf" path="res://Engine/Fight/fight_world.tscn" id="5_jrdgj"]
+[ext_resource type="PackedScene" uid="uid://cx3g60hl607wr" path="res://Engine/Fight/Atack_Indication/atack_indicators.tscn" id="8_77esn"]
+
+[node name="FightScene" type="Control" unique_id=183399807 node_paths=PackedStringArray("FightWorld", "AtackIndicatorUI", "TutorialMan")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_78axv")
+FightWorld = NodePath("SubViewportContainer/SubViewport/FightWorld")
+AtackIndicatorUI = NodePath("AtackIndicators")
+TutorialMan = NodePath("TutorialManager")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=77677127]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=77097765]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+anisotropic_filtering_level = 0
+canvas_item_default_texture_filter = 3
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+size = Vector2i(640, 480)
+render_target_update_mode = 4
+script = ExtResource("3_l1ww7")
+
+[node name="FightWorld" parent="SubViewportContainer/SubViewport" unique_id=741307255 instance=ExtResource("5_jrdgj")]
+
+[node name="AtackIndicators" parent="." unique_id=1067508434 instance=ExtResource("8_77esn")]
+layout_mode = 1
+mouse_filter = 2
+
+[node name="TutorialManager" parent="." unique_id=1118925504 node_paths=PackedStringArray("fight") instance=ExtResource("5_11mp3")]
+layout_mode = 1
+fight = NodePath("..")

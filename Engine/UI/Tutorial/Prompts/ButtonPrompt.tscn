@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://5pd451742lrl"]
+
+[ext_resource type="Script" uid="uid://br3oug3332615" path="res://Engine/UI/Tutorial/Prompts/button_prompt.gd" id="2_nc0ym"]
+[ext_resource type="PackedScene" uid="uid://xxw3ow6w8g3o" path="res://Engine/UI/Tutorial/Prompts/PromptParticle.tscn" id="3_8ukgc"]
+[ext_resource type="Texture2D" uid="uid://bbca1h0o1n8ir" path="res://addons/button_prompts_for_godot/Textures/key_blank.png" id="3_h4f85"]
+[ext_resource type="Script" uid="uid://presi14fa7k4" path="res://addons/button_prompts_for_godot/Scripts/sprite_button_prompt.gd" id="4_wnmqo"]
+
+[node name="ButtonPrompt" type="Control" unique_id=1695649989 node_paths=PackedStringArray("Prompt", "Lab")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
+script = ExtResource("2_nc0ym")
+Tooltip = ""
+Prompt = NodePath("ButtonPromptSprite")
+Lab = NodePath("Label2")
+
+[node name="Label2" type="Label" parent="." unique_id=2078790500]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.5
+offset_top = -54.0
+offset_right = 28.5
+offset_bottom = -22.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GPUParticles2D" parent="." unique_id=637553013 instance=ExtResource("3_8ukgc")]
+
+[node name="ButtonPromptSprite" type="Sprite2D" parent="." unique_id=636835036]
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("3_h4f85")
+script = ExtResource("4_wnmqo")
+metadata/_custom_type_script = "uid://presi14fa7k4"
+
+[node name="Button_Text" type="Label" parent="." unique_id=45413314]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 21.0

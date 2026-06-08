@@ -1,0 +1,178 @@
+[gd_scene format=3 uid="uid://cx3g60hl607wr"]
+
+[ext_resource type="Texture2D" uid="uid://dned6ltl6w2cp" path="res://Engine/Assets/UI_Icons/AtackIndicator.png" id="1_0m86f"]
+[ext_resource type="Script" uid="uid://fd5p3s6igmlf" path="res://Engine/Fight/Atack_Indication/atack_indicators.gd" id="1_5ow0o"]
+[ext_resource type="Texture2D" uid="uid://bsbr3gbf2ef67" path="res://Engine/Assets/UI_Icons/AtackIndicator2.png" id="3_ey0kq"]
+
+[sub_resource type="Animation" id="Animation_78axv"]
+resource_name = "Bounce"
+length = 0.2
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(300, 300), Vector2(264, 264), Vector2(300, 300)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(170, 90), Vector2(188, 108), Vector2(170, 90)]
+}
+
+[sub_resource type="Animation" id="Animation_11mp3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(300, 300)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(170, 90)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0m86f"]
+_data = {
+&"Bounce": SubResource("Animation_78axv"),
+&"RESET": SubResource("Animation_11mp3")
+}
+
+[node name="AtackIndicators" type="Control" unique_id=1067508434 node_paths=PackedStringArray("LeftIndicator", "RightIndicator", "TopIndicator", "BotIndicator", "MidIndicator", "Anim")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5ow0o")
+LeftIndicator = NodePath("Control/LeftIndicator")
+RightIndicator = NodePath("Control/RightIndicator")
+TopIndicator = NodePath("Control/TopIndicator")
+BotIndicator = NodePath("Control/BottomIndicator")
+MidIndicator = NodePath("Control/MidIndicator")
+Anim = NodePath("AnimationPlayer")
+
+[node name="Control" type="Control" parent="." unique_id=735558472]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 170.0
+offset_top = 90.0
+offset_right = -170.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="LeftIndicator" type="TextureRect" parent="Control" unique_id=773232026]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -32.0
+offset_right = 64.0
+offset_bottom = 32.0
+grow_vertical = 2
+rotation = -1.5707964
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_0m86f")
+expand_mode = 1
+
+[node name="TopIndicator" type="TextureRect" parent="Control" unique_id=2089988922]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -32.0
+offset_right = 32.0
+offset_bottom = 64.0
+grow_horizontal = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_0m86f")
+expand_mode = 1
+
+[node name="MidIndicator" type="TextureRect" parent="Control" unique_id=433578313]
+modulate = Color(1, 0.42000002, 0.42000002, 1)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 127.0
+offset_top = 127.0
+offset_right = -127.0
+offset_bottom = -127.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_ey0kq")
+expand_mode = 1
+
+[node name="BottomIndicator" type="TextureRect" parent="Control" unique_id=1048017744]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -64.0
+offset_right = 32.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_0m86f")
+expand_mode = 1
+flip_v = true
+
+[node name="RightIndicator" type="TextureRect" parent="Control" unique_id=47719927]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -32.0
+offset_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 2
+rotation = 1.5707964
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_0m86f")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=168797286]
+callback_mode_process = 2
+libraries/ = SubResource("AnimationLibrary_0m86f")

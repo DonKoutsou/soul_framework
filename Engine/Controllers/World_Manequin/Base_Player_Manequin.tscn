@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://bv801fylom5yv"]
+
+[ext_resource type="Script" uid="uid://bjn5olojcmokl" path="res://Engine/Controllers/World_Manequin/Base_Player_Manequin.gd" id="1_ehe4r"]
+[ext_resource type="Script" uid="uid://cn0rec8qe556" path="res://Engine/Controllers/player_camera.gd" id="3_n26di"]
+[ext_resource type="Script" uid="uid://b54a62p7na65n" path="res://Engine/Stage/Level/InteractionSystem/interaction_cast.gd" id="5_u78rh"]
+[ext_resource type="Texture2D" uid="uid://bfirfv8r5h6rc" path="res://Engine/Assets/UI_Icons/Dot.png" id="6_n3oyg"]
+[ext_resource type="Material" path="res://Engine/Shaders/Materials/LocationMarkerMat.tres" id="8_g4f1h"]
+[ext_resource type="ArrayMesh" uid="uid://bb8vx4ag1r38u" path="res://Engine/Assets/Particles/LocationMesh.obj" id="9_tj6ut"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8cnf6"]
+radius = 0.2993164
+height = 1.0
+
+[node name="Base_player_manequin" type="Node3D" unique_id=805555846 node_paths=PackedStringArray("Cast", "CamPivot", "CamRotPivot", "Cam", "DuckPivot", "AimPoint", "RewardLocation", "MagicProjectileLocation")]
+script = ExtResource("1_ehe4r")
+Cast = NodePath("RayCast3D")
+CamPivot = NodePath("CameraPivot")
+CamRotPivot = NodePath("CameraPivot/CameraRotationPivot")
+Cam = NodePath("CameraPivot/CameraRotationPivot/DuckPivot/CameraPovot/Camera3D")
+DuckPivot = NodePath("CameraPivot/CameraRotationPivot/DuckPivot")
+AimPoint = NodePath("AimPoint")
+RewardLocation = NodePath("CameraPivot/CameraRotationPivot/DuckPivot/CameraPovot/Camera3D/RewardLocation")
+MagicProjectileLocation = NodePath("CameraPivot/CameraRotationPivot/DuckPivot/CameraPovot/Camera3D/MagicProjectileSpawnLocation")
+
+[node name="AimPoint" type="Node3D" parent="." unique_id=428493603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=494318471]
+
+[node name="CameraRotationPivot" type="Node3D" parent="CameraPivot" unique_id=1868677596]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="DuckPivot" type="Node3D" parent="CameraPivot/CameraRotationPivot" unique_id=1826336546]
+
+[node name="CameraPovot" type="Node3D" parent="CameraPivot/CameraRotationPivot/DuckPivot" unique_id=284561114]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.120648384, 0.2668761)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraRotationPivot/DuckPivot/CameraPovot" unique_id=1985626194]
+doppler_tracking = 1
+current = true
+fov = 45.0
+script = ExtResource("3_n26di")
+BaseFOV = 55.0
+
+[node name="InteractionCast" type="RayCast3D" parent="CameraPivot/CameraRotationPivot/DuckPivot/CameraPovot/Camera3D" unique_id=1574061177 node_paths=PackedStringArray("InteractableTitleLabel", "InteractableIndicator")]
+target_position = Vector3(0, 0, -3)
+collision_mask = 243
+hit_from_inside = true
+collide_with_areas = true
+debug_shape_custom_color = Color(1, 1, 1, 0.014)
+script = ExtResource("5_u78rh")
+InteractableTitleLabel = NodePath("CanvasLayer/Label")
+InteractableIndicator = NodePath("CanvasLayer/TextureRect")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="CameraPivot/CameraRotationPivot/DuckPivot/CameraPovot/Camera3D/InteractionCast" unique_id=1663031624]
+follow_viewport_enabled = true
+
+[node name="TextureRect" type="TextureRect" parent="CameraPivot/CameraRotationPivot/DuckPivot/CameraPovot/Camera3D/InteractionCast/CanvasLayer" unique_id=1404249423]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+pivot_offset = Vector2(17, 17)
+texture = ExtResource("6_n3oyg")
+
+[node name="Label" type="Label" parent="CameraPivot/CameraRotationPivot/DuckPivot/CameraPovot/Camera3D/InteractionCast/CanvasLayer" unique_id=905419898]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 28.0
+offset_right = 20.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 12
+text = "Test"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MagicProjectileSpawnLocation" type="Marker3D" parent="CameraPivot/CameraRotationPivot/DuckPivot/CameraPovot/Camera3D" unique_id=828784069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.20564869, -0.8506068)
+
+[node name="RewardLocation" type="Node3D" parent="CameraPivot/CameraRotationPivot/DuckPivot/CameraPovot/Camera3D" unique_id=2066077410]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.008322716, -0.22341365)
+
+[node name="Area3D" type="Area3D" parent="CameraPivot" unique_id=715552723]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraPivot/Area3D" unique_id=1313313619]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5001438, 0)
+shape = SubResource("CapsuleShape3D_8cnf6")
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1588040072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.819, 0)
+target_position = Vector3(0, 0, -5)
+collision_mask = 123
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=977956163]
+material_override = ExtResource("8_g4f1h")
+mesh = ExtResource("9_tj6ut")
+
+[connection signal="area_entered" from="CameraPivot/Area3D" to="." method="_on_area_3d_area_entered"]

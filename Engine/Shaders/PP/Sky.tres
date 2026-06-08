@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b8qkgtnvd4u0j"]
+
+[ext_resource type="Shader" uid="uid://bprxemk4mno0f" path="res://Engine/Shaders/PP/Sky.gdshader" id="1_0clue"]
+
+[resource]
+shader = ExtResource("1_0clue")
+shader_parameter/add_clouds = true
+shader_parameter/clouds_below = false
+shader_parameter/cloud_scale = 0.00999999977648
+shader_parameter/speed = 0.0010000000475
+shader_parameter/cloud_dark = 0.0
+shader_parameter/cloud_light = 0.999999977648
+shader_parameter/cloud_cover = 0.2
+shader_parameter/cloud_alpha = 0.0
+shader_parameter/sky_tint = 0.0
+shader_parameter/height_offset = 0.0430000020425
+shader_parameter/sky_contribution = 0.0

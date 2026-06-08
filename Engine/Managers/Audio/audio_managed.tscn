@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://cd6x3o3cq6nje"]
+
+[ext_resource type="Script" uid="uid://dpmdj7wjn35dy" path="res://Engine/Managers/Audio/audio_managed.gd" id="1_slgmx"]
+[ext_resource type="AudioStream" uid="uid://dyxq451c4e5r6" path="res://Engine/Assets/Sounds/FootStep.mp3" id="2_qc00v"]
+[ext_resource type="AudioStream" uid="uid://b2vi5bt4lhaqb" path="res://Engine/Assets/Sounds/LevelUp.mp3" id="3_mdty1"]
+[ext_resource type="AudioStream" uid="uid://3kc76q2fdtq0" path="res://Engine/Assets/Sounds/Damage.mp3" id="4_1gw26"]
+[ext_resource type="AudioStream" uid="uid://b485aawiotq60" path="res://Engine/Assets/Sounds/Hover.mp3" id="5_6tcrb"]
+[ext_resource type="AudioStream" uid="uid://crxyofrf3ybym" path="res://Engine/Assets/Sounds/Whosh.mp3" id="6_hrogr"]
+[ext_resource type="AudioStream" uid="uid://b5hgj8ga2umsx" path="res://Engine/Assets/Sounds/SwordClash.mp3" id="7_qjccj"]
+[ext_resource type="AudioStream" uid="uid://duqcaui2nrcxg" path="res://Engine/Assets/Sounds/Evade.mp3" id="8_ecjra"]
+[ext_resource type="AudioStream" uid="uid://krclhgy67png" path="res://Engine/Assets/Sounds/LockOpen.mp3" id="9_d1xcg"]
+[ext_resource type="AudioStream" uid="uid://13w8lv1lio8u" path="res://Engine/Assets/Sounds/LockStop.mp3" id="10_m1jje"]
+[ext_resource type="AudioStream" uid="uid://ctfrjivoypkn7" path="res://Engine/Assets/Sounds/Coins.mp3" id="11_hgnow"]
+[ext_resource type="AudioStream" uid="uid://ftxl3b4uhj55" path="res://Engine/Assets/Sounds/HitWood.mp3" id="12_wxmyj"]
+[ext_resource type="AudioStream" uid="uid://bjivldvvbywyp" path="res://Engine/Assets/Sounds/SmashBarrel.mp3" id="13_fpcig"]
+[ext_resource type="AudioStream" uid="uid://c4toipysdy2x4" path="res://Engine/Assets/Sounds/Ladder.mp3" id="14_ejcr6"]
+[ext_resource type="AudioStream" uid="uid://ci7ttci3ahtmk" path="res://Engine/Assets/Sounds/Magic.mp3" id="15_bu4gl"]
+[ext_resource type="AudioStream" uid="uid://d3o427eppls30" path="res://Engine/Assets/Sounds/StepDirt.mp3" id="16_xk8nv"]
+[ext_resource type="AudioStream" uid="uid://dk86sorvtkb68" path="res://Engine/Assets/Sounds/WalkDirt.mp3" id="17_37dh7"]
+[ext_resource type="AudioStream" uid="uid://cvuuqknermra1" path="res://Engine/Assets/Sounds/Walk.mp3" id="18_x68g4"]
+[ext_resource type="AudioStream" uid="uid://cbw8w7h6j7o7y" path="res://Engine/Assets/Sounds/StepWood.mp3" id="19_l57ol"]
+[ext_resource type="AudioStream" uid="uid://x4jf1ndukdno" path="res://Engine/Assets/Sounds/Drag.mp3" id="20_jcyst"]
+[ext_resource type="AudioStream" uid="uid://h35j4hcwexxf" path="res://Engine/Assets/Sounds/Jump.mp3" id="21_42y8q"]
+[ext_resource type="AudioStream" uid="uid://t12oneqtmtdu" path="res://Engine/Assets/Sounds/WaterStep.mp3" id="22_x8hhw"]
+[ext_resource type="AudioStream" uid="uid://dravwf6w448nd" path="res://Engine/Assets/Sounds/SeathIn.mp3" id="23_uc6i2"]
+[ext_resource type="AudioStream" uid="uid://csblfypjv24kq" path="res://Engine/Assets/Sounds/SeathOut.mp3" id="24_3xiel"]
+[ext_resource type="AudioStream" uid="uid://u0neyb2fm7r6" path="res://Engine/Assets/Sounds/Dig.mp3" id="25_3xiel"]
+[ext_resource type="AudioStream" uid="uid://d0q83l4bu7kyk" path="res://Engine/Assets/Sounds/Drop.mp3" id="26_l7k5x"]
+[ext_resource type="AudioStream" uid="uid://bwf6hqq5l2ig1" path="res://Engine/Assets/Sounds/sfx_033.ogg" id="27_0f7dd"]
+[ext_resource type="AudioStream" uid="uid://gexa5gsvcd8n" path="res://Engine/Assets/Sounds/DoorWood_Open.mp3" id="28_likbp"]
+[ext_resource type="AudioStream" uid="uid://4k0syh1repax" path="res://Engine/Assets/Sounds/Voice/Fight/Human/Shout3.mp3" id="29_gjoqo"]
+[ext_resource type="AudioStream" uid="uid://c1sla2n26wuad" path="res://Engine/Assets/Sounds/Voice/Fight/Human/Shout2.mp3" id="30_xtlx2"]
+[ext_resource type="AudioStream" uid="uid://c56hh8ffp6cnf" path="res://Engine/Assets/Sounds/Voice/Fight/Human/Pain1.mp3" id="31_bwkrn"]
+[ext_resource type="AudioStream" uid="uid://bk7fwoysb4nsq" path="res://Engine/Assets/Sounds/Voice/Fight/Human/Pain2.mp3" id="32_aan1n"]
+[ext_resource type="AudioStream" uid="uid://bcpkbnltavmwy" path="res://Engine/Assets/Sounds/Voice/Fight/Human/Pain3.mp3" id="33_gjoqo"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_thw0u"]
+streams_count = 2
+stream_0/stream = ExtResource("29_gjoqo")
+stream_1/stream = ExtResource("30_xtlx2")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_v8tn0"]
+streams_count = 3
+stream_0/stream = ExtResource("31_bwkrn")
+stream_1/stream = ExtResource("32_aan1n")
+stream_2/stream = ExtResource("33_gjoqo")
+
+[node name="AudioManaged" type="Node" unique_id=129214324]
+script = ExtResource("1_slgmx")
+SoundLibrary = Dictionary[int, AudioStream]({
+0: ExtResource("2_qc00v"),
+1: ExtResource("3_mdty1"),
+2: ExtResource("4_1gw26"),
+3: ExtResource("5_6tcrb"),
+4: ExtResource("6_hrogr"),
+5: ExtResource("7_qjccj"),
+6: ExtResource("8_ecjra"),
+7: ExtResource("9_d1xcg"),
+8: ExtResource("10_m1jje"),
+9: ExtResource("11_hgnow"),
+10: ExtResource("12_wxmyj"),
+11: ExtResource("13_fpcig"),
+12: ExtResource("14_ejcr6"),
+13: ExtResource("15_bu4gl"),
+14: ExtResource("16_xk8nv"),
+15: ExtResource("18_x68g4"),
+16: ExtResource("17_37dh7"),
+17: ExtResource("19_l57ol"),
+18: ExtResource("20_jcyst"),
+19: ExtResource("21_42y8q"),
+20: ExtResource("22_x8hhw"),
+21: ExtResource("23_uc6i2"),
+22: ExtResource("24_3xiel"),
+23: ExtResource("25_3xiel"),
+24: ExtResource("26_l7k5x"),
+25: ExtResource("27_0f7dd"),
+26: ExtResource("28_likbp"),
+27: SubResource("AudioStreamRandomizer_thw0u"),
+28: SubResource("AudioStreamRandomizer_v8tn0")
+})

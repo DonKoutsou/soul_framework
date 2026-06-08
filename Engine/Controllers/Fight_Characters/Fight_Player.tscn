@@ -1,0 +1,316 @@
+[gd_scene format=3 uid="uid://2p6hli6yrahm"]
+
+[ext_resource type="Script" uid="uid://bs4q4gmw2d7ow" path="res://Engine/Controllers/Fight_Characters/Fight_Player.gd" id="1_nn08x"]
+[ext_resource type="PackedScene" uid="uid://c1l7ysdd53tdg" path="res://Engine/Controllers/Fight_Characters/PlayerRig/PlayerRigSkeleton.tscn" id="2_tiq7d"]
+[ext_resource type="Curve" uid="uid://htwdrptip8gv" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/WeaponCurve.tres" id="5_ttegh"]
+[ext_resource type="Material" uid="uid://c8xpah88sw5yu" path="res://Engine/Shaders/Materials/SwipeMeshShader.tres" id="5_yoq75"]
+[ext_resource type="ArrayMesh" uid="uid://djcb40udi2miv" path="res://Engine/Assets/Particles/SwipeMesh.res" id="6_bhhdu"]
+[ext_resource type="Script" uid="uid://bl0vbdv76yftl" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/AnimationInfo.gd" id="9_ga5p4"]
+[ext_resource type="Script" uid="uid://cn0rec8qe556" path="res://Engine/Controllers/player_camera.gd" id="9_ksbbd"]
+[ext_resource type="Resource" uid="uid://cf2foygm8meh4" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Idle_Player.tres" id="10_57y0o"]
+[ext_resource type="Resource" uid="uid://dkmeipubvaxnr" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Lantern.tres" id="11_x4p7r"]
+[ext_resource type="Material" path="res://Engine/Shaders/Materials/LanternLight.tres" id="12_1e7my"]
+[ext_resource type="Resource" uid="uid://b756etlvgnhmh" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Unseath.tres" id="12_kyleq"]
+[ext_resource type="ArrayMesh" uid="uid://oq5oukr3asry" path="res://Engine/Assets/Items/Lantern2.res" id="12_lslt6"]
+[ext_resource type="Resource" uid="uid://cs0jqehmsjlch" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Seath.tres" id="13_endcp"]
+[ext_resource type="Resource" uid="uid://cdyg6ufhgxywx" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Walk.tres" id="14_7u03s"]
+[ext_resource type="Texture2D" uid="uid://t7wwx8j6b12w" path="res://Engine/Assets/Textures/LLight.png" id="14_lslt6"]
+[ext_resource type="Script" path="res://Engine/Controllers/Fight_Characters/lantern_light.gd" id="14_tc1am"]
+[ext_resource type="Resource" uid="uid://duv7d5qm5xwti" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Right.tres" id="15_j7887"]
+[ext_resource type="Resource" uid="uid://c0jflo3f0vfd3" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Right_Recover.tres" id="16_uwlqa"]
+[ext_resource type="Script" uid="uid://2o6tgcat6qck" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Fight_Animation_Modifier.gd" id="17_22ek7"]
+[ext_resource type="Resource" uid="uid://evvg7ku0qg1b" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Left.tres" id="17_gpdat"]
+[ext_resource type="Resource" uid="uid://cu22ae73unhvs" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Left_Recover.tres" id="18_u1g0i"]
+[ext_resource type="Resource" uid="uid://cbohbq1f4vtwx" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Middle.tres" id="19_m5kv2"]
+[ext_resource type="Resource" uid="uid://c1tt5bvga8iop" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Atack_Middle.tres" id="20_upm8t"]
+[ext_resource type="Resource" uid="uid://ct3xp725bja6k" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Middle_Reversed.tres" id="21_tcu7f"]
+[ext_resource type="Resource" uid="uid://kp0uqqa5jxek" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Left.tres" id="22_pc6nx"]
+[ext_resource type="Resource" uid="uid://cl8rkv7tndpsf" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Atack_Left.tres" id="23_n25ff"]
+[ext_resource type="Resource" uid="uid://cdr7rvqg2fflh" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Left_Reversed.tres" id="24_6lemw"]
+[ext_resource type="Resource" uid="uid://4a6ocedwmlxy" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Right.tres" id="25_btr13"]
+[ext_resource type="Resource" uid="uid://c4dpg8h6mhxog" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Atack_Right.tres" id="26_jpaba"]
+[ext_resource type="Resource" uid="uid://bgvrgcfnurir3" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Right_Reversed.tres" id="27_67617"]
+[ext_resource type="Resource" uid="uid://b4fvf6byailc0" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_LOw.tres" id="28_bqsjn"]
+[ext_resource type="Resource" uid="uid://b03u8sbdx1bsq" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Atack_Low.tres" id="29_xjw76"]
+[ext_resource type="Resource" uid="uid://kp8pub07rv8" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Low_Reversed.tres" id="30_o4q42"]
+[ext_resource type="Resource" uid="uid://b1e506c7ccgdk" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Top.tres" id="31_e5kpb"]
+[ext_resource type="Resource" uid="uid://c5gcxtp77vm1m" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Atack_Top.tres" id="32_s781g"]
+[ext_resource type="Resource" uid="uid://jicws5gnp0h7" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Charge_Top_Reversed.tres" id="33_mjjn8"]
+[ext_resource type="Resource" uid="uid://dyw31qd3r5lo3" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Dig.tres" id="34_krl06"]
+[ext_resource type="Resource" uid="uid://cbe2074luep4t" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Parry.tres" id="34_wmvpl"]
+[ext_resource type="Resource" uid="uid://ey6tbsgbg4ds" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Hit_Mid_Player.tres" id="35_0de3s"]
+[ext_resource type="Resource" uid="uid://do5uxwtrkt31b" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Stun.tres" id="36_jmdvu"]
+[ext_resource type="Resource" uid="uid://dfwyrnlf06arg" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Death.tres" id="37_wyigv"]
+[ext_resource type="ArrayMesh" uid="uid://c1lhyd5f67lw1" path="res://Engine/Assets/Weapons/Shovel.res" id="38_tiq7d"]
+[ext_resource type="AnimationLibrary" uid="uid://3aa8srjf5dmm" path="res://Engine/Controllers/Fight_Characters/PlayerRig/PlayerRigAnimationLib.tres" id="45_ttegh"]
+[ext_resource type="Script" uid="uid://bj3feok1xkxq" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/MomentumModifier.gd" id="45_y0045"]
+
+[sub_resource type="Curve" id="Curve_22ek7"]
+_data = [Vector2(0, 0), 0.0, 0.97934157, 0, 0, Vector2(1, 0.25392854), 0.015191219, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="SphereMesh" id="SphereMesh_arntx"]
+radius = 0.02
+height = 0.18
+radial_segments = 4
+rings = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ulo2v"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
+albedo_texture = ExtResource("14_lslt6")
+texture_filter = 2
+texture_repeat = false
+billboard_mode = 1
+billboard_keep_scale = true
+grow_amount = -0.09
+proximity_fade_enabled = true
+stencil_flags = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_arntx"]
+size = Vector2(0.75, 0.75)
+orientation = 2
+
+[node name="Player" type="Node3D" unique_id=172630672 node_paths=PackedStringArray("Lantern", "Cam", "LeftHandLocator", "LeftHandTrans", "RightHandLocator", "LookMOdif", "FlowPivot", "LanternL", "LLight", "LanternLightMesh", "CameraAttachment", "RewardLocation", "Anim", "WeaponPlecement", "SwipeShape", "sk", "SkeletonModif") groups=["Player"]]
+script = ExtResource("1_nn08x")
+Lantern = NodePath("GeneralSkeleton/BoneAttachment3D/LanternPivot/Lantern")
+Cam = NodePath("GeneralSkeleton/BoneAttachment3D2/PlayerCamera")
+LeftHandLocator = NodePath("GeneralSkeleton/LeftHandTarget")
+LeftHandTrans = NodePath("GeneralSkeleton/CopyTransformModifier3D")
+RightHandLocator = NodePath("GeneralSkeleton/RightHandTarget")
+LookMOdif = NodePath("GeneralSkeleton/LookAtModifier3D")
+FlowPivot = NodePath("FlowPivot")
+LanternL = NodePath("GeneralSkeleton/BoneAttachment3D/LanternPivot/Lantern/LanternLight")
+LLight = NodePath("GeneralSkeleton/BoneAttachment3D/LanternPivot/Lantern/OmniLight3D")
+LanternLightMesh = NodePath("GeneralSkeleton/BoneAttachment3D/LanternPivot/Lantern/LanternLightMesh")
+CameraAttachment = NodePath("GeneralSkeleton/BoneAttachment3D2")
+RewardLocation = NodePath("RewardLocation")
+Anim = NodePath("AnimationPlayer")
+WeaponPlecement = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement")
+SwipeShape = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh")
+sk = NodePath("GeneralSkeleton")
+SkeletonModif = NodePath("GeneralSkeleton/MyModifier")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1292187288]
+active = false
+libraries/ = ExtResource("45_ttegh")
+
+[node name="GeneralSkeleton" parent="." unique_id=1728014551 instance=ExtResource("2_tiq7d")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+
+[node name="MyModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=1069785363 node_paths=PackedStringArray("animator")]
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+rotation_edit_mode = 0
+rotation_order = 2
+top_level = false
+visible = true
+visibility_parent = NodePath("")
+active = true
+influence = 1.0
+script = ExtResource("17_22ek7")
+CurrentState = 1
+WeaponCurve = ExtResource("5_ttegh")
+RecoilCurve = SubResource("Curve_22ek7")
+animator = NodePath("../../AnimationPlayer")
+anims = Array[ExtResource("9_ga5p4")]([ExtResource("10_57y0o"), ExtResource("11_x4p7r"), ExtResource("12_kyleq"), ExtResource("13_endcp"), ExtResource("14_7u03s"), ExtResource("15_j7887"), ExtResource("16_uwlqa"), ExtResource("17_gpdat"), ExtResource("18_u1g0i"), ExtResource("19_m5kv2"), ExtResource("20_upm8t"), ExtResource("21_tcu7f"), ExtResource("22_pc6nx"), ExtResource("23_n25ff"), ExtResource("24_6lemw"), ExtResource("25_btr13"), ExtResource("26_jpaba"), ExtResource("27_67617"), ExtResource("28_bqsjn"), ExtResource("29_xjw76"), ExtResource("30_o4q42"), ExtResource("31_e5kpb"), ExtResource("32_s781g"), ExtResource("33_mjjn8"), ExtResource("34_wmvpl"), ExtResource("35_0de3s"), ExtResource("36_jmdvu"), ExtResource("37_wyigv"), ExtResource("34_krl06")])
+metadata/_custom_type_script = "uid://2o6tgcat6qck"
+
+[node name="LookAtModifier3D" type="LookAtModifier3D" parent="GeneralSkeleton" unique_id=751339328]
+influence = 0.6
+target_node = NodePath("../BoneAttachment3D2/PlayerCamera/CameraTarget")
+bone_name = "Body.003"
+bone = 8
+origin_offset = Vector3(-0.2, -0.1, 0)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1077415663]
+transform = Transform3D(-0.9394854, -0.30395344, 0.15804765, 0.30377272, -0.9523925, -0.025895603, 0.15839447, 0.023682248, 0.98709184, -0.25614557, 0.5188509, 0.002853541)
+bone_name = "WeaponPlacement.R"
+bone_idx = 29
+
+[node name="WeaponPlacement" type="Node3D" parent="GeneralSkeleton/BoneAttachment3D" unique_id=2136917447]
+transform = Transform3D(0.0048682285, 0.1156679, -0.99327606, -0.9994029, 0.034539543, -0.00087609846, 0.034205973, 0.99268717, 0.11576699, -0.01770631, 0.045, -0.007187872)
+visible = false
+
+[node name="SwipeMesh" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D/WeaponPlacement" unique_id=1407660072]
+transform = Transform3D(49.985, 0, 0, 0, 49.985, 0, 0, 0, 49.985, 1.0910663e-08, 0.66057384, 5.54057e-10)
+material_override = ExtResource("5_yoq75")
+cast_shadow = 0
+mesh = ExtResource("6_bhhdu")
+skeleton = NodePath("../../../..")
+blend_shapes/blendShape1.Closed = 1.0
+
+[node name="ShovelMesh" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D" unique_id=1518276128]
+transform = Transform3D(-0.2246674, -0.07785466, -0.63173425, -0.6044671, 0.23598836, 0.1858871, 0.19942187, 0.62759316, -0.14826587, -0.0042126095, 0.019956905, -0.008214641)
+visible = false
+layers = 655361
+mesh = ExtResource("38_tiq7d")
+skeleton = NodePath("../../../..")
+
+[node name="LanternPivot" type="Node3D" parent="GeneralSkeleton/BoneAttachment3D" unique_id=19954267]
+transform = Transform3D(0.06088456, 0.9899696, -0.1274812, -0.9761332, 0.0323817, -0.21473512, -0.20845313, 0.137513, 0.96831584, -0.011, 0.045, 0.003)
+
+[node name="Lantern" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D/LanternPivot" unique_id=1820666340]
+transform = Transform3D(0.5993388, 0, -0.113549784, 0, 0.61000067, 0, 0.11354961, 0, 0.5993397, -0.003124038, 0, -0.0005918744)
+layers = 524288
+cast_shadow = 0
+mesh = ExtResource("12_lslt6")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="GeneralSkeleton/BoneAttachment3D/LanternPivot/Lantern" unique_id=468137951 groups=["Lights"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15388936, -0.31573018, -1.0973575e-09)
+light_color = Color(0.09772024, 0.09772033, 0.0977203, 1)
+light_energy = 0.08
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+light_bake_mode = 0
+omni_attenuation = 2.032
+
+[node name="LanternLightMesh" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D/LanternPivot/Lantern" unique_id=54350977]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0244548e-08, -0.3029046, 1.8626451e-09)
+material_override = ExtResource("12_1e7my")
+cast_shadow = 0
+mesh = SubResource("SphereMesh_arntx")
+skeleton = NodePath("../../../../..")
+
+[node name="LanternLight" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D/LanternPivot/Lantern" unique_id=837764559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5267584e-09, -0.2996795, 0)
+layers = 524288
+material_override = SubResource("StandardMaterial3D_ulo2v")
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_arntx")
+skeleton = NodePath("../../../../..")
+script = ExtResource("14_tc1am")
+
+[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1819386683]
+transform = Transform3D(-1, -8.697901e-15, -6.278329e-07, -1.1962389e-11, 0.9999997, 1.9039608e-05, 6.278329e-07, 1.9039602e-05, -1, 1.6701878e-16, 0.771, 0.0073502064)
+bone_name = "CameraBone"
+bone_idx = 30
+
+[node name="PlayerCamera" type="Camera3D" parent="GeneralSkeleton/BoneAttachment3D2" unique_id=1285667092]
+physics_interpolation_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1.0000004, 0, 0, 0, 1, 0, 0.018, -0.016)
+doppler_tracking = 1
+current = true
+script = ExtResource("9_ksbbd")
+BaseFOV = 65.0
+MaxRotation = Vector3(0.1, 0.1, 0.1)
+Master = true
+
+[node name="CameraTarget" type="Node3D" parent="GeneralSkeleton/BoneAttachment3D2/PlayerCamera" unique_id=2003424567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2612796, -0.9204023)
+
+[node name="LeftHandTarget" type="TwoBoneIK3D" parent="GeneralSkeleton" unique_id=1591041583]
+transform = Transform3D(-0.06698732, -0.25000003, -0.9659259, -0.9659259, 0.25881907, -1.4901161e-08, 0.25000003, 0.9330127, -0.25881904, 0.022648618, 0.7272314, 0.21050072)
+influence = 0.0
+setting_count = 1
+settings/0/target_node = NodePath(".")
+settings/0/pole_node = NodePath("../LeftHandPole")
+settings/0/root_bone_name = "UpperArm.L"
+settings/0/root_bone = 11
+settings/0/middle_bone_name = "LowerArm.L"
+settings/0/middle_bone = 12
+settings/0/pole_direction = 0
+settings/0/end_bone_name = "Palm.L"
+settings/0/end_bone = 13
+settings/0/use_virtual_end = false
+settings/0/extend_end_bone = false
+
+[node name="CopyTransformModifier3D" type="CopyTransformModifier3D" parent="GeneralSkeleton" unique_id=785382582]
+influence = 0.0
+setting_count = 1
+settings/0/amount = 1.0
+settings/0/apply_bone_name = "Palm.L"
+settings/0/apply_bone = 13
+settings/0/reference_type = 1
+settings/0/reference_node = NodePath("../LeftHandTarget")
+settings/0/copy = 7
+settings/0/axes = 7
+settings/0/invert = 0
+settings/0/additive = false
+
+[node name="RightHandTarget" type="TwoBoneIK3D" parent="GeneralSkeleton" unique_id=314147458]
+transform = Transform3D(1, 1.406258e-16, -9.434771e-09, -1.8626451e-09, 1, 9.313226e-10, 9.434771e-09, -9.313226e-10, 1, -0.16112818, 0.7699404, 0.26106435)
+influence = 0.0
+setting_count = 1
+settings/0/target_node = NodePath("../../FlowPivot/Node3D")
+settings/0/pole_node = NodePath("../RigtHandPole")
+settings/0/root_bone_name = "UpperArm.R"
+settings/0/root_bone = 21
+settings/0/middle_bone_name = "LowerArm.R"
+settings/0/middle_bone = 22
+settings/0/pole_direction = 0
+settings/0/end_bone_name = "Palm.R"
+settings/0/end_bone = 23
+settings/0/use_virtual_end = false
+settings/0/extend_end_bone = true
+settings/0/end_bone/direction = 6
+settings/0/end_bone/length = 0.0
+
+[node name="LeftHandPole" type="Node3D" parent="GeneralSkeleton" unique_id=1308703561]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.47532538, 0.44824612, -0.36713022)
+
+[node name="RigtHandPole" type="Node3D" parent="GeneralSkeleton" unique_id=347524000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14446166, 0.44824612, -0.36713022)
+
+[node name="MomentumModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=169411806]
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+rotation_edit_mode = 0
+rotation_order = 2
+top_level = false
+visible = true
+visibility_parent = NodePath("")
+active = false
+influence = 1.0
+script = ExtResource("45_y0045")
+metadata/_custom_type_script = "uid://bj3feok1xkxq"
+
+[node name="FlowPivot" type="Node3D" parent="." unique_id=1898368749]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16990097, 0.5131718, -0.19746694)
+
+[node name="Node3D" type="Node3D" parent="FlowPivot" unique_id=1681334029]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.009893358, 0.2508806, 0)
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="." unique_id=430662804 groups=["Lights"]]
+transform = Transform3D(1, 0, 0, 0, 0.64193153, 0.766762, 0, -0.766762, 0.64193153, -1.3544324e-07, 1.7776735, -0.5215081)
+layers = 524288
+light_energy = 1.5
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+light_bake_mode = 0
+light_cull_mask = 4294443008
+shadow_enabled = true
+shadow_bias = 0.01
+shadow_normal_bias = 0.0
+shadow_opacity = 0.8
+shadow_blur = 1.5
+distance_fade_begin = 5.0
+distance_fade_shadow = 5.0
+distance_fade_length = 5.0
+spot_range = 4096.0
+spot_attenuation = 6.4
+spot_angle = 70.0
+spot_angle_attenuation = 1.7411014
+
+[node name="RewardLocation" type="Node3D" parent="." unique_id=482046343]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3544324e-07, 0.901, -0.897)
+
+[connection signal="AnimationFinished" from="GeneralSkeleton/MyModifier" to="." method="AnimTreeFinished"]

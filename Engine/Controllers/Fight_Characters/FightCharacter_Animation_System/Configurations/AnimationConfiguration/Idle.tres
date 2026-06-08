@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CombatAnimationInfo" format=3 uid="uid://b5vqjjy1pi4ci"]
+
+[ext_resource type="Curve" uid="uid://cot3ch0uluahv" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/EaseOut.tres" id="1_vsm3x"]
+[ext_resource type="Script" uid="uid://bkqk3nyk4pe2r" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/CombatAnimationInfo.gd" id="2_t1wge"]
+
+[resource]
+script = ExtResource("2_t1wge")
+AlwaysR = true
+AnimName = "Idle"
+BlendCurve = ExtResource("1_vsm3x")
+Blend_Duration = 0.15
+Blend_Out_Duration = 0.15
+Loop = true
+AutoComplete = false
+ValidStates = Array[int]([0, 2, 3, 4, 5, 6, 7, 18, 19, 13, 14, 15, 16, 17, 8, 9, 10, 11, 12, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39])
+metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

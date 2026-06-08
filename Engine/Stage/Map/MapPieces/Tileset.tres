@@ -1,0 +1,43 @@
+[gd_resource type="TileSet" format=3 uid="uid://ffar32u4k25w"]
+
+[ext_resource type="Texture2D" uid="uid://1t2k6hks64ou" path="res://Engine/Stage/Map/MapPieces/MapPieces.png" id="1_4pova"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dmb8w"]
+resource_name = "Floor"
+texture = ExtResource("1_4pova")
+separation = Vector2i(1, 1)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+17:0/0 = 0
+18:0/0 = 0
+19:0/0 = 0
+20:0/0 = 0
+21:0/0 = 0
+22:0/0 = 0
+23:0/0 = 0
+24:0/0 = 0
+25:0/0 = 0
+26:0/0 = 0
+27:0/0 = 0
+28:0/0 = 0
+29:0/0 = 0
+30:0/0 = 0
+
+[resource]
+sources/10 = SubResource("TileSetAtlasSource_dmb8w")
+tile_proxies/coords_level = [[0, Vector2i(0, 0)], [10, Vector2i(0, 0)], [1, Vector2i(0, 0)], [10, Vector2i(1, 0)], [2, Vector2i(0, 0)], [10, Vector2i(2, 0)], [3, Vector2i(0, 0)], [10, Vector2i(0, 1)], [4, Vector2i(0, 0)], [10, Vector2i(1, 1)], [5, Vector2i(0, 0)], [10, Vector2i(2, 1)], [6, Vector2i(0, 0)], [10, Vector2i(0, 2)], [7, Vector2i(0, 0)], [10, Vector2i(1, 2)], [8, Vector2i(0, 0)], [10, Vector2i(2, 2)]]

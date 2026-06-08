@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dajpxd1pnq28d"]
+
+[ext_resource type="Material" path="res://Engine/Shaders/Materials/ItemMa.tres" id="1_ecgm3"]
+[ext_resource type="Script" uid="uid://dpf06q7ltelqk" path="res://Engine/Particles/light_part.gd" id="2_xkdrv"]
+[ext_resource type="PackedScene" uid="uid://dxq20d767888h" path="res://Engine/Particles/DeathPartSound.tscn" id="3_4pw8m"]
+[ext_resource type="AudioStream" uid="uid://b0ouxfvsai2bb" path="res://Engine/Assets/Sounds/Light.mp3" id="4_4pw8m"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_4hipe"]
+radius = 0.01
+height = 0.02
+radial_segments = 4
+rings = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" unique_id=2027374756]
+mesh = SubResource("SphereMesh_4hipe")
+surface_material_override/0 = ExtResource("1_ecgm3")
+script = ExtResource("2_xkdrv")
+DPart = ExtResource("3_4pw8m")
+SpeedOverride = 3.0
+
+[node name="Aim" type="Node3D" parent="." unique_id=215925796]
+
+[node name="FuturePos" type="Node3D" parent="." unique_id=1675142636]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1531144145]
+stream = ExtResource("4_4pw8m")
+volume_db = -50.0
+pitch_scale = 8.0
+autoplay = true

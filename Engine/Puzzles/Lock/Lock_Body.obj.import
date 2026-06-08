@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://t13kyuibghfd"
+path="res://.godot/imported/Lock_Body.obj-8d5a6a53dad0582b19f921fcd5fc96cd.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Lock_Body.obj-8d5a6a53dad0582b19f921fcd5fc96cd.mesh"]
+
+source_file="res://Engine/Puzzles/Lock/Lock_Body.obj"
+dest_files=["res://.godot/imported/Lock_Body.obj-8d5a6a53dad0582b19f921fcd5fc96cd.mesh", "res://.godot/imported/Lock_Body.obj-8d5a6a53dad0582b19f921fcd5fc96cd.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

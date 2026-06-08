@@ -1,0 +1,428 @@
+[gd_scene format=3 uid="uid://c3v1lq4fsttds"]
+
+[ext_resource type="Script" uid="uid://hxxsah6n6oak" path="res://Engine/Stage/Level/Level.gd" id="1_8kag3"]
+[ext_resource type="PackedScene" uid="uid://bualon7naga6t" path="res://Engine/Stage/NPC.tscn" id="4_jnjmb"]
+[ext_resource type="PackedScene" uid="uid://g1v6rflwacfo" path="res://Engine/Controllers/World_Manequin/Enemy_Manequin.tscn" id="6_tijfw"]
+[ext_resource type="PackedScene" uid="uid://cnge62u6oksn7" path="res://Engine/Particles/ParticlePacks/BaseParticlePack.tscn" id="7_24ms2"]
+[ext_resource type="PackedScene" uid="uid://x3putg6b3vjj" path="res://Engine/Particles/WoodbreakParticle.tscn" id="7_dfojv"]
+[ext_resource type="PackedScene" uid="uid://ck2l4kggylthw" path="res://Engine/Particles/WallbreakParticle.tscn" id="8_cspmi"]
+[ext_resource type="PackedScene" uid="uid://xr2jrubm5uy6" path="res://Engine/Particles/FloorBreakParticles.tscn" id="9_x1mwr"]
+[ext_resource type="PackedScene" uid="uid://cm5b5u8hrtwx" path="res://Engine/Managers/Traps/Traps/SpikeTrap.tscn" id="10_il8c7"]
+[ext_resource type="PackedScene" uid="uid://dhli7c5clhoja" path="res://Engine/Managers/Traps/Traps/fire_trap_projectile.tscn" id="11_gp8xr"]
+[ext_resource type="PackedScene" uid="uid://bd878xpthxdj" path="res://Engine/Managers/Traps/Traps/GuilotineTrap.tscn" id="12_66m7x"]
+[ext_resource type="PackedScene" uid="uid://csq7mqpe7fyd0" path="res://Engine/Managers/monster_manager.tscn" id="13_b7lgf"]
+[ext_resource type="PackedScene" uid="uid://tp3832syp54x" path="res://Engine/Dialogue/dialogue_trigger.tscn" id="13_tijfw"]
+[ext_resource type="PackedScene" uid="uid://bmp53oiroonbo" path="res://Engine/Managers/Traps/TrapManager.tscn" id="14_b7w5u"]
+[ext_resource type="Script" uid="uid://ojfffjpv2gr2" path="res://Engine/Managers/effect_manager.gd" id="15_jnjmb"]
+[ext_resource type="Script" uid="uid://dd35hcw6d7m6y" path="res://Engine/Managers/Traps/TrapSettings.gd" id="15_keskx"]
+[ext_resource type="PackedScene" uid="uid://cs3tu7q65veyc" path="res://Engine/Managers/Audio/level_audio_manager.tscn" id="16_gxdms"]
+[ext_resource type="Material" uid="uid://12vsdljd0kly" path="res://Engine/Shaders/Materials/Water.tres" id="19_gxdms"]
+[ext_resource type="Script" uid="uid://dejcs257apasv" path="res://Engine/Stage/Level/LevelMultimesh/FloorMultimehs.gd" id="21_clxdj"]
+[ext_resource type="Material" uid="uid://c6edfmjpyt8as" path="res://Engine/Shaders/Materials/Lava.tres" id="21_p44al"]
+[ext_resource type="ArrayMesh" uid="uid://bolha7cjhqyfe" path="res://Engine/Assets/Map_Geometry/Stairs.res" id="23_yg26m"]
+[ext_resource type="Script" uid="uid://b12ojkfk5qf0t" path="res://Engine/Stage/Level/LevelMultimesh/StairsMultimehs.gd" id="24_fqkhk"]
+[ext_resource type="Script" uid="uid://djy8qn1rub7u4" path="res://Engine/Stage/Level/LevelMultimesh/WaterMultimesh.gd" id="25_myl6m"]
+[ext_resource type="Material" uid="uid://hjvv7gta03nx" path="res://Engine/Shaders/Materials/GapMat.tres" id="26_5acyj"]
+[ext_resource type="Script" uid="uid://b1cdfojal1awd" path="res://Engine/Stage/Level/LevelMultimesh/LavaMultimesh.gd" id="27_br2m8"]
+[ext_resource type="Script" uid="uid://f123qwori5c2" path="res://Engine/Stage/Level/LevelMultimesh/CeilingMultimesh.gd" id="28_aiuad"]
+[ext_resource type="Script" uid="uid://cuy0sc7w4gmor" path="res://Engine/Stage/Level/LevelMultimesh/GapMultimesh.gd" id="29_f2cv5"]
+[ext_resource type="ArrayMesh" uid="uid://1euw0y0wpf4v" path="res://Engine/Assets/Map_Geometry/Floor.res" id="31_a2w6e"]
+[ext_resource type="Script" uid="uid://cakgpau4ru4dp" path="res://Engine/Stage/Level/LevelMultimesh/WallMultimehs.gd" id="33_cusvj"]
+[ext_resource type="ArrayMesh" uid="uid://f3ijk187nimo" path="res://Engine/Assets/Map_Geometry/Wall.res" id="33_jnjmb"]
+[ext_resource type="ArrayMesh" uid="uid://0v5t0w5tl4m0" path="res://Engine/Assets/Map_Geometry/Corner.res" id="35_a2w6e"]
+[ext_resource type="Script" uid="uid://cxrmo4l5e2ikn" path="res://Engine/Stage/Level/LevelMultimesh/CornerMultimesh.gd" id="35_n2xn5"]
+[ext_resource type="Script" uid="uid://cpfda7ppdvxgm" path="res://Engine/Stage/Level/LevelMultimesh/BrokenWallMultimehs.gd" id="36_lkhil"]
+[ext_resource type="ArrayMesh" uid="uid://pa0c5277qtj5" path="res://Engine/Assets/Map_Geometry/BrokenWall.res" id="37_a2w6e"]
+[ext_resource type="ArrayMesh" uid="uid://m24e6eerbmb8" path="res://Engine/Assets/Map_Geometry/BackWall.res" id="39_a2w6e"]
+[ext_resource type="Script" uid="uid://c0ll3etn0dai5" path="res://Engine/Stage/Level/LevelMultimesh/BackWallMultimehs.gd" id="39_lkhil"]
+[ext_resource type="Environment" uid="uid://d2enr6co805w7" path="res://Engine/Enviroments/MainEnviroment.tres" id="39_p8upu"]
+[ext_resource type="Script" uid="uid://bb482cybr58nq" path="res://Engine/Stage/Level/CustomEnviroment.gd" id="40_stt2d"]
+[ext_resource type="ArrayMesh" uid="uid://0dhrl4xlbxyc" path="res://Engine/Assets/Map_Geometry/DoorFrame.res" id="41_a2w6e"]
+[ext_resource type="Script" uid="uid://chemlbo21d36h" path="res://Engine/Stage/Level/Prop_Spawner/mesh_spawner.gd" id="42_by1hy"]
+[ext_resource type="Script" uid="uid://br2uc8tqceuuv" path="res://Engine/Stage/Level/LevelMultimesh/DoorWallMultimesh.gd" id="42_cnnnn"]
+[ext_resource type="Material" uid="uid://2p82bw8skjky" path="res://Engine/Shaders/Materials/TransitionMaterial.tres" id="42_gxdms"]
+[ext_resource type="AudioStream" uid="uid://bq3xxh54rnduw" path="res://Engine/Assets/Sounds/Cave_Ambient.mp3" id="42_v00n4"]
+[ext_resource type="ArrayMesh" uid="uid://ccsjllqbuvd3f" path="res://Engine/Assets/Map_Geometry/DoorNoLock.res" id="43_a2w6e"]
+[ext_resource type="Script" uid="uid://cedtciby003oc" path="res://Engine/Stage/Level/LevelMultimesh/FallMultimesh.gd" id="43_jig7l"]
+[ext_resource type="ArrayMesh" uid="uid://bn6rmicgkbv38" path="res://Engine/Assets/Particles/TransitionMesh.obj" id="43_q0nyt"]
+[ext_resource type="Script" uid="uid://bp0ik4hm6bpw2" path="res://Engine/Stage/Level/LevelMultimesh/DoorMultimesh.gd" id="44_agxqa"]
+[ext_resource type="ArrayMesh" uid="uid://bvqmntj4vught" path="res://Engine/Assets/Map_Geometry/Lock.res" id="45_a2w6e"]
+[ext_resource type="Script" uid="uid://d1l3qa1opfdfq" path="res://Engine/Stage/Level/LevelMultimesh/LockMultimesh.gd" id="47_wihue"]
+[ext_resource type="ArrayMesh" uid="uid://imklp17o1uoh" path="res://Engine/Assets/Map_Geometry/Lever.res" id="49_a2w6e"]
+[ext_resource type="ArrayMesh" uid="uid://bouq41s820bp7" path="res://Engine/Assets/Map_Geometry/SoftBreakable.res" id="51_a2w6e"]
+[ext_resource type="Script" uid="uid://3o8xel8b53so" path="res://Engine/Stage/Level/LevelMultimesh/LeverMultimesh.gd" id="51_dfh1m"]
+[ext_resource type="Script" uid="uid://ekaebps4fwg3" path="res://Engine/Stage/Level/LevelMultimesh/BreakablesMultimesh.gd" id="53_mw50t"]
+[ext_resource type="Script" uid="uid://chyc70bgt2hji" path="res://Engine/Stage/Level/LevelMultimesh/LadderMultimesh.gd" id="54_08cfg"]
+[ext_resource type="ArrayMesh" uid="uid://d0u81tm3mmvcu" path="res://Engine/Assets/Map_Geometry/Ladder.res" id="54_wgf1p"]
+[ext_resource type="Script" uid="uid://dlrnljfstir1q" path="res://Engine/Stage/Level/LevelMultimesh/SoftBreakablesMultimesh.gd" id="55_1f8mx"]
+[ext_resource type="ArrayMesh" uid="uid://bm4s41qbahmve" path="res://Engine/Assets/Map_Geometry/Fall.res" id="56_wgf1p"]
+[ext_resource type="ArrayMesh" uid="uid://d3tp855lhnstt" path="res://Engine/Assets/Map_Geometry/DuggableClosed.res" id="58_a2w6e"]
+[ext_resource type="ArrayMesh" uid="uid://csdfhxqdf6666" path="res://Engine/Assets/Map_Geometry/DuggableOpen.res" id="60_jnjmb"]
+[ext_resource type="Script" uid="uid://c4wu7m2x6exuk" path="res://Engine/Stage/Level/LevelMultimesh/DuggableMultimesh.gd" id="60_xi66b"]
+[ext_resource type="Script" uid="uid://ce4oy8mfg7iqr" path="res://Engine/Stage/Level/LevelMultimesh/DugDuggableMultimesh.gd" id="62_8kiyy"]
+[ext_resource type="ArrayMesh" uid="uid://c7kqqv07xxe1i" path="res://Engine/Assets/Particles/Chest.obj" id="62_fg3x2"]
+[ext_resource type="ArrayMesh" uid="uid://cmadhq6mrsbrg" path="res://Engine/Assets/Map_Geometry/FireTrap.res" id="62_mf631"]
+[ext_resource type="Material" uid="uid://bqd68wlr5r82y" path="res://Engine/Shaders/Materials/TestMatUV.tres" id="63_fg3x2"]
+[ext_resource type="ArrayMesh" uid="uid://bxhoqw2rkt0q3" path="res://Engine/Assets/Map_Geometry/Clutter_01.res" id="66_252yv"]
+[ext_resource type="Script" uid="uid://c8ov6vvvry02n" path="res://Engine/Stage/Level/LevelMultimesh/FiretrapMultimesh.gd" id="66_iss4s"]
+[ext_resource type="Script" uid="uid://b5juvbtdtxlhu" path="res://Engine/Stage/Level/LevelMultimesh/ChestMultimesh.gd" id="66_tkqs7"]
+[ext_resource type="Script" uid="uid://bptwnxly3umq7" path="res://Engine/Stage/Level/LevelMultimesh/ItemMultimesh.gd" id="67_8kiyy"]
+[ext_resource type="ArrayMesh" uid="uid://bjq1ocavv3mae" path="res://Engine/Assets/Map_Geometry/Clutter_02.res" id="67_sjhj7"]
+[ext_resource type="ArrayMesh" uid="uid://7osioyoujcmn" path="res://Engine/Assets/Map_Geometry/Stalag.res" id="68_fg3x2"]
+[ext_resource type="ArrayMesh" uid="uid://cvqxelitxc5hu" path="res://Engine/Assets/Map_Geometry/HouseCollision.res" id="70_24ms2"]
+[ext_resource type="ArrayMesh" uid="uid://c47va7v6rtpis" path="res://Engine/Assets/Map_Geometry/House.res" id="71_252yv"]
+[ext_resource type="ArrayMesh" uid="uid://c665ek31jvaaf" path="res://Engine/Assets/Map_Geometry/Block.res" id="72_yg26m"]
+[ext_resource type="Script" uid="uid://bgbmfnmkygn6s" path="res://Engine/Stage/Level/LevelMultimesh/DecorationMultimesh.gd" id="74_1f8mx"]
+[ext_resource type="Script" uid="uid://b1wnyrfain8ir" path="res://Engine/Stage/Level/LevelMultimesh/BlockingDecorationMultimesh.gd" id="77_1f8mx"]
+[ext_resource type="Script" uid="uid://cvyqkp0270tlv" path="res://Engine/Stage/Level/LevelMultimesh/MovableMultimesh.gd" id="78_ibjmf"]
+[ext_resource type="Script" uid="uid://doi7p738mpl5u" path="res://Engine/Stage/Level/LevelMultimesh/HouseMultimesh.gd" id="79_iss4s"]
+[ext_resource type="Script" uid="uid://v8quiag5lr4m" path="res://Engine/Stage/Level/LevelMultimesh/PlateMultimesh.gd" id="79_ndsu7"]
+[ext_resource type="Script" uid="uid://byjjvqv4y8bo4" path="res://Engine/Stage/Level/LevelMultimesh/TransitionMultimesh.gd" id="81_lypxd"]
+[ext_resource type="ArrayMesh" uid="uid://5epxdyibji7l" path="res://Engine/Assets/Map_Geometry/Movable.res" id="81_yg26m"]
+[ext_resource type="Script" uid="uid://bs4ysh060o61w" path="res://Engine/Stage/Level/LevelMultimesh/ProjectileSwitchMultimesh.gd" id="82_ibjmf"]
+[ext_resource type="Material" uid="uid://dnueq5u2lpoat" path="res://Engine/Shaders/Materials/TestMovable.tres" id="82_yg26m"]
+[ext_resource type="ArrayMesh" uid="uid://cyxlxh2f22osj" path="res://Engine/Assets/Map_Geometry/ProjectileSwitch.res" id="83_252yv"]
+[ext_resource type="ArrayMesh" uid="uid://cddcsq8cv2a6q" path="res://Engine/Assets/Map_Geometry/PreassurePlate.res" id="83_yg26m"]
+[ext_resource type="PackedScene" uid="uid://brfw7arelgq7l" path="res://Engine/Particles/DragParts.tscn" id="84_iss4s"]
+[ext_resource type="Script" uid="uid://bcr5vv2m647em" path="res://Engine/Stage/Level/LevelMultimesh/LevelMultiLayerMultimesh.gd" id="91_1f8mx"]
+[ext_resource type="ArrayMesh" uid="uid://citgqs1idf274" path="res://Engine/Assets/Map_Geometry/BG.res" id="92_yg26m"]
+[ext_resource type="Material" uid="uid://cs5qavhmjdtgy" path="res://Engine/Shaders/Materials/BackgroundMat.tres" id="93_im3oe"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_24ms2"]
+center_offset = Vector3(-0.5, 0.5, 0)
+orientation = 0
+
+[sub_resource type="Resource" id="Resource_24ms2"]
+resource_local_to_scene = true
+script = ExtResource("15_keskx")
+TrapType = 1
+Cooldown = 2.0
+CustomData = {
+"Range": 20.0,
+"Speed": 3.0
+}
+metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
+
+[sub_resource type="Resource" id="Resource_252yv"]
+resource_local_to_scene = true
+script = ExtResource("15_keskx")
+Cooldown = 3.0
+CustomData = {
+"Speed": 15.0
+}
+metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
+
+[sub_resource type="Resource" id="Resource_sjhj7"]
+resource_local_to_scene = true
+script = ExtResource("15_keskx")
+TrapType = 2
+Cooldown = 1.0
+CustomData = {
+"Speed": 1.0
+}
+metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
+
+[sub_resource type="Resource" id="Resource_d87ld"]
+script = ExtResource("15_keskx")
+TrapType = 3
+Cooldown = 3.0
+CustomData = {
+"Lifetime": 1.0
+}
+metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gmal7"]
+subdivide_width = 2
+subdivide_depth = 2
+
+[sub_resource type="SphereMesh" id="SphereMesh_fhlu0"]
+radius = 0.15
+height = 0.3
+radial_segments = 4
+rings = 2
+
+[node name="DungeonLevel9" type="Node3D" unique_id=127161226 node_paths=PackedStringArray("MonsterMan", "TrapMan", "AudioMan", "AmbientAudio", "PropMeshSpawner", "BackgroundMesh", "ProjectileSwitchArea")]
+script = ExtResource("1_8kag3")
+MonsterMan = NodePath("MonsterManager")
+TrapMan = NodePath("TrapManager")
+AudioMan = NodePath("LevelAudioManager")
+AmbientAudio = NodePath("AudioStreamPlayer")
+WallCollider = SubResource("QuadMesh_24ms2")
+PropMeshSpawner = NodePath("MeshSpawner")
+BackgroundMesh = NodePath("MeshInstance3D")
+ProjectileSwitchArea = NodePath("ProjectileSwitch/ProjectileSwitchCollision")
+RecruitScene = ExtResource("4_jnjmb")
+EnemyManequinScene = ExtResource("6_tijfw")
+BarrelBreakParticles = ExtResource("7_dfojv")
+WallBreakParticles = ExtResource("8_cspmi")
+FloorBreakParticles = ExtResource("9_x1mwr")
+ParticlePack = ExtResource("7_24ms2")
+DialogueTriggerScene = ExtResource("13_tijfw")
+LoadDistance = 4
+
+[node name="MonsterManager" parent="." unique_id=722211184 instance=ExtResource("13_b7lgf")]
+
+[node name="EffectManager" type="Node3D" parent="." unique_id=1033357268]
+script = ExtResource("15_jnjmb")
+
+[node name="TrapManager" parent="." unique_id=287800843 instance=ExtResource("14_b7w5u")]
+TrapSetting = Array[ExtResource("15_keskx")]([SubResource("Resource_24ms2"), SubResource("Resource_252yv"), SubResource("Resource_sjhj7"), SubResource("Resource_d87ld")])
+TrapScenes = Dictionary[int, PackedScene]({
+0: ExtResource("10_il8c7"),
+1: ExtResource("11_gp8xr"),
+2: ExtResource("12_66m7x")
+})
+
+[node name="LevelAudioManager" parent="." unique_id=1785781435 instance=ExtResource("16_gxdms")]
+SoundRange = 2
+
+[node name="MeshSpawner" type="Node3D" parent="." unique_id=115733035]
+script = ExtResource("42_by1hy")
+ViewDistanceSquared = 100.0
+
+[node name="Floors" type="Node3D" parent="." unique_id=893937957]
+script = ExtResource("21_clxdj")
+geometry = ExtResource("31_a2w6e")
+
+[node name="Stairs" type="Node3D" parent="." unique_id=586834395]
+script = ExtResource("24_fqkhk")
+geometry = ExtResource("23_yg26m")
+
+[node name="Water" type="Node3D" parent="." unique_id=916234799]
+script = ExtResource("25_myl6m")
+geometry = SubResource("PlaneMesh_gmal7")
+material_override = ExtResource("19_gxdms")
+
+[node name="WaterCollision" type="Area3D" parent="Water" unique_id=867240068]
+collision_layer = 144
+collision_mask = 144
+monitoring = false
+
+[node name="Lava" type="Node3D" parent="." unique_id=472592208]
+script = ExtResource("27_br2m8")
+geometry = SubResource("PlaneMesh_gmal7")
+material_override = ExtResource("21_p44al")
+
+[node name="LavaCollision" type="Area3D" parent="Lava" unique_id=1962315986]
+collision_layer = 160
+collision_mask = 160
+monitoring = false
+
+[node name="Gap" type="Node3D" parent="." unique_id=1617287893]
+script = ExtResource("29_f2cv5")
+geometry = SubResource("PlaneMesh_gmal7")
+material_override = ExtResource("26_5acyj")
+
+[node name="GapCollision" type="Area3D" parent="Gap" unique_id=1065414682]
+collision_layer = 64
+collision_mask = 64
+monitoring = false
+
+[node name="Ceiling" type="Node3D" parent="." unique_id=899468311]
+script = ExtResource("28_aiuad")
+geometry = ExtResource("31_a2w6e")
+
+[node name="FlatWalls" type="Node3D" parent="." unique_id=984481328]
+script = ExtResource("33_cusvj")
+alt_Geomatry = Array[Mesh]([ExtResource("33_jnjmb"), ExtResource("33_jnjmb")])
+geometry = ExtResource("33_jnjmb")
+
+[node name="WallCollision" type="Area3D" parent="FlatWalls" unique_id=1098253251]
+collision_layer = 129
+collision_mask = 129
+monitoring = false
+
+[node name="Corners" type="Node3D" parent="." unique_id=1991222658]
+script = ExtResource("35_n2xn5")
+geometry = ExtResource("35_a2w6e")
+
+[node name="BrokenWalls" type="Node3D" parent="." unique_id=1568823529]
+script = ExtResource("36_lkhil")
+geometry = ExtResource("37_a2w6e")
+
+[node name="WallCollision" type="Area3D" parent="BrokenWalls" unique_id=1056776012]
+collision_layer = 129
+collision_mask = 129
+monitoring = false
+
+[node name="BackWalls" type="Node3D" parent="." unique_id=1075028033]
+script = ExtResource("39_lkhil")
+geometry = ExtResource("39_a2w6e")
+
+[node name="WallCollision" type="Area3D" parent="BackWalls" unique_id=1975255842]
+collision_layer = 129
+collision_mask = 129
+monitoring = false
+
+[node name="DoorWalls" type="Node3D" parent="." unique_id=907108965]
+script = ExtResource("42_cnnnn")
+geometry = ExtResource("41_a2w6e")
+
+[node name="Door" type="Node3D" parent="." unique_id=1786892442]
+script = ExtResource("44_agxqa")
+geometry = ExtResource("43_a2w6e")
+
+[node name="DoorCollision" type="Area3D" parent="Door" unique_id=1323008915]
+collision_layer = 130
+collision_mask = 130
+monitoring = false
+
+[node name="Lock" type="Node3D" parent="." unique_id=1204697384]
+script = ExtResource("47_wihue")
+geometry = ExtResource("45_a2w6e")
+
+[node name="Lever" type="Node3D" parent="." unique_id=701325761]
+script = ExtResource("51_dfh1m")
+geometry = ExtResource("49_a2w6e")
+
+[node name="LeverCollision" type="Area3D" parent="Lever" unique_id=1955796761]
+collision_layer = 128
+collision_mask = 128
+monitoring = false
+
+[node name="Breakables" type="Node3D" parent="." unique_id=940831426]
+script = ExtResource("53_mw50t")
+geometry = ExtResource("51_a2w6e")
+
+[node name="WallCollision" type="Area3D" parent="Breakables" unique_id=1203908163]
+collision_layer = 129
+collision_mask = 129
+monitoring = false
+
+[node name="SoftBreakables" type="Node3D" parent="." unique_id=1957466139]
+script = ExtResource("55_1f8mx")
+geometry = ExtResource("51_a2w6e")
+
+[node name="WallCollision" type="Area3D" parent="SoftBreakables" unique_id=2005222123]
+collision_layer = 129
+collision_mask = 129
+monitoring = false
+
+[node name="Ladders" type="Node3D" parent="." unique_id=2017164341]
+script = ExtResource("54_08cfg")
+geometry = ExtResource("54_wgf1p")
+
+[node name="Fall" type="Node3D" parent="." unique_id=944302901]
+script = ExtResource("43_jig7l")
+geometry = ExtResource("56_wgf1p")
+
+[node name="Duggable" type="Node3D" parent="." unique_id=21146658]
+script = ExtResource("60_xi66b")
+geometry = ExtResource("58_a2w6e")
+
+[node name="DuggableOpen" type="Node3D" parent="." unique_id=1050313097]
+script = ExtResource("62_8kiyy")
+geometry = ExtResource("60_jnjmb")
+
+[node name="FireTraps" type="Node3D" parent="." unique_id=88691307]
+script = ExtResource("66_iss4s")
+geometry = ExtResource("62_mf631")
+
+[node name="Items" type="Node3D" parent="." unique_id=1645653371]
+script = ExtResource("67_8kiyy")
+geometry = SubResource("SphereMesh_fhlu0")
+
+[node name="Chests" type="Node3D" parent="." unique_id=1544302014]
+script = ExtResource("66_tkqs7")
+geometry = ExtResource("62_fg3x2")
+material_override = ExtResource("63_fg3x2")
+
+[node name="ChestCollision" type="Area3D" parent="Chests" unique_id=119885487]
+collision_layer = 128
+collision_mask = 128
+monitoring = false
+
+[node name="LevelMultiLayerMultimesh" type="Node3D" parent="." unique_id=1529343021]
+script = ExtResource("91_1f8mx")
+metadata/_custom_type_script = "uid://bcr5vv2m647em"
+
+[node name="Decoration1" type="Node3D" parent="LevelMultiLayerMultimesh" unique_id=1765005891]
+script = ExtResource("74_1f8mx")
+geometry = ExtResource("66_252yv")
+
+[node name="Decoration2" type="Node3D" parent="LevelMultiLayerMultimesh" unique_id=2113281883]
+script = ExtResource("74_1f8mx")
+geometry = ExtResource("67_sjhj7")
+
+[node name="Decoration3" type="Node3D" parent="LevelMultiLayerMultimesh" unique_id=1201841742]
+script = ExtResource("74_1f8mx")
+AllowOnCeiling = true
+geometry = ExtResource("68_fg3x2")
+
+[node name="LevelMultiLayerMultimesh2" type="Node3D" parent="." unique_id=444522788]
+script = ExtResource("91_1f8mx")
+metadata/_custom_type_script = "uid://bcr5vv2m647em"
+
+[node name="BlockingDecorations1" type="Node3D" parent="LevelMultiLayerMultimesh2" unique_id=1604762629]
+script = ExtResource("77_1f8mx")
+geometry = ExtResource("72_yg26m")
+
+[node name="WallCollision" type="Area3D" parent="LevelMultiLayerMultimesh2/BlockingDecorations1" unique_id=1854590572]
+collision_layer = 129
+collision_mask = 129
+monitoring = false
+
+[node name="Houses" type="Node3D" parent="." unique_id=739245481]
+script = ExtResource("79_iss4s")
+CustomCollision = ExtResource("70_24ms2")
+geometry = ExtResource("71_252yv")
+
+[node name="HouseCollision" type="Area3D" parent="Houses" unique_id=1667330890]
+collision_layer = 129
+collision_mask = 129
+monitoring = false
+
+[node name="TransitionMeshes" type="Node3D" parent="." unique_id=63679223]
+script = ExtResource("81_lypxd")
+geometry = ExtResource("43_q0nyt")
+material_override = ExtResource("42_gxdms")
+
+[node name="Movables" type="Node3D" parent="." unique_id=2118592485]
+script = ExtResource("78_ibjmf")
+DragParticles = ExtResource("84_iss4s")
+geometry = ExtResource("81_yg26m")
+material_override = ExtResource("82_yg26m")
+
+[node name="MovableCollision" type="Area3D" parent="Movables" unique_id=1301861169]
+collision_layer = 640
+collision_mask = 640
+monitoring = false
+
+[node name="Plates" type="Node3D" parent="." unique_id=1903541653]
+script = ExtResource("79_ndsu7")
+geometry = ExtResource("83_yg26m")
+material_override = ExtResource("82_yg26m")
+
+[node name="LeverCollision" type="Area3D" parent="Plates" unique_id=941221311]
+collision_layer = 128
+collision_mask = 128
+monitoring = false
+
+[node name="ProjectileSwitch" type="Node3D" parent="." unique_id=1225485626]
+script = ExtResource("82_ibjmf")
+geometry = ExtResource("83_252yv")
+material_override = ExtResource("82_yg26m")
+
+[node name="ProjectileSwitchCollision" type="Area3D" parent="ProjectileSwitch" unique_id=1924767616]
+collision_layer = 641
+collision_mask = 641
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=440085174 groups=["Enviroments"]]
+environment = ExtResource("39_p8upu")
+script = ExtResource("40_stt2d")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=786636517]
+stream = ExtResource("42_v00n4")
+autoplay = true
+bus = &"SFX"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=958300129]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+material_override = ExtResource("93_im3oe")
+mesh = ExtResource("92_yg26m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1875046444]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 0, 0)
+light_energy = 1.81
+
+[connection signal="area_shape_entered" from="ProjectileSwitch/ProjectileSwitchCollision" to="." method="_on_projectile_switch_collision_area_shape_entered"]

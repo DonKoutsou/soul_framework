@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://dhsdcpbwtm7m1"]
+
+[ext_resource type="Script" uid="uid://l1yv1ffimeej" path="res://Engine/Items/Effects/ItemEffect.gd" id="1_5g68f"]
+[ext_resource type="Script" uid="uid://b0xkcgct2s43c" path="res://Engine/Items/Effects/UpgradeStatItemEffect.gd" id="2_5g68f"]
+[ext_resource type="ArrayMesh" uid="uid://bu7ifdun0t5e2" path="res://Engine/Assets/Items/Branch.obj" id="4_hyxuj"]
+[ext_resource type="Material" uid="uid://w4mudmp4kmjs" path="res://Engine/Assets/Items/BranchGreen.tres" id="5_k47q7"]
+[ext_resource type="Script" uid="uid://dnwn8l0kfkmcy" path="res://Engine/Items/Item.gd" id="6_kedyo"]
+
+[sub_resource type="Resource" id="Resource_pqmyc"]
+script = ExtResource("2_5g68f")
+Stat = 1
+Timing = 8
+metadata/_custom_type_script = "uid://b0xkcgct2s43c"
+
+[resource]
+script = ExtResource("6_kedyo")
+ItemName = "Branch"
+Effects = Array[ExtResource("1_5g68f")]([SubResource("Resource_pqmyc")])
+ConsumeOnUse = true
+Value = 10
+Model = ExtResource("4_hyxuj")
+ModelMat = ExtResource("5_k47q7")
+metadata/_custom_type_script = "uid://dnwn8l0kfkmcy"

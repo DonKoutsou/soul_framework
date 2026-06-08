@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://c6slmlpjirxh0"]
+
+[ext_resource type="Shader" uid="uid://gr1ubeyppnin" path="res://Engine/Shaders/BaseMat/LanternLight.gdshader" id="1_amfs4"]
+
+[resource]
+render_priority = 127
+shader = ExtResource("1_amfs4")
+shader_parameter/base_color = Color(1, 1, 1, 1)
+shader_parameter/spike_color = Color(1, 1, 1, 1)
+shader_parameter/spike_density = 2.0000000475
+shader_parameter/spike_height = 0.030000001425
+shader_parameter/spike_width = 0.5
+shader_parameter/spike_base_width = 0.5
+shader_parameter/tip_smoothness = 1.0
+shader_parameter/min_alpha = 1.0
+shader_parameter/max_alpha = 1.0
+shader_parameter/grow_out = true
+shader_parameter/TimeOffset = 0.0

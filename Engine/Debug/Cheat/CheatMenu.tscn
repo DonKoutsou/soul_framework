@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://ba83u0ygnks3h"]
+
+[ext_resource type="Script" uid="uid://c7b3b46oro6sh" path="res://Engine/Debug/Cheat/cheat_menu.gd" id="1_wxo0r"]
+
+[node name="CheatMenu" type="Control" unique_id=1227261222]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wxo0r")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=357823725]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Inf HP" type="Button" parent="VBoxContainer" unique_id=2140979383 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "INF HP"
+
+[node name="Inf Stam" type="Button" parent="VBoxContainer" unique_id=853383565 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "INF STAM"
+
+[node name="NOCLIP" type="Button" parent="VBoxContainer" unique_id=987591356 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "NOCLIP"
+
+[node name="Shake" type="Button" parent="VBoxContainer" unique_id=1061792052 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "SHAKE"
+
+[node name="Respawn Enemies" type="Button" parent="VBoxContainer" unique_id=1099621849 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "Respawn Enemies"
+
+[node name="Freecam" type="Button" parent="VBoxContainer" unique_id=1857016518 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "Freecam"
+
+[node name="Enemy Action Trigger" type="Button" parent="VBoxContainer" unique_id=68307037 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "Enemy Action Trigger"
+
+[node name="WalkOnWater" type="Button" parent="VBoxContainer" unique_id=562986012 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "Toggle Walk On Water"
+
+[node name="WalkOnLava" type="Button" parent="VBoxContainer" unique_id=1195882601 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "Toggle Walk On Lava"
+
+[node name="WalkOnGaps" type="Button" parent="VBoxContainer" unique_id=1023559874 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "Toggle Walk On Gaps"
+
+[node name="RedoCurrentMap" type="Button" parent="VBoxContainer" unique_id=1317463893 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "Redo map
+"
+
+[node name="SpawnReward" type="Button" parent="VBoxContainer" unique_id=34459163 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "Spawn Reward
+"
+
+[node name="UpgradeHP" type="Button" parent="VBoxContainer" unique_id=1067129896 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "Upgrade HP
+"
+
+[node name="UpgradeStamina" type="Button" parent="VBoxContainer" unique_id=938512252 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "Upgrade  Stamina
+
+"
+
+[node name="UpgradeMana" type="Button" parent="VBoxContainer" unique_id=1159290899 groups=["DigitalBouncingButton"]]
+layout_mode = 2
+text = "Upgrade  Mana
+
+"
+
+[connection signal="pressed" from="VBoxContainer/Inf HP" to="." method="_on_inf_hp_pressed"]
+[connection signal="pressed" from="VBoxContainer/Inf Stam" to="." method="_on_inf_stam_pressed"]
+[connection signal="pressed" from="VBoxContainer/NOCLIP" to="." method="_on_noclip_pressed"]
+[connection signal="pressed" from="VBoxContainer/Shake" to="." method="_on_shake_pressed"]
+[connection signal="pressed" from="VBoxContainer/Respawn Enemies" to="." method="_on_respawn_enemies_pressed"]
+[connection signal="pressed" from="VBoxContainer/Freecam" to="." method="_on_freecam_pressed"]
+[connection signal="pressed" from="VBoxContainer/Enemy Action Trigger" to="." method="_on_enemy_action_trigger_pressed"]
+[connection signal="pressed" from="VBoxContainer/WalkOnWater" to="." method="_on_walk_on_water_pressed"]
+[connection signal="pressed" from="VBoxContainer/WalkOnLava" to="." method="_on_walk_on_lava_pressed"]
+[connection signal="pressed" from="VBoxContainer/WalkOnGaps" to="." method="_on_walk_on_gaps_pressed"]
+[connection signal="pressed" from="VBoxContainer/RedoCurrentMap" to="." method="_on_redo_current_map_pressed"]
+[connection signal="pressed" from="VBoxContainer/SpawnReward" to="." method="_on_spawn_reward_pressed"]
+[connection signal="pressed" from="VBoxContainer/UpgradeHP" to="." method="_on_upgrade_hp_pressed"]
+[connection signal="pressed" from="VBoxContainer/UpgradeStamina" to="." method="_on_upgrade_stamina_pressed"]
+[connection signal="pressed" from="VBoxContainer/UpgradeMana" to="." method="_on_upgrade_mana_pressed"]

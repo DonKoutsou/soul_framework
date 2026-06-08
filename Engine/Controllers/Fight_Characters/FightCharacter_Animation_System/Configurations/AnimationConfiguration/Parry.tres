@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CombatAnimationInfo" format=3 uid="uid://cbe2074luep4t"]
+
+[ext_resource type="Script" uid="uid://bkqk3nyk4pe2r" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/CombatAnimationInfo.gd" id="1_uoje7"]
+
+[resource]
+script = ExtResource("1_uoje7")
+AlwaysR = true
+AnimName = "Parry"
+Blend_Duration = 0.15
+Blend_Out_Duration = 0.15
+AutoComplete = false
+ValidStates = Array[int]([20])
+metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cm5b5u8hrtwx"]
+
+[ext_resource type="Script" uid="uid://1anll8wf5hi7" path="res://Engine/Managers/Traps/Traps/spike_trap.gd" id="2_djb0o"]
+[ext_resource type="Material" uid="uid://bqd68wlr5r82y" path="res://Engine/Shaders/Materials/TestMatUV.tres" id="4_5awo3"]
+[ext_resource type="AudioStream" uid="uid://dip7vy5psovc6" path="res://Engine/Assets/Sounds/SpikeIn.mp3" id="4_qlnf1"]
+[ext_resource type="ArrayMesh" uid="uid://mmct6y5tmmv" path="res://Engine/Assets/Map_Geometry/Spike.res" id="5_5awo3"]
+[ext_resource type="AudioStream" uid="uid://bmse1dsn57m44" path="res://Engine/Assets/Sounds/SpikeOut.mp3" id="5_qup3v"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rj4u7"]
+size = Vector3(1.7119141, 0.47070313, 1.6933594)
+
+[node name="SpikeTrap" type="Node3D" unique_id=1130057019 node_paths=PackedStringArray("SpikeMesh")]
+script = ExtResource("2_djb0o")
+Speed = 5.0
+SpikeMesh = NodePath("MeshInstance3D")
+SpikeOutSOund = ExtResource("5_qup3v")
+SpikeInSound = ExtResource("4_qlnf1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2051164111]
+material_override = ExtResource("4_5awo3")
+mesh = ExtResource("5_5awo3")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=867607024]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1994279124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23535156, 0)
+shape = SubResource("BoxShape3D_rj4u7")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://b83syoriw72hu"]
+
+[ext_resource type="Script" uid="uid://6q67ms25a4ng" path="res://Engine/UI/MessageBox/message_box.gd" id="1_ooai8"]
+
+[node name="MessageBox" type="Control" unique_id=619678209]
+custom_minimum_size = Vector2(260, 145)
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -145.0
+offset_right = 260.0
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("1_ooai8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=539138951]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

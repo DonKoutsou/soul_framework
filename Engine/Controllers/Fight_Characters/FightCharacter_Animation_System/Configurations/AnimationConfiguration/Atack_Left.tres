@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CombatAnimationInfo" format=3 uid="uid://cl8rkv7tndpsf"]
+
+[ext_resource type="Curve" uid="uid://cot3ch0uluahv" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/EaseOut.tres" id="1_vya4q"]
+[ext_resource type="Script" uid="uid://bkqk3nyk4pe2r" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/CombatAnimationInfo.gd" id="2_bxbxw"]
+
+[resource]
+script = ExtResource("2_bxbxw")
+AlwaysR = false
+AnimName = "Atack_Left"
+BlendInAnim = ""
+BlendCurve = ExtResource("1_vya4q")
+BlendOutAnim = "Charge_Left"
+BlendOutCurve = ExtResource("1_vya4q")
+Blend_Duration = 0.3
+Blend_Out_Duration = 0.3
+OnCompleteAnim = ""
+InverseSyncBlend = true
+BoneFilter = 4294967295
+AffectedByWeapon = true
+Time_Scale = 1.0
+Loop = false
+AutoComplete = true
+ValidStates = Array[int]([13, 35])
+metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

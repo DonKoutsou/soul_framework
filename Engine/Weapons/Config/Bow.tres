@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://c230we1738hcl"]
+
+[ext_resource type="Resource" uid="uid://ifiqjx6ic3mh" path="res://Engine/Items/ItemConfigs/Arrow.tres" id="1_t6mub"]
+[ext_resource type="PackedScene" uid="uid://bvp3xh0ib1xju" path="res://Engine/Managers/Traps/Traps/Arrow_Trap_Projectile.tscn" id="2_du4bd"]
+[ext_resource type="Script" uid="uid://b6lfayw73m16y" path="res://Engine/Managers/Traps/Item_Projectile.gd" id="3_qmt00"]
+[ext_resource type="PackedScene" uid="uid://dyn5o00v5sl6m" path="res://Engine/Weapons/Scenes/Bow.tscn" id="4_egepv"]
+[ext_resource type="Script" uid="uid://bts0j03n0r12w" path="res://Engine/Weapons/Weapon.gd" id="5_jy74e"]
+
+[sub_resource type="Resource" id="Resource_j1d1t"]
+script = ExtResource("3_qmt00")
+It = ExtResource("1_t6mub")
+ProjectileScene = ExtResource("2_du4bd")
+metadata/_custom_type_script = "uid://b6lfayw73m16y"
+
+[resource]
+script = ExtResource("5_jy74e")
+Damage = 20.0
+WeaponType = 3
+WeaponScene = ExtResource("4_egepv")
+Proj = SubResource("Resource_j1d1t")
+metadata/_custom_type_script = "uid://bts0j03n0r12w"

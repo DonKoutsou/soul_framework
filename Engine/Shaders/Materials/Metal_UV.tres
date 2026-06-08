@@ -1,0 +1,24 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://d01w180fqfjnm"]
+
+[ext_resource type="Texture2D" uid="uid://dhbpg2hslh5po" path="res://Engine/Assets/Textures/Metal_Albedo.png" id="1_laqh1"]
+[ext_resource type="Shader" uid="uid://b1s0rtuhuqc2p" path="res://Engine/Shaders/BaseMat/Base_Simple_Normal_Mat.gdshader" id="1_o7hvb"]
+[ext_resource type="Texture2D" uid="uid://dv8gbx636box6" path="res://Engine/Assets/Textures/Metal_Metal.png" id="2_o7hvb"]
+[ext_resource type="Texture2D" uid="uid://bcsjktjgwohki" path="res://Engine/Assets/Textures/Metal_Normal.png" id="3_1r6r0"]
+[ext_resource type="Texture2D" uid="uid://budajdye36ebe" path="res://Engine/Assets/Textures/MetalRough.png" id="4_8ofne"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_o7hvb")
+shader_parameter/albedo = Color(0.7263139, 0.7263139, 0.7263138, 1)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("1_laqh1")
+shader_parameter/texture_normal = ExtResource("3_1r6r0")
+shader_parameter/normal_scale = 1.0
+shader_parameter/texture_metallic = ExtResource("2_o7hvb")
+shader_parameter/texture_roughness = ExtResource("4_8ofne")
+shader_parameter/roughness = 0.999999977648
+shader_parameter/metal = 0.86999998055376
+shader_parameter/specular = 0.5
+shader_parameter/ao = 0.999999977648
+shader_parameter/ao_light_affect = 0.0

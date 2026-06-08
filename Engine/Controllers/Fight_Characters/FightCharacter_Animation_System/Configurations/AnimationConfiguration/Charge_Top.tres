@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CombatAnimationInfo" format=3 uid="uid://b1e506c7ccgdk"]
+
+[ext_resource type="Curve" uid="uid://cot3ch0uluahv" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/EaseOut.tres" id="1_yifmn"]
+[ext_resource type="Script" uid="uid://bkqk3nyk4pe2r" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/CombatAnimationInfo.gd" id="2_2qeas"]
+
+[resource]
+script = ExtResource("2_2qeas")
+AlwaysR = false
+AnimName = "Charge_Top"
+BlendInAnim = ""
+BlendCurve = ExtResource("1_yifmn")
+BlendOutAnim = ""
+BlendOutCurve = ExtResource("1_yifmn")
+Blend_Duration = 0.3
+Blend_Out_Duration = 0.15
+OnCompleteAnim = ""
+InverseSyncBlend = false
+BoneFilter = 4294967295
+AffectedByWeapon = true
+Time_Scale = 1.0
+Loop = false
+AutoComplete = false
+ValidStates = Array[int]([5, 10])
+metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

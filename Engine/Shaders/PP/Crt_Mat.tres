@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dgs4ojsv546rq"]
+
+[ext_resource type="Shader" uid="uid://bbjuho2s42o3t" path="res://Engine/Shaders/PP/crt.gdshader" id="1_q41rt"]
+
+[resource]
+shader = ExtResource("1_q41rt")
+shader_parameter/color_offset = 0.5
+shader_parameter/blur = 0.15

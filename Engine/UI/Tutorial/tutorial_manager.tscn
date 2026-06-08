@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://my68s44pih7h"]
+
+[ext_resource type="Script" uid="uid://dwdla5l1ljx05" path="res://Engine/UI/Tutorial/tutorial_manager.gd" id="1_uhfhj"]
+[ext_resource type="Script" uid="uid://bh3uguo082gip" path="res://Engine/UI/Tutorial/TutorialData.gd" id="2_b4d3t"]
+[ext_resource type="PackedScene" uid="uid://5pd451742lrl" path="res://Engine/UI/Tutorial/Prompts/ButtonPrompt.tscn" id="2_yvjw6"]
+[ext_resource type="PackedScene" uid="uid://dnjly52e3glug" path="res://Engine/UI/Tutorial/TutorialTextPrompt.tscn" id="5_bjrsg"]
+
+[sub_resource type="Resource" id="Resource_ks2cl"]
+script = ExtResource("2_b4d3t")
+TutorialTitle = "test"
+TutorialText = "sete"
+metadata/_custom_type_script = "uid://bh3uguo082gip"
+
+[sub_resource type="Resource" id="Resource_3qsdw"]
+script = ExtResource("2_b4d3t")
+TutorialTitle = "ets"
+TutorialText = "etste"
+metadata/_custom_type_script = "uid://bh3uguo082gip"
+
+[node name="TutorialManager" type="Control" unique_id=1118925504]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_uhfhj")
+Tutorials = Dictionary[int, ExtResource("2_b4d3t")]({
+0: SubResource("Resource_ks2cl"),
+1: SubResource("Resource_3qsdw")
+})
+Prompt = ExtResource("2_yvjw6")
+TutorialPrompt = ExtResource("5_bjrsg")
+
+[node name="ButtonPrompt" parent="." unique_id=1556086543 instance=ExtResource("2_yvjw6")]
+layout_mode = 1
+offset_top = -23.0
+offset_bottom = -23.0
+InputName = "move_forward"
+
+[node name="ButtonPrompt2" parent="." unique_id=599395346 instance=ExtResource("2_yvjw6")]
+layout_mode = 1
+offset_top = 17.0
+offset_bottom = 17.0
+InputName = "move_back"
+
+[node name="ButtonPrompt4" parent="." unique_id=1480724191 instance=ExtResource("2_yvjw6")]
+layout_mode = 1
+offset_left = -40.0
+offset_top = 17.0
+offset_right = -40.0
+offset_bottom = 17.0
+InputName = "look_left"
+
+[node name="ButtonPrompt3" parent="." unique_id=10715191 instance=ExtResource("2_yvjw6")]
+layout_mode = 1
+offset_left = 40.0
+offset_top = 17.0
+offset_right = 40.0
+offset_bottom = 17.0
+InputName = "look_right"

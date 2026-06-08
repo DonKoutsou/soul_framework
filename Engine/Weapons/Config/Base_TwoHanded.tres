@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://dovtwiuqcgkvk"]
+
+[ext_resource type="PackedScene" uid="uid://bsutxifqrokua" path="res://Engine/Weapons/Scenes/Dummy_TwoHanded.tscn" id="2_giwe4"]
+[ext_resource type="Script" uid="uid://bts0j03n0r12w" path="res://Engine/Weapons/Weapon.gd" id="3_yxhgs"]
+
+[resource]
+script = ExtResource("3_yxhgs")
+Speed = 0.9
+Stamina_Cost = 30.0
+Damage = 18.0
+WeaponType = 1
+WeaponScene = ExtResource("2_giwe4")
+metadata/_custom_type_script = "uid://bts0j03n0r12w"

@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://04leo48nv66k"]
+
+[ext_resource type="Script" uid="uid://bmhva0s3jqqij" path="res://Engine/UI/demo_end_screen.gd" id="1_44y3o"]
+[ext_resource type="Texture2D" uid="uid://clw8lq0ekmf2s" path="res://Assets/Logos/Logo.png" id="1_hfqas"]
+
+[node name="EndScreen" type="Control" unique_id=2093694933]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_44y3o")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1413257983]
+self_modulate = Color(1, 1, 1, 0.8)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1269654929]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer" unique_id=1743433980]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("1_hfqas")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer" unique_id=266504892]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 26
+text = "This is the end of the demo. Thanks for playing!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1771859946]
+layout_mode = 2
+text = "END"
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

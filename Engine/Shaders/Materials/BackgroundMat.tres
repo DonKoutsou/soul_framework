@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cs5qavhmjdtgy"]
+
+[ext_resource type="Shader" uid="uid://g8r3l6oiplqa" path="res://Engine/Shaders/BaseMat/Base_Simple_Dither_Transparent_NODISTFADE_Mat.gdshader" id="1_gl056"]
+[ext_resource type="Texture2D" uid="uid://dptq3rdmvs2x2" path="res://Engine/Assets/Textures/Light.png" id="1_mns6h"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_gl056")
+shader_parameter/albedo = Color(0, 0, 0, 1)
+shader_parameter/alpha_scale = 1.0
+shader_parameter/billboard = false
+shader_parameter/particle_billboard = false
+shader_parameter/y_billboard = false
+shader_parameter/keep_scale = false
+shader_parameter/uv1_scale = Vector3(1, 1.6, 1)
+shader_parameter/uv1_offset = Vector3(0, 0.205, 0)
+shader_parameter/texture_albedo = ExtResource("1_mns6h")

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cy7ue74koc5a0"]
+
+[ext_resource type="Material" path="res://Engine/Shaders/Materials/ItemMa.tres" id="1_0ftus"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xka2e"]
+emission_shape = 3
+emission_box_extents = Vector3(4, 0, 4)
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 0.5
+initial_velocity_max = 0.5
+angular_velocity_min = 159.99998
+angular_velocity_max = 252.49998
+gravity = Vector3(0, 0, 0)
+scale_min = 0.01
+scale_max = 0.03
+
+[sub_resource type="QuadMesh" id="QuadMesh_74lhj"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" unique_id=1913593289 groups=["Particles"]]
+material_override = ExtResource("1_0ftus")
+cast_shadow = 0
+amount = 20
+lifetime = 4.0
+process_material = SubResource("ParticleProcessMaterial_xka2e")
+draw_pass_1 = SubResource("QuadMesh_74lhj")

@@ -1,0 +1,24 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://c1o4l0x1godac"]
+
+[ext_resource type="Shader" uid="uid://5xosl8jgb5kl" path="res://Engine/Shaders/BaseMat/Base_Simple_Transparent_Emissive_Part_Mat.gdshader" id="1_nkpbm"]
+[ext_resource type="Texture2D" uid="uid://bvmii264x7hv6" path="res://Engine/Assets/Textures/smoke_01.png" id="2_b5fst"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_nkpbm")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/dither_size = 1
+shader_parameter/alpha_scale = 1.0
+shader_parameter/texture_albedo = ExtResource("2_b5fst")
+shader_parameter/roughness = 0.999999977648
+shader_parameter/metal = 0.0
+shader_parameter/specular = 0.5
+shader_parameter/ao_light_affect = 0.0
+shader_parameter/emission = Color(1, 1, 1, 1)
+shader_parameter/emission_energy_multiplier = 100.0
+shader_parameter/billboard = false
+shader_parameter/particle_billboard = true
+shader_parameter/y_billboard = false
+shader_parameter/keep_scale = true

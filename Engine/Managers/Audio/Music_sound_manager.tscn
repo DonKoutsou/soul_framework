@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://jrc6kpj1x1fe"]
+
+[ext_resource type="Script" uid="uid://b2v5bkeelb05n" path="res://Engine/Managers/Audio/music_manager.gd" id="1_fhub7"]
+[ext_resource type="AudioStream" uid="uid://ycnyvxqpntnx" path="res://Engine/Assets/Sounds/Music/UtterDarkMusic.mp3" id="2_4nfux"]
+[ext_resource type="AudioStream" uid="uid://dsh180824adqe" path="res://Engine/Assets/Sounds/Music/Manic_Ritual.mp3" id="3_oyo1p"]
+
+[node name="MusicSoundManager" type="Node" unique_id=416673559]
+process_mode = 3
+script = ExtResource("1_fhub7")
+SoundLibrary = Dictionary[int, AudioStream]({
+0: ExtResource("2_4nfux"),
+1: ExtResource("3_oyo1p")
+})
+SoundVolumes = Dictionary[int, float]({
+0: -15.0,
+1: -10.0
+})

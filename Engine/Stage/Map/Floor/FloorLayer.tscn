@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://sbji8vmb6epv"]
+
+[ext_resource type="TileSet" uid="uid://ffar32u4k25w" path="res://Engine/Stage/Map/MapPieces/Tileset.tres" id="1_bl2g5"]
+[ext_resource type="Script" uid="uid://bxxlexc63h1eo" path="res://Engine/Stage/Map/Floor/floor_layer.gd" id="1_lclr8"]
+[ext_resource type="TileSet" uid="uid://c6je640rwsdtd" path="res://Engine/Stage/Map/MapPieces/DoorTileset.tres" id="2_lclr8"]
+[ext_resource type="TileSet" uid="uid://bjcdaiqm0lu2b" path="res://Engine/Stage/Map/MapPieces/ExitsTileset.tres" id="3_xbqr1"]
+[ext_resource type="TileSet" uid="uid://c4upbpyxdypet" path="res://Engine/Stage/Map/MapPieces/ItemsTileset.tres" id="4_hqcig"]
+[ext_resource type="TileSet" uid="uid://djfplxdilmmls" path="res://Engine/Stage/Map/MapPieces/MonsterSpawnTileset.tres" id="5_mco7m"]
+[ext_resource type="TileSet" uid="uid://bk5dt8t12i5af" path="res://Engine/Stage/Map/MapPieces/Locks.tres" id="6_07bep"]
+[ext_resource type="TileSet" uid="uid://c4tpb4dcdxjyk" path="res://Engine/Stage/Map/MapPieces/LeverTileset.tres" id="7_27cef"]
+[ext_resource type="TileSet" uid="uid://u0lcqfkcwtf" path="res://Engine/Stage/Map/MapPieces/CharactersTileset.tres" id="7_dp076"]
+[ext_resource type="TileSet" uid="uid://dxn7jmeir8cvm" path="res://Engine/Stage/Map/MapPieces/TextsTileSet.tres" id="9_3p4bd"]
+[ext_resource type="TileSet" uid="uid://b2a3qsskxrnji" path="res://Engine/Stage/Map/MapPieces/LocksTileset.tres" id="9_4ocsu"]
+[ext_resource type="TileSet" uid="uid://tsanyvcnsban" path="res://Engine/Stage/Map/MapPieces/PreassurePlatesTileset.tres" id="10_7ac8e"]
+
+[node name="Floor_0" type="Node2D" unique_id=1666837197]
+script = ExtResource("1_lclr8")
+
+[node name="MAZE" type="TileMapLayer" parent="." unique_id=817992180]
+tile_set = ExtResource("1_bl2g5")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="DOORS" type="TileMapLayer" parent="." unique_id=584279988]
+tile_set = ExtResource("2_lclr8")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="MAP_INFO" type="TileMapLayer" parent="." unique_id=1043461689]
+tile_set = ExtResource("6_07bep")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="MAP_INFO2" type="TileMapLayer" parent="." unique_id=179013606]
+tile_set = ExtResource("6_07bep")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="EXITS" type="TileMapLayer" parent="." unique_id=1074619576]
+tile_set = ExtResource("3_xbqr1")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="ITEMS" type="TileMapLayer" parent="." unique_id=288722588]
+tile_set = ExtResource("4_hqcig")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="CHARACTERS" type="TileMapLayer" parent="." unique_id=1640039887]
+tile_set = ExtResource("7_dp076")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="MONSTERS" type="TileMapLayer" parent="." unique_id=173128641]
+tile_set = ExtResource("5_mco7m")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="LEVERS" type="TileMapLayer" parent="." unique_id=521985993]
+tile_set = ExtResource("7_27cef")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="LOCKS" type="TileMapLayer" parent="." unique_id=580903904]
+tile_set = ExtResource("9_4ocsu")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="PLATES" type="TileMapLayer" parent="." unique_id=2070613937]
+tile_set = ExtResource("10_7ac8e")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="MOVABLES" type="TileMapLayer" parent="." unique_id=909357748]
+tile_set = ExtResource("7_27cef")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="PROJECTILE_SWITCH" type="TileMapLayer" parent="." unique_id=628202626]
+tile_set = ExtResource("7_27cef")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="TEXTS" type="TileMapLayer" parent="." unique_id=830701216]
+tile_set = ExtResource("9_3p4bd")

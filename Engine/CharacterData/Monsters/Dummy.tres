@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="Monster" format=3 uid="uid://q5ci3vkqvnyf"]
+
+[ext_resource type="Script" uid="uid://l1yv1ffimeej" path="res://Engine/Items/Effects/ItemEffect.gd" id="1_ntw0s"]
+[ext_resource type="Script" uid="uid://bel483m12cmq1" path="res://Engine/CharacterData/CharacterStat.gd" id="3_6cntw"]
+[ext_resource type="Script" uid="uid://nrr1x4b7ijdb" path="res://Engine/CharacterData/Monsters/Monster.gd" id="4_qa4l5"]
+
+[sub_resource type="Resource" id="Resource_t6qoy"]
+script = ExtResource("3_6cntw")
+StatValue = 80
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
+[sub_resource type="Resource" id="Resource_sv068"]
+script = ExtResource("3_6cntw")
+StatName = 1
+StatValue = 80
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
+[sub_resource type="Resource" id="Resource_epk5n"]
+script = ExtResource("3_6cntw")
+StatName = 2
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
+[sub_resource type="Resource" id="Resource_csbjq"]
+script = ExtResource("3_6cntw")
+StatName = 3
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
+[resource]
+script = ExtResource("4_qa4l5")
+MonsterName = "Dummy"
+MonsterStats = Array[ExtResource("3_6cntw")]([SubResource("Resource_t6qoy"), SubResource("Resource_sv068"), SubResource("Resource_epk5n"), SubResource("Resource_csbjq")])
+MonsterWeapons = Array[String](["uid://3adttrer5teh", "uid://cm0d5gw0kuioa", "uid://dovtwiuqcgkvk"])
+Dificulty = 1
+AutoTurns = true
+GoldReward = 2
+Visuals = "uid://css3evm50uubp"
+Materials = Array[String](["uid://opx64qjq6i0l"])
+DecorationAmm = Dictionary[String, int]({
+"CH": 0,
+"HE": 1,
+"LS": 1,
+"RA": 0,
+"RS": 1
+})
+metadata/_custom_type_script = "uid://nrr1x4b7ijdb"

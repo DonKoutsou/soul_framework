@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://ifiqjx6ic3mh"]
+
+[ext_resource type="Script" uid="uid://l1yv1ffimeej" path="res://Engine/Items/Effects/ItemEffect.gd" id="1_m3sbc"]
+[ext_resource type="ArrayMesh" uid="uid://b2nnuwggkhk58" path="res://Assets/Weapons/WeaponModels/Arrow.res" id="3_m3sbc"]
+[ext_resource type="Script" uid="uid://dnwn8l0kfkmcy" path="res://Engine/Items/Item.gd" id="5_gli0o"]
+
+[resource]
+script = ExtResource("5_gli0o")
+ItemName = "Arrow"
+ConsumeOnUse = true
+Value = 5
+Model = ExtResource("3_m3sbc")
+Stack = true
+metadata/_custom_type_script = "uid://dnwn8l0kfkmcy"

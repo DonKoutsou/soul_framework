@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dfonlaa4u7jth"]
+
+[ext_resource type="Texture2D" uid="uid://crbta14morp15" path="res://Engine/Assets/Items/Textures/LeafSet019_1K-PNG_Red_Color.png" id="1_crlgc"]
+[ext_resource type="Shader" uid="uid://dcjmc7ch6w5tw" path="res://Engine/Shaders/BaseMat/Base_Simple_Dither_Transparent_Mat.gdshader" id="1_ej8bs"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ej8bs")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/dither_size = 1
+shader_parameter/alpha_scale = 1.0
+shader_parameter/texture_albedo = ExtResource("1_crlgc")
+shader_parameter/billboard = false
+shader_parameter/particle_billboard = false
+shader_parameter/y_billboard = false
+shader_parameter/keep_scale = false

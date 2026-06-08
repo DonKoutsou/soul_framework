@@ -1,0 +1,201 @@
+[gd_scene format=3 uid="uid://i78xcdi566ur"]
+
+[ext_resource type="Script" uid="uid://ceprnxrpb3ma4" path="res://Engine/UI/StartingMenu/starting_menu.gd" id="1_pxkw3"]
+[ext_resource type="Texture2D" uid="uid://d285tvcnnxaob" path="res://Engine/Assets/Logos/ΜΧΨLogo2.png" id="2_1mfia"]
+[ext_resource type="PackedScene" uid="uid://chnmfgs0215cp" path="res://Engine/UI/Utilities/PopUp.tscn" id="2_oweaf"]
+[ext_resource type="Texture2D" uid="uid://cjhl5oy861siv" path="res://Engine/Assets/Logos/icon_monochrome_light.png" id="3_bhq4f"]
+[ext_resource type="PackedScene" uid="uid://coslsa2xslu3t" path="res://Engine/UI/StartingMenu/StartingMenuWorld.tscn" id="4_7c5ue"]
+[ext_resource type="Environment" uid="uid://bpnvakbk7taqj" path="res://Engine/Enviroments/StartingMenuEnviroment.tres" id="4_i0jdu"]
+[ext_resource type="Script" uid="uid://cv8sypgj72pj0" path="res://Engine/Stage/Level/CustomSubviewPort.gd" id="6_1rf5g"]
+
+[sub_resource type="World3D" id="World3D_nf1qf"]
+environment = ExtResource("4_i0jdu")
+
+[node name="StartingMenu" type="CanvasLayer" unique_id=1229486114 node_paths=PackedStringArray("Credits", "Menu", "StartingMenuW")]
+layer = 8
+script = ExtResource("1_pxkw3")
+PopM = ExtResource("2_oweaf")
+Credits = NodePath("Credits")
+Menu = NodePath("Control")
+StartingMenuW = NodePath("SubViewportContainer/SubViewport/Node3D")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1058922147]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1655807524]
+own_world_3d = true
+world_3d = SubResource("World3D_nf1qf")
+handle_input_locally = false
+size = Vector2i(320, 240)
+render_target_update_mode = 4
+script = ExtResource("6_1rf5g")
+
+[node name="Node3D" parent="SubViewportContainer/SubViewport" unique_id=328425693 instance=ExtResource("4_7c5ue")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=408301909]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -35.0
+offset_right = 68.0
+offset_bottom = -3.0
+grow_vertical = 0
+alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=2130932328]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_1mfia")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer" unique_id=485601028]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_bhq4f")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="." unique_id=1456906434]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=1825340202]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -155.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Panel2" type="Panel" parent="Control/VBoxContainer" unique_id=1051161782]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+
+[node name="Start" type="Button" parent="Control/VBoxContainer" unique_id=70990313 groups=["DigitalButtons"]]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+text = "START GAME"
+
+[node name="Load" type="Button" parent="Control/VBoxContainer" unique_id=734412699 groups=["DigitalButtons"]]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+text = "LOAD GAME"
+
+[node name="Settings" type="Button" parent="Control/VBoxContainer" unique_id=666240816 groups=["DigitalButtons"]]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+text = "SETTINGS"
+
+[node name="Credits" type="Button" parent="Control/VBoxContainer" unique_id=1719913184 groups=["DigitalButtons"]]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+text = "CREDITS"
+
+[node name="Exit" type="Button" parent="Control/VBoxContainer" unique_id=1048951013 groups=["DigitalButtons"]]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+text = "QUIT"
+
+[node name="Panel" type="Panel" parent="Control/VBoxContainer" unique_id=946382166]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+
+[node name="Credits" type="Control" parent="." unique_id=505903250]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Credits" unique_id=178736340]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Credits/VBoxContainer" unique_id=1762930683]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Credits/VBoxContainer/ScrollContainer" unique_id=35168281]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 19
+
+[node name="Label2" type="Label" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=331576605]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Credits:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1812669157]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainer2" unique_id=2033980111]
+layout_mode = 2
+text = "Developers"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LinkButton2" type="LinkButton" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainer2" unique_id=1126590358]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 12
+text = "Development : Koutsouradis Antonios"
+underline = 1
+uri = "https://www.artstation.com/koutsou"
+
+[node name="CloseCredits" type="Button" parent="Credits/VBoxContainer" unique_id=1543997634 groups=["DigitalButtons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Close"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1170061140]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[connection signal="gui_input" from="HBoxContainer/TextureRect" to="." method="_on_texture_rect_gui_input"]
+[connection signal="pressed" from="Control/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Credits/VBoxContainer/CloseCredits" to="." method="_on_close_credits_pressed"]

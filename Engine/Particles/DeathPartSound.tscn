@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dxq20d767888h"]
+
+[ext_resource type="Material" path="res://Engine/Shaders/Materials/ItemMa.tres" id="1_muhvn"]
+[ext_resource type="AudioStream" uid="uid://ci7ttci3ahtmk" path="res://Engine/Assets/Sounds/Magic.mp3" id="2_xwksf"]
+
+[sub_resource type="Curve" id="Curve_vldxg"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.1, 0.2), -0.92232, -0.92232, 0, 0, Vector2(0.9980694, 0), -0.10244936, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_5qfm4"]
+curve = SubResource("Curve_vldxg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vldxg"]
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 0.5
+initial_velocity_max = 0.5
+angular_velocity_min = -720.0
+angular_velocity_max = 719.99994
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = 0.99999774
+tangential_accel_max = 0.99999774
+scale_min = 0.5
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_5qfm4")
+
+[sub_resource type="SphereMesh" id="SphereMesh_5qfm4"]
+radial_segments = 4
+rings = 2
+
+[node name="GPUParticles3D" type="GPUParticles3D" unique_id=401005205 groups=["Particles"]]
+material_override = ExtResource("1_muhvn")
+cast_shadow = 0
+emitting = false
+amount = 20
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_vldxg")
+draw_pass_1 = SubResource("SphereMesh_5qfm4")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1856515761]
+stream = ExtResource("2_xwksf")
+volume_db = -20.0
+unit_size = 1.0
+autoplay = true

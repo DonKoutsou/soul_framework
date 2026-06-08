@@ -1,0 +1,172 @@
+[gd_scene format=3 uid="uid://purdosvq2xdp"]
+
+[ext_resource type="Script" uid="uid://dp78wxcje321n" path="res://Engine/Settings/settings.gd" id="1_4geyq"]
+
+[node name="Settings" type="ColorRect" unique_id=1590089318 node_paths=PackedStringArray("BrighnessSlider", "ContrastSlider", "FullScreenCheckbox", "SoundSlider", "MusicSoundSlider", "VSync", "MinimapBox", "DOFBOX", "HeadBobBox")]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+script = ExtResource("1_4geyq")
+BrighnessSlider = NodePath("PanelContainer/VBoxContainer/GridContainer/BrighnessSlider")
+ContrastSlider = NodePath("PanelContainer/VBoxContainer/GridContainer/ContrastSlider")
+FullScreenCheckbox = NodePath("PanelContainer/VBoxContainer/GridContainer/FullScreenBox")
+SoundSlider = NodePath("PanelContainer/VBoxContainer/GridContainer/Sound")
+MusicSoundSlider = NodePath("PanelContainer/VBoxContainer/GridContainer/MusicSound")
+VSync = NodePath("PanelContainer/VBoxContainer/GridContainer/VSyncBox")
+MinimapBox = NodePath("PanelContainer/VBoxContainer/GridContainer/MinimapBox")
+DOFBOX = NodePath("PanelContainer/VBoxContainer/GridContainer/DofBox")
+HeadBobBox = NodePath("PanelContainer/VBoxContainer/GridContainer/HeadBobBox")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1324881075]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -100.0
+offset_right = 125.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=796563818]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer" unique_id=285143964]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/h_separation = 34
+columns = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=1515745297]
+visible = false
+layout_mode = 2
+size_flags_vertical = 6
+text = "Brightness"
+
+[node name="BrighnessSlider" type="HSlider" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=1307859431 groups=["DigitalButtons"]]
+visible = false
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 2
+size_flags_vertical = 6
+min_value = 0.5
+max_value = 2.0
+step = 0.1
+value = 0.5
+
+[node name="Label5" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=1163383889]
+visible = false
+layout_mode = 2
+size_flags_vertical = 6
+text = "Contrast"
+
+[node name="ContrastSlider" type="HSlider" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=892568582 groups=["DigitalButtons"]]
+visible = false
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 2
+size_flags_vertical = 6
+min_value = 0.5
+max_value = 2.0
+step = 0.1
+value = 0.5
+
+[node name="Label3" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=106008276]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Master Sound"
+
+[node name="Sound" type="HSlider" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=259357859 groups=["DigitalButtons"]]
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 2
+size_flags_vertical = 6
+max_value = 1.0
+step = 0.05
+
+[node name="Label7" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=2006686912]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Music Sound"
+
+[node name="MusicSound" type="HSlider" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=636680874 groups=["DigitalButtons"]]
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 2
+size_flags_vertical = 6
+max_value = 1.0
+step = 0.05
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=1122448855]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Full Screen"
+
+[node name="FullScreenBox" type="CheckBox" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=1787354371 groups=["DigitalButtons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Label9" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=1098160487]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Head Bob"
+
+[node name="HeadBobBox" type="CheckBox" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=317256977 groups=["DigitalButtons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Label8" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=393703433]
+visible = false
+layout_mode = 2
+size_flags_vertical = 6
+text = "Depth of Field"
+
+[node name="DofBox" type="CheckBox" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=1210745848 groups=["DigitalButtons"]]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Label4" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=481826794]
+layout_mode = 2
+size_flags_vertical = 6
+text = "V-Sunc"
+
+[node name="VSyncBox" type="CheckBox" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=1798831146 groups=["DigitalButtons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Label6" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=782469815]
+visible = false
+layout_mode = 2
+size_flags_vertical = 6
+text = "Show Minimap"
+
+[node name="MinimapBox" type="CheckBox" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=1976259245 groups=["DigitalButtons"]]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer" unique_id=364233233 groups=["DigitalButtons"]]
+layout_mode = 2
+text = "CLOSE"
+
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/GridContainer/BrighnessSlider" to="." method="_on_brighness_slider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/GridContainer/ContrastSlider" to="." method="_on_contrast_slider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/GridContainer/Sound" to="." method="_on_sound_value_changed"]
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/GridContainer/MusicSound" to="." method="_on_music_sound_value_changed"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/GridContainer/FullScreenBox" to="." method="_on_full_screen_box_toggled"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/GridContainer/HeadBobBox" to="." method="_on_head_bob_box_toggled"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/GridContainer/DofBox" to="." method="_on_dof_box_toggled"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/GridContainer/VSyncBox" to="." method="_on_v_sync_box_toggled"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/GridContainer/MinimapBox" to="." method="_on_minimap_box_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

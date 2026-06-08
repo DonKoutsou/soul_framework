@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://2p82bw8skjky"]
+
+[ext_resource type="Shader" uid="uid://1tbkbml80kx3" path="res://Engine/Shaders/BaseMat/Base_Time_Emissive_Mat.gdshader" id="1_76mvd"]
+[ext_resource type="Texture2D" uid="uid://d1jfw7avsleqy" path="res://Engine/Assets/Textures/Opacity.png" id="2_u7qwj"]
+
+[resource]
+render_priority = 1
+shader = ExtResource("1_76mvd")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/dither_size = 1
+shader_parameter/alpha_scale = 1.0
+shader_parameter/texture_albedo = ExtResource("2_u7qwj")
+shader_parameter/roughness = 0.0
+shader_parameter/metal = 0.0
+shader_parameter/specular = 0.0
+shader_parameter/ao_light_affect = 0.0
+shader_parameter/emission = Color(1, 1, 1, 1)
+shader_parameter/emission_energy_multiplier = 0.999999977648
+shader_parameter/TimeOffset = 0.0
+shader_parameter/TimeScale = 1.0

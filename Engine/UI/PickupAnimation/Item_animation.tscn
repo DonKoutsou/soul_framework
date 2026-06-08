@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://bfbhibg48legn"]
+
+[ext_resource type="Script" uid="uid://bosjlqe6evtjs" path="res://Engine/UI/PickupAnimation/chest_animation.gd" id="1_3k4tg"]
+[ext_resource type="Environment" uid="uid://bwrhss8cb37v4" path="res://Engine/Enviroments/InventorySceneEnviroment.tres" id="2_hcna8"]
+[ext_resource type="ArrayMesh" uid="uid://b42pcmm1e2nlh" path="res://Engine/Assets/Items/Key.obj" id="3_ov75t"]
+
+[sub_resource type="World3D" id="World3D_swvtp"]
+environment = ExtResource("2_hcna8")
+
+[sub_resource type="Animation" id="Animation_phnu4"]
+resource_name = "Open"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/Item:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.008, 0), Vector3(0, 0.008, 0), Vector3(0, 0.576, 0.198), Vector3(0, 0.55, 0.623)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/Item:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.530423, 0, 0.95881414)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/Item:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_swvtp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/Item:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.14774229, 0.2913702, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/Item:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.530423, 0, 0.95881414)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/Item:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.16, 0.16, 0.16)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8fg60"]
+_data = {
+&"Open": SubResource("Animation_phnu4"),
+&"RESET": SubResource("Animation_swvtp")
+}
+
+[node name="ChestAnimation" type="SubViewportContainer" unique_id=490380857 node_paths=PackedStringArray("animation_player", "item")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = ExtResource("1_3k4tg")
+animation_player = NodePath("SubViewport/AnimationPlayer")
+item = NodePath("SubViewport/Item/MeshInstance3D")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=486100546]
+own_world_3d = true
+world_3d = SubResource("World3D_swvtp")
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(640, 480)
+render_target_update_mode = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport" unique_id=447240691]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_8fg60")
+
+[node name="Item" type="Node3D" parent="SubViewport" unique_id=795621627]
+transform = Transform3D(0.091918565, -0.13096175, 0, 0.11296671, 0.079288326, 0.08094372, -0.06625331, -0.04650144, 0.1380149, 0.14774229, 0.2913702, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Item" unique_id=534834091]
+transform = Transform3D(1.0000001, -7.450581e-09, 2.9802322e-08, 2.9802322e-08, 1, 2.9802322e-08, 2.9802322e-08, 2.9802322e-08, 1, -2.9802322e-08, -0.17752266, 5.9604645e-08)
+mesh = ExtResource("3_ov75t")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=824916492]
+transform = Transform3D(1, 2.3236636e-08, 3.5162707e-08, -2.9802322e-08, 0.97977835, 0.20008622, -2.9802322e-08, -0.20008622, 0.97977835, 7.5289165e-08, 0.7491154, 1.4839894)
+fov = 45.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport" unique_id=1500251890]
+transform = Transform3D(0.88899314, 0.05740851, -0.45430762, 0.34369197, 0.571951, 0.7448139, 0.30260032, -0.81827646, 0.48872966, 0, 0, 0)
+
+[connection signal="animation_finished" from="SubViewport/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

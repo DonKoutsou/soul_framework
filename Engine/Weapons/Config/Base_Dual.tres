@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://3adttrer5teh"]
+
+[ext_resource type="PackedScene" uid="uid://ckyjqnm5f8oix" path="res://Engine/Weapons/Scenes/Dummy_Sword.tscn" id="2_fu6iu"]
+[ext_resource type="Script" uid="uid://bts0j03n0r12w" path="res://Engine/Weapons/Weapon.gd" id="3_k2vqf"]
+
+[resource]
+script = ExtResource("3_k2vqf")
+Speed = 1.1
+Stamina_Cost = 25.0
+Damage = 13.0
+WeaponType = 2
+Pierce = true
+WeaponScene = ExtResource("2_fu6iu")
+metadata/_custom_type_script = "uid://bts0j03n0r12w"

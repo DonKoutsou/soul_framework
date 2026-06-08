@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://dnjly52e3glug"]
+
+[ext_resource type="Script" uid="uid://dxmuuobiwx1wn" path="res://Engine/UI/Tutorial/tutorial_text_prompt.gd" id="1_xlbk0"]
+
+[node name="TutorialTextPrompt" type="Control" unique_id=1399470122 node_paths=PackedStringArray("TutorialPanel", "Title", "Text", "LeaveButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xlbk0")
+TutorialPanel = NodePath("PanelContainer")
+Title = NodePath("PanelContainer/VBoxContainer/Title")
+Text = NodePath("PanelContainer/VBoxContainer/Text")
+LeaveButton = NodePath("PanelContainer/VBoxContainer/Button")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1286534212]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=31092423]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=996087844]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer" unique_id=422720853]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Test"
+
+[node name="Text" type="Label" parent="PanelContainer/VBoxContainer" unique_id=2108620341]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 12
+text = "Test textdwadwa
+dwa
+d
+wa
+daw
+d
+wa
+"
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1759819296 groups=["DigitalButtons"]]
+layout_mode = 2
+text = "OK"
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

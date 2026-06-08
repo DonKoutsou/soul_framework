@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://hjvv7gta03nx"]
+
+[ext_resource type="Shader" uid="uid://bvsd8i5keurgc" path="res://Engine/Shaders/BaseMat/Base_Simple_Unlit_Mat.gdshader" id="1_c2sq4"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_c2sq4")
+shader_parameter/albedo = Color(0, 0, 0, 1)

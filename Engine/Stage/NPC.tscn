@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://bualon7naga6t"]
+
+[ext_resource type="Script" uid="uid://xpvvosrw2m7v" path="res://Engine/Stage/Level/MapCharacter.gd" id="1_au01g"]
+[ext_resource type="Script" uid="uid://2o6tgcat6qck" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Fight_Animation_Modifier.gd" id="2_tiudx"]
+[ext_resource type="Script" uid="uid://bl0vbdv76yftl" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/AnimationInfo.gd" id="3_2q6pq"]
+[ext_resource type="PackedScene" uid="uid://0e6kd5jui0hi" path="res://Engine/Assets/Characters/DummyNPC/NPC_RigSkeleton.tscn" id="3_60drj"]
+[ext_resource type="PackedScene" uid="uid://dajpxd1pnq28d" path="res://Engine/Particles/LightPart.tscn" id="3_phepf"]
+[ext_resource type="AnimationLibrary" uid="uid://dgp1js6g2k7vi" path="res://Engine/Assets/Characters/DummyNPC/NPC_RigAnimationLib.tres" id="7_ffvcy"]
+[ext_resource type="Script" uid="uid://baqcab4qnvbk0" path="res://Engine/UI/Utilities/TalkText.gd" id="7_utfws"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uoj2o"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="Resource" id="Resource_ym7w5"]
+script = ExtResource("3_2q6pq")
+AnimName = "Idle"
+Blend_Duration = 0.0
+Blend_Out_Duration = 0.0
+Loop = true
+AutoComplete = false
+ValidStates = Array[int]([0, 40])
+metadata/_custom_type_script = "uid://bl0vbdv76yftl"
+
+[sub_resource type="Resource" id="Resource_uoj2o"]
+script = ExtResource("3_2q6pq")
+AnimName = "ExtendHand"
+Blend_Duration = 0.5
+Blend_Out_Duration = 0.5
+Time_Scale = 2.0
+AutoComplete = false
+ValidStates = Array[int]([40])
+metadata/_custom_type_script = "uid://bl0vbdv76yftl"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ffvcy"]
+size = Vector3(6, 1, 6)
+
+[node name="TestMachine" type="Area3D" unique_id=1871716308 node_paths=PackedStringArray("LookPivot", "Skel", "Talkt", "modif", "lookModif", "HandPlacement", "LookLoc")]
+script = ExtResource("1_au01g")
+LookPivot = NodePath("GeneralSkeleton/Look")
+Skel = NodePath("GeneralSkeleton")
+Talkt = NodePath("GeneralSkeleton/BoneAttachment3D/TalkText")
+modif = NodePath("GeneralSkeleton/MyModifier")
+lookModif = NodePath("GeneralSkeleton/LookAtModifier3D")
+LightPartScene = ExtResource("3_phepf")
+HandPlacement = NodePath("GeneralSkeleton/HandLocator")
+LookLoc = NodePath("LookLoc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1632229408]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_uoj2o")
+
+[node name="GeneralSkeleton" parent="." unique_id=405094765 instance=ExtResource("3_60drj")]
+bones/1/position = Vector3(0.014457805, 0.5055567, -0.0077270623)
+bones/1/rotation = Quaternion(-0.05810635, 1.19007865e-07, -6.926817e-09, 0.9983104)
+bones/2/rotation = Quaternion(-0.0031127406, -0.07398474, 0.9961874, -0.046122417)
+bones/4/rotation = Quaternion(0.57412577, 0.07813693, 0.26536855, 0.7706191)
+bones/7/rotation = Quaternion(0.57412577, -0.07813687, -0.26536864, 0.7706191)
+bones/8/rotation = Quaternion(0.025964519, 2.863259e-14, 6.1904246e-09, 0.9996629)
+bones/9/rotation = Quaternion(-0.009258556, 7.423307e-05, 0.008017172, 0.999925)
+bones/10/position = Vector3(0.022619992, 0.090541795, 0.012897477)
+bones/10/rotation = Quaternion(-0.2589101, 0.08974045, -0.78607786, 0.5540703)
+bones/11/rotation = Quaternion(0.30879414, 0.44620654, -0.32654807, 0.7738943)
+bones/12/rotation = Quaternion(0.41964713, -0.05244329, -0.26622638, 0.866181)
+bones/13/rotation = Quaternion(-0.0731506, 0.0495876, -0.1752838, 0.9805436)
+bones/14/rotation = Quaternion(-0.029413383, -2.7650804e-06, -0.10327085, 0.9942183)
+bones/15/rotation = Quaternion(-0.020301573, 0.0012570403, -0.12708148, 0.9916837)
+bones/16/position = Vector3(-1.6302169e-09, -5.0822926e-08, -3.978094e-08)
+bones/16/rotation = Quaternion(0.41636452, -0.008226956, -0.17961355, 0.8912418)
+bones/17/rotation = Quaternion(-0.22516918, -0.0028543393, -0.07110363, 0.97171754)
+bones/18/rotation = Quaternion(-0.0730274, -0.008274136, -0.05424724, 0.99581915)
+bones/20/position = Vector3(-0.022620013, 0.09054193, 0.012897421)
+bones/20/rotation = Quaternion(-0.3443345, -0.027855964, 0.75258654, 0.560599)
+bones/21/rotation = Quaternion(0.3923151, -0.6077182, 0.278956, 0.6316258)
+bones/22/rotation = Quaternion(0.4821644, 0.09401353, 0.26743004, 0.8289512)
+bones/23/rotation = Quaternion(-0.04447997, -0.004280871, 0.119912274, 0.9917783)
+bones/24/rotation = Quaternion(-0.029413471, 2.754758e-06, 0.10327083, 0.9942183)
+bones/25/rotation = Quaternion(-0.020301599, -0.0012570791, 0.12708142, 0.9916837)
+bones/26/position = Vector3(-1.0181421e-08, -2.5023384e-08, -1.5620564e-08)
+bones/26/rotation = Quaternion(0.40251347, -0.054523367, 0.26749745, 0.87375927)
+bones/27/rotation = Quaternion(-0.22516905, 0.0028544287, 0.07110362, 0.97171766)
+bones/28/rotation = Quaternion(-0.073027454, 0.008273981, 0.054247238, 0.99581915)
+bones/29/position = Vector3(-1.7520508e-08, 2.27883e-08, -1.9790605e-08)
+bones/29/rotation = Quaternion(-1.6065314e-08, -2.910397e-11, -5.4133125e-09, 1)
+bones/31/rotation = Quaternion(0.353668, -1.8027453e-10, 8.4221746e-08, 0.93537104)
+bones/32/position = Vector3(2.722941e-17, 0.7685975, 0.0073502064)
+bones/32/rotation = Quaternion(4.6296608e-10, 1, 9.525391e-06, -2.828335e-07)
+
+[node name="MyModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=1311205604 node_paths=PackedStringArray("animator")]
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+rotation_edit_mode = 0
+rotation_order = 2
+top_level = false
+visible = true
+visibility_parent = NodePath("")
+active = true
+influence = 1.0
+script = ExtResource("2_tiudx")
+animator = NodePath("../../AnimationPlayer")
+anims = Array[ExtResource("3_2q6pq")]([SubResource("Resource_ym7w5"), SubResource("Resource_uoj2o")])
+metadata/_custom_type_script = "uid://2o6tgcat6qck"
+
+[node name="Look" type="Node3D" parent="GeneralSkeleton" unique_id=1775841605]
+transform = Transform3D(0.99943763, -0.025436774, -0.021849804, -0.012544802, 0.32065678, -0.9471125, 0.031097772, 0.9468538, 0.3201573, 0.011676369, 0.86409134, -0.026688464)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1239546505]
+transform = Transform3D(0.99987143, -0.011103989, 0.011567752, 0.015977617, 0.7507601, -0.6603816, -0.001351737, 0.66048145, 0.750841, 0.011676368, 0.8640554, -0.028075667)
+bone_name = "Head"
+bone_idx = 31
+
+[node name="TalkText" type="Node3D" parent="GeneralSkeleton/BoneAttachment3D" unique_id=990652676]
+transform = Transform3D(0.99999976, 3.445713e-05, 3.317627e-05, -3.4556724e-05, 0.9999956, 0.0029826164, -3.307429e-05, -0.002982527, 0.9999957, 0.0006786492, 0.1288858, -0.09147847)
+script = ExtResource("7_utfws")
+
+[node name="LookAtModifier3D" type="LookAtModifier3D" parent="GeneralSkeleton" unique_id=668738455]
+active = false
+target_node = NodePath("../../Area3D")
+bone_name = "Head"
+bone = 31
+use_angle_limitation = true
+symmetry_limitation = true
+primary_limit_angle = 1.0471976
+primary_damp_threshold = 1.0
+secondary_limit_angle = 1.0471976
+secondary_damp_threshold = 1.0
+
+[node name="HandLocator" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1000125895]
+transform = Transform3D(-0.3469007, 0.73154056, 0.58694804, -0.1673153, -0.66404, 0.7287362, 0.922857, 0.1545938, 0.35275376, -0.051321533, 0.5105219, 0.060310844)
+bone_name = "WeaponPlacement.R"
+bone_idx = 29
+
+[node name="Area3D" type="Area3D" parent="." unique_id=137221091]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1756144533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_ffvcy")
+
+[node name="LookLoc" type="Node3D" parent="." unique_id=1468526064]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7406007, 0.777505)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1264452150]
+active = false
+libraries/ = ExtResource("7_ffvcy")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]

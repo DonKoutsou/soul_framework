@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponItem" format=3 uid="uid://77d7e1g6awew"]
+
+[ext_resource type="Script" uid="uid://l1yv1ffimeej" path="res://Engine/Items/Effects/ItemEffect.gd" id="1_iugeb"]
+[ext_resource type="Resource" uid="uid://c230we1738hcl" path="res://Engine/Weapons/Config/Bow.tres" id="3_do1xw"]
+[ext_resource type="ArrayMesh" uid="uid://bxgmg3cqbpdmn" path="res://Assets/Weapons/WeaponModels/Bow.res" id="3_iugeb"]
+[ext_resource type="Script" uid="uid://ojmne3pkd664" path="res://Engine/Items/WeaponItem.gd" id="6_lbo8p"]
+
+[resource]
+script = ExtResource("6_lbo8p")
+WeaponsRes = ExtResource("3_do1xw")
+ItemName = "Bow"
+Value = 10
+Model = ExtResource("3_iugeb")
+metadata/_custom_type_script = "uid://dnwn8l0kfkmcy"

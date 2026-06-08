@@ -1,0 +1,307 @@
+[gd_scene format=3 uid="uid://b63snluv13jfb"]
+
+[ext_resource type="Script" uid="uid://d20xk26tpbx3j" path="res://Engine/UI/character_sheet.gd" id="1_hrdcl"]
+[ext_resource type="PackedScene" uid="uid://ckxosup45uawb" path="res://Engine/UI/Utilities/SlashAnim.tscn" id="2_qv1ju"]
+[ext_resource type="Texture2D" uid="uid://u51o0yeeuq56" path="res://Engine/Assets/UI_Icons/Death.png" id="4_5k3fm"]
+[ext_resource type="StyleBox" uid="uid://dwqvoapa1bpu1" path="res://Engine/Theme/HPBar.tres" id="4_b766n"]
+[ext_resource type="StyleBox" uid="uid://dg8u0ab1xq1lh" path="res://Engine/Theme/ExpBar.tres" id="5_3h2wq"]
+[ext_resource type="StyleBox" uid="uid://di7dsa4p4aga2" path="res://Engine/Theme/ManBar.tres" id="6_ky1d0"]
+[ext_resource type="Texture2D" uid="uid://dnhgfeeqnuy3o" path="res://Engine/Assets/UI_Icons/Stars.png" id="7_ipn01"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ky1d0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fg8ep"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qv1ju"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ky1d0"]
+bg_color = Color(0.63102823, 0.4137785, 0.24284607, 1)
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 4
+shadow_color = Color(0.03876, 0.03876, 0.03876, 0.5)
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3h2wq"]
+bg_color = Color(0, 0, 0, 0.8)
+
+[node name="CharacterSheet" type="PanelContainer" unique_id=2017737270 node_paths=PackedStringArray("CharacterHealthBar", "CharacterHealthBar2", "CharacterHealthLabel", "CharacterStaminaBar", "CharacterStaminaBar2", "CharacterStaminaLabel", "CharacterManaBar", "CharacterManaBar2", "CharacterManaLabel", "CharacterManaText", "DeathPanel", "Portrait", "FloaterParent", "FloaterParentBot", "StunnTex")]
+texture_filter = 1
+custom_minimum_size = Vector2(200, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = -23.0
+offset_right = 105.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ky1d0")
+script = ExtResource("1_hrdcl")
+CharacterHealthBar = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/HealthBar")
+CharacterHealthBar2 = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/HealthBar/HealthBar2")
+CharacterHealthLabel = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/HealthBar/Label")
+CharacterStaminaBar = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/StaminaBar")
+CharacterStaminaBar2 = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/StaminaBar/StaminaBar2")
+CharacterStaminaLabel = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/StaminaBar/Label")
+CharacterManaBar = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/ManaBar")
+CharacterManaBar2 = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/ManaBar/ManaBar2")
+CharacterManaLabel = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/ManaBar/Label")
+CharacterManaText = NodePath("HBoxContainer/HBoxContainer/VBoxContainer/Label3")
+DeathPanel = NodePath("DeathPanel")
+Portrait = NodePath("")
+SlashAnim = ExtResource("2_qv1ju")
+FloaterParent = NodePath("Control/VBoxContainer")
+FloaterParentBot = NodePath("Control/VBoxContainer2")
+StunnTex = NodePath("Control/TextureRect")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="." unique_id=1127296042]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer" unique_id=2000093456]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/HBoxContainer" unique_id=566513431]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/VBoxContainer" unique_id=906018580]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "HP"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="HBoxContainer/HBoxContainer/VBoxContainer" unique_id=460734139]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "ST"
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="HBoxContainer/HBoxContainer/VBoxContainer" unique_id=1358704845]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "MP"
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/HBoxContainer" unique_id=1301644375]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 1
+
+[node name="HealthBar" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1966639464]
+custom_minimum_size = Vector2(8, 18)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_fg8ep")
+theme_override_styles/fill = ExtResource("4_b766n")
+value = 31.38
+show_percentage = false
+
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/VBoxContainer2/HealthBar" unique_id=966564328]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "23 / 23"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthBar2" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2/HealthBar" unique_id=552858553]
+show_behind_parent = true
+custom_minimum_size = Vector2(8, 18)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_qv1ju")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ky1d0")
+value = 55.94
+show_percentage = false
+
+[node name="StaminaBar" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1415063316]
+custom_minimum_size = Vector2(8, 18)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_qv1ju")
+theme_override_styles/fill = ExtResource("5_3h2wq")
+value = 31.38
+show_percentage = false
+
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/VBoxContainer2/StaminaBar" unique_id=1122144672]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "23 / 23"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StaminaBar2" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2/StaminaBar" unique_id=636485069]
+show_behind_parent = true
+custom_minimum_size = Vector2(8, 18)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_qv1ju")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ky1d0")
+value = 55.94
+show_percentage = false
+
+[node name="ManaBar" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2" unique_id=61922574]
+visible = false
+custom_minimum_size = Vector2(8, 18)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_qv1ju")
+theme_override_styles/fill = ExtResource("6_ky1d0")
+value = 31.38
+show_percentage = false
+
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/VBoxContainer2/ManaBar" unique_id=1123182742]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "23 / 23"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ManaBar2" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2/ManaBar" unique_id=2109278743]
+show_behind_parent = true
+custom_minimum_size = Vector2(8, 18)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_qv1ju")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ky1d0")
+value = 55.94
+show_percentage = false
+
+[node name="DeathPanel" type="Panel" parent="." unique_id=1933505015]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3h2wq")
+
+[node name="TextureRect" type="TextureRect" parent="DeathPanel" unique_id=1446186829]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -13.0
+offset_top = -13.0
+offset_right = 13.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_5k3fm")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="." unique_id=1702391712]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1652935288]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(32, 32)
+mouse_filter = 2
+texture = ExtResource("7_ipn01")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=469697529]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control" unique_id=941971291]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+alignment = 1

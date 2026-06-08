@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cyl813ovmcydq"]
+
+[ext_resource type="Script" uid="uid://c005168h7m23y" path="res://addons/button_prompts_for_godot/Scripts/ui_button_prompt.gd" id="1_b7s10"]
+
+[node name="Button Prompt Text" type="RichTextLabel" unique_id=452639544]
+offset_right = 200.0
+offset_bottom = 69.0
+bbcode_enabled = true
+text = "Placeholder Prompt {ui_select}"
+fit_content = true
+scroll_active = false
+script = ExtResource("1_b7s10")

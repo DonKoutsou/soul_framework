@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://dlcgsp7s3485r"]
+
+[ext_resource type="Material" uid="uid://dt6eg4tfdsftg" path="res://Engine/Shaders/Materials/ShineMat.tres" id="1_2uwq6"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p2mb7"]
+emission_shape_offset = Vector3(0, 1, 0)
+emission_shape_scale = Vector3(1, 0, 1)
+emission_shape = 3
+emission_box_extents = Vector3(4, 4, 4)
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 8.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.01
+scale_max = 0.03
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 5
+
+[sub_resource type="QuadMesh" id="QuadMesh_74lhj"]
+size = Vector2(0.5, 15)
+
+[sub_resource type="Curve" id="Curve_vldxg"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.07142856, 0.7626654), -0.4432908, -2.189856, 0, 0, Vector2(0.9980694, 0), -0.10244936, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_5qfm4"]
+curve = SubResource("Curve_vldxg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fthix"]
+emission_shape = 3
+emission_box_extents = Vector3(4, 4, 4)
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 3.0
+angular_velocity_min = -720.0
+angular_velocity_max = 719.99994
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = 1.9999977
+tangential_accel_max = 1.9999977
+scale_min = 0.099999994
+scale_max = 0.099999994
+scale_curve = SubResource("CurveTexture_5qfm4")
+
+[sub_resource type="SphereMesh" id="SphereMesh_5qfm4"]
+radius = 1.0
+height = 2.0
+radial_segments = 4
+rings = 2
+
+[node name="GPUParticles3D" type="GPUParticles3D" unique_id=266552009 groups=["Particles"]]
+material_override = ExtResource("1_2uwq6")
+cast_shadow = 0
+amount = 3
+sub_emitter = NodePath("GPUParticles3D")
+lifetime = 0.5
+collision_base_size = 0.2
+process_material = SubResource("ParticleProcessMaterial_p2mb7")
+draw_pass_1 = SubResource("QuadMesh_74lhj")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=3074130 groups=["Particles"]]
+material_override = ExtResource("1_2uwq6")
+cast_shadow = 0
+emitting = false
+amount = 20
+lifetime = 0.3
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_fthix")
+draw_pass_1 = SubResource("SphereMesh_5qfm4")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="." unique_id=749416562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+size = Vector3(8, 0.1, 8)

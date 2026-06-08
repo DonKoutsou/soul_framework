@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://fiuajpm4l4lj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bkmyc"]
+albedo_color = Color(0.82276577, 0.5263845, 0.20737559, 1)
+emission_enabled = true
+emission = Color(0.7044502, 0.5737944, 0.48402596, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="Curve" id="Curve_bkmyc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_l23i4"]
+curve = SubResource("Curve_bkmyc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bkmyc"]
+direction = Vector3(1, 1, 0)
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, -2, 0)
+scale_min = 0.099999994
+scale_max = 0.099999994
+scale_curve = SubResource("CurveTexture_l23i4")
+
+[sub_resource type="SphereMesh" id="SphereMesh_l23i4"]
+radius = 0.1
+height = 0.25
+radial_segments = 4
+rings = 1
+
+[node name="Spark" type="GPUParticles3D" unique_id=942870742 groups=["Particles"]]
+material_override = SubResource("StandardMaterial3D_bkmyc")
+emitting = false
+amount = 20
+one_shot = true
+explosiveness = 1.0
+transform_align = 2
+process_material = SubResource("ParticleProcessMaterial_bkmyc")
+draw_pass_1 = SubResource("SphereMesh_l23i4")

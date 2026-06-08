@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b4cqpodb86861"]
+
+[ext_resource type="Shader" uid="uid://dig6g7bdj63ng" path="res://Engine/Shaders/PP/Vignette.gdshader" id="1_gxvxq"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_gxvxq")
+shader_parameter/outerRadius = 1.0000000475
+shader_parameter/MainAlpha = 1.0
