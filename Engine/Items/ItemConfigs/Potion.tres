@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dnwn8l0kfkmcy" path="res://Engine/Items/Item.gd" id="1_eguh6"]
 [ext_resource type="Script" uid="uid://d2r1jshublp3f" path="res://Engine/Items/Effects/HealItemEffect.gd" id="1_tantg"]
 [ext_resource type="ArrayMesh" uid="uid://ckrykityr6g0r" path="res://Engine/Assets/Items/Textures/Potion.obj" id="4_n6mu5"]
-[ext_resource type="Material" uid="uid://gn0dpu371111" path="res://Engine/Assets/Items/Potion.tres" id="5_84wu4"]
+[ext_resource type="Material" uid="uid://gn0dpu371111" path="res://Engine/Assets/Items/Materials/Potion.tres" id="5_84wu4"]
 
 [sub_resource type="Resource" id="Resource_n6mu5"]
 script = ExtResource("1_tantg")

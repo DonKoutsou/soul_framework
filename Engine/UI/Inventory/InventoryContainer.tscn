@@ -1,10 +1,9 @@
 [gd_scene format=3 uid="uid://dp3gkey5tl6rc"]
 
-[ext_resource type="StyleBox" uid="uid://bbk2ps7ndxsxo" path="res://Theme/Panel_Trans.tres" id="1_e04pg"]
 [ext_resource type="Script" uid="uid://53pe3l32u1ru" path="res://Engine/UI/Inventory/inventory_container.gd" id="1_jbl1v"]
 [ext_resource type="Environment" uid="uid://bwrhss8cb37v4" path="res://Engine/Enviroments/InventorySceneEnviroment.tres" id="3_cciop"]
-[ext_resource type="Material" uid="uid://gn0dpu371111" path="res://Engine/Assets/Items/Potion.tres" id="3_ls70g"]
-[ext_resource type="ArrayMesh" uid="uid://bxy6if6i850s2" path="res://Engine/Assets/Items/LargePotion.obj" id="4_cciop"]
+[ext_resource type="Material" uid="uid://gn0dpu371111" path="res://Engine/Assets/Items/Materials/Potion.tres" id="3_ls70g"]
+[ext_resource type="ArrayMesh" uid="uid://c1dp5ccr13w7o" path="res://Engine/Assets/Items/LargePotion.res" id="4_xukm7"]
 
 [sub_resource type="World3D" id="World3D_41ixo"]
 environment = ExtResource("3_cciop")
@@ -17,7 +16,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_styles/panel = ExtResource("1_e04pg")
 script = ExtResource("1_jbl1v")
 
 [node name="Label" type="Label" parent="." unique_id=1502408524]
@@ -35,7 +33,7 @@ own_world_3d = true
 world_3d = SubResource("World3D_41ixo")
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(319, 239)
+size = Vector2i(320, 240)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport" unique_id=1851621090]
@@ -43,7 +41,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.1435893)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport" unique_id=1687810077]
 material_override = ExtResource("3_ls70g")
-mesh = ExtResource("4_cciop")
+mesh = ExtResource("4_xukm7")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport" unique_id=847215077]
 transform = Transform3D(0.8980276, 0.32949495, -0.29151252, 0, 0.66262007, 0.7489557, 0.43993917, -0.6725829, 0.5950511, 0, 0, 0)

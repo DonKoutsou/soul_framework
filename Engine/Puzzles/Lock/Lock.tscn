@@ -6,12 +6,10 @@
 [ext_resource type="ArrayMesh" uid="uid://c7j5ya28ag0y0" path="res://Engine/Puzzles/Lock/Tool1.obj" id="3_7eq7t"]
 [ext_resource type="ArrayMesh" uid="uid://b8q71i8yomvt" path="res://Engine/Puzzles/Lock/Tool2.obj" id="4_g3ufa"]
 [ext_resource type="Material" uid="uid://dln4m74uowja4" path="res://Engine/Puzzles/Lock/LockMat.tres" id="5_et3g1"]
-[ext_resource type="ArrayMesh" uid="uid://q4wjg3sh4bn2" path="res://Assets/Weapons/Hand.obj" id="6_c6o0u"]
-[ext_resource type="Material" uid="uid://h27tjhkufvx5" path="res://Shaders/HandMaterial.tres" id="7_gu56o"]
 [ext_resource type="AudioStream" uid="uid://13w8lv1lio8u" path="res://Engine/Assets/Sounds/LockStop.mp3" id="7_o0qqj"]
+[ext_resource type="ArrayMesh" uid="uid://b4nklebs17be0" path="res://Engine/Assets/Items/Key.res" id="7_us5j5"]
 [ext_resource type="AudioStream" uid="uid://krclhgy67png" path="res://Engine/Assets/Sounds/LockOpen.mp3" id="8_jjtwf"]
 [ext_resource type="AudioStream" uid="uid://35a0e2wnij2a" path="res://Engine/Assets/Sounds/Scrape4.mp3" id="8_omw47"]
-[ext_resource type="ArrayMesh" uid="uid://b42pcmm1e2nlh" path="res://Engine/Assets/Items/Key.obj" id="9_ul7ml"]
 [ext_resource type="Material" uid="uid://y7elw5svrerg" path="res://Engine/Shaders/Materials/Metal.tres" id="10_et3g1"]
 
 [sub_resource type="Animation" id="Animation_c6o0u"]
@@ -233,8 +231,6 @@ surface_material_override/0 = ExtResource("5_et3g1")
 
 [node name="e" type="MeshInstance3D" parent="SubViewport/Node3D/MeshInstance3D2/Node3D/MeshInstance3D2" unique_id=687464210]
 transform = Transform3D(-0.18722296, -4.2270937, -5.576436, -2.8341355, 5.146208, -3.8058138, 6.3978605, 2.1559768, -1.8490918, 0.1967559, 0.68973494, 0.022828292)
-mesh = ExtResource("6_c6o0u")
-surface_material_override/0 = ExtResource("7_gu56o")
 
 [node name="Node3D2" type="Node3D" parent="SubViewport/Node3D/MeshInstance3D2" unique_id=452936916]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.40681356, -0.32620436)
@@ -250,20 +246,16 @@ surface_material_override/0 = ExtResource("5_et3g1")
 
 [node name="e" type="MeshInstance3D" parent="SubViewport/Node3D/MeshInstance3D2/Node3D2/Node3D/MeshInstance3D" unique_id=340396406]
 transform = Transform3D(2.6081293, 4.3531456, 4.821595, -6.37604, 0.72173405, 2.7973573, -1.2424852, 5.4340796, -4.2340302, -0.14308959, 0.84057266, -0.20853996)
-mesh = ExtResource("6_c6o0u")
-surface_material_override/0 = ExtResource("7_gu56o")
 
 [node name="KeyHand" type="Node3D" parent="SubViewport/Node3D/MeshInstance3D2" unique_id=391418082]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="e" type="MeshInstance3D" parent="SubViewport/Node3D/MeshInstance3D2/KeyHand" unique_id=384468438]
 transform = Transform3D(3.059797e-07, 0, 7.000001, 0, -6.9999995, 0, -7, 0, 3.0597977e-07, 0.018458992, 1.8369831, -0.1734701)
-mesh = ExtResource("6_c6o0u")
-surface_material_override/0 = ExtResource("7_gu56o")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Node3D/MeshInstance3D2/KeyHand/e" unique_id=209330956]
 transform = Transform3D(-0.9, 0, -1.3589622e-07, 0, 0.9, 0, 1.3589622e-07, 0, -0.9, 0, 0.1247017, -7.450581e-09)
-mesh = ExtResource("9_ul7ml")
+mesh = ExtResource("7_us5j5")
 surface_material_override/0 = ExtResource("10_et3g1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport/Node3D" unique_id=462308047]

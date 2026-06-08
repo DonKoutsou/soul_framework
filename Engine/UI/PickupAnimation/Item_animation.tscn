@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bosjlqe6evtjs" path="res://Engine/UI/PickupAnimation/chest_animation.gd" id="1_3k4tg"]
 [ext_resource type="Environment" uid="uid://bwrhss8cb37v4" path="res://Engine/Enviroments/InventorySceneEnviroment.tres" id="2_hcna8"]
-[ext_resource type="ArrayMesh" uid="uid://b42pcmm1e2nlh" path="res://Engine/Assets/Items/Key.obj" id="3_ov75t"]
+[ext_resource type="ArrayMesh" uid="uid://b4nklebs17be0" path="res://Engine/Assets/Items/Key.res" id="3_ov75t"]
 
 [sub_resource type="World3D" id="World3D_swvtp"]
 environment = ExtResource("2_hcna8")

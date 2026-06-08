@@ -14,14 +14,11 @@ class_name FloorLayer
 		FloorNumber = value
 		name = "Floor_" + var_to_str(FloorNumber)
 
-var Layers : Array[TileMapLayer]
-
+var Layers : Dictionary[LayerType, BaseFloorLayer]
 
 func _ready() -> void:
-	for g in LayerType.keys().size():
-		var Path = NodePath(LayerType.keys()[g])
-		var Layer : TileMapLayer = get_node(Path)
-		Layers.append(Layer)
+	for layer : BaseFloorLayer in get_children():
+		Layers[layer.layerType] = layer
 
 enum LayerType{
 		MAZE,
@@ -40,5 +37,5 @@ enum LayerType{
 		CHARACTERS
 	}
 
-func GetLayer(Type : LayerType) -> TileMapLayer:
+func GetLayer(Type : LayerType) -> BaseFloorLayer:
 	return Layers[Type]

@@ -18,8 +18,12 @@ func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator 
 	
 	if it.ModelMat != null:
 		matRID = it.ModelMat.get_rid()
-		
-	AddSpawn(it.Model.get_rid(), pos, Transform3D(Basis(), Vector3(realPos) + Vector3(0,0.25,0)), 0, null, matRID)
+	
+	var modelRID = it.Model.get_rid()
+	if (modelRID.get_id() == 0):
+		printerr("Item {0} has wronlgly configured model".format([it.ItemName]))
+	
+	AddSpawn(modelRID, pos, Transform3D(Basis(), Vector3(realPos) + Vector3(0,0.25,0)), 0, null, matRID)
 	
 
 func GetLayerType() -> LevelMultimeshTypes:

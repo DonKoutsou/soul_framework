@@ -34,8 +34,10 @@ class_name Map
 #Array of Transform3D
 @export var Props : Dictionary[Mesh, Array]
 
+
 var Data : MapData
 var AccumulatedHours : int
+
 
 enum LocationName{
 	Base,
@@ -62,8 +64,6 @@ enum TrapType {
 	FIREPIT_TRAP
 }
 
-
-
 func GetFloor(FloorIndex : int) -> FloorLayer:
 	for g : FloorLayer in Floors:
 		if (g.FloorNumber == FloorIndex):
@@ -78,22 +78,9 @@ func _ready() -> void:
 		return
 	else:
 		set_physics_process(false)
-	#TileMapLayers.clear()
-	visible = false
-	#TileMapLayers.assign(Floors)
-	#for Fl in Floors.keys():
-		#TileMapLayers[Fl] = []
-		#for g in Floors[Fl]:
-			#TileMapLayers[Fl].append(get_node(g))
-			#get_node(g).enabled = false
 
-#func GetSoundOfTile(Pos : Vector3i) -> AudioStream:
-	#var Stream : AudioStream = null
-	#var Floor = GetFloor(Pos.y)
-	#var Data = Floor.GetLayer(1).get_cell_tile_data(Vector2i(Pos.x, Pos.z))
-	#if (Data != null):
-		#Stream = Data.get_custom_data("Sound")
-	#return Stream
+	visible = false
+
 
 func IsWater(Pos : Vector3i) -> bool:
 	if (!Data.cells.has(Pos)):
@@ -207,16 +194,12 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 	r.state = hash(RandomSeed)
 	Data.RandomState = 1
 	Data.DecorationProbability = DecorationProbability
-	#print(r.get_state())
 
-	#var rect = GetFloor(0).GetLayer(FloorLayer.LayerType.MAZE).get_used_rect()
-	#var size = rect.size
+
 	Data.level = levelScene
 	Data.MapDir = scene_file_path
-	var Locks : Dictionary[Vector3i, LockData]
-	var MasterLocks : Array[Vector3i]
-	var Cracks : Dictionary[Vector3i, Vector2]
-	var Blocks : Array[Vector3i]
+
+	var tempData = TempGenerationData.NewData(r)
 	
 	for Floor in Floors:
 		#Data.Mazes[FloorIndex] = {}
@@ -233,21 +216,10 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 					continue
 				
 				Data.cells[Pos] = cellDat
-				
-				var Item_Index = Floor.GetLayer(FloorLayer.LayerType.ITEMS).get_cell_atlas_coords(Vector2i(x, y)).x
+
 				var Character_Index = Floor.GetLayer(FloorLayer.LayerType.CHARACTERS).get_cell_atlas_coords(Vector2i(x, y)).x
-				var Map_Info_Index = Floor.GetLayer(FloorLayer.LayerType.MAP_INFO).get_cell_atlas_coords(Vector2i(x, y)).x
-				var Map_Info_Index2 = Floor.GetLayer(FloorLayer.LayerType.MAP_INFO2).get_cell_atlas_coords(Vector2i(x, y)).x
-				var MapInfoIndexes = [Map_Info_Index, Map_Info_Index2]
-				var Lever_Index = Floor.GetLayer(FloorLayer.LayerType.LEVERS).get_cell_atlas_coords(Vector2i(x, y)).x
 				var Door_Index = Floor.GetLayer(FloorLayer.LayerType.DOORS).get_cell_atlas_coords(Vector2i(x, y)).x
 				var Exit_Index = Floor.GetLayer(FloorLayer.LayerType.EXITS).get_cell_atlas_coords(Vector2i(x, y)).x
-				var Text_Index = Floor.GetLayer(FloorLayer.LayerType.TEXTS).get_cell_atlas_coords(Vector2i(x, y)).x
-				var Movable_Index = Floor.GetLayer(FloorLayer.LayerType.MOVABLES).get_cell_atlas_coords(Vector2i(x, y)).x
-				var Plate_Index = Floor.GetLayer(FloorLayer.LayerType.PLATES).get_cell_atlas_coords(Vector2i(x, y)).x
-				var ProjectileSwitch_Index = Floor.GetLayer(FloorLayer.LayerType.PROJECTILE_SWITCH).get_cell_atlas_coords(Vector2i(x, y)).x
-				var Lock_Index = Floor.GetLayer(FloorLayer.LayerType.LOCKS).get_cell_atlas_coords(Vector2i(x, y)).x
-				
 				
 				if (Door_Index != -1):
 					if (Door_Index > LevelTransitionCatalogue.size() - 1):
@@ -257,242 +229,28 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 				if (Exit_Index != -1):
 					if (Exit_Index > LevelTransitionCatalogue.size() - 1):
 						push_error("Level transition hasn't been configured")
-						
 					else:
 						cellDat.type = CellData.CELLTYPE.EXIT
 						Data.Exits[Pos] = LevelTransitionCatalogue[Exit_Index]
 				
-				var AddFloor = true
-				var AddDeco = true
-				var AddCeiling = true
+				var layerGenerationData : TempLayerGenerationData = TempLayerGenerationData.NewData(Floor)
 				
-				for g in MapInfoIndexes: 
-					match g:
-						#empty
-						0:
-							pass
-							#Locks.append(Pos)
-						#Breakable obstacle
-						1:
-							var T = Transform3D(Basis().rotated(Vector3(0,1,0), r.randf_range(-PI * 2, PI * 2)), Pos * WorldScale)
-							cellDat.Custom_Data["Breakable"] = T
-							AddDeco = false
-						#Master Lock
-						2:
-							MasterLocks.append(Pos)
-						#3 Soft Breakable obstacle
-						3:
-							var T = Transform3D(Basis().rotated(Vector3(0,1,0), r.randf_range(-PI * 2, PI * 2)), Pos * WorldScale)
-							cellDat.Custom_Data["SoftBreakable"] = T
-						#Closed door, either to be unlocked by switch/lever or to stay closed
-						4:
-							Blocks.append(Pos)
-						#Spike trap
-						5:
-							var TrapDat = MapTrapData.new()
-							var B = Basis().scaled(Vector3(1,1,1) * (WorldScale / 2.0))
-							var Trans = Transform3D(B, (Pos * WorldScale))
-							TrapDat.TrapTransform = Trans
-							TrapDat.TrapType = TrapType.SPIKE_TRAP
-							cellDat.AddData("Trap", TrapDat)
-							#AddDeco = false
-						#Wall crack
-						6:
-							Cracks[Pos] = GetTileDirection(Vector2i(x,y), FloorIndex, FloorLayer.LayerType.MAP_INFO)
-						#Light door
-						7:
-							cellDat.AddData("LightDoor", LightDoorData.new())
-							#Data.LightDoorList[Pos] = null
-						#Fire trap
-						8:
-							var TrapDat = MapTrapData.new()
-							var rot = deg_to_rad(GetTileRotationDegrees(Vector2i(x, y),FloorIndex, FloorLayer.LayerType.MAP_INFO))
-							var B = Basis().scaled(Vector3(1,1,1) * (WorldScale / 2.0))
-							var Trans = Transform3D(B.rotated(Vector3(0,1,0), rot), Pos * WorldScale + Vector3i(0,1,0))
-							TrapDat.TrapType = TrapType.FIRE_TRAP
-							TrapDat.TrapTransform = Trans
-							#Data.Traps[Pos] = TrapDat
+				#Layer mapping-------------------------------------
+				for g in Floor.Layers:
+					var layer = Floor.Layers[g]
+					layer.HandleCell(cellDat, Pos, self, layerGenerationData, tempData)
 
-							cellDat.AddData("Trap", TrapDat)
-						#Drop
-						9:
-							AddDeco = false
-							var BellowMapPos = Vector3i(x, FloorIndex - 1, y)
-							if (Data.cells.has(BellowMapPos)):
-								var BelloCell = Data.cells[BellowMapPos]
-								BelloCell.CrackedCeiling = true
-							cellDat.CrackedFloor = true
-						#Guilotine
-						10:
-							var TrapDat = MapTrapData.new()
-							var rot = deg_to_rad(GetTileRotationDegrees(Vector2i(x, y), FloorIndex, FloorLayer.LayerType.MAP_INFO))
-							var Trans = Transform3D(Basis().rotated(Vector3(0,1,0), rot), Pos * WorldScale)
-							TrapDat.TrapTransform = Trans
-							TrapDat.TrapType = TrapType.GUILOTINE_TRAP
-							#Data.Traps[Pos] = TrapDat
-							cellDat.AddData("Trap", TrapDat)
-						#Blocking decoration
-						11:
-							var t = Transform3D(Basis(), Pos * WorldScale)
-							t = t.rotated_local(Vector3(0,1,0), deg_to_rad(GetTileRotationDegrees(Vector2i(x, y), FloorIndex, FloorLayer.LayerType.MAP_INFO)))
-							cellDat.AddData("BlockingDeco", t)
-							#Data.BlockingDecoration[Pos] = t
-							AddDeco = false
-						#Blocking decoration2
-						12:
-							cellDat.type = CellData.CELLTYPE.ENDPOINT
-							
-						#Fall, already broken floor
-						13:
-							cellDat.type = CellData.CELLTYPE.FALL
-							AddFloor = false
-							AddDeco = false
-							var BellowMapPos = Vector3i(x, FloorIndex - 1, y)
-							if (Data.cells.has(BellowMapPos)):
-								Data.cells[BellowMapPos].spawnCeiling = false
-						#Spawnpoint
-						14:
-							Data.SpawnPoint = Pos
-							Data.SpawnRot = deg_to_rad(GetTileRotationDegrees(Vector2i(Pos.x, Pos.z), Pos.y, FloorLayer.LayerType.MAP_INFO))
-						#Fire pit
-						15:
-							cellDat.type = CellData.CELLTYPE.BONEFIRE
-							AddDeco = false
-						#Water
-						16:
-							AddFloor = false
-							AddDeco = Floor.AddDecorationOnWater
-							cellDat.type = CellData.CELLTYPE.WATER
-						#Ladder Up
-						17:
-							cellDat.type = CellData.CELLTYPE.UP_LADDER
-						#Ladder Down
-						18:
-							cellDat.type = CellData.CELLTYPE.DOWN_LADDER
-							AddFloor = false
-							AddDeco = false
-						#House
-						19:
-							var rot2 = GetTileRotationRadians(Vector2i(x, y), FloorIndex, FloorLayer.LayerType.MAP_INFO)
-							var T = Transform3D(Basis().rotated(Vector3(0,1,0), rot2), (Pos * WorldScale))
-							cellDat.Custom_Data["House"] = T
-						# Recruit 1
-						20:
-							pass
-							#cellDat.AddData("Recruit", load("res://Resources/Characters/Alice.tres").duplicate(true))
-							#Data.Recruits[Pos] = load("res://Resources/Characters/Alice.tres").duplicate(true)
-						# Recruit 2
-						21:
-							pass
-							#cellDat.AddData("Recruit", load("res://Resources/Characters/Oliver.tres").duplicate(true))
-							#Data.Recruits[Pos] = load("res://Resources/Characters/Oliver.tres").duplicate(true)
-						#Lava
-						22:
-							AddFloor = false
-							cellDat.type = CellData.CELLTYPE.LAVA
-							AddDeco = Floor.AddDecorationOnWater
-						#Gap
-						23:
-							AddFloor = false
-							AddDeco = false
-							cellDat.type = CellData.CELLTYPE.GAP
-						#Stairs going up
-						24:
-							var rot2 = GetTileRotationRadians(Vector2i(x, y), FloorIndex, FloorLayer.LayerType.MAP_INFO)
-							var T = Transform3D(Basis().rotated(Vector3(0,1,0), rot2), (Pos * WorldScale))
-							cellDat.Custom_Data["UP_STAIRS"] = T
-							cellDat.type = CellData.CELLTYPE.UP_STAIRS
-							AddFloor = false
-							AddDeco = false
-							AddCeiling = false
-						#Stairs going down
-						25: 
-							var rot2 = GetTileRotationRadians(Vector2i(x, y), FloorIndex, FloorLayer.LayerType.MAP_INFO)
-							var Position = Vector3i(Pos.x, Pos.y - 1, Pos.z)
-							var T = Transform3D(Basis().rotated(Vector3(0,1,0), rot2), (Position * WorldScale))
-							cellDat.Custom_Data["DOWN_STAIRS"] = T
-							#Data.StairsDown[Pos] = T
-							cellDat.type = CellData.CELLTYPE.DOWN_STAIRS
-							AddFloor = false
-							AddDeco = false
-						26: 
-							cellDat.AddData("Door", DoorData.new())
-						27:
-							cellDat.type = CellData.CELLTYPE.DUGGABLE
-							AddDeco = false
 
-					
-				if (Item_Index > -1 and ItemCaralogue.size() > Item_Index):
-					var it = ItemCaralogue[Item_Index]
-					#assert(it is Item, "Wrongly configured item")
-					#AddDeco = false
-					if (Lock_Index != -1):
-						var ChestDat = ChestData.new()
-						var LockDat = LockData.new()
-						LockDat.RequiredItem = LockCatalogue[Lock_Index]
-						ChestDat.LockDat = LockDat
-						ChestDat.ChestMapPosition = Pos
-						ChestDat.ContainedItem = it
-						
-						var rot = deg_to_rad(GetTileRotationDegrees(Vector2i(x, y), FloorIndex, FloorLayer.LayerType.LOCKS))
-						var Trans = Transform3D(Basis().rotated(Vector3(0,1,0), rot), Pos * WorldScale).translated(Vector3(0,0.1,0))
-						
-						ChestDat.ChestTransform = Trans
-						cellDat.Custom_Data["Chest"] = ChestDat
-						#Data.ChestSpawns[Pos] = ChestDat
-						AddDeco = false
-
-					else:
-						cellDat.AddData("Item", it)
-						#Data.ItemSpawns[Pos] = it
-				
 				if (Character_Index > -1 and CharacterCatalogue.size() > Character_Index):
 					cellDat.AddData("Recruit", load(CharacterCatalogue[Character_Index]))
 				
-				if (Lever_Index != -1 and LeverCatalogue.size() > Lever_Index):
-					var LData = LeverData.new()
-					LData.Info = LeverCatalogue[Lever_Index].duplicate()
-					cellDat.Custom_Data["Lever"] = LData
-				
-				if (Plate_Index != -1):
-					var PData = PreassuerPlateData.new()
-					PData.Info = PlateCatalogue[Plate_Index].duplicate()
-					cellDat.Custom_Data["Plate"] = PData
-				
-				if (Lock_Index != -1):
-					var LData = LockData.new()
-					LData.RequiredItem = LockCatalogue[Lock_Index]
-					Locks[Pos] = LData
-				
-				if (Movable_Index != -1):
-					var MoveData = MovableData.new()
-					MoveData.Info = MovableCatalogue[Movable_Index].duplicate()
-					cellDat.Custom_Data["Movable"] = MoveData
-				
-				if (ProjectileSwitch_Index != -1):
-					var SwitchData = ProjectileSwitchData.new()
-					SwitchData.Info = ProjectileSwitchCatalogue[Lever_Index].duplicate()
-					SwitchData.Pos = Pos
-					cellDat.Custom_Data["ProjectileSwitch"] = SwitchData
-				
-				
 				#Floor
-				if (AddFloor and cellDat.type != CellData.CELLTYPE.FALL and cellDat.type != CellData.CELLTYPE.DOWN_LADDER):
+				if (layerGenerationData.SpawnFloor and cellDat.type != CellData.CELLTYPE.FALL and cellDat.type != CellData.CELLTYPE.DOWN_LADDER):
 					cellDat.spawnFloor = true
-					#var t = Transform3D(Basis(), Pos * WorldScale)
-					#if (Floor.RandomiseFloorRotation):
-						#t = t.rotated_local(Vector3(0,1,0), Helper.GetRandomRotationSnapped(r))
-					#Data.Floors[Pos] = t
 
-					
-				CheckForLevers(Pos)
-				CreateWallFromIndex(cell, Pos, Locks, MasterLocks, Cracks, Blocks)
-					
-				#if (Map_Info_Index != -1):
-					
-				if (AddDeco):
+				if (layerGenerationData.SpawnDeco):
 					var t = Transform3D(Basis(), Pos * WorldScale)
-					if (AddFloor):
+					if (layerGenerationData.SpawnFloor):
 						t.origin.y += 0.1
 					
 					if (cellDat.Custom_Data.has(["Decorations"])):
@@ -505,16 +263,14 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 				if (Data.cells.has(AboveMapPos)):
 					var aboveCell = Data.cells[AboveMapPos]
 					#Ceiling
-					if (AddCeiling and Floor.SpawnCeiling and aboveCell.type != CellData.CELLTYPE.FALL and cellDat.type != CellData.CELLTYPE.UP_LADDER):
+					if (layerGenerationData.SpawnCeiling and Floor.SpawnCeiling and aboveCell.type != CellData.CELLTYPE.FALL and cellDat.type != CellData.CELLTYPE.UP_LADDER):
 						cellDat.spawnCeiling = true
 						cellDat.floorAsCeiling = Floor.UseFloorAsCeiling
 				else:
-					if (AddCeiling and Floor.SpawnCeiling and cellDat.type != CellData.CELLTYPE.UP_LADDER):
+					if (layerGenerationData.SpawnCeiling and Floor.SpawnCeiling and cellDat.type != CellData.CELLTYPE.UP_LADDER):
 						cellDat.spawnCeiling = true
 						cellDat.floorAsCeiling = Floor.UseFloorAsCeiling
-					
-				if (Text_Index != -1):
-					Data.Texts[Pos] = TextCatalogue[Text_Index]
+
 				row[x] = cell
 
 		var AllTiles = Floor.GetLayer(FloorLayer.LayerType.MAZE).get_used_cells()
@@ -640,221 +396,6 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 	call_deferred("ThreadedGenerationFinished", Thr)
 
 
-func CreateWallFromIndex(Index : int, MapPos : Vector3i, Locks : Dictionary[Vector3i, LockData], MasterLocks : Array[Vector3i], Cracks : Dictionary[Vector3i, Vector2], Blocks : Array[Vector3i]) -> void:
-	var cell = Data.cells[MapPos]
-	var pos = MapPos * WorldScale
-	var rot = deg_to_rad(GetTileRotationDegrees(Vector2i(MapPos.x, MapPos.z), MapPos.y))
-	var rot2 = GetTileRotationRadians(Vector2i(MapPos.x, MapPos.z), MapPos.y)
-	match (Index):
-		#Wall
-			1:
-				AddWallToData(GetWallType(MapPos, Vector2.LEFT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.LEFT, rot, pos), MapPos)
-		#Corner
-			2:
-				AddWallToData(GetWallType(MapPos, Vector2.LEFT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.LEFT, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.DOWN.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.DOWN, rot, pos), MapPos)
-		#Corner
-			3:
-				AddWallToData(GetWallType(MapPos, Vector2.LEFT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.LEFT, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.DOWN.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.DOWN, rot, pos), MapPos)
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-			#TJunction
-			4:
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.UP, rot, pos))
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.DOWN, rot, pos))
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-		#Corridor
-			5:
-				AddWallToData(GetWallType(MapPos, Vector2.LEFT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.LEFT, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.RIGHT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.RIGHT, rot, pos), MapPos)
-		#Cap
-			6:
-				AddWallToData(GetWallType(MapPos, Vector2.LEFT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.LEFT, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.RIGHT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.RIGHT, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-		#T section
-			7:
-				AddWallToData(GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.DOWN, rot, pos))
-		#Door
-			8:
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-			9:
-				AddWallToData(GetWallType(MapPos, Vector2.DOWN.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.DOWN, rot, pos), MapPos)
-				
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-			10:
-				AddWallToData(GetWallType(MapPos, Vector2.DOWN.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.DOWN, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-				
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-			11:
-				AddWallToData(GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-				
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-			12:
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-					
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.RIGHT, Locks, MasterLocks, Blocks)
-			13:
-				AddWallToData(GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.DOWN.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.DOWN, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.RIGHT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.RIGHT, rot, pos), MapPos)
-				
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-			14:
-				AddWallToData(GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-				
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-				
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.RIGHT, Locks, MasterLocks, Blocks)
-			15:
-				AddWallToData(GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.DOWN.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.DOWN, rot, pos), MapPos)
-				
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.RIGHT, Locks, MasterLocks, Blocks)
-			16:
-				AddWallToData(GetWallType(MapPos, Vector2.LEFT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.LEFT, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.RIGHT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.RIGHT, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.DOWN.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.DOWN, rot, pos), MapPos)
-			17:
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-				AddWallToData(GetWallType(MapPos, Vector2.RIGHT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.RIGHT, rot, pos), MapPos)
-			18:
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-				AddWallToData(GetWallType(MapPos, Vector2.RIGHT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.RIGHT, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-			19:
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-				AddWallToData(GetWallType(MapPos, Vector2.RIGHT.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.RIGHT, rot, pos), MapPos)
-				AddWallToData(GetWallType(MapPos, Vector2.DOWN.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.DOWN, rot, pos), MapPos)
-			20:
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.UP, rot, pos))
-			21:
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-			22:
-				AddWallToData(GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.DOWN, rot, pos))
-			23:
-				AddWallToData(GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-			24:
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-			25:
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.DOWN, rot, pos))
-			26:
-				AddWallToData(GetWallType(MapPos, Vector2.DOWN.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.DOWN, rot, pos), MapPos)
-				
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-				
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-			27:
-				AddWallToData( GetWallType(MapPos, Vector2.UP.rotated(rot2), Cracks), GetMeshPlecement(Vector2i.UP, rot, pos), MapPos)
-				
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-				
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.DOWN, rot, pos))
-			28:
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.DOWN, rot, pos))
-			29:
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.DOWN, rot, pos))
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-			30:
-				cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
-				CheckForDoors(MapPos, pos, rot, Vector2i.LEFT, Locks, MasterLocks, Blocks)
-				cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-
-
-func CheckForDoors(MapPos : Vector3i, LevelPos : Vector3, rot : float, MeshPlecement : Vector2i, Locks : Dictionary[Vector3i, LockData], MasterLocks : Array[Vector3i], Blocks : Array[Vector3i]) -> void:
-	var cell = Data.cells[MapPos]
-	if (Locks.has(MapPos)):
-		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, rot, Vector3i(0,1,0))
-		var DoorD = DoorData.NewData(GetMeshPlecement(MeshPlecement, rot, LevelPos), OppositeLocation)
-		DoorD.DoorMapPosition = MapPos
-		DoorD.LockDat = Locks[MapPos]
-		DoorD.Locked = true
-		cell.AddData("Door", DoorD)
-		cell.AddDataArr("Locks", GetMeshPlecement(MeshPlecement, rot, LevelPos))
-	else: if (MasterLocks.has(MapPos)):
-		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, rot, Vector3i(0,1,0))
-		var DoorD = DoorData.NewData(GetMeshPlecement(MeshPlecement, rot, LevelPos), OppositeLocation)
-		cell.AddData("Door", DoorD)
-		cell.AddDataArr("MasterLocks", GetMeshPlecement(MeshPlecement, rot, LevelPos))
-	else : if (Blocks.has(MapPos)):
-		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, rot, Vector3i(0,1,0))
-		var DoorD = DoorData.NewData(GetMeshPlecement(MeshPlecement, rot, LevelPos), OppositeLocation)
-		DoorD.Blocked = true
-		cell.AddData("Door", DoorD)
-	else : if (cell.HasData("Door")):
-		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, rot, Vector3i(0,1,0))
-		var DoorD = DoorData.NewData(GetMeshPlecement(MeshPlecement, rot, LevelPos), OppositeLocation)
-		cell.AddData("Door", DoorD)
-	else :if (cell.HasData("LightDoor")):
-		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, rot, Vector3i(0,1,0))
-		var DoorD = LightDoorData.NewData(GetMeshPlecement(MeshPlecement, rot, LevelPos), OppositeLocation)
-		cell.AddData("LightDoor", DoorD)
-
-
-func CheckForLevers(MapPos : Vector3i) -> void:
-	var LevelPos = MapPos * WorldScale
-	var cell = Data.GetCell(MapPos)
-	if (cell.Custom_Data.has("Lever")):
-		var data = cell.Custom_Data["Lever"]
-		var RoundedPos = Vector3i(LevelPos)
-		var rot = deg_to_rad(GetTileRotationDegrees(Vector2i(MapPos.x, MapPos.z), MapPos.y, FloorLayer.LayerType.LEVERS))
-		var T = Transform3D(Basis().rotated(Vector3(0,1,0), rot), RoundedPos + Vector3i(0,1,0))
-		data.Trans = T
-
-
-func GetMeshPlecement(Dir : Vector2i, Rot : float, Pos : Vector3) -> Transform3D:
-	var T : Transform3D
-	match Dir:
-		Vector2i.RIGHT:
-			var B = Basis().rotated(Vector3(0,1,0), Rot + PI)
-			T =  Transform3D(B, Pos)
-		Vector2i.LEFT:
-			var B = Basis().rotated(Vector3(0,1,0), Rot)
-			T = Transform3D(B, Pos)
-		Vector2i.UP:
-			var B = Basis().rotated(Vector3(0,1,0), Rot - PI / 2)
-			T = Transform3D(B, Pos)
-		Vector2i.DOWN:
-			var B = Basis().rotated(Vector3(0,1,0), Rot + PI / 2)
-			T = Transform3D(B, Pos)
-	return T
-
-
 func GetFinalRotation(Dir : Vector2i, Rot : float) -> float:
 	var FinalRot : float
 	match Dir:
@@ -867,24 +408,6 @@ func GetFinalRotation(Dir : Vector2i, Rot : float) -> float:
 		Vector2i.DOWN:
 			FinalRot = Rot + PI / 2
 	return wrapf(FinalRot, -PI, PI)
-
-
-func AddWallToData(WallType : String, Transform : Transform3D, MapPos : Vector3i) -> void:
-	var cell = Data.cells[MapPos]
-	var data = WallData.new()
-	data.WallTransform = Transform
-	if (WallType == "BrokenWalls"):
-		data.Cracked = true
-	
-	cell.AddDataArr("Walls", data)
-
-
-func GetWallType(MapPos : Vector3i, Direction : Vector2, Cracks : Dictionary[Vector3i, Vector2]) -> String:
-	var WallType = "Walls"
-	if (Cracks.keys().has(MapPos)):
-		if (Cracks[MapPos].is_equal_approx(Direction)):
-			WallType = "BrokenWalls"
-	return WallType
 
 
 func GetMonsterSpawnsOnRoom(room : Array, Floor : int) -> Array[Vector3i]:
@@ -951,6 +474,7 @@ func flood_fill(start: Vector2i, tile_coords: Array, visited: Dictionary, Floor 
 	
 	return room
 
+
 func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visited: Dictionary, Floor : int) -> Array:
 	var room : Array = []
 	var stack := [start]
@@ -978,7 +502,7 @@ func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visite
 	
 	return room
 	
-	
+##Used to declare the blocking direction of each of the MAZE tiles
 func CantReach(tilecoords : Vector2, dir : Vector2, Floor : int) -> bool:
 	var index = GetFloor(Floor).GetLayer(FloorLayer.LayerType.MAZE).get_cell_atlas_coords(tilecoords).x
 	var tilerotation = GetTileRotationRadians(tilecoords, Floor)
@@ -1079,6 +603,9 @@ func CantReach(tilecoords : Vector2, dir : Vector2, Floor : int) -> bool:
 			resault = dir.is_equal_approx(rot1)
 	return resault
 
+
+#TODO fix this, we dont need all those separate functions
+#----------------------------------------------------------------
 func Testtile(pos : Vector2i, Floor : int) -> int:
 	var tile_alternate : int = 0
 	var rot = GetTileRotationDegrees(pos, Floor)
@@ -1091,6 +618,7 @@ func Testtile(pos : Vector2i, Floor : int) -> int:
 			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V
 	return tile_alternate
 
+#----------------------------------------------------------------
 func GetTileRotationDegrees(pos : Vector2i, Floor : int, Layer : FloorLayer.LayerType = FloorLayer.LayerType.MAZE) -> float:
 	var rot : float = 0
 
@@ -1104,6 +632,7 @@ func GetTileRotationDegrees(pos : Vector2i, Floor : int, Layer : FloorLayer.Laye
 		rot = 180
 	return rot
 
+#----------------------------------------------------------------
 func GetTileRotationRadians(pos : Vector2i, Floor : int, Layer : FloorLayer.LayerType = FloorLayer.LayerType.MAZE) -> float:
 	var rot : float = 0
 	if GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == false and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == false:
@@ -1116,6 +645,7 @@ func GetTileRotationRadians(pos : Vector2i, Floor : int, Layer : FloorLayer.Laye
 		rot = PI
 	return rot
 
+#----------------------------------------------------------------
 func GetTileDirection(pos : Vector2i, Floor : int, Layer : FloorLayer.LayerType = FloorLayer.LayerType.MAZE) -> Vector2:
 	var Dir : Vector2 = Vector2.RIGHT
 	if GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == false and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == false:
@@ -1127,12 +657,77 @@ func GetTileDirection(pos : Vector2i, Floor : int, Layer : FloorLayer.LayerType 
 	elif GetFloor(Floor).GetLayer(Layer).is_cell_flipped_h(pos) == true and GetFloor(Floor).GetLayer(Layer).is_cell_flipped_v(pos) == true:
 		Dir = Vector2.LEFT
 	return Dir
-#DEBUG234
 
+
+#----------------------- EDITOR -----------------------------#
+#This area is used when the map is used in editor to generate the geometry for visualisation purposes.
+#Once save is pressed the map is regenerated to reflect changes done to the tile map
+
+@export_group("EditorStuff")
+@export_tool_button("Redo 3D Map") var Redo3DMapAction = RedoMap
+@export_tool_button("Store Props") var StorePropAction = StoreProps
+
+##Storing of debug lines
 var DebugLines : Array[Array]
 
 var CurrentlyVisibleFloor : int = 0
 
+#----------------------------------------------------------------
+## Stores all mesh instance 3D under the node Extra Props, those will be dynamicly spawned when player is close enough
+func StoreProps() -> void:
+	Props.clear()
+	for g : MeshInstance3D in $ExtraProps.get_children():
+		var MData = MeshData.new()
+		MData.Transform = g.transform
+		if (g.get_surface_override_material(0) != null):
+			MData.MatOverride = g.get_surface_override_material(0)
+		else: if (g.material_override != null):
+			MData.MatOverride = g.material_override
+		if (Props.keys().has(g.mesh)):
+			Props[g.mesh].append(MData)
+		else:
+			Props[g.mesh] = [MData]
+
+var _Editor_CurrentWorld : Level
+#----------------------------------------------------------------
+## Used to generate the map in the editor either when editor button is pressed or save notification is received
+func RedoMap() -> void:
+	StoreProps()
+	if (_Editor_CurrentWorld == null):
+		RespawnMap()
+	else:
+		StartGenerationThread(false)
+		await GenerationFinished
+		_Editor_CurrentWorld.RedoMap(false)
+	queue_redraw()
+	
+#----------------------------------------------------------------
+func _notification(what: int) -> void:
+	if (what == NOTIFICATION_EDITOR_POST_SAVE):
+		print("Redoing map")
+		RedoMap()
+
+#----------------------------------------------------------------
+func RespawnMap() -> void:
+	var NewLevelScene:PackedScene = load(levelScene)
+	_Editor_CurrentWorld = NewLevelScene.instantiate()
+	get_parent().add_child(_Editor_CurrentWorld)
+	StartGenerationThread(false)
+	await GenerationFinished
+	_Editor_CurrentWorld.configure_map(self)
+	_Editor_CurrentWorld.StartBuildingThread(false)
+
+#----------------------------------------------------------------
+func _exit_tree() -> void:
+	if (_Editor_CurrentWorld != null):
+		_Editor_CurrentWorld.queue_free()
+
+#----------------------------------------------------------------
+func _on_extra_props_updated() -> void:
+	StoreProps()
+
+#----------------------------------------------------------------
+## Used to update level with the camera's position so the geo is updated
 func _physics_process(delta: float) -> void:
 	if (!Engine.is_editor_hint()):
 		return
@@ -1179,6 +774,11 @@ func _physics_process(delta: float) -> void:
 		#CurrentlyVisibleFloor = 2
 		##Update()
 
+
+#----------------------------------------------------------------
+## Used to draw various element on the map to help.
+## Draws lines from switches to the doors they interact with
+## Declares the element of preassure plates, movable and projectile switches
 func _draw() -> void:
 	if (!Engine.is_editor_hint()):
 		return
@@ -1320,57 +920,3 @@ func _draw() -> void:
 		TextDrawPos.x -= text.length() * 2
 		TextDrawPos.y -= 10
 		draw_string(ThemeDB.fallback_font, TextDrawPos, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 8, Color(1,0,0))
-
-
-#EDITOR STUFF
-@export_group("EditorStuff")
-@export_tool_button("Redo 3D Map") var Redo3DMapAction = RedoMap
-@export_tool_button("Store Props") var StorePropAction = StoreProps
-
-func StoreProps() -> void:
-	Props.clear()
-	for g : MeshInstance3D in $ExtraProps.get_children():
-		var MData = MeshData.new()
-		MData.Transform = g.transform
-		if (g.get_surface_override_material(0) != null):
-			MData.MatOverride = g.get_surface_override_material(0)
-		else: if (g.material_override != null):
-			MData.MatOverride = g.material_override
-		if (Props.keys().has(g.mesh)):
-			Props[g.mesh].append(MData)
-		else:
-			Props[g.mesh] = [MData]
-
-var _Editor_CurrentWorld : Level
-
-func RedoMap() -> void:
-	StoreProps()
-	if (_Editor_CurrentWorld == null):
-		RespawnMap()
-	else:
-		StartGenerationThread(false)
-		await GenerationFinished
-		_Editor_CurrentWorld.RedoMap(false)
-	queue_redraw()
-
-func _notification(what: int) -> void:
-	if (what == NOTIFICATION_EDITOR_POST_SAVE):
-		print("Redoing map")
-		RedoMap()
-
-func RespawnMap() -> void:
-	var NewLevelScene:PackedScene = load(levelScene)
-	_Editor_CurrentWorld = NewLevelScene.instantiate()
-	get_parent().add_child(_Editor_CurrentWorld)
-	StartGenerationThread(false)
-	await GenerationFinished
-	_Editor_CurrentWorld.configure_map(self)
-	_Editor_CurrentWorld.StartBuildingThread(false)
-
-func _exit_tree() -> void:
-	if (_Editor_CurrentWorld != null):
-		_Editor_CurrentWorld.queue_free()
-
-
-func _on_extra_props_updated() -> void:
-	StoreProps()

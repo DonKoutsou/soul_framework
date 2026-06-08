@@ -57,7 +57,7 @@ mouse_cursor/custom_image="uid://vdckvap8ll4o"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/button_prompts_for_godot/plugin.cfg")
+enabled=PackedStringArray("res://addons/button_prompts_for_godot/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [file_customization]
 

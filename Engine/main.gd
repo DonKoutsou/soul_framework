@@ -51,7 +51,7 @@ func StartGame() -> void:
 	Menu.queue_free()
 
 	$SubViewportContainer/SubViewport.add_child(GameInstance)
-	GameInstance.StartingLevel = Map.LocationName.Test_Map
+	GameInstance.StartingLevel = StartingLevel
 	GameInstance.GameEnded.connect(GameWon)
 	GameInstance.GameSaved.connect(SaveGame)
 	GameInstance.GameClosed.connect(BackToMenu)
@@ -110,6 +110,7 @@ func StartTestMap() -> void:
 	Menu.queue_free()
 	
 	$SubViewportContainer/SubViewport.add_child(GameInstance)
+	GameInstance.StartingLevel = Map.LocationName.Test_Map
 	GameInstance.GameEnded.connect(GameWon)
 	GameInstance.GameSaved.connect(SaveGame)
 	GameInstance.GameClosed.connect(BackToMenu)

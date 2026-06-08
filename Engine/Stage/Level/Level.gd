@@ -98,8 +98,6 @@ func Update(delta: float) -> void:
 		for g : LevelMultiLayerMultimesh in MultiLayerMultiMeshes.values():
 			g.Proc(delta)
 	
-	
-	
 func PauseLevel(t : bool) -> void:
 	Paused = t
 

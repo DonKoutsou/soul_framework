@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://l1yv1ffimeej" path="res://Engine/Items/Effects/ItemEffect.gd" id="1_xftdo"]
 [ext_resource type="Script" uid="uid://d2r1jshublp3f" path="res://Engine/Items/Effects/HealItemEffect.gd" id="2_sps87"]
+[ext_resource type="ArrayMesh" uid="uid://c1dp5ccr13w7o" path="res://Engine/Assets/Items/LargePotion.res" id="3_lg7um"]
+[ext_resource type="Material" uid="uid://gn0dpu371111" path="res://Engine/Assets/Items/Materials/Potion.tres" id="4_fpn1f"]
 [ext_resource type="Script" uid="uid://dnwn8l0kfkmcy" path="res://Engine/Items/Item.gd" id="4_p6arr"]
-[ext_resource type="ArrayMesh" uid="uid://bxy6if6i850s2" path="res://Engine/Assets/Items/LargePotion.obj" id="4_sn4gf"]
-[ext_resource type="Material" uid="uid://gn0dpu371111" path="res://Engine/Assets/Items/Potion.tres" id="5_sn4gf"]
 
 [sub_resource type="Resource" id="Resource_n6mu5"]
 script = ExtResource("2_sps87")
@@ -20,7 +20,7 @@ ItemName = "Large Potion"
 Effects = Array[ExtResource("1_xftdo")]([SubResource("Resource_n6mu5")])
 ConsumeOnUse = true
 Value = 30
-Model = ExtResource("4_sn4gf")
-ModelMat = ExtResource("5_sn4gf")
+Model = ExtResource("3_lg7um")
+ModelMat = ExtResource("4_fpn1f")
 Stack = true
 metadata/_custom_type_script = "uid://dnwn8l0kfkmcy"

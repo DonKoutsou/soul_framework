@@ -11,7 +11,6 @@
 [ext_resource type="Resource" uid="uid://dkmeipubvaxnr" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Lantern.tres" id="11_x4p7r"]
 [ext_resource type="Material" path="res://Engine/Shaders/Materials/LanternLight.tres" id="12_1e7my"]
 [ext_resource type="Resource" uid="uid://b756etlvgnhmh" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Unseath.tres" id="12_kyleq"]
-[ext_resource type="ArrayMesh" uid="uid://oq5oukr3asry" path="res://Engine/Assets/Items/Lantern2.res" id="12_lslt6"]
 [ext_resource type="Resource" uid="uid://cs0jqehmsjlch" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Seath.tres" id="13_endcp"]
 [ext_resource type="Resource" uid="uid://cdyg6ufhgxywx" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Walk.tres" id="14_7u03s"]
 [ext_resource type="Texture2D" uid="uid://t7wwx8j6b12w" path="res://Engine/Assets/Textures/LLight.png" id="14_lslt6"]
@@ -42,6 +41,9 @@
 [ext_resource type="Resource" uid="uid://do5uxwtrkt31b" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Stun.tres" id="36_jmdvu"]
 [ext_resource type="Resource" uid="uid://dfwyrnlf06arg" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Death.tres" id="37_wyigv"]
 [ext_resource type="ArrayMesh" uid="uid://c1lhyd5f67lw1" path="res://Engine/Assets/Weapons/Shovel.res" id="38_tiq7d"]
+[ext_resource type="ArrayMesh" uid="uid://drjpt5pqn3tav" path="res://Engine/Assets/Items/Lentern.res" id="39_ttegh"]
+[ext_resource type="Material" uid="uid://c3dr87khiawcx" path="res://Engine/Assets/Items/Materials/LanternBodyMat.tres" id="40_hmpig"]
+[ext_resource type="Material" uid="uid://bhufvoie07eh7" path="res://Engine/Assets/Items/Materials/LanternMat.tres" id="41_6y68k"]
 [ext_resource type="AnimationLibrary" uid="uid://3aa8srjf5dmm" path="res://Engine/Controllers/Fight_Characters/PlayerRig/PlayerRigAnimationLib.tres" id="45_ttegh"]
 [ext_resource type="Script" uid="uid://bj3feok1xkxq" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/MomentumModifier.gd" id="45_y0045"]
 
@@ -165,7 +167,9 @@ transform = Transform3D(0.06088456, 0.9899696, -0.1274812, -0.9761332, 0.0323817
 transform = Transform3D(0.5993388, 0, -0.113549784, 0, 0.61000067, 0, 0.11354961, 0, 0.5993397, -0.003124038, 0, -0.0005918744)
 layers = 524288
 cast_shadow = 0
-mesh = ExtResource("12_lslt6")
+mesh = ExtResource("39_ttegh")
+surface_material_override/0 = ExtResource("40_hmpig")
+surface_material_override/1 = ExtResource("41_6y68k")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="GeneralSkeleton/BoneAttachment3D/LanternPivot/Lantern" unique_id=468137951 groups=["Lights"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15388936, -0.31573018, -1.0973575e-09)
