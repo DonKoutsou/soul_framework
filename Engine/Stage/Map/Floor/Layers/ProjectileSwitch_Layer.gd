@@ -3,7 +3,7 @@ extends BaseFloorLayer
 
 class_name ProjectileSwitchLayer
 
-func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : TempLayerGenerationData, tempData : TempGenerationData) -> void:
+func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, _tempLayerData : TempLayerGenerationData, _tempData : TempGenerationData) -> void:
 	var index = get_cell_atlas_coords(Vector2i(Pos.x, Pos.z)).x
 	
 	if (index != -1 and map.ProjectileSwitchCatalogue.size() > index):
@@ -12,7 +12,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 		SwitchData.Pos = Pos
 		cellDat.Custom_Data["ProjectileSwitch"] = SwitchData
 
-func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
+func GetDebugData(map : Map, floorIndex : int) -> Dictionary[String, Variant]:
 	var DebugData : Dictionary[String, Variant] = {
 		"Texts" : {},
 		"Lines" : [],
@@ -47,7 +47,7 @@ func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
 				DebugData["Lines"].append(map_to_local(ProjectileSwitchPosition))
 				DebugData["Lines"].append(map_to_local(ProjectileSwitchPosition))
 				
-				var lineText = var_to_str(Vector3i(ProjectileSwitchPosition.x, floor, ProjectileSwitchPosition.y)).erase(0, 8)
+				var lineText = var_to_str(Vector3i(ProjectileSwitchPosition.x, floorIndex, ProjectileSwitchPosition.y)).erase(0, 8)
 				
 				var LineTextDrawPos = map_to_local(ProjectileSwitchPosition)
 				var LinetextSize = ThemeDB.fallback_font.get_multiline_string_size(lineText, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
@@ -82,7 +82,7 @@ func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
 				DebugData["Lines"].append(map_to_local(Vector2(Pos.x, Pos.z)))
 				DebugData["Lines"].append(map_to_local(ProjectileSwitchPosition))
 				
-				var lineText = var_to_str(Vector3i(ProjectileSwitchPosition.x, floor, ProjectileSwitchPosition.y)).erase(0, 8)
+				var lineText = var_to_str(Vector3i(ProjectileSwitchPosition.x, floorIndex, ProjectileSwitchPosition.y)).erase(0, 8)
 				
 				var LineTextDrawPos = map_to_local(ProjectileSwitchPosition)
 				var LinetextSize = ThemeDB.fallback_font.get_multiline_string_size(lineText, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)

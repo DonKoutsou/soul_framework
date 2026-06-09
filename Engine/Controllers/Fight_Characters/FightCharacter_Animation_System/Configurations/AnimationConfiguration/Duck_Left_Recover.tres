@@ -9,5 +9,6 @@ AnimName = "Duck_Left_Recover"
 BlendOutAnim = "Duck_Left"
 Blend_Duration = 0.15
 Blend_Out_Duration = 0.3
+InverseSyncBlend = true
 ValidStates = Array[int]([0])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

@@ -3,7 +3,7 @@ extends BaseFloorLayer
 
 class_name ItemLayer
 
-func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : TempLayerGenerationData, tempData : TempGenerationData) -> void:
+func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : TempLayerGenerationData, _tempData : TempGenerationData) -> void:
 	var index = get_cell_atlas_coords(Vector2i(Pos.x, Pos.z)).x
 
 	if (index > -1 ):
@@ -34,7 +34,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 			cellDat.AddData("Item", it)
 			#Data.ItemSpawns[Pos] = it
 
-func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
+func GetDebugData(map : Map, _floorIndex : int) -> Dictionary[String, Variant]:
 	var DebugData : Dictionary[String, Variant] = {
 		"Texts" : {},
 		"Lines" : [],
@@ -52,13 +52,11 @@ func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
 			var it : Item = load(map.ItemCaralogue[Index])
 			text = it.ItemName
 			
-		
-		
 		var TextDrawPos = map_to_local(itemPos)
 		
 		var textSize = ThemeDB.fallback_font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
 		TextDrawPos.x -= textSize.x / 2.0
-		
+	
 		var textData : Dictionary[String, Variant] = {
 			"text" : text,
 			"color" : DebugStringColor
@@ -66,5 +64,4 @@ func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
 		
 		DebugData["Texts"][TextDrawPos] = textData
 		
-	
 	return DebugData

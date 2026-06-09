@@ -3,7 +3,7 @@ extends BaseFloorLayer
 
 class_name LeverLayer
 
-func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : TempLayerGenerationData, tempData : TempGenerationData) -> void:
+func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, _tempLayerData : TempLayerGenerationData, _tempData : TempGenerationData) -> void:
 	var index = get_cell_atlas_coords(Vector2i(Pos.x, Pos.z)).x
 
 	if (index != -1 and map.LeverCatalogue.size() > index):
@@ -18,7 +18,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 		LData.Trans = T
 
 
-func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
+func GetDebugData(map : Map, floorIndex : int) -> Dictionary[String, Variant]:
 	var DebugData : Dictionary[String, Variant] = {
 		"Texts" : {},
 		"Lines" : [],
@@ -49,14 +49,14 @@ func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
 			if (UnlockPosition == Vector3i.ZERO):
 				
 				var linetextData : Dictionary[String, Variant] = {
-					"text" : var_to_str(Vector3i(LeverPosition.x, floor, LeverPosition.y)),
+					"text" : var_to_str(Vector3i(LeverPosition.x, floorIndex, LeverPosition.y)),
 					"color" : DebugStringColor
 				}
 		
 				DebugData["Texts"][LeverPosition] = linetextData
 				
 			else:
-				if (map.CurrentlyVisibleFloor != floor and map.CurrentlyVisibleFloor != UnlockPosition.y):
+				if (map.CurrentlyVisibleFloor != floorIndex and map.CurrentlyVisibleFloor != UnlockPosition.y):
 					continue
 				
 				DebugData["Lines"].append(map_to_local(LeverPosition))
@@ -81,7 +81,7 @@ func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
 				DebugData["Lines"].append(map_to_local(LeverPosition))
 				DebugData["Lines"].append(map_to_local(Vector2i(Pos.x, Pos.z)))
 				
-				var text = var_to_str(Vector3i(LeverPosition.x, floor, LeverPosition.y)).erase(0, 8)
+				var text = var_to_str(Vector3i(LeverPosition.x, floorIndex, LeverPosition.y)).erase(0, 8)
 				
 				var LineTextDrawPos = map_to_local(Vector2i(Pos.x, Pos.z))
 				var LinetextSize = ThemeDB.fallback_font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)

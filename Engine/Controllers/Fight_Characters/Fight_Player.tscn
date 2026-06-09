@@ -9,12 +9,12 @@
 [ext_resource type="Script" uid="uid://cn0rec8qe556" path="res://Engine/Controllers/player_camera.gd" id="9_ksbbd"]
 [ext_resource type="Resource" uid="uid://cf2foygm8meh4" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Idle_Player.tres" id="10_57y0o"]
 [ext_resource type="Resource" uid="uid://dkmeipubvaxnr" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Lantern.tres" id="11_x4p7r"]
-[ext_resource type="Material" path="res://Engine/Shaders/Materials/LanternLight.tres" id="12_1e7my"]
+[ext_resource type="Material" uid="uid://c6slmlpjirxh0" path="res://Engine/Shaders/Materials/LanternLight.tres" id="12_1e7my"]
 [ext_resource type="Resource" uid="uid://b756etlvgnhmh" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Unseath.tres" id="12_kyleq"]
 [ext_resource type="Resource" uid="uid://cs0jqehmsjlch" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Seath.tres" id="13_endcp"]
 [ext_resource type="Resource" uid="uid://cdyg6ufhgxywx" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Walk.tres" id="14_7u03s"]
 [ext_resource type="Texture2D" uid="uid://t7wwx8j6b12w" path="res://Engine/Assets/Textures/LLight.png" id="14_lslt6"]
-[ext_resource type="Script" path="res://Engine/Controllers/Fight_Characters/lantern_light.gd" id="14_tc1am"]
+[ext_resource type="Script" uid="uid://btyn5d4y5rdmv" path="res://Engine/Controllers/Fight_Characters/lantern_light.gd" id="14_tc1am"]
 [ext_resource type="Resource" uid="uid://duv7d5qm5xwti" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Right.tres" id="15_j7887"]
 [ext_resource type="Resource" uid="uid://c0jflo3f0vfd3" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Right_Recover.tres" id="16_uwlqa"]
 [ext_resource type="Script" uid="uid://2o6tgcat6qck" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Fight_Animation_Modifier.gd" id="17_22ek7"]
@@ -126,7 +126,7 @@ CurrentState = 1
 WeaponCurve = ExtResource("5_ttegh")
 RecoilCurve = SubResource("Curve_22ek7")
 animator = NodePath("../../AnimationPlayer")
-anims = Array[ExtResource("9_ga5p4")]([ExtResource("10_57y0o"), ExtResource("11_x4p7r"), ExtResource("12_kyleq"), ExtResource("13_endcp"), ExtResource("14_7u03s"), ExtResource("15_j7887"), ExtResource("16_uwlqa"), ExtResource("17_gpdat"), ExtResource("18_u1g0i"), ExtResource("19_m5kv2"), ExtResource("20_upm8t"), ExtResource("21_tcu7f"), ExtResource("22_pc6nx"), ExtResource("23_n25ff"), ExtResource("24_6lemw"), ExtResource("25_btr13"), ExtResource("26_jpaba"), ExtResource("27_67617"), ExtResource("28_bqsjn"), ExtResource("29_xjw76"), ExtResource("30_o4q42"), ExtResource("31_e5kpb"), ExtResource("32_s781g"), ExtResource("33_mjjn8"), ExtResource("34_wmvpl"), ExtResource("35_0de3s"), ExtResource("36_jmdvu"), ExtResource("37_wyigv"), ExtResource("34_krl06")])
+anims = Array[ExtResource("9_ga5p4")]([ExtResource("10_57y0o"), ExtResource("11_x4p7r"), ExtResource("12_kyleq"), ExtResource("13_endcp"), ExtResource("14_7u03s"), ExtResource("15_j7887"), ExtResource("16_uwlqa"), ExtResource("17_gpdat"), ExtResource("18_u1g0i"), ExtResource("19_m5kv2"), ExtResource("22_pc6nx"), ExtResource("25_btr13"), ExtResource("28_bqsjn"), ExtResource("31_e5kpb"), ExtResource("20_upm8t"), ExtResource("23_n25ff"), ExtResource("26_jpaba"), ExtResource("29_xjw76"), ExtResource("32_s781g"), ExtResource("21_tcu7f"), ExtResource("24_6lemw"), ExtResource("27_67617"), ExtResource("30_o4q42"), ExtResource("33_mjjn8"), ExtResource("34_wmvpl"), ExtResource("35_0de3s"), ExtResource("36_jmdvu"), ExtResource("37_wyigv"), ExtResource("34_krl06")])
 metadata/_custom_type_script = "uid://2o6tgcat6qck"
 
 [node name="LookAtModifier3D" type="LookAtModifier3D" parent="GeneralSkeleton" unique_id=751339328]

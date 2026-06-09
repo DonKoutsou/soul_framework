@@ -3,7 +3,7 @@ extends BaseFloorLayer
 
 class_name PreassurePlateLayer
 
-func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : TempLayerGenerationData, tempData : TempGenerationData) -> void:
+func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, _tempLayerData : TempLayerGenerationData, _tempData : TempGenerationData) -> void:
 	var index = get_cell_atlas_coords(Vector2i(Pos.x, Pos.z)).x
 
 	if (index != -1 and map.PlateCatalogue.size() > index):
@@ -11,7 +11,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 		PData.Info = map.PlateCatalogue[index].duplicate()
 		cellDat.Custom_Data["Plate"] = PData
 
-func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
+func GetDebugData(map : Map, floorIndex : int) -> Dictionary[String, Variant]:
 	var DebugData : Dictionary[String, Variant] = {
 		"Texts" : {},
 		"Lines" : [],
@@ -45,7 +45,7 @@ func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
 				DebugData["Lines"].append(map_to_local(PlatePosition))
 				DebugData["Lines"].append(map_to_local(PlatePosition))
 				
-				var lineText = var_to_str(Vector3i(PlatePosition.x, floor, PlatePosition.y)).erase(0, 8)
+				var lineText = var_to_str(Vector3i(PlatePosition.x, floorIndex, PlatePosition.y)).erase(0, 8)
 				
 				var LineTextDrawPos = map_to_local(PlatePosition)
 				var LinetextSize = ThemeDB.fallback_font.get_multiline_string_size(lineText, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)

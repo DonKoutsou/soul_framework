@@ -3,7 +3,7 @@ class_name BoneTrackBinding
 
 var bone_index : int
 
-func Handle(anim : Animation, animationProgress : float, progressionAmmount : float, animInfo : AnimationInfo, blendValue : float, skel : Skeleton3D) -> void:
+func Handle(anim : Animation, animationProgress : float, _progressionAmmount : float, animInfo : AnimationInfo, blendValue : float, skel : Skeleton3D) -> void:
 	
 	if !animInfo.AnimateBone(bone_index):
 		return

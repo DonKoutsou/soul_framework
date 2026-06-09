@@ -3,21 +3,25 @@ extends SkeletonModifier3D
 
 class_name Fight_Animation_Modifier
 
+##Main driving force of modifier, when state switches all animations that are configured to that state will start playing/blending in
 @export var CurrentState : FightCharacter.CharacterState:
 	set(value):
 		CurrentState = value
 		if (!is_inside_tree()):
 			return
 		StateSwitched(value)
+##Will set the walking animations to play or not.
 @export var Walking : bool = false:
 	set(value):
 		Walking = value
 		ToggleWalking(Walking)
+##This curve is recalculated based on weapons speed to change the buildup and strike speed of each weapon to be a little different
 @export var WeaponCurve : Curve
 @export var Custom_Time_Scale : float = 1.0
 @export_group("Weapon")
+##Swaps the animations that is played to match the weapon type
 @export var CurrentWeaponType : WeaponType = WeaponType.ONE_HANDED
-
+##Affects blend speed and animation progression speed of all animations marked as `AffectedByWeapon`
 @export var currentWeaponSpeed: float = 1.0:
 	set(value):
 		currentWeaponSpeed = value
@@ -25,30 +29,44 @@ class_name Fight_Animation_Modifier
 
 
 @export_group("Recoil")
+##Any offset here will be applied to skeleton and progressivly be reduced back to 0
 @export var Recoil : Vector3 = Vector3.ZERO
+##Recoil is applied using this curve
 @export var RecoilCurve : Curve
 
 @export_group("Nodes")
 @export var animator : AnimationPlayer
 
 @export_group("Animation configuration")
+##Animation configuration to be used to figure out wich animation to player. Animations can be configured to be played durring specific state switch or as a on complete animation
 @export var anims : Array[AnimationInfo] = []
 @export_tool_button("Check For Broken Bone Maps") var boneMapFix : Callable = FixBoneMaps
 
-
+##Contains the progress of each animations
 var animProgress : PackedFloat32Array
+##Contains the progress each animation had last frame
 var cachedPrevanimProgress : PackedFloat32Array
+##Contains blend values of each animations
 var animBlend : PackedFloat32Array
-#bit flags
+
+##-------------------------- BIT FLAGS ------------------------------##
+##Bitflag showing animations that are active, to interact with use GetAnimationActive and SetAnimationActive
 var animActive : int = 0
+##Bitflag showng the blend diraction of each animation, to interact with use GetAnimationBlendDirection and SetAnimationBlendDirection
 var animBlendDirection : int = 0
+##Bitflag used for dual wielding, showing if animation is on left or right hand, to interact with use GetAnimationDualDirection and SetAnimationDualDirection
 var animDir : int = 0
 
+##Bone list to use on recoil
 var recoilBone : int
 var recoilBone2 : int
 var cambone : int
 var headbone : int
+
+##Animation cache, on ready this cache is build to avoid getting information from animations player all the time.
+##Information includes all tracks either bone track, method call track of value set track
 var animation_cache : Dictionary[String, CachedAnimation] = {}
+
 
 signal AnimationFinished(animName : String)
 
@@ -70,6 +88,7 @@ func _ready() -> void:
 			BuildAnimationCache("BOW_" + g.AnimName)
 	#print(animBlend.size())
 
+#---------------------------------------------
 func BuildAnimationCache(anim_name : String) -> void:
 	var cache = CachedAnimation.new()
 	if (!animator.has_animation(anim_name)):
@@ -101,6 +120,7 @@ func BuildAnimationCache(anim_name : String) -> void:
 	
 	animation_cache[anim_name] = cache
 
+#---------------------------------------------
 func ToggleWalking(t : bool) -> void:
 	var walkIndex = GetAnimationInfo("Walk")
 	if (t):
@@ -108,6 +128,7 @@ func ToggleWalking(t : bool) -> void:
 	else:
 		SetAnimationBlendDirection(walkIndex, t)
 
+#---------------------------------------------
 func StateSwitched(NewState : FightCharacter.CharacterState) -> void:
 	for animIndex in anims.size():
 		var animInfo = anims[animIndex]
@@ -146,6 +167,7 @@ func StateSwitched(NewState : FightCharacter.CharacterState) -> void:
 					
 				var animToStop = anims[blendOutAnimIndex]
 				var blendOutDir = GetAnimationDualDirection(blendOutAnimIndex)
+				
 				if (animToStop is CombatAnimationInfo and !animToStop.AlwaysR):
 					SetAnimationDualDirection(animIndex, blendOutDir)
 				
@@ -157,21 +179,22 @@ func StateSwitched(NewState : FightCharacter.CharacterState) -> void:
 				if (animInfo.InverseSyncBlend):
 					var time = animator.get_animation(animToStop.GetAnimationName(CurrentWeaponType, dualDir)).length
 					var newTime = time - animProgress[blendOutAnimIndex]
-					cachedPrevanimProgress[animIndex] = animProgress[animIndex]
+					cachedPrevanimProgress[animIndex] = animProgress[blendOutAnimIndex]
 					animProgress[animIndex] = newTime
-				continue
+			
+			else: if (animInfo is CombatAnimationInfo and !animInfo.AlwaysR):
+				SetAnimationDualDirection(animIndex, randi_range(0, 1) == 0)
 			
 			SetAnimationActive(animIndex, true)
 			SetAnimationBlendDirection(animIndex, true)
-			if (animInfo is CombatAnimationInfo and !animInfo.AlwaysR):
-				SetAnimationDualDirection(animIndex, randi_range(0, 1) == 0)
+			
+			
 		else:
 			if (!GetAnimationActive(animIndex)):
 				continue
 			SetAnimationBlendDirection(animIndex, false)
 
-
-
+#---------------------------------------------
 func PlayAnim(animName : String) -> void:
 	#print("playing {0}".format([animName]))
 	var animToPlayIndex = GetAnimationInfo(animName)
@@ -191,6 +214,7 @@ func PlayAnim(animName : String) -> void:
 		var animToStopIndex = GetAnimationInfo(animToPlay.GetBlendOutAnimationName(CurrentWeaponType, dualDir))
 		SetAnimationBlendDirection(animToStopIndex, false)
 
+#---------------------------------------------
 func UpdateWeaponSpeed(newSpeed : float) -> void:
 	var normalisedSpeed = GetWeaponSpeedNormalised(newSpeed)
 	var first = clampf(lerpf(0.0, 1.0, normalisedSpeed), 0.0, 1.0)
@@ -250,7 +274,8 @@ func _process_modification_with_delta(delta: float) -> void:
 			binding.Handle(anim, animation_progress, t, animInfo, blendValue, get_skeleton())
 	
 	HandleRecoil(delta)
-	
+
+#---------------------------------------------
 func HandleRecoil(delta : float) -> void:
 	if (Recoil == Vector3.ZERO):
 		return
@@ -331,7 +356,7 @@ func ProgressAnimation(animIndex : int, delta : float) -> void:
 	else:
 		if (animProgress[animIndex] > currentAnim.length):
 			return
-		var blend_speed = (delta / anim.Time_Scale)
+		var blend_speed = (delta * anim.Time_Scale)
 		if (anim.AffectedByWeapon):
 			blend_speed *= currentWeaponSpeed
 		
@@ -339,7 +364,7 @@ func ProgressAnimation(animIndex : int, delta : float) -> void:
 		
 		#try to coclulate how far the ending of the animation is and start blending it out eralier
 		var remainingBlendTime = animBlend[animIndex]
-		var blendOutDuration = anim.Blend_Out_Duration
+		var blendOutDuration = anim.Blend_Out_Duration * anim.Time_Scale
 		if (anim.AffectedByWeapon):
 			blendOutDuration /= currentWeaponSpeed
 		var timeUntilBlendOut = (remainingBlendTime * blendOutDuration) - delta
@@ -356,12 +381,12 @@ func ProgressAnimation(animIndex : int, delta : float) -> void:
 		if (animProgress[animIndex] > currentAnim.length):
 			OnAnimationFinished(anim.AnimName)
 			
-
-
+#---------------------------------------------
 func OnAnimationFinished(animName : String) -> void:
 	print("Finished : {0}".format([animName]))
 	AnimationFinished.emit(animName)
 
+#---------------------------------------------
 func SampleRecoil(Value : float) -> float:
 	var s = sign(Value)
 	var sampledValue = RecoilCurve.sample(abs(Value))
@@ -375,18 +400,22 @@ func GetAnimationInfo(animatioName : String) -> int:
 			return animIndex
 	return -1
 
+#---------------------------------------------
 func GetWeaponSpeedNormalised(speed : float) -> float:
 	return normalize_value(speed, Weapon.WEAPON_MIN_SPEED, Weapon.WEAPON_MAX_SPEED)
 
+#---------------------------------------------
 func GetSkeletonName() -> String:
 	return get_skeleton().name
 
+#---------------------------------------------
 func GetTackBone(anim : Animation, trackID : int) -> int:
 	var bone_name : String = anim.track_get_path(trackID)
 	bone_name = bone_name.replace("%{0}:".format([GetSkeletonName()]), "")
 	var bone = get_skeleton().find_bone(bone_name)
 	return bone
 
+#---------------------------------------------
 func GetBlendValue(animIndex : int) -> float:
 	var animInfo = anims[animIndex]
 	var blendValue = animBlend[animIndex]
@@ -401,6 +430,7 @@ func GetBlendValue(animIndex : int) -> float:
 func GetAnimationProgres(animIndex : int) -> float:
 	return animProgress[animIndex]
 
+#---------------------------------------------
 func GetPreviousAnimationProgres(animIndex : int) -> float:
 	return cachedPrevanimProgress[animIndex]
 
@@ -409,19 +439,18 @@ func GetPreviousAnimationProgres(animIndex : int) -> float:
 func GetAnimationActive(animationIndex : int) -> bool:
 	return animActive & (1 << animationIndex) != 0
 
+#---------------------------------------------
 func SetAnimationActive(animationIndex : int, t : bool):
 	if (GetAnimationActive(animationIndex) == t):
 		return
 		
 	if (t):
 		var anim = anims[animationIndex]
-		print("{0} set to active".format([anim.AnimName]))
+		#print("{0} set to active".format([anim.AnimName]))
 		animActive |= (1 << animationIndex)
 	else:
 		var anim = anims[animationIndex]
-		print("{0} set to inactive".format([anim.AnimName]))
-		if (anim.AnimName in ["Charge_Right_Reversed", "Charge_Top_Reversed", "Charge_Left_Reversed", "Charge_Middle_Reversed"]):
-			print("thing")
+		#print("{0} set to inactive".format([anim.AnimName]))
 		animActive &= ~(1 << animationIndex)
 	
 	#print("toggled {0}".format([anims[animationIndex].AnimName]))
@@ -434,18 +463,20 @@ func SetAnimationActive(animationIndex : int, t : bool):
 func GetAnimationBlendDirection(animationIndex : int) -> bool:
 	return animBlendDirection & (1 << animationIndex) != 0
 
+#---------------------------------------------
 func SetAnimationBlendDirection(animationIndex : int, t : bool):
 	if (t):
 		animBlendDirection |= (1 << animationIndex)
 	else:
 		var anim = anims[animationIndex]
-		if (anim.AnimName in ["Charge_Right_Reversed", "Charge_Top_Reversed", "Charge_Left_Reversed", "Charge_Middle_Reversed"]):
-			print("thing")
+
 		animBlendDirection &= ~(1 << animationIndex)
 
+#---------------------------------------------
 func GetAnimationDualDirection(animationIndex : int) -> bool:
 	return animDir & (1 << animationIndex) != 0
 
+#---------------------------------------------
 func SetAnimationDualDirection(animationIndex : int, t : bool):
 	if (t):
 		animDir |= (1 << animationIndex)
@@ -459,6 +490,7 @@ func normalize_value(value: float, minimum: float, maximum: float) -> float:
 		return 0.0
 	return (value - minimum) / (maximum - minimum)
 
+#---------------------------------------------
 func FixBoneMaps() -> void:
 	for g in get_skeleton().get_bone_count():
 		ProjectSettings.set_setting("layer_names/2d_navigation/layer_{0}".format([g]), get_skeleton().get_bone_name(g))

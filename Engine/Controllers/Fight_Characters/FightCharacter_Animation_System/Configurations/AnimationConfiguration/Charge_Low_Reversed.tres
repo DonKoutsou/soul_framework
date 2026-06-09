@@ -5,20 +5,13 @@
 
 [resource]
 script = ExtResource("2_dify5")
-AlwaysR = false
 AnimName = "Charge_Low_Reversed"
-BlendInAnim = ""
 BlendCurve = ExtResource("1_i3qfs")
 BlendOutAnim = "Charge_Low"
 BlendOutCurve = ExtResource("1_i3qfs")
 Blend_Duration = 0.15
 Blend_Out_Duration = 0.4
-OnCompleteAnim = ""
 InverseSyncBlend = true
-BoneFilter = 4294967295
-AffectedByWeapon = false
-Time_Scale = 1.0
-Loop = false
-AutoComplete = true
+Time_Scale = 0.8
 ValidStates = Array[int]([25])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

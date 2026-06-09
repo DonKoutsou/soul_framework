@@ -6,7 +6,7 @@ var node : Node
 var property : StringName
 
 
-func Handle(anim : Animation, animationProgress : float, progressionAmmount : float, animInfo : AnimationInfo, blendValue : float, skel : Skeleton3D) -> void:
+func Handle(anim : Animation, animationProgress : float, _progressionAmmount : float, _animInfo : AnimationInfo, _blendValue : float, _skel : Skeleton3D) -> void:
 	var value = anim.value_track_interpolate(track_index, animationProgress)
 
 	node.set(property,value)

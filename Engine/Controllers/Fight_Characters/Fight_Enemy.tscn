@@ -102,7 +102,9 @@ visibility_parent = NodePath("")
 active = true
 influence = 1.0
 script = ExtResource("10_84woi")
+CurrentState = 13
 WeaponCurve = ExtResource("4_5mrp1")
+CurrentWeaponType = 1
 currentWeaponSpeed = 0.6
 RecoilCurve = SubResource("Curve_kw201")
 animator = NodePath("../../AnimationPlayer")
@@ -110,7 +112,7 @@ anims = Array[ExtResource("6_c3124")]([ExtResource("7_fxlpe"), ExtResource("8_id
 metadata/_custom_type_script = "uid://2o6tgcat6qck"
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=352902681]
-transform = Transform3D(0.9611044, -0.00033834577, 0.27618518, 0.08208701, 0.9551593, -0.28448576, -0.2637046, 0.29609162, 0.91803557, 0.083079465, 0.7706631, 0.14103855)
+transform = Transform3D(0.9999134, 0.0024470538, -0.012945771, -0.0062117986, 0.9540944, -0.29944044, 0.01161872, 0.29949492, 0.95402694, 0.01839904, 0.74098164, 0.1496674)
 bone_name = "Head"
 bone_idx = 13
 
@@ -118,7 +120,7 @@ bone_idx = 13
 transform = Transform3D(1, 0, 0, 0, 0.9999996, 0, 0, 0, 0.9999999, 0, 0, 0)
 
 [node name="Palm_L" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1614551408]
-transform = Transform3D(-0.38510036, 0.9227857, 0.012804084, 0.88963467, 0.3675042, 0.2710911, 0.24545309, 0.115788594, -0.96246845, 0.21641111, 0.5528347, 0.105626546)
+transform = Transform3D(-0.5063236, -0.14851122, -0.84945893, -0.6698021, -0.55270237, 0.49586764, -0.5431397, 0.8200394, 0.18037303, 0.14701965, 0.40170908, 0.09696082)
 bone_name = "WeaponPlacement.L"
 bone_idx = 20
 
@@ -133,7 +135,7 @@ mesh = ExtResource("5_66mam")
 blend_shapes/blendShape1.Closed = 1.0
 
 [node name="Palm_L2" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=480455727]
-transform = Transform3D(-0.026398813, 0.66803145, 0.7436644, 0.64821666, -0.55488247, 0.52146, 0.7609981, 0.4958213, -0.4183809, 0.23640867, 0.60052395, 0.099738486)
+transform = Transform3D(-0.47672844, 0.13061033, -0.8692932, -0.83842176, -0.3647253, 0.4049988, -0.26415646, 0.9219086, 0.28338146, -0.15188569, 0.45487034, 0.2140978)
 bone_name = "WeaponPlacement.R"
 bone_idx = 25
 

@@ -408,11 +408,12 @@ func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Mag
 	if (HitConnected):
 		if (is_instance_valid(RecoilTween) and RecoilTween.is_valid()):
 			RecoilTween.kill()
-		RecoilTween = create_tween()
-		RecoilTween.set_ease(Tween.EASE_OUT)
-		RecoilTween.set_trans(Tween.TRANS_BACK)
-		RecoilTween.tween_property(SkeletonModif, "Recoil", GetRecoil(Dir), 0.1)
-		RecoilTween.pause()
+		#RecoilTween = create_tween()
+		#RecoilTween.set_ease(Tween.EASE_OUT)
+		#RecoilTween.set_trans(Tween.TRANS_BACK)
+		#RecoilTween.tween_property(SkeletonModif, "Recoil", GetRecoil(Dir), 0.1)
+		#RecoilTween.pause()
+		SkeletonModif.Recoil = GetRecoil(Dir)
 		
 	if (IsAttacking()):
 		if (ControllingCharacter.CharacterWeapon.Stamina_Cost > Magnitude):

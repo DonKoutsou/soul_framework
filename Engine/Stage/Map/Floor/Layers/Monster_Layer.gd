@@ -13,7 +13,7 @@ func GetMonsterSpawnsOnRoom(room : Array) -> Array[Vector2i]:
 			Spawns.append(Vector2i(g.x, g.y))
 	return Spawns
 
-func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
+func GetDebugData(map : Map, _floorIndex : int) -> Dictionary[String, Variant]:
 	var DebugData : Dictionary[String, Variant] = {
 		"Texts" : {},
 		"Lines" : [],

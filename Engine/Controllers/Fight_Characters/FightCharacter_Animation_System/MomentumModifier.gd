@@ -121,7 +121,7 @@ func ApplyMementum():
 		#skeleton.set_bone_pose_rotation(bone_idx, result.rotation)
 		#bone_q = result.rotation
 
-func _process_modification_with_delta(delta: float) -> void:
+func _process_modification_with_delta(_delta: float) -> void:
 	StorePose()
 	ApplyMementum()
 	

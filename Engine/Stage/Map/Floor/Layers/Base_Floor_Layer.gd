@@ -6,7 +6,7 @@ class_name BaseFloorLayer
 @export var layerType : FloorLayer.LayerType = FloorLayer.LayerType.MAZE
 @export var DebugStringColor : Color = Color(1,1,1)
 
-func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : TempLayerGenerationData, tempData : TempGenerationData) -> void:
+func HandleCell(_cellDat : CellData, _Pos : Vector3i, _map : Map, _tempLayerData : TempLayerGenerationData, _tempData : TempGenerationData) -> void:
 	pass
 
 #TODO fix this, we dont need all those separate functions
@@ -65,7 +65,7 @@ func GetTileDirection(pos : Vector2i) -> Vector2:
 		Dir = Vector2.LEFT
 	return Dir
 
-func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
+func GetDebugData(_map : Map, _floorIndex : int) -> Dictionary[String, Variant]:
 	var DebugData : Dictionary[String, Variant] = {
 		"Texts" : {},
 		"Lines" : [],

@@ -64,7 +64,7 @@ func Damage(finalDamage : int, Instigator : Actor, _Source : String = "") -> voi
 			Killed.emit()
 	
 
-func DamageFlat(Dmg : int, Source : String = "") -> void:
+func DamageFlat(Dmg : int, _Source : String = "") -> void:
 	CurrentHP = max(0, CurrentHP - Dmg)
 	
 	AudioManager.Instance.PlaySound(AudioManager.Sound.DAMAGE, -5, 0.2)

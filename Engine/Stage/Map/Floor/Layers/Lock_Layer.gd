@@ -3,7 +3,7 @@ extends BaseFloorLayer
 
 class_name LockLayer
 
-func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : TempLayerGenerationData, tempData : TempGenerationData) -> void:
+func HandleCell(_cellDat : CellData, Pos : Vector3i, map : Map, _tempLayerData : TempLayerGenerationData, tempData : TempGenerationData) -> void:
 	var index = get_cell_atlas_coords(Vector2i(Pos.x, Pos.z)).x
 
 	if (index != -1 and map.LockCatalogue.size() > index):
@@ -11,7 +11,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 		LData.RequiredItem = map.LockCatalogue[index]
 		tempData.Locks[Pos] = LData
 
-func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
+func GetDebugData(map : Map, _floorIndex : int) -> Dictionary[String, Variant]:
 	var DebugData : Dictionary[String, Variant] = {
 		"Texts" : {},
 		"Lines" : [],

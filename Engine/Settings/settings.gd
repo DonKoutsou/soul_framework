@@ -29,11 +29,11 @@ func _ready() -> void:
 	DOFBOX.set_pressed_no_signal(CameraAttribures[0].dof_blur_amount > 0)
 	HeadBobBox.set_pressed_no_signal(Player.HeadBob)
 
-func _on_brighness_slider_value_changed(value: float) -> void:
+func _on_brighness_slider_value_changed(_value: float) -> void:
 	pass
 	#Env.adjustment_brightness = value
 
-func _on_contrast_slider_value_changed(value: float) -> void:
+func _on_contrast_slider_value_changed(_value: float) -> void:
 	pass
 	#Env.adjustment_contrast = value
 

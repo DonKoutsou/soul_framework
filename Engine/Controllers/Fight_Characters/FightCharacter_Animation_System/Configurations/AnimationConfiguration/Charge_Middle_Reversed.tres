@@ -5,20 +5,13 @@
 
 [resource]
 script = ExtResource("2_3h12f")
-AlwaysR = false
 AnimName = "Charge_Middle_Reversed"
-BlendInAnim = ""
 BlendCurve = ExtResource("1_p78js")
 BlendOutAnim = "Charge_Middle"
 BlendOutCurve = ExtResource("1_p78js")
 Blend_Duration = 0.15
 Blend_Out_Duration = 0.4
-OnCompleteAnim = ""
 InverseSyncBlend = true
-BoneFilter = 4294967295
-AffectedByWeapon = false
-Time_Scale = 1.0
-Loop = false
-AutoComplete = true
+Time_Scale = 0.8
 ValidStates = Array[int]([26])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

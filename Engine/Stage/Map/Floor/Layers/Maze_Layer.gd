@@ -8,7 +8,7 @@ class_name MazeFloorLayer
 func GetLayerType() -> FloorLayer.LayerType:
 	return FloorLayer.LayerType.MAZE
 
-func HandleCell(cell : CellData, Pos : Vector3i, map : Map, tempLayerData : TempLayerGenerationData, tempData : TempGenerationData) -> void:
+func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : TempLayerGenerationData, tempData : TempGenerationData) -> void:
 	var index = get_cell_atlas_coords(Vector2i(Pos.x, Pos.z)).x
 
 	var pos = Pos * map.WorldScale

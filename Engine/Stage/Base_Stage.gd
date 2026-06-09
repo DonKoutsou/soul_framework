@@ -382,10 +382,7 @@ func RegisteCharachter(Char : Character) -> void:
 	Char.Init()
 	UIMan.AddNewCharacter(Char)
 	
-	
 	Fight.RegisterPlayerCharacter(playerCharacter)
-	UIMan.Inv.ChangeWeapon(playerCharacter.CharacterWeapon)
-
 
 func Dig(Pos : Vector3i) -> void:
 	

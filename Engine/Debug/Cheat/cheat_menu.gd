@@ -31,7 +31,7 @@ func _on_shake_pressed() -> void:
 
 
 func _on_respawn_enemies_pressed() -> void:
-	Stage.CurrentWorld.MapData.TimePassed(6)
+	Stage.CurrentWorld.MData.TimePassed(6)
 
 
 func _on_freecam_pressed() -> void:

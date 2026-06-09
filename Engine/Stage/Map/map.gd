@@ -507,7 +507,7 @@ func _physics_process(delta: float) -> void:
 		
 		EditorInterface.get_selection().clear()
 		EditorInterface.get_selection().add_node(Parent.get_child(wrap(Index + 1, 0, Parent.get_child_count())))
-		
+	
 	if (Input.is_key_label_pressed(KEY_1)):
 		for g in get_child_count():
 			get_child(g).visible = g == 0

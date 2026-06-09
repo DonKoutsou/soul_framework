@@ -55,10 +55,10 @@ enum ItemCategory{
 	KEY
 }
 
-func _physics_process(_delta: float) -> void:
+#func _physics_process(_delta: float) -> void:
 	#var Mpos = get_local_mouse_position() - Vector2(ItemDescr.size.x,0)
-	var VPRect =  get_viewport().get_visible_rect()
-	var DistanceFromDown = VPRect.size.y - get_global_mouse_position().y
+	#var VPRect =  get_viewport().get_visible_rect()
+	#var DistanceFromDown = VPRect.size.y - get_global_mouse_position().y
 	#var Diff = ItemDescr.size.y - DistanceFromDown
 	
 	#if (Diff > 0):
@@ -125,22 +125,6 @@ func ApplyEffectsOfItem(It : Item, EffectTimming : ItemEffect.EffectTiming, Data
 			Used = true
 	if (Used and It.ConsumeOnUse):
 		RemoveItem(It)
-
-#func HasSpace() -> bool:
-	#return InventoryContents.size() < 12
-
-func ChangeWeapon(W : Weapon) -> void:
-	if (CurrentShownWeapon != null):
-		CurrentShownWeapon.queue_free()
-	
-	#CurrentShownWeapon = W.WeaponScene.instantiate()
-	#weapon_preview_position.add_child(CurrentShownWeapon)
-	
-	#var Aabb = Helper.get_node_aabb(CurrentShownWeapon)
-	#var Cam = $HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer/SubViewportContainer/SubViewport2/Camera3D
-	#Cam.position.y = (Aabb.size.y / 2) + Aabb.position.y
-	#weapon_preview.scale = Vector3(weapon_preview.mesh.get_aabb().size.y, weapon_preview.mesh.get_aabb().size.y, weapon_preview.mesh.get_aabb().size.y)
-	#Cam.position.z = weapon_preview.mesh.get_aabb().size.y * 2
 
 func HasItem(It : Item) -> bool:
 	return InventoryContents.has(It)

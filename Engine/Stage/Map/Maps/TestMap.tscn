@@ -46,7 +46,7 @@ LockCatalogue = Array[ExtResource("4_tleah")]([ExtResource("5_1460h"), ExtResour
 MovableCatalogue = Array[ExtResource("6_6yne7")]([SubResource("Resource_cp2ut")])
 PlateCatalogue = Array[ExtResource("7_apsce")]([SubResource("Resource_8v5n2"), SubResource("Resource_o2xav")])
 ProjectileSwitchCatalogue = Array[ExtResource("9_1ikve")]([SubResource("Resource_4frg2")])
-ItemCaralogue = Array[String](["uid://btpko76rq38uv", "uid://c0c77r244tq4a", "uid://7eusou4hbr2u", "uid://blfnacfyi8fyb"])
+ItemCaralogue = Array[String](["uid://btpko76rq38uv", "uid://c0c77r244tq4a", "uid://7eusou4hbr2u", "uid://blfnacfyi8fyb", "uid://c0c77r244tq4a"])
 MonsterCatalogue = Array[String](["uid://q5ci3vkqvnyf"])
 CharacterCatalogue = Array[String](["uid://b77cqjrh45r8b"])
 

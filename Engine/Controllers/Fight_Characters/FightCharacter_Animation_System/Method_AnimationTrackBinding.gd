@@ -4,7 +4,7 @@ class_name MethodTrackBinding
 var node : Node
 var method : StringName
 
-func Handle(anim : Animation, animationProgress : float, progressionAmmount : float, animInfo : AnimationInfo, blendValue : float, skel : Skeleton3D) -> void:
+func Handle(anim : Animation, animationProgress : float, progressionAmmount : float, _animInfo : AnimationInfo, _blendValue : float, _skel : Skeleton3D) -> void:
 	var key = anim.track_find_key(track_index, animationProgress, Animation.FIND_MODE_NEAREST)
 
 	if key == -1:
@@ -20,11 +20,11 @@ func Handle(anim : Animation, animationProgress : float, progressionAmmount : fl
 	if abs(key_time - animationProgress) >= progressionAmmount:
 		return
 	
-	var method = anim.method_track_get_name(track_index, key)
+	var funct = anim.method_track_get_name(track_index, key)
 
 	var args = anim.method_track_get_params(track_index, key)
 		
-	node.callv(method, args)
+	node.callv(funct, args)
 
 static func Create(trackIndex : int, targetNode : Node, _anim : Animation):
 	var binding = MethodTrackBinding.new()
