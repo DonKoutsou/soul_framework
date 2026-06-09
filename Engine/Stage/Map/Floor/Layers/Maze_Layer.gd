@@ -3,6 +3,8 @@ extends BaseFloorLayer
 
 class_name MazeFloorLayer
 
+
+
 func GetLayerType() -> FloorLayer.LayerType:
 	return FloorLayer.LayerType.MAZE
 

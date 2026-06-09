@@ -173,9 +173,12 @@ func Toggle(t : bool) -> void:
 	Cast.enabled = t
 	visible = t
 
-
 func StepSound() -> void:
-	AudioManager.Instance.PlaySoundLocational(Stage.CurrentWorld.StepSound, global_position, -2, 0.1, 1, true, 2)
+	if (Stage.CurrentWorld.MData.IsWater(Helper.PlayerPositionToMap(global_position))):
+		AudioManager.Instance.PlaySoundLocational(AudioManager.Sound.WATER_STEP, global_position, -2, 0.1, 1, true, 2)
+	else:
+		AudioManager.Instance.PlaySoundLocational(Stage.CurrentWorld.StepSound, global_position, -2, 0.1, 1, true, 2)
+	
 		
 
 func TakeAction() -> void:

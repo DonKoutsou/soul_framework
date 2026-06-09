@@ -72,7 +72,6 @@ func GetFloor(FloorIndex : int) -> FloorLayer:
 
 var editorCamPos : Vector3i
 
-
 func _ready() -> void:
 	if (Engine.is_editor_hint()):
 		return
@@ -81,18 +80,19 @@ func _ready() -> void:
 
 	visible = false
 
-
+## check is cell is a lava tile
 func IsWater(Pos : Vector3i) -> bool:
 	if (!Data.cells.has(Pos)):
 		return false
 	return Data.cells[Pos].type == CellData.CELLTYPE.WATER
 
+## check is cell is a water tile
 func IsLava(Pos : Vector3i) -> bool:
 	if (!Data.cells.has(Pos)):
 		return false
 	return Data.cells[Pos].type == CellData.CELLTYPE.LAVA
 
-
+## Used when we want to pass, reaspawns monsters
 func TimePassed(T : int) -> void:
 	AccumulatedHours += T
 	
@@ -244,7 +244,7 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 				var layerGenerationData : TempLayerGenerationData = TempLayerGenerationData.NewData(Floor)
 				
 				#Layer mapping-------------------------------------
-				for g in Floor.Layers:
+				for g in Floor.layerProcessPriority:
 					var layer = Floor.Layers[g]
 					layer.HandleCell(cellDat, Pos, self, layerGenerationData, tempData)
 
@@ -419,7 +419,7 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 @export_tool_button("Store Props") var StorePropAction = StoreProps
 
 ##Storing of debug lines
-var DebugLines : Array[Array]
+var DebugLines : PackedVector2Array
 
 var CurrentlyVisibleFloor : int = 0
 
@@ -440,6 +440,7 @@ func StoreProps() -> void:
 			Props[g.mesh] = [MData]
 
 var _Editor_CurrentWorld : Level
+var _Editor_Cam_Zoom : float = 1
 #----------------------------------------------------------------
 ## Used to generate the map in the editor either when editor button is pressed or save notification is received
 func RedoMap() -> void:
@@ -485,7 +486,10 @@ func _physics_process(delta: float) -> void:
 	
 	if (_Editor_CurrentWorld == null):
 		return
-		
+	
+	_Editor_Cam_Zoom = EditorInterface.get_editor_viewport_2d().get_final_transform().x.x
+	#print(_Editor_Cam_Zoom)
+	
 	_Editor_CurrentWorld.Update(delta)
 	var camPos = Vector3i(EditorInterface.get_editor_viewport_3d().get_camera_3d().global_position)
 	if (editorCamPos != camPos and _Editor_CurrentWorld != null and _Editor_CurrentWorld.GetMapData() != null):
@@ -494,36 +498,40 @@ func _physics_process(delta: float) -> void:
 		_Editor_CurrentWorld.PlayerPositionChanged(camPos, Vector3.ZERO)
 		#print("thing")
 	
-	#if (Input.is_key_pressed(KEY_TAB)):
-		#var Selected = EditorInterface.get_selection().get_selected_nodes()[0]
-		#var Index = Selected.get_index()
-		#var Parent = Selected.get_parent()
-		#EditorInterface.edit_node(Parent.get_child(wrap(Index + 1, 0, Parent.get_child_count())))
-		#
-	#if (Input.is_key_label_pressed(KEY_1)):
-		#for g in get_child_count():
-			#get_child(g).visible = g == 0
-		#EditorInterface.edit_node(get_child(0).get_child(0))
-		#CurrentlyVisibleFloor = -1
-		##update()
-	#if (Input.is_key_label_pressed(KEY_2)):
-		#for g in get_child_count():
-			#get_child(g).visible = g == 1
-		#EditorInterface.edit_node(get_child(1).get_child(0))
-		#CurrentlyVisibleFloor = 0
-		##Update()
-	#if (Input.is_key_label_pressed(KEY_3)):
-		#for g in get_child_count():
-			#get_child(g).visible = g == 2
-		#EditorInterface.edit_node(get_child(2).get_child(0))
-		#CurrentlyVisibleFloor = 1
-		##Update()
-	#if (Input.is_key_label_pressed(KEY_4)):
-		#for g in get_child_count():
-			#get_child(g).visible = g == 3
-		#EditorInterface.edit_node(get_child(3).get_child(0))
-		#CurrentlyVisibleFloor = 2
-		##Update()
+	if (Input.is_key_pressed(KEY_TAB)):
+		var Selected = EditorInterface.get_selection().get_selected_nodes()[0]
+		var Index = Selected.get_index()
+		var Parent = Selected.get_parent()
+		EditorInterface.edit_node(Parent.get_child(wrap(Index + 1, 0, Parent.get_child_count())))
+		
+	if (Input.is_key_label_pressed(KEY_1)):
+		for g in get_child_count():
+			get_child(g).visible = g == 0
+		EditorInterface.edit_node(get_child(0).get_child(0))
+		CurrentlyVisibleFloor = -1
+		queue_redraw()
+		#update()
+	if (Input.is_key_label_pressed(KEY_2)):
+		for g in get_child_count():
+			get_child(g).visible = g == 1
+		EditorInterface.edit_node(get_child(1).get_child(0))
+		CurrentlyVisibleFloor = 0
+		queue_redraw()
+		#Update()
+	if (Input.is_key_label_pressed(KEY_3)):
+		for g in get_child_count():
+			get_child(g).visible = g == 2
+		EditorInterface.edit_node(get_child(2).get_child(0))
+		CurrentlyVisibleFloor = 1
+		queue_redraw()
+		#Update()
+	if (Input.is_key_label_pressed(KEY_4)):
+		for g in get_child_count():
+			get_child(g).visible = g == 3
+		EditorInterface.edit_node(get_child(3).get_child(0))
+		CurrentlyVisibleFloor = 2
+		queue_redraw()
+		#Update()
 
 
 #----------------------------------------------------------------
@@ -533,141 +541,46 @@ func _physics_process(delta: float) -> void:
 func _draw() -> void:
 	if (!Engine.is_editor_hint()):
 		return
-		
+	
+	if(DebugLines.size() > 0):
+		draw_multiline(DebugLines, Color(1,0,0), 1)
+	
 	DebugLines.clear()
 	
 	for Floor in Floors:
-		var LeverLayer = Floor.GetLayer(FloorLayer.LayerType.LEVERS)
-		for LeverPosition in LeverLayer.get_used_cells():
-			var Index = LeverLayer.get_cell_atlas_coords(LeverPosition).x
-			
-			var TextDrawPos = LeverLayer.map_to_local(LeverPosition)
-			TextDrawPos.x -= var_to_str(Index).length() * 2
-			TextDrawPos.y += 10
-			draw_string(ThemeDB.fallback_font, TextDrawPos, var_to_str(Index), HORIZONTAL_ALIGNMENT_CENTER, -1, 8, Color(0,1,0))
-			
-			if (LeverCatalogue.size() - 1 < Index):
-				printerr("Lever of Index {0} hasn't been configured in {1}".format([Index, LocationName.keys()[LevelName]]))
-				continue
-			var Dat = LeverCatalogue[Index]
-			if (Dat is DoorLeverCallInfo):
-				var UnlockPosition = Dat.DoorLoc
-				if (UnlockPosition == Vector3i.ZERO):
-					if (CurrentlyVisibleFloor != Floor.FloorNumber):
-						continue
-					DebugLines.append([LeverLayer.map_to_local(LeverPosition), LeverLayer.map_to_local(LeverPosition), Vector3i(LeverPosition.x, Floor.FloorNumber, LeverPosition.y)])
-				else:
-					if (CurrentlyVisibleFloor != Floor.FloorNumber and CurrentlyVisibleFloor != UnlockPosition.y):
-						continue
-					DebugLines.append([LeverLayer.map_to_local(LeverPosition), LeverLayer.map_to_local(Vector2i(UnlockPosition.x, UnlockPosition.z)), UnlockPosition])
-			if (Dat is BridgeLeverCallInfo):
-
-				var UnlockPositions = Dat.FloorPos
-				for Pos in UnlockPositions:
-					DebugLines.append([LeverLayer.map_to_local(LeverPosition), LeverLayer.map_to_local(Vector2(Pos.x, Pos.z)), Vector3i(LeverPosition.x, Floor.FloorNumber, LeverPosition.y)])
-
-		var PlateLayer = Floor.GetLayer(FloorLayer.LayerType.PLATES)
-		for PlatePosition in PlateLayer.get_used_cells():
-			var Index = PlateLayer.get_cell_atlas_coords(PlatePosition).x
-			if (PlateCatalogue.size() - 1 < Index):
-				printerr("Plate of Index {0} hasn't been configured in {1}".format([Index, LocationName.keys()[LevelName]]))
-				continue
-			var Dat = PlateCatalogue[Index]
-			
-			var TextDrawPos = LeverLayer.map_to_local(PlatePosition)
-			var text = "{0}\n{1}".format([Index, PreassuerPlateData.SwitchElement.keys()[Dat.Element]])
-			
-			TextDrawPos.y += 10
-			var lines = text.split("\n")
-			for line in lines:
-				TextDrawPos.x -= line.length() * 2
-				draw_string(ThemeDB.fallback_font, TextDrawPos, line, HORIZONTAL_ALIGNMENT_CENTER, -1, 8, Color(0,1,0))
-				TextDrawPos.y = TextDrawPos.y + 10
-
-			if (Dat is DoorPreassurePlateCallInfo):
-				var UnlockPosition = Dat.DoorLoc
-				if (UnlockPosition == Vector3i.ZERO):
-					if (CurrentlyVisibleFloor != Floor.FloorNumber):
-						continue
-					DebugLines.append([PlateLayer.map_to_local(PlatePosition), PlateLayer.map_to_local(PlatePosition), Vector3i(PlatePosition.x, Floor.FloorNumber, PlatePosition.y)])
-				else:
-					if (CurrentlyVisibleFloor != Floor.FloorNumber and CurrentlyVisibleFloor != UnlockPosition.y):
-						continue
-					DebugLines.append([PlateLayer.map_to_local(PlatePosition), PlateLayer.map_to_local(Vector2i(UnlockPosition.x, UnlockPosition.z)), UnlockPosition])
-			
-		var MovableLayer = Floor.GetLayer(FloorLayer.LayerType.MOVABLES)
-		for MovablePosition in MovableLayer.get_used_cells():
-			var Index = MovableLayer.get_cell_atlas_coords(MovablePosition).x
-			if (MovableCatalogue.size() - 1 < Index):
-				printerr("Movable of Index {0} hasn't been configured in {1}".format([Index, LocationName.keys()[LevelName]]))
-				continue
-			var Dat = MovableCatalogue[Index]
-			
-			var TextDrawPos = MovableLayer.map_to_local(MovablePosition)
-			var text = "{0}\n{1}".format([Index, PreassuerPlateData.SwitchElement.keys()[Dat.Element]])
-			
-			TextDrawPos.y += 10
-			var lines = text.split("\n")
-			for line in lines:
-				TextDrawPos.x -= line.length() * 2
-				draw_string(ThemeDB.fallback_font, TextDrawPos, line, HORIZONTAL_ALIGNMENT_CENTER, -1, 8, Color(0,1,0))
-				TextDrawPos.y = TextDrawPos.y + 10
 		
-		var LockLayer = Floor.GetLayer(FloorLayer.LayerType.LOCKS)
-		for LockPosition in LockLayer.get_used_cells():
-			var Index = LockLayer.get_cell_atlas_coords(LockPosition).x
-			if (LockCatalogue.size() - 1 < Index):
-				printerr("Lock of Index {0} hasn't been configured in {1}".format([Index, LocationName.keys()[LevelName]]))
-				continue
-			var Dat = LockCatalogue[Index]
-			
-			var TextDrawPos = LockLayer.map_to_local(LockPosition)
-			var text = "{0}\n{1}".format([Index, Dat.ItemName])
-			
-			TextDrawPos.y += 10
-			var lines = text.split("\n")
-			for line in lines:
-				TextDrawPos.x -= line.length() * 2
-				draw_string(ThemeDB.fallback_font, TextDrawPos, line, HORIZONTAL_ALIGNMENT_CENTER, -1, 8, Color(0,1,0))
-				TextDrawPos.y = TextDrawPos.y + 10
+		if (CurrentlyVisibleFloor != Floor.FloorNumber):
+			continue
 		
-		var ProjectileSwitchLayer = Floor.GetLayer(FloorLayer.LayerType.PROJECTILE_SWITCH)
-		for ProjectileSwitchPosition in ProjectileSwitchLayer.get_used_cells():
-			var Index = ProjectileSwitchLayer.get_cell_atlas_coords(ProjectileSwitchPosition).x
-			if (ProjectileSwitchCatalogue.size() - 1 < Index):
-				printerr("Projectile switch of Index {0} hasn't been configured in {1}".format([Index, LocationName.keys()[LevelName]]))
-				continue
-			var Dat = ProjectileSwitchCatalogue[Index]
+		for g in Floor.layerProcessPriority:
+			var layer = Floor.GetLayer(g)
+			var debugData = layer.GetDebugData(self, Floor.FloorNumber)
+	
+			for textPos : Vector2 in debugData["Texts"]:
+				var textDat = debugData["Texts"][textPos]
+				var text = textDat["text"]
+				draw_multiline_string(ThemeDB.fallback_font, textPos, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2, -1, textDat["color"])
 			
-			var TextDrawPos = LeverLayer.map_to_local(ProjectileSwitchPosition)
-			var text = "{0}\n{1}".format([Index, ProjectileSwitchData.SwitchElement.keys()[Dat.Element]])
-			
-			TextDrawPos.y += 10
-			var lines = text.split("\n")
-			for line in lines:
-				TextDrawPos.x -= line.length() * 2
-				draw_string(ThemeDB.fallback_font, TextDrawPos, line, HORIZONTAL_ALIGNMENT_CENTER, -1, 8, Color(0,1,0))
-				TextDrawPos.y = TextDrawPos.y + 10
+			for linePos in debugData["Lines"]:
+				DebugLines.append(linePos)
+	
+	
 
-			if (Dat is DoorProjectileSwitchCallInfo):
-				var UnlockPosition = Dat.DoorLoc
-				if (UnlockPosition == Vector3i.ZERO):
-					if (CurrentlyVisibleFloor != Floor.FloorNumber):
-						continue
-					DebugLines.append([ProjectileSwitchLayer.map_to_local(ProjectileSwitchPosition), ProjectileSwitchLayer.map_to_local(ProjectileSwitchPosition), Vector3i(ProjectileSwitchPosition.x, Floor.FloorNumber, ProjectileSwitchPosition.y)])
-				else:
-					if (CurrentlyVisibleFloor != Floor.FloorNumber and CurrentlyVisibleFloor != UnlockPosition.y):
-						continue
-					DebugLines.append([ProjectileSwitchLayer.map_to_local(ProjectileSwitchPosition), ProjectileSwitchLayer.map_to_local(Vector2i(UnlockPosition.x, UnlockPosition.z)), UnlockPosition])
-			if (Dat is BridgeProjectileSwitchCallInfo):
-				var UnlockPositions = Dat.FloorPos
-				for Pos in UnlockPositions:
-					DebugLines.append([ProjectileSwitchLayer.map_to_local(Vector2(Pos.x, Pos.z)), ProjectileSwitchLayer.map_to_local(ProjectileSwitchPosition), Vector3i(ProjectileSwitchPosition.x, Floor.FloorNumber, ProjectileSwitchPosition.y)])
-
-	for g in DebugLines:
-		draw_line(g[0], g[1], Color(1,0,0), 2)
-		var text : String = "{0}|{1}|{2}".format([g[2].x, g[2].y, g[2].z])
-		var TextDrawPos = g[1]
-		TextDrawPos.x -= text.length() * 2
-		TextDrawPos.y -= 10
-		draw_string(ThemeDB.fallback_font, TextDrawPos, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 8, Color(1,0,0))
+#--------------------------------------
+func DrawMovableDebug(Floor : FloorLayer) -> void:
+	var MovableLayer = Floor.GetLayer(FloorLayer.LayerType.MOVABLES)
+	for MovablePosition in MovableLayer.get_used_cells():
+		if (CurrentlyVisibleFloor != Floor.FloorNumber):
+			continue
+		var Index = MovableLayer.get_cell_atlas_coords(MovablePosition).x
+		if (MovableCatalogue.size() - 1 < Index):
+			printerr("Movable of Index {0} hasn't been configured in {1}".format([Index, LocationName.keys()[LevelName]]))
+			continue
+		var Dat = MovableCatalogue[Index]
+		
+		var TextDrawPos = MovableLayer.map_to_local(MovablePosition)
+		var text = "{0}\n{1}".format([Index, PreassuerPlateData.SwitchElement.keys()[Dat.Element]])
+		
+		var textSize = ThemeDB.fallback_font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
+		TextDrawPos.x -= textSize.x / 2.0
+		draw_multiline_string(ThemeDB.fallback_font, TextDrawPos, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)

@@ -87,6 +87,8 @@ signal AtackCharged(Direction : AtackSide)
 signal CharacterDucked(Dir : AtackSide)
 signal CharacterUnducked()
 
+signal StepPerformed
+
 var CanMove : bool = true
 var ComboWindowOpen : bool = false
 
@@ -473,7 +475,8 @@ func Damage(DamageAmm : int, Direction : AtackSide, _ShakeAmm : float, AtackWeig
 #----------------------------------------------------
 #Called from animation
 func StepSound() -> void:
-	AudioManager.Instance.PlaySound(Stage.CurrentWorld.StepSound, -2, 0.1, 1, true)
+	StepPerformed.emit()
+	
 #----------------------------------------------------
 #Called from animation
 func Whosh() -> void:

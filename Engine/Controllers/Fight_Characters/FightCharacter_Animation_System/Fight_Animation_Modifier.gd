@@ -111,6 +111,8 @@ func ToggleWalking(t : bool) -> void:
 func StateSwitched(NewState : FightCharacter.CharacterState) -> void:
 	for animIndex in anims.size():
 		var animInfo = anims[animIndex]
+		if (animInfo.ValidStates.size() == 0):
+			continue
 		if (animInfo.ValidStates.has(NewState)):
 			if (GetAnimationActive(animIndex)):
 				continue

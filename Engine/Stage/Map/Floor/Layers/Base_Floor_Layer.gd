@@ -4,6 +4,7 @@ extends TileMapLayer
 class_name BaseFloorLayer
 
 @export var layerType : FloorLayer.LayerType = FloorLayer.LayerType.MAZE
+@export var DebugStringColor : Color = Color(1,1,1)
 
 func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : TempLayerGenerationData, tempData : TempGenerationData) -> void:
 	pass
@@ -63,3 +64,10 @@ func GetTileDirection(pos : Vector2i) -> Vector2:
 	elif is_cell_flipped_h(pos) == true and is_cell_flipped_v(pos) == true:
 		Dir = Vector2.LEFT
 	return Dir
+
+func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
+	var DebugData : Dictionary[String, Variant] = {
+		"Texts" : {},
+		"Lines" : [],
+	}
+	return DebugData

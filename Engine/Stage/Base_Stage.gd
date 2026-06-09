@@ -135,14 +135,13 @@ func SpawnFight() -> void:
 	Node_Spawn_Loc.add_child(Fight)
 
 	Fight.EnemyKilled.connect(EV_MonsterKilled)
-	
 	Fight.FightStared.connect(UIMan.ToggleFight.bind(true))
 	Fight.FightEnded.connect(UIMan.ToggleFight.bind(false))
-	
 	Fight.Effect.connect(UIMan.Inv.ApplyEffects)
 	Fight.EnviromentalAttack.connect(AtackEnviroment)
-
 	Fight.TutorialToggled.connect(UIToggled)
+	
+	Fight.GetPlayer()
 
 func _input(event: InputEvent) -> void:
 	if (CurrentFreeCam != null):
@@ -315,10 +314,17 @@ func SpawnPlayer() -> void:
 	Fight.FightEnded.connect(Manequin.FightToggled.bind(false))
 	Fight.GetPlayer().CharacterDucked.connect(Manequin.Duck)
 	Fight.GetPlayer().CharacterUnducked.connect(Manequin.UnDuck)
+	Fight.GetPlayer().StepPerformed.connect(StepPerformed)
 	
 	DialogueMan.ManequinSpawned(Manequin)
 	
 	CurrentWorld.SpawnPlayer(Manequin)
+
+func StepPerformed() -> void:
+	if (Stage.CurrentWorld.MData.IsWater(Helper.PlayerPositionToMap(Manequin.PlayerPos))):
+		AudioManager.Instance.PlaySound(AudioManager.Sound.WATER_STEP, -2, 0.1, 1, true)
+	else:
+		AudioManager.Instance.PlaySound(Stage.CurrentWorld.StepSound, -2, 0.1, 1, true)
 
 func UIToggled(t : bool, AffectTime : bool) -> void:
 	if (t):

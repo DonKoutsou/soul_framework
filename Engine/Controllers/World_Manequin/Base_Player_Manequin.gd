@@ -115,10 +115,7 @@ func Update(delta: float) -> void:
 		if (StepCoolDown <= 0):
 			StepCoolDown = 0.4
 	#Cam.Update(delta)
-			#if (Stage.CurrentWorld.MData.IsWater(Helper.PlayerPositionToMap(PlayerPos))):
-				#AudioManager.Instance.PlaySound(AudioManager.Sound.WATER_STEP, -10, 0.5)
-			#else:
-				#AudioManager.Instance.PlaySound(Stage.CurrentWorld.StepSound, -5, 0.2, 0.8)
+			
 
 
 func Damage(Origin : Map.TrapType, Amm : int) -> void:

@@ -4,28 +4,36 @@
 [ext_resource type="Script" uid="uid://bxxlexc63h1eo" path="res://Engine/Stage/Map/Floor/floor_layer.gd" id="1_lclr8"]
 [ext_resource type="TileSet" uid="uid://c6je640rwsdtd" path="res://Engine/Stage/Map/MapPieces/DoorTileset.tres" id="2_lclr8"]
 [ext_resource type="Script" uid="uid://tihbepo17oew" path="res://Engine/Stage/Map/Floor/Layers/Base_Floor_Layer.gd" id="3_15ls4"]
-[ext_resource type="Script" uid="uid://sbmf87uubk7x" path="res://Engine/Stage/Map/Floor/Layers/Maze_Layer.gd" id="3_cnxu7"]
 [ext_resource type="TileSet" uid="uid://bjcdaiqm0lu2b" path="res://Engine/Stage/Map/MapPieces/ExitsTileset.tres" id="3_xbqr1"]
+[ext_resource type="Script" uid="uid://sbmf87uubk7x" path="res://Engine/Stage/Map/Floor/Layers/Maze_Layer.gd" id="3_y2gm3"]
 [ext_resource type="TileSet" uid="uid://c4upbpyxdypet" path="res://Engine/Stage/Map/MapPieces/ItemsTileset.tres" id="4_hqcig"]
-[ext_resource type="Script" uid="uid://yf0sqmidoc3y" path="res://Engine/Stage/Map/Floor/Layers/MapInfo_Layer.gd" id="5_eexfj"]
 [ext_resource type="TileSet" uid="uid://djfplxdilmmls" path="res://Engine/Stage/Map/MapPieces/MonsterSpawnTileset.tres" id="5_mco7m"]
 [ext_resource type="TileSet" uid="uid://bk5dt8t12i5af" path="res://Engine/Stage/Map/MapPieces/Locks.tres" id="6_07bep"]
 [ext_resource type="TileSet" uid="uid://c4tpb4dcdxjyk" path="res://Engine/Stage/Map/MapPieces/LeverTileset.tres" id="7_27cef"]
 [ext_resource type="TileSet" uid="uid://u0lcqfkcwtf" path="res://Engine/Stage/Map/MapPieces/CharactersTileset.tres" id="7_dp076"]
+[ext_resource type="Script" uid="uid://yf0sqmidoc3y" path="res://Engine/Stage/Map/Floor/Layers/MapInfo_Layer.gd" id="7_wyyvq"]
 [ext_resource type="TileSet" uid="uid://dxn7jmeir8cvm" path="res://Engine/Stage/Map/MapPieces/TextsTileSet.tres" id="9_3p4bd"]
 [ext_resource type="TileSet" uid="uid://b2a3qsskxrnji" path="res://Engine/Stage/Map/MapPieces/LocksTileset.tres" id="9_4ocsu"]
 [ext_resource type="Script" uid="uid://xlofl1v5yxpb" path="res://Engine/Stage/Map/Floor/Layers/Item_Layer.gd" id="9_qx8oq"]
 [ext_resource type="TileSet" uid="uid://tsanyvcnsban" path="res://Engine/Stage/Map/MapPieces/PreassurePlatesTileset.tres" id="10_7ac8e"]
-[ext_resource type="Script" uid="uid://dk41xu4wxr8ky" path="res://Engine/Stage/Map/Floor/Layers/Monster_Layer.gd" id="11_y2gm3"]
-[ext_resource type="Script" uid="uid://dcdbc4gyr73yl" path="res://Engine/Stage/Map/Floor/Layers/Lever_Layer.gd" id="13_cnxu7"]
-[ext_resource type="Script" uid="uid://bvyonvsyoqkv3" path="res://Engine/Stage/Map/Floor/Layers/Lock_Layer.gd" id="15_y2gm3"]
-[ext_resource type="Script" uid="uid://b1os8pmvps1uy" path="res://Engine/Stage/Map/Floor/Layers/PreassurePlate_Layer.gd" id="17_wyyvq"]
-[ext_resource type="Script" uid="uid://dfbaw8gcd1ndh" path="res://Engine/Stage/Map/Floor/Layers/Movable_Layer.gd" id="18_g1fpk"]
-[ext_resource type="Script" uid="uid://bw5gs61peuh1f" path="res://Engine/Stage/Map/Floor/Layers/ProjectileSwitch_Layer.gd" id="19_815a5"]
-[ext_resource type="Script" uid="uid://molddu8kwi07" path="res://Engine/Stage/Map/Floor/Layers/Text_Layer.gd" id="21_0v1m6"]
+[ext_resource type="Script" uid="uid://dk41xu4wxr8ky" path="res://Engine/Stage/Map/Floor/Layers/Monster_Layer.gd" id="13_g1fpk"]
+[ext_resource type="Script" uid="uid://dcdbc4gyr73yl" path="res://Engine/Stage/Map/Floor/Layers/Lever_Layer.gd" id="15_815a5"]
+[ext_resource type="Script" uid="uid://bvyonvsyoqkv3" path="res://Engine/Stage/Map/Floor/Layers/Lock_Layer.gd" id="17_0v1m6"]
+[ext_resource type="Script" uid="uid://b1os8pmvps1uy" path="res://Engine/Stage/Map/Floor/Layers/PreassurePlate_Layer.gd" id="19_83i4u"]
+[ext_resource type="Script" uid="uid://dfbaw8gcd1ndh" path="res://Engine/Stage/Map/Floor/Layers/Movable_Layer.gd" id="20_mplq8"]
+[ext_resource type="Script" uid="uid://bw5gs61peuh1f" path="res://Engine/Stage/Map/Floor/Layers/ProjectileSwitch_Layer.gd" id="21_3j466"]
+[ext_resource type="Script" uid="uid://molddu8kwi07" path="res://Engine/Stage/Map/Floor/Layers/Text_Layer.gd" id="23_yjw2x"]
 
 [node name="Floor_0" type="Node2D" unique_id=1666837197]
 script = ExtResource("1_lclr8")
+
+[node name="MAZE" type="TileMapLayer" parent="." unique_id=817992180]
+tile_set = ExtResource("1_bl2g5")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+script = ExtResource("3_y2gm3")
+DebugStringColor = null
 
 [node name="DOORS" type="TileMapLayer" parent="." unique_id=584279988]
 tile_set = ExtResource("2_lclr8")
@@ -34,22 +42,25 @@ collision_enabled = false
 navigation_enabled = false
 script = ExtResource("3_15ls4")
 layerType = 5
+DebugStringColor = null
 
 [node name="MAP_INFO" type="TileMapLayer" parent="." unique_id=1043461689]
 tile_set = ExtResource("6_07bep")
 occlusion_enabled = false
 collision_enabled = false
 navigation_enabled = false
-script = ExtResource("5_eexfj")
+script = ExtResource("7_wyyvq")
 layerType = 2
+DebugStringColor = null
 
 [node name="MAP_INFO2" type="TileMapLayer" parent="." unique_id=179013606]
 tile_set = ExtResource("6_07bep")
 occlusion_enabled = false
 collision_enabled = false
 navigation_enabled = false
-script = ExtResource("5_eexfj")
+script = ExtResource("7_wyyvq")
 layerType = 10
+DebugStringColor = null
 
 [node name="EXITS" type="TileMapLayer" parent="." unique_id=1074619576]
 tile_set = ExtResource("3_xbqr1")
@@ -58,6 +69,7 @@ collision_enabled = false
 navigation_enabled = false
 script = ExtResource("3_15ls4")
 layerType = 6
+DebugStringColor = null
 
 [node name="ITEMS" type="TileMapLayer" parent="." unique_id=288722588]
 tile_set = ExtResource("4_hqcig")
@@ -66,6 +78,7 @@ collision_enabled = false
 navigation_enabled = false
 script = ExtResource("9_qx8oq")
 layerType = 1
+DebugStringColor = null
 
 [node name="CHARACTERS" type="TileMapLayer" parent="." unique_id=1640039887]
 tile_set = ExtResource("7_dp076")
@@ -74,63 +87,64 @@ collision_enabled = false
 navigation_enabled = false
 script = ExtResource("3_15ls4")
 layerType = 13
+DebugStringColor = null
 
 [node name="MONSTERS" type="TileMapLayer" parent="." unique_id=173128641]
 tile_set = ExtResource("5_mco7m")
 occlusion_enabled = false
 collision_enabled = false
 navigation_enabled = false
-script = ExtResource("11_y2gm3")
+script = ExtResource("13_g1fpk")
 layerType = 3
+DebugStringColor = null
 
 [node name="LEVERS" type="TileMapLayer" parent="." unique_id=521985993]
 tile_set = ExtResource("7_27cef")
 occlusion_enabled = false
 collision_enabled = false
 navigation_enabled = false
-script = ExtResource("13_cnxu7")
+script = ExtResource("15_815a5")
 layerType = 4
+DebugStringColor = null
 
 [node name="LOCKS" type="TileMapLayer" parent="." unique_id=580903904]
 tile_set = ExtResource("9_4ocsu")
 occlusion_enabled = false
 collision_enabled = false
 navigation_enabled = false
-script = ExtResource("15_y2gm3")
+script = ExtResource("17_0v1m6")
 layerType = 12
+DebugStringColor = null
 
 [node name="PLATES" type="TileMapLayer" parent="." unique_id=2070613937]
 tile_set = ExtResource("10_7ac8e")
 occlusion_enabled = false
 collision_enabled = false
 navigation_enabled = false
-script = ExtResource("17_wyyvq")
+script = ExtResource("19_83i4u")
 layerType = 8
+DebugStringColor = null
 
 [node name="MOVABLES" type="TileMapLayer" parent="." unique_id=909357748]
 tile_set = ExtResource("7_27cef")
 occlusion_enabled = false
 collision_enabled = false
 navigation_enabled = false
-script = ExtResource("18_g1fpk")
+script = ExtResource("20_mplq8")
 layerType = 9
+DebugStringColor = null
 
 [node name="PROJECTILE_SWITCH" type="TileMapLayer" parent="." unique_id=628202626]
 tile_set = ExtResource("7_27cef")
 occlusion_enabled = false
 collision_enabled = false
 navigation_enabled = false
-script = ExtResource("19_815a5")
+script = ExtResource("21_3j466")
 layerType = 11
+DebugStringColor = null
 
 [node name="TEXTS" type="TileMapLayer" parent="." unique_id=830701216]
 tile_set = ExtResource("9_3p4bd")
-script = ExtResource("21_0v1m6")
+script = ExtResource("23_yjw2x")
 layerType = 7
-
-[node name="MAZE" type="TileMapLayer" parent="." unique_id=817992180]
-tile_set = ExtResource("1_bl2g5")
-occlusion_enabled = false
-collision_enabled = false
-navigation_enabled = false
-script = ExtResource("3_cnxu7")
+DebugStringColor = null

@@ -16,6 +16,23 @@ class_name FloorLayer
 
 var Layers : Dictionary[LayerType, BaseFloorLayer]
 
+const layerProcessPriority : Array[LayerType] = [
+		LayerType.ITEMS,
+		LayerType.MAP_INFO,
+		LayerType.MONSTERS,
+		LayerType.LEVERS,
+		LayerType.DOORS,
+		LayerType.EXITS,
+		LayerType.TEXTS,
+		LayerType.PLATES,
+		LayerType.MOVABLES,
+		LayerType.MAP_INFO2,
+		LayerType.PROJECTILE_SWITCH,
+		LayerType.LOCKS,
+		LayerType.CHARACTERS,
+		LayerType.MAZE
+		]
+
 func _ready() -> void:
 	for layer : BaseFloorLayer in get_children():
 		Layers[layer.layerType] = layer

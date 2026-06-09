@@ -33,3 +33,38 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 		else:
 			cellDat.AddData("Item", it)
 			#Data.ItemSpawns[Pos] = it
+
+func GetDebugData(map : Map, floor : int) -> Dictionary[String, Variant]:
+	var DebugData : Dictionary[String, Variant] = {
+		"Texts" : {},
+		"Lines" : [],
+	}
+	
+	for itemPos in get_used_cells():
+
+		var Index = get_cell_atlas_coords(itemPos).x
+		
+		var text : String = ""
+		
+		if (map.ItemCaralogue.size() <= Index):
+			text = "INVALID!!!!!!!!!!\nSEND HELP"
+		else:
+			var it : Item = load(map.ItemCaralogue[Index])
+			text = it.ItemName
+			
+		
+		
+		var TextDrawPos = map_to_local(itemPos)
+		
+		var textSize = ThemeDB.fallback_font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
+		TextDrawPos.x -= textSize.x / 2.0
+		
+		var textData : Dictionary[String, Variant] = {
+			"text" : text,
+			"color" : DebugStringColor
+		}
+		
+		DebugData["Texts"][TextDrawPos] = textData
+		
+	
+	return DebugData
