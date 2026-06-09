@@ -418,8 +418,7 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 @export_tool_button("Redo 3D Map") var Redo3DMapAction = RedoMap
 @export_tool_button("Store Props") var StorePropAction = StoreProps
 
-##Storing of debug lines
-var DebugLines : PackedVector2Array
+
 
 var CurrentlyVisibleFloor : int = 0
 
@@ -498,41 +497,66 @@ func _physics_process(delta: float) -> void:
 		_Editor_CurrentWorld.PlayerPositionChanged(camPos, Vector3.ZERO)
 		#print("thing")
 	
+	if (CheckForFocus(EditorInterface.get_script_editor())):
+		return
+	
 	if (Input.is_key_pressed(KEY_TAB)):
 		var Selected = EditorInterface.get_selection().get_selected_nodes()[0]
 		var Index = Selected.get_index()
 		var Parent = Selected.get_parent()
-		EditorInterface.edit_node(Parent.get_child(wrap(Index + 1, 0, Parent.get_child_count())))
+		
+		EditorInterface.get_selection().clear()
+		EditorInterface.get_selection().add_node(Parent.get_child(wrap(Index + 1, 0, Parent.get_child_count())))
 		
 	if (Input.is_key_label_pressed(KEY_1)):
 		for g in get_child_count():
 			get_child(g).visible = g == 0
-		EditorInterface.edit_node(get_child(0).get_child(0))
+			
+		EditorInterface.get_selection().clear()
+		EditorInterface.get_selection().add_node(get_child(0).get_child(0))
 		CurrentlyVisibleFloor = -1
 		queue_redraw()
-		#update()
+
 	if (Input.is_key_label_pressed(KEY_2)):
 		for g in get_child_count():
 			get_child(g).visible = g == 1
-		EditorInterface.edit_node(get_child(1).get_child(0))
+		
+		EditorInterface.get_selection().clear()
+		EditorInterface.get_selection().add_node(get_child(1).get_child(0))
 		CurrentlyVisibleFloor = 0
 		queue_redraw()
-		#Update()
+
 	if (Input.is_key_label_pressed(KEY_3)):
 		for g in get_child_count():
 			get_child(g).visible = g == 2
-		EditorInterface.edit_node(get_child(2).get_child(0))
+		
+		EditorInterface.get_selection().clear()
+		EditorInterface.get_selection().add_node(get_child(2).get_child(0))
 		CurrentlyVisibleFloor = 1
 		queue_redraw()
-		#Update()
+		
 	if (Input.is_key_label_pressed(KEY_4)):
 		for g in get_child_count():
 			get_child(g).visible = g == 3
-		EditorInterface.edit_node(get_child(3).get_child(0))
+		
+		EditorInterface.get_selection().clear()
+		EditorInterface.get_selection().add_node(get_child(3).get_child(0))
+
 		CurrentlyVisibleFloor = 2
 		queue_redraw()
-		#Update()
 
+func CheckForFocus(node : Control) -> bool:
+	if (node.has_focus()):
+		return true
+		
+	if (get_child_count() > 0):
+		for g in node.get_children():
+			if (g is not Control):
+				continue
+			if (CheckForFocus(g)):
+				return true
+			
+	return false
 
 #----------------------------------------------------------------
 ## Used to draw various element on the map to help.
@@ -542,10 +566,9 @@ func _draw() -> void:
 	if (!Engine.is_editor_hint()):
 		return
 	
-	if(DebugLines.size() > 0):
-		draw_multiline(DebugLines, Color(1,0,0), 1)
-	
-	DebugLines.clear()
+	##Storing of debug lines
+	var DebugLines : PackedVector2Array
+	var strings : Dictionary[Vector2, Dictionary]
 	
 	for Floor in Floors:
 		
@@ -557,30 +580,16 @@ func _draw() -> void:
 			var debugData = layer.GetDebugData(self, Floor.FloorNumber)
 	
 			for textPos : Vector2 in debugData["Texts"]:
-				var textDat = debugData["Texts"][textPos]
-				var text = textDat["text"]
-				draw_multiline_string(ThemeDB.fallback_font, textPos, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2, -1, textDat["color"])
-			
+				strings[textPos] = debugData["Texts"][textPos]
+
 			for linePos in debugData["Lines"]:
 				DebugLines.append(linePos)
 	
+	if(DebugLines.size() > 0):
+		draw_multiline(DebugLines, Color(1,0,0), 1)
 	
-
-#--------------------------------------
-func DrawMovableDebug(Floor : FloorLayer) -> void:
-	var MovableLayer = Floor.GetLayer(FloorLayer.LayerType.MOVABLES)
-	for MovablePosition in MovableLayer.get_used_cells():
-		if (CurrentlyVisibleFloor != Floor.FloorNumber):
-			continue
-		var Index = MovableLayer.get_cell_atlas_coords(MovablePosition).x
-		if (MovableCatalogue.size() - 1 < Index):
-			printerr("Movable of Index {0} hasn't been configured in {1}".format([Index, LocationName.keys()[LevelName]]))
-			continue
-		var Dat = MovableCatalogue[Index]
-		
-		var TextDrawPos = MovableLayer.map_to_local(MovablePosition)
-		var text = "{0}\n{1}".format([Index, PreassuerPlateData.SwitchElement.keys()[Dat.Element]])
-		
-		var textSize = ThemeDB.fallback_font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
-		TextDrawPos.x -= textSize.x / 2.0
-		draw_multiline_string(ThemeDB.fallback_font, TextDrawPos, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
+	for textPos in strings:
+		var textDat = strings[textPos]
+		var text = textDat["text"]
+		draw_multiline_string(ThemeDB.fallback_font, textPos, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2, -1, textDat["color"])
+			
