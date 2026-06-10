@@ -32,7 +32,7 @@ func SpawnEnemy(actor : MonsterGroup) -> void:
 	var scene : PackedScene = load(EnemyScene)
 	En = scene.instantiate()
 	En.Target = Pl
-	En.SetControllingChar(actor)
+	En.ControllingCharacter = actor
 	En.EquipWeapon(actor.CharacterWeapon)
 	add_child(En)
 	En.position = $EnemySpawnLoc.position

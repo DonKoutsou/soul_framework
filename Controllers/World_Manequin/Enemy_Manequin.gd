@@ -1,3 +1,4 @@
+@tool
 extends Node3D
 
 class_name EnemyManequin
@@ -17,8 +18,11 @@ class_name EnemyManequin
 @export var Skel : Skeleton3D
 @export var AlarmStateLabel : Label3D
 @export var HeadRotationPivot : Node3D
-
-
+@export var G : MonsterGroup:
+	set(value):
+		G = value
+		RegisterCharacter(G)
+		
 var BodyModels : Array[MeshInstance3D]
 var Decorations : Dictionary[String, Array] = {
 	"RA" : [],
@@ -36,6 +40,8 @@ enum AlarmState{
 	TRIGGERED
 }
 
+var visuals : Node3D
+
 func SetAlarmState(NewState : AlarmState) -> void:
 	CurrentAlarmState = NewState
 	UpdateStateLabel()
@@ -52,7 +58,7 @@ func UpdateStateLabel() -> void:
 #----------------------------------------------------------------
 
 #Monster Data
-var G : MonsterGroup
+
 
 #Location details
 var CurrentPosition : Vector3i
@@ -77,17 +83,35 @@ var SeeingPlayer : bool = false
 var GoingAfterPlayer : bool = false
 #Varaible rises when enemy looks at player, once at max (1) moster atacks player
 var PlayerVis : float = 0
-
-
-
 #----------------------------------------------------------------
 
 func _ready() -> void:
+	position = CurrentPosition * Level.CurrentWorldScale
+	G.LastKnownPosition = position
+	Level.EnemyOccupiedSlots.append(CurrentPosition)
+
+func RegisterCharacter(group : MonsterGroup) -> void:
+	if (group == null):
+		Skel.clear_bones()
+		visuals.queue_free()
+		return
+		
 	G.Respawned.connect(Respawn)
 	
 	var pickedArchetype = G
 	
-	var visuals : Node3D = load(pickedArchetype.Mon.Visuals).instantiate()
+	var incommingSkel : Skeleton3D = load(pickedArchetype.Mon.Skeleton).instantiate()
+	
+	for boneIndex in incommingSkel.get_bone_count():
+		Skel.add_bone(incommingSkel.get_bone_name(boneIndex))
+		
+		var parentIndex = incommingSkel.get_bone_parent(boneIndex)
+		if (parentIndex != -1):
+			Skel.set_bone_parent(boneIndex, parentIndex)
+		
+		Skel.set_bone_global_pose(boneIndex, incommingSkel.get_bone_global_pose(boneIndex))
+	
+	visuals = load(pickedArchetype.Mon.Visuals).instantiate()
 	Skel.add_child(visuals)
 	for g : MeshInstance3D in visuals.get_children():
 		g.skeleton = g.get_path_to(Skel)
@@ -119,11 +143,6 @@ func _ready() -> void:
 		for g in Decorations[DecoType].size():
 			var deco : MeshInstance3D = Decorations[DecoType][g]
 			deco.visible = pickedArchetype.PickedDecorations[DecoType] == g
-	
-	position = CurrentPosition * Level.CurrentWorldScale
-	G.LastKnownPosition = position
-	Level.EnemyOccupiedSlots.append(CurrentPosition)
-
 
 func Update(delta: float, PlayerPos : Vector3) -> void:
 	AnimTree.advance(delta)
@@ -255,11 +274,7 @@ func Action(CustomStep : float = 0.6) -> void:
 	MoveTw.finished.connect(WalkingFinished)
 	#print("Mosnter moving from {0} to {1}".format([position, CurrentPosition * Level.CurrentWorldScale]))
 	
-	if (is_instance_valid(WalkBlendTw)):
-		WalkBlendTw.kill()
-	WalkBlendTw = create_tween()
-	WalkBlendTw.tween_method(SetWalkBlend, AnimTree.get("parameters/WalkBlend/blend_amount"), 1.0, 0.4)
-	WalkBlendTw.pause()
+	AnimTree.set("parameters/WalkBlend/blend_amount", 1.0)
 
 func LookAtDirection(DirectionToGo : Vector3i) -> void:
 	
@@ -298,11 +313,7 @@ func SetRunBlend(Value : float) -> void:
 	AnimTree.set("parameters/RunBlend/blend_amount", Value)
 
 func WalkingFinished() -> void:
-	if (is_instance_valid(WalkBlendTw)):
-		WalkBlendTw.kill()
-	WalkBlendTw = create_tween()
-	WalkBlendTw.tween_method(SetWalkBlend, AnimTree.get("parameters/WalkBlend/blend_amount"), 0.0, 0.4)
-	WalkBlendTw.pause()
+	AnimTree.set("parameters/WalkBlend/blend_amount", 0.0)
 	#AnimTree.set("parameters/WalkBlend/blend_amount", 0.0)
 	
 func GetRandomDirections() -> Array[Vector3i]:

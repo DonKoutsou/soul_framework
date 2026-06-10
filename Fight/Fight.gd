@@ -184,7 +184,7 @@ func UpdateAlpha(A : float) -> void:
 
 func RegisterPlayerCharacter(character : Character) -> void:
 	character.Damaged.connect(EV_CharacterDamaged.bind(character))
-	GetPlayer().SetControllingChar(character)
+	GetPlayer().ControllingCharacter = character
 	GetPlayer().EquipWeapon(character.CharacterWeapon, false)
 
 func EV_EnemyAtacked(Direction : FightCharacter.AtackSide) -> void:

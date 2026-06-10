@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MonsterGroup" format=3 uid="uid://0noot5hd10xt"]
+
+[ext_resource type="Resource" uid="uid://lywcg47onigs" path="res://Engine/CharacterData/Monsters/BigDummy.tres" id="1_hp2gk"]
+[ext_resource type="Script" uid="uid://dqgbru225q4ul" path="res://Engine/CharacterData/MonsterGroup.gd" id="2_xrjlr"]
+
+[resource]
+script = ExtResource("2_xrjlr")
+Mon = ExtResource("1_hp2gk")
+metadata/_custom_type_script = "uid://dqgbru225q4ul"

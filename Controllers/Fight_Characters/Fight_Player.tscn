@@ -43,8 +43,8 @@
 [ext_resource type="Resource" uid="uid://dfwyrnlf06arg" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Death.tres" id="37_wyigv"]
 [ext_resource type="ArrayMesh" uid="uid://c1lhyd5f67lw1" path="res://Engine/Assets/Weapons/Shovel.res" id="38_tiq7d"]
 [ext_resource type="ArrayMesh" uid="uid://drjpt5pqn3tav" path="res://Engine/Assets/Items/Lentern.res" id="39_ttegh"]
-[ext_resource type="Material" uid="uid://c3dr87khiawcx" path="res://Engine/Assets/Items/Materials/LanternBodyMat.tres" id="40_hmpig"]
-[ext_resource type="Material" uid="uid://bhufvoie07eh7" path="res://Engine/Assets/Items/Materials/LanternMat.tres" id="41_6y68k"]
+[ext_resource type="Material" uid="uid://c3dr87khiawcx" path="res://Engine/Shaders/Materials/LanternBody.tres" id="40_hmpig"]
+[ext_resource type="Material" uid="uid://bhufvoie07eh7" path="res://Engine/Shaders/Materials/Lantern.tres" id="41_6y68k"]
 [ext_resource type="Script" uid="uid://bj3feok1xkxq" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/MomentumModifier.gd" id="45_y0045"]
 
 [sub_resource type="Curve" id="Curve_22ek7"]
@@ -103,6 +103,7 @@ libraries/ = ExtResource("2_ttegh")
 
 [node name="GeneralSkeleton" parent="." unique_id=1728014551 instance=ExtResource("2_tiq7d")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+modifier_callback_mode_process = 2
 
 [node name="MyModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=1069785363 node_paths=PackedStringArray("animator")]
 unique_name_in_owner = false
@@ -163,7 +164,6 @@ transform = Transform3D(0.06088456, 0.9899696, -0.1274812, -0.9761332, 0.0323817
 
 [node name="Lantern" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D/LanternPivot" unique_id=1820666340]
 transform = Transform3D(0.5993388, 0, -0.113549784, 0, 0.61000067, 0, 0.11354961, 0, 0.5993397, -0.003124038, 0, -0.0005918744)
-visible = false
 layers = 524288
 cast_shadow = 0
 mesh = ExtResource("39_ttegh")

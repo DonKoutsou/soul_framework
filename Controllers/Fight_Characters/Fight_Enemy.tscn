@@ -59,6 +59,7 @@ Can_Retaliate = true
 
 [node name="GeneralSkeleton" type="Skeleton3D" parent="." unique_id=1385459663]
 unique_name_in_owner = true
+modifier_callback_mode_process = 2
 
 [node name="MyModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=118797013 node_paths=PackedStringArray("animator")]
 unique_name_in_owner = false
@@ -79,6 +80,7 @@ active = true
 influence = 1.0
 script = ExtResource("10_84woi")
 WeaponCurve = ExtResource("4_5mrp1")
+CurrentWeaponType = 2
 currentWeaponSpeed = 0.6
 RecoilCurve = SubResource("Curve_kw201")
 animator = NodePath("../../AnimationPlayer")

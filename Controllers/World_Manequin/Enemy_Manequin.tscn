@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dke4aimiytcrd" path="res://Engine/Controllers/World_Manequin/Enemy_Manequin.gd" id="2_bqo2l"]
 [ext_resource type="AudioStream" uid="uid://cicrjeo3klcpj" path="res://Engine/Assets/Sounds/Voice.mp3" id="3_j1ohr"]
-[ext_resource type="PackedScene" uid="uid://cx8606l0bax3g" path="res://Engine/Controllers/Fight_Characters/EnemyRig/EnemyRigSkeleton.tscn" id="4_ihg1j"]
 [ext_resource type="AudioStream" uid="uid://c35hd0vilu1jj" path="res://Engine/Assets/Sounds/Scream.mp3" id="4_q6hbr"]
 [ext_resource type="AnimationLibrary" uid="uid://dkpao1mofh7ko" path="res://Engine/Controllers/Fight_Characters/EnemyRig/EnemyRigAnimationLib.tres" id="6_ihg1j"]
 
@@ -41,12 +40,12 @@ animation = &"Idle"
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_sa4iq"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_a2sg0"]
-graph_offset = Vector2(-448.9531, -165.5479)
+graph_offset = Vector2(-703.68414, -210.46147)
 nodes/output/position = Vector2(546.6667, 160)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_02o2w")
 nodes/Animation/position = Vector2(-400, -80)
 nodes/WalkBlend/node = SubResource("AnimationNodeBlend2_sa4iq")
-nodes/WalkBlend/position = Vector2(-20, 100)
+nodes/WalkBlend/position = Vector2(-13.333333, 93.333336)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_sa4iq")
 "nodes/Animation 2/position" = Vector2(-720, 560)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_sa4iq")
@@ -114,38 +113,14 @@ transform = Transform3D(0.9999998, 0, 0, 0, 1, 0, 0, 0, 0.9999998, 0, 0.11957443
 [node name="HeadRotPosition" type="Node3D" parent="Node3D" unique_id=1026861910]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, -0.25511718, 2.0000002)
 
-[node name="GeneralSkeleton" parent="." unique_id=1868505070 instance=ExtResource("4_ihg1j")]
-bones/1/position = Vector3(0.011416708, 0.44754893, 0.0051369555)
-bones/1/rotation = Quaternion(0.09446339, 0.3407318, 0.06873589, 0.93287396)
-bones/2/rotation = Quaternion(-0.41472304, 0.36813924, 0.83034164, -0.05487346)
-bones/3/rotation = Quaternion(-0.50195855, -0.0013933755, -0.33874404, 0.79579407)
-bones/4/rotation = Quaternion(0.54641545, -0.42794055, 0.44350904, 0.5670951)
-bones/6/rotation = Quaternion(-0.11369752, 0.35842595, 0.8147433, 0.4413584)
-bones/7/rotation = Quaternion(-0.56044984, 0.0012890012, 0.37821794, 0.7367806)
-bones/8/rotation = Quaternion(0.5979394, 0.043295905, -0.38834295, 0.6998456)
-bones/10/rotation = Quaternion(0.047672145, 0.05524611, 0.0061554713, 0.9973151)
-bones/11/rotation = Quaternion(0.10919237, 0.3066222, 0.03615566, 0.94485587)
-bones/13/rotation = Quaternion(-0.33684456, -0.5296016, 0.14270702, 0.76530564)
-bones/13/scale = Vector3(1.0000001, 1, 0.99999994)
-bones/14/rotation = Quaternion(0.9998618, -1.6075019e-08, 2.3785074e-07, -0.016626822)
-bones/15/rotation = Quaternion(-0.5263849, -0.002469265, -0.0023564068, 0.8502396)
-bones/15/scale = Vector3(0.5490162, 0.54901624, 0.5490162)
-bones/16/rotation = Quaternion(-0.2028381, 0.16705047, -0.7733472, 0.5769619)
-bones/17/rotation = Quaternion(0.46775764, -0.13055527, -0.41073054, 0.7716597)
-bones/18/rotation = Quaternion(0.269697, -0.67926574, -0.46819445, 0.49664423)
-bones/19/rotation = Quaternion(0.07259307, -0.12128322, -0.08714107, 0.9861172)
-bones/20/position = Vector3(-0.036399245, -0.083173, -0.22009581)
-bones/20/rotation = Quaternion(0.0003062501, 0.00018927203, -9.8936725e-06, 0.99999994)
-bones/22/rotation = Quaternion(0.65463716, -0.060489576, 0.39070484, 0.64431435)
-bones/23/rotation = Quaternion(0.58838236, -0.17035522, 0.1518327, 0.7757139)
-bones/24/rotation = Quaternion(-0.7007901, -0.043942474, -0.19028674, 0.6861146)
+[node name="GeneralSkeleton" type="Skeleton3D" parent="." unique_id=1672969582]
+unique_name_in_owner = true
 
 [node name="Hear_Rotation_Modifier" type="LookAtModifier3D" parent="GeneralSkeleton" unique_id=1388580164]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 influence = 0.6
 target_node = NodePath("../../Node3D/HeadRotPosition")
 bone_name = "Head"
-bone = 13
 use_angle_limitation = true
 symmetry_limitation = true
 primary_limit_angle = 3.569373
@@ -157,8 +132,7 @@ secondary_damp_threshold = 0.29
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 influence = 0.4
 target_node = NodePath("../../Node3D/HeadRotPosition")
-bone_name = "Body.003"
-bone = 10
+bone_name = "UpperChest"
 use_angle_limitation = true
 symmetry_limitation = false
 primary_positive_limit_angle = 3.1415927
@@ -171,7 +145,6 @@ secondary_negative_limit_angle = 3.1415927
 secondary_negative_damp_threshold = 1.0
 
 [node name="WeaponAtatchment_L" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=584210558]
-transform = Transform3D(-0.35113543, 0.8739776, 0.3359559, 0.92716354, 0.27448067, 0.2550042, 0.13065451, 0.40102732, -0.9067006, 0.1834417, 0.5328857, 0.1663595)
 bone_name = "WeaponPlacement.L"
 bone_idx = 20
 
@@ -179,7 +152,6 @@ bone_idx = 20
 transform = Transform3D(0.0948617, 0.13343139, -0.98650765, -0.9384404, 0.34264004, -0.04389548, 0.3321598, 0.9299434, 0.15772079, 0, 0.045, 0)
 
 [node name="WeaponAtatchment_R" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=261937646]
-transform = Transform3D(-0.19487283, 0.4236662, 0.88460773, 0.6581205, -0.612252, 0.43820593, 0.72725624, 0.6675728, -0.15951237, 0.2089386, 0.578237, 0.16777064)
 bone_name = "WeaponPlacement.R"
 bone_idx = 25
 
@@ -207,10 +179,9 @@ libraries/ = ExtResource("6_ihg1j")
 
 [node name="AnimationTree" type="AnimationTree" parent="GeneralSkeleton" unique_id=1673104848]
 root_node = NodePath("%GeneralSkeleton/..")
-callback_mode_process = 2
 tree_root = SubResource("AnimationNodeBlendTree_a2sg0")
 anim_player = NodePath("../AnimationPlayer")
-parameters/WalkBlend/blend_amount = 0.0
+parameters/WalkBlend/blend_amount = 0.39
 parameters/TimeScale/scale = 1.0
 parameters/RunBlend/blend_amount = 0.0
 parameters/Stance_Walk_Blend/blend_amount = 0.0

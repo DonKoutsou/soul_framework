@@ -1,4 +1,5 @@
 # Player.gd (character body with camera as child)
+@tool
 extends FightCharacter
 
 class_name Player
@@ -44,7 +45,6 @@ func _ready() -> void:
 	#ToggleWalk(true)
 
 func SetControllingChar(Char : Actor) -> void:
-	ControllingCharacter = Char
 	Char.Exposed.connect(Exposed)
 	Char.SpeedBuffed.connect(SpeedChanged)
 	

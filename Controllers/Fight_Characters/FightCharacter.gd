@@ -1,3 +1,4 @@
+@tool
 extends Node3D
 
 class_name FightCharacter
@@ -19,7 +20,11 @@ var CurrentState : CharacterState = CharacterState.IDLE
 
 var LookDir : Vector3
 #var RecoveryPenalty : float
-var ControllingCharacter : Actor
+
+@export var ControllingCharacter : Actor:
+	set(value):
+		ControllingCharacter = value
+		SetControllingChar(ControllingCharacter)
 
 enum CharacterState{
 	IDLE,
@@ -197,7 +202,6 @@ func GetReadyForFight() -> void:
 	pass
 #----------------------------------------------------
 func SetControllingChar(Char : Actor) -> void:
-	ControllingCharacter = Char
 	Char.Exposed.connect(Exposed)
 	Char.SpeedBuffed.connect(SpeedChanged)
 	

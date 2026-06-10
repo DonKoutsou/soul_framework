@@ -1,3 +1,4 @@
+@tool
 extends FightCharacter
 
 class_name Enemy
@@ -43,13 +44,19 @@ func _ready() -> void:
 	
 
 func SetControllingChar(Char : Actor) -> void:
-	ControllingCharacter = Char
-	CancelHits()
+	if (Char == null):
+		Visuals.queue_free()
+		sk.clear_bones()
+		if (Engine.is_editor_hint()):
+			sk.modifier_callback_mode_process = Skeleton3D.MODIFIER_CALLBACK_MODE_PROCESS_MANUAL
+		return
+	
+	if (Engine.is_editor_hint()):
+		sk.modifier_callback_mode_process = Skeleton3D.MODIFIER_CALLBACK_MODE_PROCESS_IDLE
+	
 	var Group = Char as MonsterGroup
 	#DualHanded = Group.Mon.DualHand
-	MedianDecisionCooldown = Group.Mon.GetDecisionCooldown()
-	Char.Exposed.connect(Exposed)
-	Char.SpeedBuffed.connect(SpeedChanged)
+	
 
 	for DecoType : String in Decorations.keys():
 		Decorations[DecoType].clear()
@@ -57,6 +64,8 @@ func SetControllingChar(Char : Actor) -> void:
 	BodyModels.clear()
 	
 	var incommingSkel : Skeleton3D = load(Group.Mon.Skeleton).instantiate()
+
+	sk.clear_bones()
 	
 	for boneIndex in incommingSkel.get_bone_count():
 		sk.add_bone(incommingSkel.get_bone_name(boneIndex))
@@ -67,7 +76,9 @@ func SetControllingChar(Char : Actor) -> void:
 		
 		sk.set_bone_global_pose(boneIndex, incommingSkel.get_bone_global_pose(boneIndex))
 
-	
+	if (Visuals != null):
+		ClearVisuals()
+		
 	Visuals = load(Group.Mon.Visuals).instantiate()
 	sk.add_child(Visuals)
 	for g : MeshInstance3D in Visuals.get_children():
@@ -84,6 +95,10 @@ func SetControllingChar(Char : Actor) -> void:
 	
 	#Visuals.BindMesh(sk)
 	
+	MedianDecisionCooldown = Group.Mon.GetDecisionCooldown()
+	Char.Exposed.connect(Exposed)
+	Char.SpeedBuffed.connect(SpeedChanged)
+	
 	UpdateState(CharacterState.IDLE)
 	Dead = false
 	Blocking = false
@@ -96,6 +111,9 @@ func SetControllingChar(Char : Actor) -> void:
 			deco.visible = Group.PickedDecorations[DecoType] == g
 
 func GetCharacterActions() -> Callable:
+	if (Engine.is_editor_hint()):
+		return DoNothing
+		
 	var ActionList : Array[Callable] = []
 	var ActionWeights : PackedFloat32Array = []
 	

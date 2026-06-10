@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MonsterGroup" format=3 uid="uid://bu0ac0ug66vsv"]
+
+[ext_resource type="Script" uid="uid://dqgbru225q4ul" path="res://Engine/CharacterData/MonsterGroup.gd" id="1_0y6nh"]
+[ext_resource type="Resource" uid="uid://q5ci3vkqvnyf" path="res://Engine/CharacterData/Monsters/Dummy.tres" id="1_xpm4o"]
+
+[resource]
+script = ExtResource("1_0y6nh")
+Mon = ExtResource("1_xpm4o")
+metadata/_custom_type_script = "uid://dqgbru225q4ul"

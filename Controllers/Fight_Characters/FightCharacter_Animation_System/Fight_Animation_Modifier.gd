@@ -41,7 +41,7 @@ class_name Fight_Animation_Modifier
 ##Animation configuration to be used to figure out wich animation to player. Animations can be configured to be played durring specific state switch or as a on complete animation
 @export var anims : Array[AnimationInfo] = []
 @export_tool_button("Check For Broken Bone Maps") var boneMapFix : Callable = FixBoneMaps
-
+@export_tool_button("Rebuild Cache") var buildCache : Callable = BuildCache
 ##Contains the progress of each animations
 var animProgress : PackedFloat32Array
 ##Contains the progress each animation had last frame
@@ -80,13 +80,17 @@ func _ready() -> void:
 	cambone = get_skeleton().find_bone("CameraBone")
 	headbone = get_skeleton().find_bone("Head")
 	
+	BuildCache()
+	#print(animBlend.size())
+
+func BuildCache() -> void:
+	animation_cache.clear()
 	for g in anims:
 		BuildAnimationCache(g.AnimName)
 		if (g is CombatAnimationInfo):
 			BuildAnimationCache("2H_" + g.AnimName)
 			BuildAnimationCache("R_" + g.AnimName)
 			BuildAnimationCache("BOW_" + g.AnimName)
-	#print(animBlend.size())
 
 #---------------------------------------------
 func BuildAnimationCache(anim_name : String) -> void:
@@ -269,7 +273,7 @@ func _process_modification_with_delta(delta: float) -> void:
 		
 		for binding in cached_anim.track_bindings:
 			if (!anim.track_is_enabled(binding.track_index)):
-				return
+				continue
 			
 			binding.Handle(anim, animation_progress, t, animInfo, blendValue, get_skeleton())
 	
@@ -303,7 +307,7 @@ func HandleRecoil(delta : float) -> void:
 		var newheadRotation = headRest * Quaternion.from_euler(FinalRecoil)
 		get_skeleton().set_bone_pose_rotation(headbone, newheadRotation.normalized())
 
-	Recoil = Recoil.move_toward(Vector3.ZERO, delta * 3 * Custom_Time_Scale)
+	Recoil = Recoil.move_toward(Vector3.ZERO, delta * 2 * Custom_Time_Scale)
 	
 #-----------------------------------------------------------------------------#
 func ProgressAnimation(animIndex : int, delta : float) -> void:

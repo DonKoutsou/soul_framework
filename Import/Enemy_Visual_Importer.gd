@@ -100,9 +100,10 @@ func GetContentsOfDir(dir : String) -> PackedStringArray:
 
 func FindMaterial(matName : String, Dirs : PackedStringArray) -> String:
 	for path in Dirs:
-		if path.containsn(matName):
+		var mName = path.get_file().substr(0, path.get_file().length() - 5)
+		if mName == matName:
 			return path
-	return "" 
+	return ""
 
 func build_skinned_mesh(source_mesh: ArrayMesh, skeleton: Skeleton3D,bone_name: String) -> ArrayMesh:
 
