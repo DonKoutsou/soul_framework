@@ -1559,82 +1559,82 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[node name="Node3D" type="Node3D" unique_id=866197937]
+[node name="" type="Node3D" unique_id=1733198174]
 
-[node name="B_Dummy_Body" type="MeshInstance3D" parent="." unique_id=192493656]
+[node name="B_Dummy_Body" type="MeshInstance3D" parent="." unique_id=1783911509]
 mesh = ExtResource("1_q3ryk")
 skin = SubResource("Skin_3nlx8")
 
-[node name="B_Dummy_Body_003" type="MeshInstance3D" parent="." unique_id=450856223]
+[node name="B_Dummy_Body_003" type="MeshInstance3D" parent="." unique_id=1239062258]
 mesh = ExtResource("2_mogba")
 skin = SubResource("Skin_e4jtv")
 
-[node name="B_Dummy_UpperLeg_R" type="MeshInstance3D" parent="." unique_id=677302934]
+[node name="B_Dummy_UpperLeg_R" type="MeshInstance3D" parent="." unique_id=1643524591]
 mesh = ExtResource("3_ubpuj")
 skin = SubResource("Skin_r30kp")
 
-[node name="B_Dummy_Foor_R" type="MeshInstance3D" parent="." unique_id=2025322162]
+[node name="B_Dummy_Foor_R" type="MeshInstance3D" parent="." unique_id=1023887361]
 mesh = ExtResource("4_c3487")
 skin = SubResource("Skin_y16ci")
 
-[node name="B_Dummy_LowerLeg_R" type="MeshInstance3D" parent="." unique_id=536693750]
+[node name="B_Dummy_LowerLeg_R" type="MeshInstance3D" parent="." unique_id=1538939830]
 mesh = ExtResource("5_px6wd")
 skin = SubResource("Skin_idcwk")
 
-[node name="B_Dummy_UpperArm_R" type="MeshInstance3D" parent="." unique_id=359238299]
+[node name="B_Dummy_UpperArm_R" type="MeshInstance3D" parent="." unique_id=746170769]
 mesh = ExtResource("6_pqlyg")
 skin = SubResource("Skin_drwu2")
 
-[node name="B_Dummy_LowerArm_R" type="MeshInstance3D" parent="." unique_id=160369038]
+[node name="B_Dummy_LowerArm_R" type="MeshInstance3D" parent="." unique_id=1870969691]
 mesh = ExtResource("7_aeayq")
 skin = SubResource("Skin_1gg18")
 
-[node name="B_Dummy_Body_001" type="MeshInstance3D" parent="." unique_id=1840574819]
+[node name="B_Dummy_Body_001" type="MeshInstance3D" parent="." unique_id=521696450]
 mesh = ExtResource("8_yax2x")
 skin = SubResource("Skin_5ecqw")
 
-[node name="B_Dummy_Head" type="MeshInstance3D" parent="." unique_id=632363809]
+[node name="B_Dummy_Head" type="MeshInstance3D" parent="." unique_id=514184999]
 mesh = ExtResource("9_fff2a")
 skin = SubResource("Skin_ke38a")
 
-[node name="B_Dummy_UpperLeg_L" type="MeshInstance3D" parent="." unique_id=1952412388]
+[node name="B_Dummy_UpperLeg_L" type="MeshInstance3D" parent="." unique_id=554147526]
 mesh = ExtResource("10_jcsmp")
 skin = SubResource("Skin_3y7ti")
 
-[node name="B_Dummy_LowerLeg_L" type="MeshInstance3D" parent="." unique_id=1048279651]
+[node name="B_Dummy_LowerLeg_L" type="MeshInstance3D" parent="." unique_id=906906510]
 mesh = ExtResource("11_ye3uc")
 skin = SubResource("Skin_1wsn3")
 
-[node name="B_Dummy_Foor_L" type="MeshInstance3D" parent="." unique_id=257784444]
+[node name="B_Dummy_Foor_L" type="MeshInstance3D" parent="." unique_id=909305336]
 mesh = ExtResource("12_yl8m8")
 skin = SubResource("Skin_468qj")
 
-[node name="B_Dummy_UpperArm_L" type="MeshInstance3D" parent="." unique_id=751089796]
+[node name="B_Dummy_UpperArm_L" type="MeshInstance3D" parent="." unique_id=1324725706]
 mesh = ExtResource("13_2iaps")
 skin = SubResource("Skin_3sqi6")
 
-[node name="B_Dummy_LowerArm_L" type="MeshInstance3D" parent="." unique_id=2096606210]
+[node name="B_Dummy_LowerArm_L" type="MeshInstance3D" parent="." unique_id=85464802]
 mesh = ExtResource("14_xbphh")
 skin = SubResource("Skin_x8tay")
 
-[node name="B_Dummy_Palm_L" type="MeshInstance3D" parent="." unique_id=442116492]
+[node name="B_Dummy_Palm_L" type="MeshInstance3D" parent="." unique_id=63051518]
 mesh = ExtResource("15_cuxjj")
 skin = SubResource("Skin_tbfk8")
 
-[node name="B_Dummy_Palm_R" type="MeshInstance3D" parent="." unique_id=956147152]
+[node name="B_Dummy_Palm_R" type="MeshInstance3D" parent="." unique_id=251795760]
 mesh = ExtResource("16_scner")
 skin = SubResource("Skin_t0amg")
 
-[node name="HE_Deco1_Head" type="MeshInstance3D" parent="." unique_id=1928533785]
+[node name="HE_Deco1_Head" type="MeshInstance3D" parent="." unique_id=477926933]
 mesh = ExtResource("17_n0jvb")
 skin = SubResource("Skin_tycy6")
 
-[node name="LS_Deco1_UpperArm_L" type="MeshInstance3D" parent="." unique_id=1033924152]
+[node name="LS_Deco1_UpperArm_L" type="MeshInstance3D" parent="." unique_id=879908481]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00025386398, 0.0063369498, 0.013969822)
 mesh = ExtResource("18_a3jqq")
 skin = SubResource("Skin_6rs87")
 
-[node name="RS_Deco1_UpperArm_R" type="MeshInstance3D" parent="." unique_id=1435924623]
+[node name="RS_Deco1_UpperArm_R" type="MeshInstance3D" parent="." unique_id=2079009441]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00025386398, 0.0063369498, 0.013969822)
 mesh = ExtResource("19_6naa4")
 skin = SubResource("Skin_21ntq")

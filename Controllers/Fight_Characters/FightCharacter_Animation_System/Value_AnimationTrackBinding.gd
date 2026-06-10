@@ -8,8 +8,8 @@ var property : StringName
 
 func Handle(anim : Animation, animationProgress : float, _progressionAmmount : float, _animInfo : AnimationInfo, _blendValue : float, _skel : Skeleton3D) -> void:
 	var value = anim.value_track_interpolate(track_index, animationProgress)
-
-	node.set(property,value)
+	if (is_instance_valid(node)):
+		node.set(property,value)
 
 static func Create(trackIndex : int, targetNode : Node, anim : Animation):
 	var binding = ValueTrackBinding.new()

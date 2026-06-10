@@ -59,6 +59,25 @@ SkeletonModif = NodePath("GeneralSkeleton/MyModifier")
 Can_Retaliate = true
 
 [node name="GeneralSkeleton" parent="." unique_id=1868505070 instance=ExtResource("2_5mrp1")]
+bones/1/position = Vector3(0.014656898, 0.5125185, -0.007833469)
+bones/1/rotation = Quaternion(0.034326445, 0.16016549, 0.0022722066, 0.9864906)
+bones/2/rotation = Quaternion(0.41127285, 0.2181025, 0.8778863, -0.11225747)
+bones/3/rotation = Quaternion(-0.056013577, 0.9266847, -0.37021303, 0.032561027)
+bones/4/rotation = Quaternion(-0.23657368, 0.5513019, -0.79918814, -0.037384976)
+bones/6/rotation = Quaternion(-0.61582905, 0.34357452, 0.6973534, 0.1280989)
+bones/7/rotation = Quaternion(0.05849278, 0.91976255, -0.3865998, -0.034002267)
+bones/8/rotation = Quaternion(0.3275448, 0.5759612, -0.6143618, 0.42841884)
+bones/10/rotation = Quaternion(1.1175871e-08, -6.389789e-11, 2.9575675e-10, 1)
+bones/11/rotation = Quaternion(0.03806674, -0.046521287, 0.011893913, 0.9981209)
+bones/16/rotation = Quaternion(0.67456603, 0.17373812, 0.37071955, -0.61428237)
+bones/17/rotation = Quaternion(0.17293075, 0.8837175, 0.17755368, 0.39700517)
+bones/18/rotation = Quaternion(0.3141281, -0.74497855, -0.5786927, 0.106983215)
+bones/19/rotation = Quaternion(-0.12484574, 0.48926583, -0.1409522, 0.8515662)
+bones/21/rotation = Quaternion(0.5000189, -0.49976808, -0.4986977, -0.5015113)
+bones/22/rotation = Quaternion(-0.31752536, 0.82294464, 0.08745159, -0.4629169)
+bones/23/rotation = Quaternion(0.4209709, 0.8025282, -0.3211574, 0.27493677)
+bones/24/rotation = Quaternion(0.022153497, -0.82885253, 0.10132623, 0.5497688)
+bones/25/position = Vector3(4.302835e-08, -7.233896e-08, 1.565055e-08)
 
 [node name="MyModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=118797013 node_paths=PackedStringArray("animator")]
 unique_name_in_owner = false
@@ -86,7 +105,7 @@ anims = Array[ExtResource("6_c3124")]([ExtResource("7_fxlpe"), ExtResource("8_id
 metadata/_custom_type_script = "uid://2o6tgcat6qck"
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=352902681]
-transform = Transform3D(1, 4.440892e-15, -4.7683702e-07, -1.1173578e-07, 0.9721577, -0.23432706, 4.6356064e-07, 0.23432714, 0.97215754, 7.948131e-15, 0.924504, -0.03033001)
+transform = Transform3D(0.9999973, -0.0021007073, 0.0009373281, 0.0021526315, 0.99823797, -0.059298903, -0.0008112148, 0.05930081, 0.9982399, 0.013963519, 0.7668572, 0.1462103)
 bone_name = "Head"
 bone_idx = 13
 
@@ -94,7 +113,7 @@ bone_idx = 13
 transform = Transform3D(1, 0, 0, 0, 0.9999996, 0, 0, 0, 0.9999999, 0, 0, 0)
 
 [node name="Palm_L" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1614551408]
-transform = Transform3D(-0.9719566, 0.2299294, -0.049318492, -0.23243636, -0.9711596, 0.05312258, -0.035681643, 0.06309642, 0.99736917, 0.25836137, 0.50875, -0.021123013)
+transform = Transform3D(-0.9892017, -0.05691327, 0.13505645, 0.055980876, -0.9983744, -0.010694858, 0.1354457, -0.003018804, 0.99077994, 0.21056621, 0.43616527, -0.03631724)
 bone_name = "WeaponPlacement.L"
 bone_idx = 20
 
@@ -109,7 +128,7 @@ mesh = ExtResource("5_66mam")
 blend_shapes/blendShape1.Closed = 1.0
 
 [node name="Palm_L2" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=480455727]
-transform = Transform3D(-0.97195673, -0.22992904, 0.04931855, 0.23243628, -0.9711594, 0.05312253, 0.035681617, 0.063096315, 0.99736935, -0.25836134, 0.50874984, -0.021122998)
+transform = Transform3D(-0.9939682, 0.038711697, 0.10260554, -0.007356778, -0.95705384, 0.28981614, 0.10941838, 0.28731313, 0.95156646, -0.16272722, 0.43105316, 0.009309559)
 bone_name = "WeaponPlacement.R"
 bone_idx = 25
 
@@ -153,7 +172,7 @@ rotation_order = 2
 top_level = false
 visible = true
 visibility_parent = NodePath("")
-active = true
+active = false
 influence = 1.0
 script = ExtResource("38_5mrp1")
 metadata/_custom_type_script = "uid://bj3feok1xkxq"
