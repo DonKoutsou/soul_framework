@@ -41,6 +41,7 @@ func _ready() -> void:
 	Inv = InventoryScene.instantiate()
 	add_child(Inv)
 	move_child(Inv, 0)
+	Inv.hide()
 	Inv.ItemUsed.connect(OnItemUsed)
 	Inv.AssistanceItem.connect(OnAssistanceToggled)
 	Inv.RequestClose.connect(ToggleInventory)
