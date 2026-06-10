@@ -2,8 +2,8 @@
 
 [ext_resource type="ArrayMesh" uid="uid://bnwegbab10e8i" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_RightThumbDistal.res" id="1_suqw6"]
 [ext_resource type="ArrayMesh" uid="uid://bofwc8tjranb5" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_LeftThumbDistal.res" id="2_ckd5j"]
-[ext_resource type="ArrayMesh" uid="uid://c8wtko5yr44wu" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_RightThumpProximal.res" id="3_phauj"]
-[ext_resource type="ArrayMesh" uid="uid://clgh04lah44b3" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_LeftThumpProximal.res" id="4_hwq5d"]
+[ext_resource type="ArrayMesh" uid="uid://crx5ba2k62qa8" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_RightThumbProximal.res" id="3_phauj"]
+[ext_resource type="ArrayMesh" uid="uid://csjvw8hwcy83q" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_LeftThumbProximal.res" id="4_hwq5d"]
 [ext_resource type="ArrayMesh" uid="uid://7apt7migl47r" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_RightThumbMetacarpal.res" id="5_dg0iw"]
 [ext_resource type="ArrayMesh" uid="uid://lccal5epx3hy" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_LeftThumbMetacarpal.res" id="6_or17t"]
 [ext_resource type="ArrayMesh" uid="uid://tdv67w6tl6o1" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_RightHand.res" id="7_ud86w"]
@@ -21,11 +21,11 @@
 [ext_resource type="ArrayMesh" uid="uid://ceio6b4ux4jrs" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_RightLowerLeg.res" id="19_gt6bc"]
 [ext_resource type="ArrayMesh" uid="uid://cpooow6i8j3rd" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_LeftLowerLeg.res" id="20_m7oxj"]
 [ext_resource type="ArrayMesh" uid="uid://bjq8k0dqxxate" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_Head.res" id="21_xyhsr"]
-[ext_resource type="ArrayMesh" uid="uid://q3xi8hirdd2i" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_RightFoot.res" id="22_xyhsr"]
-[ext_resource type="ArrayMesh" uid="uid://dp1laar3coq8i" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_LeftFoot.res" id="23_lcdso"]
-[ext_resource type="ArrayMesh" uid="uid://bv84he4inc1mr" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_Spine.res" id="24_stpro"]
-[ext_resource type="ArrayMesh" uid="uid://baqv5fotwe0r1" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_UpperChest.res" id="25_iyuyy"]
-[ext_resource type="ArrayMesh" uid="uid://dija2kkbo6tq6" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_Hips.res" id="26_5k3qe"]
+[ext_resource type="ArrayMesh" uid="uid://q3xi8hirdd2i" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_RightFoot.res" id="22_lcdso"]
+[ext_resource type="ArrayMesh" uid="uid://dp1laar3coq8i" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_LeftFoot.res" id="23_stpro"]
+[ext_resource type="ArrayMesh" uid="uid://bv84he4inc1mr" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_Spine.res" id="24_iyuyy"]
+[ext_resource type="ArrayMesh" uid="uid://baqv5fotwe0r1" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_UpperChest.res" id="25_5k3qe"]
+[ext_resource type="ArrayMesh" uid="uid://dija2kkbo6tq6" path="res://Engine/Assets/Characters/DummyNPC/B_Dummy_Hips.res" id="26_o1ny6"]
 
 [sub_resource type="Skin" id="Skin_nsje8"]
 bind_count = 33
@@ -231,7 +231,7 @@ bind/32/name = &"CameraBone"
 bind/32/bone = 32
 bind/32/pose = Transform3D(-1, -1.196239e-11, 6.2783295e-07, -8.697907e-15, 1.0000004, 1.9039615e-05, -6.2783295e-07, 1.903961e-05, -1, -4.605478e-09, -0.77100044, 0.007335527)
 
-[sub_resource type="Skin" id="Skin_gaarc"]
+[sub_resource type="Skin" id="Skin_i68wl"]
 bind_count = 33
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -333,7 +333,7 @@ bind/32/name = &"CameraBone"
 bind/32/bone = 32
 bind/32/pose = Transform3D(-1, -1.196239e-11, 6.2783295e-07, -8.697907e-15, 1.0000004, 1.9039615e-05, -6.2783295e-07, 1.903961e-05, -1, -4.605478e-09, -0.77100044, 0.007335527)
 
-[sub_resource type="Skin" id="Skin_whfre"]
+[sub_resource type="Skin" id="Skin_lg3aa"]
 bind_count = 33
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -2679,108 +2679,108 @@ bind/32/name = &"CameraBone"
 bind/32/bone = 32
 bind/32/pose = Transform3D(-1, -1.196239e-11, 6.2783295e-07, -8.697907e-15, 1.0000004, 1.9039615e-05, -6.2783295e-07, 1.903961e-05, -1, -4.605478e-09, -0.77100044, 0.007335527)
 
-[node name="" type="Node3D" unique_id=82700475]
+[node name="" type="Node3D" unique_id=211297829]
 
-[node name="B_Dummy_RightThumbDistal" type="MeshInstance3D" parent="." unique_id=153430461]
+[node name="B_Dummy_RightThumbDistal" type="MeshInstance3D" parent="." unique_id=367035337]
 mesh = ExtResource("1_suqw6")
 skin = SubResource("Skin_nsje8")
 
-[node name="B_Dummy_LeftThumbDistal" type="MeshInstance3D" parent="." unique_id=1227637374]
+[node name="B_Dummy_LeftThumbDistal" type="MeshInstance3D" parent="." unique_id=1371140024]
 mesh = ExtResource("2_ckd5j")
 skin = SubResource("Skin_qp5rb")
 
-[node name="B_Dummy_RightThumpProximal" type="MeshInstance3D" parent="." unique_id=1740656133]
+[node name="B_Dummy_RightThumbProximal" type="MeshInstance3D" parent="." unique_id=74936921]
 mesh = ExtResource("3_phauj")
-skin = SubResource("Skin_gaarc")
+skin = SubResource("Skin_i68wl")
 
-[node name="B_Dummy_LeftThumpProximal" type="MeshInstance3D" parent="." unique_id=1541951414]
+[node name="B_Dummy_LeftThumbProximal" type="MeshInstance3D" parent="." unique_id=991640922]
 mesh = ExtResource("4_hwq5d")
-skin = SubResource("Skin_whfre")
+skin = SubResource("Skin_lg3aa")
 
-[node name="B_Dummy_RightThumbMetacarpal" type="MeshInstance3D" parent="." unique_id=805791223]
+[node name="B_Dummy_RightThumbMetacarpal" type="MeshInstance3D" parent="." unique_id=1343696128]
 mesh = ExtResource("5_dg0iw")
 skin = SubResource("Skin_l24hn")
 
-[node name="B_Dummy_LeftThumbMetacarpal" type="MeshInstance3D" parent="." unique_id=1786961689]
+[node name="B_Dummy_LeftThumbMetacarpal" type="MeshInstance3D" parent="." unique_id=1301993711]
 mesh = ExtResource("6_or17t")
 skin = SubResource("Skin_nfks7")
 
-[node name="B_Dummy_RightHand" type="MeshInstance3D" parent="." unique_id=630042429]
+[node name="B_Dummy_RightHand" type="MeshInstance3D" parent="." unique_id=783931689]
 mesh = ExtResource("7_ud86w")
 skin = SubResource("Skin_r0g6s")
 
-[node name="B_Dummy_LeftHand" type="MeshInstance3D" parent="." unique_id=1307507602]
+[node name="B_Dummy_LeftHand" type="MeshInstance3D" parent="." unique_id=1006237795]
 mesh = ExtResource("8_6ogdp")
 skin = SubResource("Skin_h05xu")
 
-[node name="B_Dummy_RightLowerArm" type="MeshInstance3D" parent="." unique_id=936662905]
+[node name="B_Dummy_RightLowerArm" type="MeshInstance3D" parent="." unique_id=1910437375]
 mesh = ExtResource("9_bk2jv")
 skin = SubResource("Skin_2drio")
 
-[node name="B_Dummy_LeftLowerArm" type="MeshInstance3D" parent="." unique_id=1563577948]
+[node name="B_Dummy_LeftLowerArm" type="MeshInstance3D" parent="." unique_id=2006684007]
 mesh = ExtResource("10_tmepj")
 skin = SubResource("Skin_e2oet")
 
-[node name="B_Dummy_RightMiddleIntermediate" type="MeshInstance3D" parent="." unique_id=1594448339]
+[node name="B_Dummy_RightMiddleIntermediate" type="MeshInstance3D" parent="." unique_id=787299550]
 mesh = ExtResource("11_5u21w")
 skin = SubResource("Skin_rbkbi")
 
-[node name="B_Dummy_LeftMiddleIntermediate" type="MeshInstance3D" parent="." unique_id=1614646707]
+[node name="B_Dummy_LeftMiddleIntermediate" type="MeshInstance3D" parent="." unique_id=2029305294]
 mesh = ExtResource("12_ygvq6")
 skin = SubResource("Skin_kq6va")
 
-[node name="B_Dummy_RightMiddleProximal" type="MeshInstance3D" parent="." unique_id=2054761846]
+[node name="B_Dummy_RightMiddleProximal" type="MeshInstance3D" parent="." unique_id=804175484]
 mesh = ExtResource("13_i46du")
 skin = SubResource("Skin_nbc8d")
 
-[node name="B_Dummy_LeftMiddleProximal" type="MeshInstance3D" parent="." unique_id=1315428656]
+[node name="B_Dummy_LeftMiddleProximal" type="MeshInstance3D" parent="." unique_id=1974541727]
 mesh = ExtResource("14_yt01k")
 skin = SubResource("Skin_vbv2h")
 
-[node name="B_Dummy_RightUpperLeg" type="MeshInstance3D" parent="." unique_id=1810431988]
+[node name="B_Dummy_RightUpperLeg" type="MeshInstance3D" parent="." unique_id=1713907029]
 mesh = ExtResource("15_16cgw")
 skin = SubResource("Skin_pm3fo")
 
-[node name="B_Dummy_LeftUpperLeg" type="MeshInstance3D" parent="." unique_id=812307349]
+[node name="B_Dummy_LeftUpperLeg" type="MeshInstance3D" parent="." unique_id=1945982411]
 mesh = ExtResource("16_cirxn")
 skin = SubResource("Skin_gvj5y")
 
-[node name="B_Dummy_RightUpperArm" type="MeshInstance3D" parent="." unique_id=1391270375]
+[node name="B_Dummy_RightUpperArm" type="MeshInstance3D" parent="." unique_id=1849090820]
 mesh = ExtResource("17_e10gq")
 skin = SubResource("Skin_yeun3")
 
-[node name="B_Dummy_LeftUpperArm" type="MeshInstance3D" parent="." unique_id=1230877841]
+[node name="B_Dummy_LeftUpperArm" type="MeshInstance3D" parent="." unique_id=1761082433]
 mesh = ExtResource("18_dll7c")
 skin = SubResource("Skin_uw1nq")
 
-[node name="B_Dummy_RightLowerLeg" type="MeshInstance3D" parent="." unique_id=1415334390]
+[node name="B_Dummy_RightLowerLeg" type="MeshInstance3D" parent="." unique_id=2123811967]
 mesh = ExtResource("19_gt6bc")
 skin = SubResource("Skin_ujrgp")
 
-[node name="B_Dummy_LeftLowerLeg" type="MeshInstance3D" parent="." unique_id=529777221]
+[node name="B_Dummy_LeftLowerLeg" type="MeshInstance3D" parent="." unique_id=340362476]
 mesh = ExtResource("20_m7oxj")
 skin = SubResource("Skin_qq6bj")
 
-[node name="B_Dummy_Head" type="MeshInstance3D" parent="." unique_id=1283130050]
+[node name="B_Dummy_Head" type="MeshInstance3D" parent="." unique_id=1745279312]
 mesh = ExtResource("21_xyhsr")
 skin = SubResource("Skin_8x556")
 
-[node name="B_Dummy_RightFoot" type="MeshInstance3D" parent="." unique_id=256332461]
-mesh = ExtResource("22_xyhsr")
+[node name="B_Dummy_RightFoot" type="MeshInstance3D" parent="." unique_id=1483555511]
+mesh = ExtResource("22_lcdso")
 skin = SubResource("Skin_v3v4s")
 
-[node name="B_Dummy_LeftFoot" type="MeshInstance3D" parent="." unique_id=843932978]
-mesh = ExtResource("23_lcdso")
+[node name="B_Dummy_LeftFoot" type="MeshInstance3D" parent="." unique_id=528136853]
+mesh = ExtResource("23_stpro")
 skin = SubResource("Skin_qvjy2")
 
-[node name="B_Dummy_Spine" type="MeshInstance3D" parent="." unique_id=676731421]
-mesh = ExtResource("24_stpro")
+[node name="B_Dummy_Spine" type="MeshInstance3D" parent="." unique_id=1087387414]
+mesh = ExtResource("24_iyuyy")
 skin = SubResource("Skin_gni45")
 
-[node name="B_Dummy_UpperChest" type="MeshInstance3D" parent="." unique_id=357724850]
-mesh = ExtResource("25_iyuyy")
+[node name="B_Dummy_UpperChest" type="MeshInstance3D" parent="." unique_id=1839745044]
+mesh = ExtResource("25_5k3qe")
 skin = SubResource("Skin_al4ye")
 
-[node name="B_Dummy_Hips" type="MeshInstance3D" parent="." unique_id=205244526]
-mesh = ExtResource("26_5k3qe")
+[node name="B_Dummy_Hips" type="MeshInstance3D" parent="." unique_id=344854010]
+mesh = ExtResource("26_o1ny6")
 skin = SubResource("Skin_vj4jo")
