@@ -26,6 +26,6 @@ metadata/_custom_type_script = "uid://bel483m12cmq1"
 script = ExtResource("3_2a01u")
 CharacterName = "Player"
 CharacterStats = Array[ExtResource("1_y1a7n")]([SubResource("Resource_y1a7n"), SubResource("Resource_cx8c7"), SubResource("Resource_2a01u")])
-Visuals = "uid://binsi450punq8"
+Visuals = "uid://wxikph1pgiis"
 CharacterWeapon = ExtResource("2_2a01u")
 metadata/_custom_type_script = "uid://dwqnoamdvs5gm"

@@ -34,6 +34,7 @@ Dificulty = 1
 AutoTurns = true
 GoldReward = 2
 Visuals = "uid://css3evm50uubp"
+Skeleton = "uid://cx8606l0bax3g"
 DecorationAmm = Dictionary[String, int]({
 "CH": 0,
 "HE": 1,

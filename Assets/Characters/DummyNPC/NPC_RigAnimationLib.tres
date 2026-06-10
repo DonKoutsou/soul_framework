@@ -43,7 +43,7 @@
 [ext_resource type="Animation" uid="uid://g7ammgpr4lv1" path="res://Engine/Assets/Characters/DummyNPC/Anims/Stunned.res" id="41_ebjf4"]
 [ext_resource type="Animation" uid="uid://bv8khef7sq8pa" path="res://Engine/Assets/Characters/DummyNPC/Anims/Walk.res" id="42_0n8at"]
 
-[sub_resource type="Animation" id="Animation_lwayi"]
+[sub_resource type="Animation" id="Animation_k6d5x"]
 resource_name = "2H_Charge_Left"
 length = 0.5416667
 tracks/0/type = "position_3d"
@@ -285,7 +285,7 @@ tracks/33/interp = 0
 tracks/33/loop_wrap = true
 tracks/33/keys = PackedFloat32Array(0.5416667, 1, 2.9927714e-12, -1, -9.519805e-06, 3.1391644e-07)
 
-[sub_resource type="Animation" id="Animation_d2wgg"]
+[sub_resource type="Animation" id="Animation_nshbg"]
 resource_name = "2H_Charge_Right"
 length = 0.5
 tracks/0/type = "position_3d"
@@ -527,7 +527,7 @@ tracks/33/interp = 0
 tracks/33/loop_wrap = true
 tracks/33/keys = PackedFloat32Array(0.5, 1, 2.9927714e-12, -1, -9.519805e-06, 3.1391644e-07)
 
-[sub_resource type="Animation" id="Animation_wixv2"]
+[sub_resource type="Animation" id="Animation_3cukp"]
 resource_name = "2H_Charge_Top"
 length = 0.5416667
 tracks/0/type = "position_3d"
@@ -769,7 +769,7 @@ tracks/33/interp = 0
 tracks/33/loop_wrap = true
 tracks/33/keys = PackedFloat32Array(0.5416667, 1, 2.9927714e-12, -1, -9.519805e-06, 3.1391644e-07)
 
-[sub_resource type="Animation" id="Animation_dimsa"]
+[sub_resource type="Animation" id="Animation_b6c4s"]
 resource_name = "Charge_Left"
 length = 0.5416667
 tracks/0/type = "position_3d"
@@ -1011,7 +1011,7 @@ tracks/33/interp = 1
 tracks/33/loop_wrap = true
 tracks/33/keys = PackedFloat32Array(0, 1, -3.3126813e-07, -0.9993968, -9.519629e-06, 0.034729086, 0.041666687, 1, -3.2570009e-07, -0.9994169, -9.51984e-06, 0.03414455, 0.07500002, 1, -3.1329955e-07, -0.9994605, -9.520256e-06, 0.032842692, 0.10833336, 1, -2.960212e-07, -0.9995185, -9.520809e-06, 0.031028766, 0.14166668, 1, -2.7458634e-07, -0.99958587, -9.52145e-06, 0.028778471, 0.17500003, 1, -2.497164e-07, -0.99965763, -9.522132e-06, 0.026167562, 0.20833336, 1, -2.2213356e-07, -0.99972916, -9.522814e-06, 0.02327184, 0.24166669, 1, -1.9237919e-07, -0.99979705, -9.523459e-06, 0.020148145, 0.275, 1, -1.6208048e-07, -0.9998561, -9.524022e-06, 0.016967312, 0.30833337, 1, -1.31961e-07, -0.99990475, -9.524485e-06, 0.013805289, 0.3416667, 1, -1.0274436e-07, -0.99994236, -9.524843e-06, 0.010738049, 0.37500003, 1, -7.515422e-08, -0.99996924, -9.525099e-06, 0.007841567, 0.40833336, 1, -5.1179548e-08, -0.9999858, -9.525256e-06, 0.0053246412, 0.4416667, 1, -3.100058e-08, -0.9999949, -9.525343e-06, 0.0032062004, 0.47500002, 1, -1.53399e-08, -0.9999988, -9.525382e-06, 0.0015621019, 0.5083333, 1, -4.9199236e-09, -0.9999999, -9.525391e-06, 0.0004681857, 0.5416667, 1, -4.6296605e-10, -1, -9.525391e-06, 2.828335e-07)
 
-[sub_resource type="Animation" id="Animation_aynk3"]
+[sub_resource type="Animation" id="Animation_h82po"]
 resource_name = "Charge_Low"
 length = 0.5416667
 tracks/0/type = "position_3d"
@@ -1253,7 +1253,7 @@ tracks/33/interp = 0
 tracks/33/loop_wrap = true
 tracks/33/keys = PackedFloat32Array(0.5416667, 1, -4.6296605e-10, -1, -9.525391e-06, 2.828335e-07)
 
-[sub_resource type="Animation" id="Animation_s32fk"]
+[sub_resource type="Animation" id="Animation_31i3b"]
 resource_name = "Charge_Right"
 length = 0.5
 tracks/0/type = "position_3d"
@@ -1495,7 +1495,7 @@ tracks/33/interp = 1
 tracks/33/loop_wrap = true
 tracks/33/keys = PackedFloat32Array(0, 1, -3.5575061e-07, 0.99930054, 9.518732e-06, 0.037395876, 0.033333335, 1, -3.5014716e-07, 0.99932235, 9.518941e-06, 0.036807623, 0.06666667, 1, -3.3712644e-07, 0.99937177, 9.519411e-06, 0.035440676, 0.1, 1, -3.176756e-07, 0.99944216, 9.520081e-06, 0.033398684, 0.13333334, 1, -2.927819e-07, 0.999526, 9.520881e-06, 0.030785289, 0.16666667, 1, -2.6343267e-07, 0.9996162, 9.5217365e-06, 0.02770413, 0.2, 1, -2.3012103e-07, 0.99970704, 9.522602e-06, 0.024206996, 0.23333333, 1, -1.9532116e-07, 0.99978876, 9.523381e-06, 0.02055363, 0.26666668, 1, -1.6002376e-07, 0.9998581, 9.524041e-06, 0.016848017, 0.3, 1, -1.2521956e-07, 0.999913, 9.524564e-06, 0.013194182, 0.33333334, 1, -9.189948e-08, 0.999953, 9.524946e-06, 0.009696156, 0.36666667, 1, -6.2539485e-08, 0.9999781, 9.5251835e-06, 0.0066138725, 0.4, 1, -3.7634138e-08, 0.999992, 9.525315e-06, 0.0039992468, 0.43333334, 1, -1.8172667e-08, 0.9999981, 9.525373e-06, 0.0019561325, 0.46666667, 1, 5.1440425e-09, -0.9999998, -9.525389e-06, -0.00058835495, 0.5, 1, -4.6296605e-10, -1, -9.525391e-06, 2.828335e-07)
 
-[sub_resource type="Animation" id="Animation_1l8qf"]
+[sub_resource type="Animation" id="Animation_7d4kh"]
 resource_name = "Charge_Top"
 length = 0.5416667
 tracks/0/type = "position_3d"
@@ -1743,11 +1743,11 @@ _data = {
 &"2H_Atack_Right": ExtResource("2_nshbg"),
 &"2H_Atack_Top": ExtResource("3_3cukp"),
 &"2H_Charge_Left": ExtResource("4_b6c4s"),
-&"2H_Charge_Left_Reversed": SubResource("Animation_lwayi"),
+&"2H_Charge_Left_Reversed": SubResource("Animation_k6d5x"),
 &"2H_Charge_Right": ExtResource("5_h82po"),
-&"2H_Charge_Right_Reversed": SubResource("Animation_d2wgg"),
+&"2H_Charge_Right_Reversed": SubResource("Animation_nshbg"),
 &"2H_Charge_Top": ExtResource("6_31i3b"),
-&"2H_Charge_Top_Reversed": SubResource("Animation_wixv2"),
+&"2H_Charge_Top_Reversed": SubResource("Animation_3cukp"),
 &"2H_Duck_Left": ExtResource("7_7d4kh"),
 &"2H_Duck_Left_Recover": ExtResource("8_ctpyq"),
 &"2H_Duck_Right": ExtResource("9_15qhr"),
@@ -1773,13 +1773,13 @@ _data = {
 &"BOW_SwordUnseath": ExtResource("29_xu2i6"),
 &"Charge_Bow": ExtResource("30_dvrhx"),
 &"Charge_Left": ExtResource("31_86ede"),
-&"Charge_Left_Reversed": SubResource("Animation_dimsa"),
+&"Charge_Left_Reversed": SubResource("Animation_b6c4s"),
 &"Charge_Low": ExtResource("32_4tlwy"),
-&"Charge_Low_Reversed": SubResource("Animation_aynk3"),
+&"Charge_Low_Reversed": SubResource("Animation_h82po"),
 &"Charge_Right": ExtResource("33_7xuul"),
-&"Charge_Right_Reversed": SubResource("Animation_s32fk"),
+&"Charge_Right_Reversed": SubResource("Animation_31i3b"),
 &"Charge_Top": ExtResource("34_r4f1d"),
-&"Charge_Top_Reversed": SubResource("Animation_1l8qf"),
+&"Charge_Top_Reversed": SubResource("Animation_7d4kh"),
 &"Death": ExtResource("35_1uynq"),
 &"Dig": ExtResource("36_rkbcj"),
 &"Duck_Left": ExtResource("21_c06yg"),

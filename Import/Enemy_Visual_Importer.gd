@@ -47,10 +47,10 @@ func _post_import(scene):
 			var boneName : String = ""
 			for boneIndex in skeleton.get_bone_count():
 				boneName = skeleton.get_bone_name(boneIndex)
-				var importedBoneName = boneName.replace(".", "_")
+				#var importedBoneName = boneName.replace(".", "_")
 
-				var meshBoneName = g.name.substr(g.name.length() - importedBoneName.length())
-				if (meshBoneName == importedBoneName):
+				var meshBoneName = g.name.substr(g.name.length() - boneName.length())
+				if (meshBoneName == boneName):
 					break
 			
 			if (boneName == ""):

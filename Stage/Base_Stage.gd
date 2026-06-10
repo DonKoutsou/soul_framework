@@ -1047,10 +1047,11 @@ func EV_MonsterKilled(MonGroup : MonsterGroup, _GoldReward : int) -> void:
 		if (drop is KeyItem or drop is UnlockItem):
 			MonGroup.Drop = ""
 	
-	if (Mon.Drop != ""):
+	if (Mon.Drop != null):
 		var r = randi_range(0,9)
 		if (r == 0):
 			#if (UIMan.Inv.HasSpace()):
+
 			UIMan.Inv.AddItem(Mon.Drop)
 			var chAnim =  load(Item_animation).instantiate() as ChestAnimation
 			Node_Spawn_Loc.add_child(chAnim)

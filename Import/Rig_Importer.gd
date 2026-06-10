@@ -8,8 +8,15 @@ func _post_import(scene : Node):
 	var filePath = sourceFile.substr(0, sourceFile.length() - get_source_file().get_file().length())
 	print("Saving at {0}".format([filePath]))
 	
-	var animPlayer : AnimationPlayer = scene.get_node("AnimationPlayer")
-	var animLib = animPlayer.get_animation_library("")
+	
+	#instead of getting animations lib from animation player we load it. This is caused of retargetting setting Normalise Position Tracks.
+	#If we take the anim lib from animation player they are normalised for some reason.
+	var animLib : AnimationLibrary
+	if (ResourceLoader.exists(filePath + "{0}AnimationLib.tres".format([scene.name]))):
+		animLib = ResourceLoader.load(filePath + "{0}AnimationLib.tres".format([scene.name]))
+	else:
+		var animPlayer : AnimationPlayer = scene.get_node("AnimationPlayer")
+		animLib = animPlayer.get_animation_library("")
 	
 	var animsToReverse : PackedStringArray = ["Charge_Right", "Charge_Left", "Charge_Middle", "Charge_Low", "Charge_Top", "2H_Charge_Right", "2H_Charge_Left", "2H_Charge_Middle", "2H_Charge_Low", "2H_Charge_Top", "R_Charge_Right", "R_Charge_Left", "R_Charge_Middle", "R_Charge_Low", "R_Charge_Top"]
 	for anim in animsToReverse:

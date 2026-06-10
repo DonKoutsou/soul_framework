@@ -75,8 +75,8 @@ func _ready() -> void:
 	cachedPrevanimProgress.resize(anims.size())
 	animBlend.resize(anims.size())
 	
-	recoilBone = get_skeleton().find_bone("Body.003")
-	recoilBone2 = get_skeleton().find_bone("Body.001")
+	recoilBone = get_skeleton().find_bone("Spine")
+	recoilBone2 = get_skeleton().find_bone("UpperChest")
 	cambone = get_skeleton().find_bone("CameraBone")
 	headbone = get_skeleton().find_bone("Head")
 	

@@ -56,6 +56,18 @@ func SetControllingChar(Char : Actor) -> void:
 			
 	BodyModels.clear()
 	
+	var incommingSkel : Skeleton3D = load(Group.Mon.Skeleton).instantiate()
+	
+	for boneIndex in incommingSkel.get_bone_count():
+		sk.add_bone(incommingSkel.get_bone_name(boneIndex))
+		
+		var parentIndex = incommingSkel.get_bone_parent(boneIndex)
+		if (parentIndex != -1):
+			sk.set_bone_parent(boneIndex, parentIndex)
+		
+		sk.set_bone_global_pose(boneIndex, incommingSkel.get_bone_global_pose(boneIndex))
+
+	
 	Visuals = load(Group.Mon.Visuals).instantiate()
 	sk.add_child(Visuals)
 	for g : MeshInstance3D in Visuals.get_children():

@@ -27,6 +27,7 @@ class_name Monster
 
 @export_group("Monster Visuals")
 @export_file("*.tscn") var Visuals : String
+@export_file("*.tscn") var Skeleton : String
 
 @export_file("*.tres") var Materials : Array[String]
 @export var DecorationAmm : Dictionary[String, int] = {
