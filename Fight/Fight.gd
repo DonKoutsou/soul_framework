@@ -147,7 +147,7 @@ func EndFight() -> void:
 	tw2.tween_method(UpdateAlpha, 1.0, 0.0, 1)
 	
 	FightWorld.Pl.LeftFight()
-	FightWorld.Pl.SetLookModif(1)
+	#FightWorld.Pl.SetLookModif(1)
 	MusicManager.Instance.PlayerMusic(MusicManager.Music.MAIN)
 	Stage.CurrentWorld.ToggleAmbientSound(true)
 	FightEnded.emit()

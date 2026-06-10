@@ -11,13 +11,13 @@
 [sub_resource type="World3D" id="World3D_nf1qf"]
 environment = ExtResource("4_i0jdu")
 
-[node name="StartingMenu" type="CanvasLayer" unique_id=1229486114 node_paths=PackedStringArray("Credits", "Menu", "StartingMenuW")]
+[node name="StartingMenu" type="CanvasLayer" unique_id=1229486114 node_paths=PackedStringArray("Credits", "Menu")]
 layer = 8
 script = ExtResource("1_pxkw3")
 PopM = ExtResource("2_oweaf")
+menuWorldScene = ExtResource("4_7c5ue")
 Credits = NodePath("Credits")
 Menu = NodePath("Control")
-StartingMenuW = NodePath("SubViewportContainer/SubViewport/Node3D")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1058922147]
 anchors_preset = 15

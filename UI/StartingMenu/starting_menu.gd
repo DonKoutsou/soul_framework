@@ -8,12 +8,16 @@ signal TestStartPressed
 signal SettingsPressed
 
 @export var PopM : PackedScene
-
+@export var menuWorldScene : PackedScene
 @export var Credits : Control
 @export var Menu : Control
-@export var StartingMenuW : StartingMenuWorld
+
+var StartingMenuW : StartingMenuWorld
 
 func _ready() -> void:
+	StartingMenuW = menuWorldScene.instantiate()
+	$SubViewportContainer/SubViewport.add_child(StartingMenuW)
+	
 	UISoundMan.GetInstance().Refresh()
 	$ColorRect.modulate.a = 1.0
 	$ColorRect.visible = true
