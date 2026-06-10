@@ -136,7 +136,7 @@ bone = 8
 origin_offset = Vector3(-0.2, -0.1, 0)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1077415663]
-transform = Transform3D(-0.9601222, -0.1359714, -0.2442886, -0.11851542, -0.59343845, 0.79610616, -0.25321773, 0.7933115, 0.5536586, -0.21236885, 0.67807573, 0.19083454)
+transform = Transform3D(-0.9394854, -0.30395344, 0.15804765, 0.30377272, -0.9523925, -0.025895603, 0.15839447, 0.023682248, 0.98709184, -0.25614557, 0.5188509, 0.002853541)
 bone_name = "WeaponPlacement.R"
 bone_idx = 29
 
@@ -196,7 +196,7 @@ skeleton = NodePath("../../../../..")
 script = ExtResource("14_tc1am")
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1819386683]
-transform = Transform3D(-1, 9.313201e-10, -5.65667e-07, 9.20544e-10, 0.9999997, 1.9050782e-05, 5.65667e-07, 1.9050776e-05, -1, 7.0833435e-14, 0.7620839, 0.0073502064)
+transform = Transform3D(-1, -8.697901e-15, -6.278329e-07, -1.1962389e-11, 0.9999997, 1.9039608e-05, 6.278329e-07, 1.9039602e-05, -1, 1.6701878e-16, 0.771, 0.0073502064)
 bone_name = "CameraBone"
 bone_idx = 30
 

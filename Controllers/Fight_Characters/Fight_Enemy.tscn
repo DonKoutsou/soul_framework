@@ -86,7 +86,7 @@ anims = Array[ExtResource("6_c3124")]([ExtResource("7_fxlpe"), ExtResource("8_id
 metadata/_custom_type_script = "uid://2o6tgcat6qck"
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=352902681]
-transform = Transform3D(0.999982, -0.0009332504, 0.0059303865, 0.0026972615, 0.95236826, -0.3049377, -0.0053633857, 0.30494824, 0.95235366, 0.01743016, 0.7534236, 0.15877575)
+transform = Transform3D(1, 4.440892e-15, -4.7683702e-07, -1.1173578e-07, 0.9721577, -0.23432706, 4.6356064e-07, 0.23432714, 0.97215754, 7.948131e-15, 0.924504, -0.03033001)
 bone_name = "Head"
 bone_idx = 13
 
@@ -94,7 +94,7 @@ bone_idx = 13
 transform = Transform3D(1, 0, 0, 0, 0.9999996, 0, 0, 0, 0.9999999, 0, 0, 0)
 
 [node name="Palm_L" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1614551408]
-transform = Transform3D(-0.9842597, -0.054079972, 0.16824839, -0.0012505808, -0.94987285, -0.31263337, 0.17672184, -0.30792272, 0.93485415, 0.20857535, 0.45583084, -0.09149591)
+transform = Transform3D(-0.9719566, 0.2299294, -0.049318492, -0.23243636, -0.9711596, 0.05312258, -0.035681643, 0.06309642, 0.99736917, 0.25836137, 0.50875, -0.021123013)
 bone_name = "WeaponPlacement.L"
 bone_idx = 20
 
@@ -109,7 +109,7 @@ mesh = ExtResource("5_66mam")
 blend_shapes/blendShape1.Closed = 1.0
 
 [node name="Palm_L2" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=480455727]
-transform = Transform3D(-0.9923039, 0.052075356, 0.112342186, -0.027216911, -0.9768064, 0.21238655, 0.120796785, 0.20769443, 0.9707063, -0.15936236, 0.42742124, -0.0011701481)
+transform = Transform3D(-0.97195673, -0.22992904, 0.04931855, 0.23243628, -0.9711594, 0.05312253, 0.035681617, 0.063096315, 0.99736935, -0.25836134, 0.50874984, -0.021122998)
 bone_name = "WeaponPlacement.R"
 bone_idx = 25
 

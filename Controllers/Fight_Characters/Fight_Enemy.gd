@@ -113,9 +113,9 @@ func GetCharacterActions() -> Callable:
 	#else: if (!IsCharging() and HasStaminaForHit()):
 	else: if (!IsCharging()):
 	#else: if (!IsCharging()):
-		if (IsCharged()):
-			ActionList.append(CancelHits)
-			ActionWeights.append(1.0)
+		#if (IsCharged()):
+			#ActionList.append(CancelHits)
+			#ActionWeights.append(1.0)
 		match (CurrentState):
 			CharacterState.CHARGED_LEFT:
 				if (Target.CurrentState == CharacterState.DUCKING_RIGHT):
