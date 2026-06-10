@@ -6,6 +6,7 @@ class_name Enemy_Visual_Importer
 const SKELETON_SCENE := "res://Engine/Controllers/Fight_Characters/EnemyRig/EnemyRigSkeleton.tscn"
 const PLAYER_SKELETON_SCENE := "res://Engine/Controllers/Fight_Characters/PlayerRig/PlayerRigSkeleton.tscn"
 const NPC_SKELETON_SCENE := "res://Engine/Assets/Characters/DummyNPC/NPC_RigSkeleton.tscn"
+
 func _post_import(scene):
 	#Remove get and save separatly
 	var sourceFile = get_source_file()
@@ -14,7 +15,7 @@ func _post_import(scene):
 	
 	var VisualRoot = Node3D.new()
 	var skeletonScene : PackedScene 
-	if (scene.name.containsn("player")):
+	if (scene.name.containsn("player") or scene.name.containsn("gaius")):
 		skeletonScene = load(PLAYER_SKELETON_SCENE)
 	else : if (scene.name.containsn("npc")):
 		skeletonScene = load(NPC_SKELETON_SCENE)
@@ -22,6 +23,10 @@ func _post_import(scene):
 		skeletonScene = load(SKELETON_SCENE)
 		
 	var skeleton : Skeleton3D = skeletonScene.instantiate()
+	
+	var materialDirs : PackedStringArray = GetMaterials()
+
+	print(materialDirs)
 	
 	for g in scene.get_children():
 		if (g is MeshInstance3D):
@@ -31,21 +36,14 @@ func _post_import(scene):
 			g.owner = VisualRoot
 			
 			var mesh = g.mesh
-			var correctMat : Material
-			match (mesh.surface_get_material(0).resource_name):
-				"TestMat":
-					correctMat = load("res://Engine/Shaders/Materials/TestMat.tres")
-				"Leather":
-					correctMat = load("res://Shaders/MapMaterials/Leather.tres")
-				"Metal":
-					correctMat = load("res://Shaders/MapMaterials/Metal_UV.tres")
-				"Gold":
-					correctMat = load("res://Shaders/MapMaterials/Gold.tres")
-				"Clothing":
-					correctMat = load("res://Shaders/MapMaterials/Characters/Goblin/GoblinClothing.tres")
-				"GoblinEyes":
-					correctMat = load("res://Shaders/MapMaterials/Characters/Goblin/GoblinEyes.tres")
 			
+			for surface in mesh.get_surface_count():
+				var matName = mesh.surface_get_material(surface).resource_name
+				var mat = FindMaterial(matName , materialDirs)
+				if (mat != ""):
+					print("Setting mat {0}".format([mat]))
+					mesh.surface_set_material(surface, load(mat))
+
 			var boneName : String = ""
 			for boneIndex in skeleton.get_bone_count():
 				boneName = skeleton.get_bone_name(boneIndex)
@@ -56,13 +54,16 @@ func _post_import(scene):
 					break
 			
 			if (boneName == ""):
-				mesh.surface_set_material(0, correctMat)
+
 				printerr("Missing bone name skipping skinning")
 				ResourceSaver.save(mesh, filePath + "{0}.res".format([g.name]),ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
 				g.mesh = load(filePath + "{0}.res".format([g.name]))
 			else:
 				var skinnedMesh : ArrayMesh = build_skinned_mesh(mesh, skeleton, boneName)
-				skinnedMesh.surface_set_material(0, correctMat)
+				
+				for surface in mesh.get_surface_count():
+					skinnedMesh.surface_set_material(surface, mesh.surface_get_material(surface))
+					
 				ResourceSaver.save(skinnedMesh, filePath + "{0}.res".format([g.name]),ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
 				g.mesh = load(filePath + "{0}.res".format([g.name]))
 				g.skin = skinnedMesh.get_meta("generated_skin")
@@ -73,6 +74,35 @@ func _post_import(scene):
 	ResourceSaver.save(packedVisuals, filePath + "{0}_Visuals.tscn".format([scene.name]),ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
 	
 	return scene # Remember to return the imported scene
+
+func GetMaterials() -> PackedStringArray:
+	var materials : PackedStringArray
+	
+	var engineShaderLocation = "res://Engine/Shaders/Materials/"
+	materials.append_array(GetContentsOfDir(engineShaderLocation))
+	
+	var projectsShaderLocation = "res://Shaders/"
+	materials.append_array(GetContentsOfDir(projectsShaderLocation))
+
+	return materials
+	
+func GetContentsOfDir(dir : String) -> PackedStringArray:
+	var contents : PackedStringArray
+	
+	for sub in ResourceLoader.list_directory(dir):
+		if (sub.contains("/")):
+			var subContents = GetContentsOfDir(dir + sub)
+			contents.append_array(subContents)
+		else :
+			contents.append(dir + sub)
+	
+	return contents
+
+func FindMaterial(matName : String, Dirs : PackedStringArray) -> String:
+	for path in Dirs:
+		if path.containsn(matName):
+			return path
+	return "" 
 
 func build_skinned_mesh(source_mesh: ArrayMesh, skeleton: Skeleton3D,bone_name: String) -> ArrayMesh:
 
