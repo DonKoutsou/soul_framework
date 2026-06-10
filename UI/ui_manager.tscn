@@ -17,19 +17,16 @@ RestInterfaceFilePath = "uid://dv6o1vvcipy2u"
 ShopFilePath = "uid://dbecl5n67mfdb"
 FireMenuFilePath = "uid://bd7qdeotnd47i"
 CharacterSheetScene = ExtResource("5_wflq5")
+InventoryScene = ExtResource("5_0cbwa")
 PauseM = ExtResource("3_qdedj")
 SettingsMenuScene = ExtResource("4_h5t5g")
 CheatMenu = ExtResource("5_ur5k7")
 MiniMp = NodePath("Minimap")
-Inv = NodePath("Inventory")
+Inv = NodePath("")
 CharacterSheetPlecement = NodePath("VBoxContainer/CharacterSheets")
 DiedLabel = NodePath("DiedLabel")
 Diag = NodePath("DialogueBox")
 MBox = NodePath("VBoxContainer/MessageBox")
-
-[node name="Inventory" parent="." unique_id=100274660 instance=ExtResource("5_0cbwa")]
-visible = false
-z_index = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=726050325]
 anchors_preset = 15

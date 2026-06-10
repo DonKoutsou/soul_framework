@@ -2679,7 +2679,7 @@ bind/32/name = &"CameraBone"
 bind/32/bone = 32
 bind/32/pose = Transform3D(-1, -1.196239e-11, 6.2783295e-07, -8.697907e-15, 1.0000004, 1.9039615e-05, -6.2783295e-07, 1.903961e-05, -1, -4.605478e-09, -0.77100044, 0.007335527)
 
-[node name="" type="Node3D" unique_id=211297829]
+[node name="Node3D" type="Node3D" unique_id=211297829]
 
 [node name="B_Dummy_RightThumbDistal" type="MeshInstance3D" parent="." unique_id=367035337]
 mesh = ExtResource("1_suqw6")

@@ -8,6 +8,7 @@ class_name UIManager
 @export_file() var FireMenuFilePath : String
 @export var CharacterSheetScene : PackedScene
 
+@export var InventoryScene : PackedScene
 @export var PauseM : PackedScene
 @export var SettingsMenuScene : PackedScene
 @export var CheatMenu : PackedScene
@@ -37,6 +38,9 @@ signal SaveGame
 var InFight : bool = false
 
 func _ready() -> void:
+	Inv = InventoryScene.instantiate()
+	add_child(Inv)
+	move_child(Inv, 0)
 	Inv.ItemUsed.connect(OnItemUsed)
 	Inv.AssistanceItem.connect(OnAssistanceToggled)
 	Inv.RequestClose.connect(ToggleInventory)

@@ -27,7 +27,6 @@ class_name Fight_Animation_Modifier
 		currentWeaponSpeed = value
 		UpdateWeaponSpeed(value)
 
-
 @export_group("Recoil")
 ##Any offset here will be applied to skeleton and progressivly be reduced back to 0
 @export var Recoil : Vector3 = Vector3.ZERO
@@ -235,8 +234,10 @@ func _process_modification_with_delta(delta: float) -> void:
 	var d = delta * Custom_Time_Scale
 	#Progress animations
 	for animIndex in anims.size():
-		if (GetAnimationActive(animIndex)):
-			ProgressAnimation(animIndex, d)
+		if (!GetAnimationActive(animIndex)):
+			continue
+		ProgressAnimation(animIndex, d)
+		
 	#Apply animations
 	for animIndex in anims.size():
 		if (!GetAnimationActive(animIndex)):
@@ -332,6 +333,7 @@ func ProgressAnimation(animIndex : int, delta : float) -> void:
 			var blend_speed = (1.0 / anim.Blend_Out_Duration)
 			if (anim.AffectedByWeapon):
 				blend_speed *= currentWeaponSpeed
+				
 			var newBlend = move_toward(animBlend[animIndex], 0.0, blend_speed * delta)
 			animBlend[animIndex] = newBlend
 			
@@ -368,9 +370,11 @@ func ProgressAnimation(animIndex : int, delta : float) -> void:
 		
 		#try to coclulate how far the ending of the animation is and start blending it out eralier
 		var remainingBlendTime = animBlend[animIndex]
+		
 		var blendOutDuration = anim.Blend_Out_Duration * anim.Time_Scale
 		if (anim.AffectedByWeapon):
 			blendOutDuration /= currentWeaponSpeed
+			
 		var timeUntilBlendOut = (remainingBlendTime * blendOutDuration) - delta
 		
 		

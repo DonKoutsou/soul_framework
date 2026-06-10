@@ -64,6 +64,8 @@ func SetRightHandLocator(t : float) -> void:
 	LanternHandTween.tween_property(RightHandLocator, "influence", t, 1.0)
 	LanternHandTween.pause()
 
+
+
 func ToggleCameraMovement(t : bool) -> void:
 	for g in Anim.get_animation_list():
 		var anim = Anim.get_animation(g)

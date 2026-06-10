@@ -274,18 +274,15 @@ func CancelHits() -> void:
 	
 	if (IsAttacking()):
 		UpdateState(GetRecoveryBasedOnSide(GetAtackBasedOnState()))
-		SetComboWindow(false)
+
 		
 	else: if (IsCharging() or IsCharged()):
 		UpdateState(GetChargeRecoveryBasedOnSide(GetAtackBasedOnState()))
 		
 	else: if (IsRecovering()):
-
-		SetComboWindow(false)
+		pass
 	else:
-
 		UpdateState(CharacterState.IDLE)
-		SetComboWindow(false)
 
 	AtackCanceled.emit()
 #----------------------------------------------------
