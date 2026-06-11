@@ -109,6 +109,7 @@ var RecoilTween : Tween
 var Dead : bool = true
 var DuckCoolDown : float = 0
 var ParryCooldDown : float = 0
+var Retaliate : bool = false
 
 func _ready() -> void:
 	sk.modifier_callback_mode_process = Skeleton3D.MODIFIER_CALLBACK_MODE_PROCESS_MANUAL
@@ -423,28 +424,19 @@ func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Mag
 	CancelHits()
 	StopParry(true)
 	
-	var retaliating : bool = false
+	Retaliate = false
 	if (Can_Retaliate):
 		var r = randi_range(1,10)
 		if (r <= 2 and !IsStunned()):
-			retaliating = true
+			Retaliate = true
 
 	match Dir:
 		AtackSide.LEFT:
-			if (retaliating):
-				UpdateState(CharacterState.RECOIL_LEFT_RETALIATION)
-			else:
-				UpdateState(CharacterState.RECOIL_LEFT)
+			UpdateState(CharacterState.RECOIL_LEFT)
 		AtackSide.RIGHT:
-			if (retaliating):
-				UpdateState(CharacterState.RECOIL_RIGHT_RETALIATION)
-			else:
-				UpdateState(CharacterState.RECOIL_RIGHT)
+			UpdateState(CharacterState.RECOIL_RIGHT)
 		AtackSide.MIDDLE:
-			if (retaliating):
-				UpdateState(CharacterState.RECOIL_MID_RETALIATION)
-			else:
-				UpdateState(CharacterState.RECOIL_MID)
+			UpdateState(CharacterState.RECOIL_MID)
 	
 #----------------------------------------------------
 func Damage(DamageAmm : int, Direction : AtackSide, _ShakeAmm : float, AtackWeight : float) -> int:
@@ -550,6 +542,12 @@ func GetAtackBasedOnState() -> AtackSide:
 			return AtackSide.MIDDLE
 		CharacterState.HITTING_LOW:
 			return AtackSide.LOW
+		CharacterState.RECOIL_LEFT:
+			return AtackSide.LEFT
+		CharacterState.RECOIL_RIGHT:
+			return AtackSide.RIGHT
+		CharacterState.RECOIL_MID:
+			return AtackSide.MIDDLE
 		CharacterState.RECOIL_LEFT_RETALIATION:
 			return AtackSide.LEFT
 		CharacterState.RECOIL_RIGHT_RETALIATION:

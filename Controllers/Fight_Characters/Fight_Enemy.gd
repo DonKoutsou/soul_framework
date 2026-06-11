@@ -23,6 +23,7 @@ var Visuals : Node3D
 var MedianDecisionCooldown : float = 0
 var Acting : bool
 var Taunting : bool
+
 #var DualHanded : bool
 #var SecondHandCurrentState : CharacterState = CharacterState.IDLE
 
@@ -33,14 +34,23 @@ signal DeathAnimFin
 
 var monsterR : RandomNumberGenerator
 
+##Array of arrays containing AtackSide
+var ComboCatalogue : Array[Array]
 
-var ParryReleased : bool = false
+var CurrentCombo : Array[AtackSide]
 
 func _ready() -> void:
 	super()
 	monsterR = RandomNumberGenerator.new()
 	var pl : Player = Target
 	LookAtNode.target_node = LookAtNode.get_path_to(pl.Cam)
+
+func RecoilFinished() -> void:
+	if (IsRecoiling()):
+		if (Retaliate):
+			UpdateState(GetStateBasedOnSide(GetAtackBasedOnState()))
+		else:
+			UpdateState(CharacterState.IDLE)
 	
 
 func SetControllingChar(Char : Actor) -> void:
@@ -55,8 +65,7 @@ func SetControllingChar(Char : Actor) -> void:
 		sk.modifier_callback_mode_process = Skeleton3D.MODIFIER_CALLBACK_MODE_PROCESS_IDLE
 	
 	var Group = Char as MonsterGroup
-	#DualHanded = Group.Mon.DualHand
-	
+
 
 	for DecoType : String in Decorations.keys():
 		Decorations[DecoType].clear()
@@ -75,7 +84,7 @@ func SetControllingChar(Char : Actor) -> void:
 			sk.set_bone_parent(boneIndex, parentIndex)
 		
 		sk.set_bone_global_pose(boneIndex, incommingSkel.get_bone_global_pose(boneIndex))
-
+	
 	if (Visuals != null):
 		ClearVisuals()
 		
@@ -109,7 +118,21 @@ func SetControllingChar(Char : Actor) -> void:
 		for g in Decorations[DecoType].size():
 			var deco : MeshInstance3D = Decorations[DecoType][g]
 			deco.visible = Group.PickedDecorations[DecoType] == g
-
+	
+	UpdateCharacterCombos()
+	
+func UpdateCharacterCombos() -> void:
+	var availableAttacks = [AtackSide.TOP, AtackSide.LEFT, AtackSide.RIGHT, AtackSide.MIDDLE]
+	ComboCatalogue.clear()
+	#create 3 combos of 3 hits
+	for g in 3:
+		var combo : Array[AtackSide]
+		for z in 3:
+			combo.append(availableAttacks.pick_random())
+		ComboCatalogue.append(combo)
+	
+	CurrentCombo = ComboCatalogue.pick_random().duplicate()
+			
 func GetCharacterActions() -> Callable:
 	if (Engine.is_editor_hint()):
 		return DoNothing
@@ -148,6 +171,10 @@ func GetCharacterActions() -> Callable:
 			#ActionWeights.append(1.0)
 		match (CurrentState):
 			CharacterState.CHARGED_LEFT:
+				if (CurrentCombo[0] == AtackSide.LEFT):
+					ActionList.append(Hit.bind(AtackSide.LEFT))
+					ActionWeights.append(0.5)
+					
 				if (Target.CurrentState == CharacterState.DUCKING_RIGHT):
 					ActionList.append(CancelHits)
 					ActionWeights.append(0.3)
@@ -163,6 +190,10 @@ func GetCharacterActions() -> Callable:
 						ActionWeights.append(goodWeight)
 			
 			CharacterState.CHARGED_TOP:
+				if (CurrentCombo[0] == AtackSide.TOP):
+					ActionList.append(Hit.bind(AtackSide.TOP))
+					ActionWeights.append(0.5)
+					
 				if (Target.IsDucking()):
 					ActionList.append(CancelHits)
 					ActionWeights.append(0.3)
@@ -178,6 +209,10 @@ func GetCharacterActions() -> Callable:
 						ActionWeights.append(goodWeight)
 			
 			CharacterState.CHARGED_RIGHT:
+				if (CurrentCombo[0] == AtackSide.RIGHT):
+					ActionList.append(Hit.bind(AtackSide.RIGHT))
+					ActionWeights.append(0.5)
+					
 				if (Target.CurrentState == CharacterState.DUCKING_LEFT):
 					ActionList.append(CancelHits)
 					ActionWeights.append(0.3)
@@ -193,6 +228,10 @@ func GetCharacterActions() -> Callable:
 						ActionWeights.append(goodWeight)
 						
 			CharacterState.CHARGED_MIDDLE:
+				if (CurrentCombo[0] == AtackSide.MIDDLE):
+					ActionList.append(Hit.bind(AtackSide.MIDDLE))
+					ActionWeights.append(0.5)
+					
 				if (Target.IsDucking()):
 					ActionList.append(CancelHits)
 					ActionWeights.append(0.3)
@@ -208,6 +247,10 @@ func GetCharacterActions() -> Callable:
 						ActionWeights.append(goodWeight)
 						
 			CharacterState.CHARGED_LOW:
+				if (CurrentCombo[0] == AtackSide.LOW):
+					ActionList.append(Hit.bind(AtackSide.LOW))
+					ActionWeights.append(0.5)
+					
 				if (Target.IsDucking()):
 					ActionList.append(CancelHits)
 					ActionWeights.append(0.3)
@@ -234,9 +277,16 @@ func GetCharacterActions() -> Callable:
 				ActionList.append(StopParry)
 				ActionWeights.append(goodWeight)
 			_:
-				var direction = PickAtackDirection()
+				if (CurrentCombo.size() == 0):
+					CurrentCombo = ComboCatalogue.pick_random().duplicate()
+				
+				var direction = CurrentCombo[0]
 				ActionList.append(ChargeHit.bind(direction))
 				ActionWeights.append(0.1)
+				
+				ActionList.append(ChargeHit.bind(PickAtackDirection()))
+				ActionWeights.append(0.1)
+				
 				if (Target.IsStunned() or Target.IsRecovering()):
 					ActionList.append(ChargeHit.bind(direction))
 					ActionWeights.append(goodWeight)
@@ -268,6 +318,32 @@ func GetCharacterActions() -> Callable:
 	
 	return ActionList[monsterR.rand_weighted(ActionWeights)]
 	
+#----------------------------------------------------
+func Hit(Direction : AtackSide) -> void:
+	if (CurrentState == CharacterState.CHARGED_LEFT):
+		UpdateState(CharacterState.HITTING_LEFT)
+
+	else: if (CurrentState == CharacterState.CHARGED_RIGHT):
+		UpdateState(CharacterState.HITTING_RIGHT)
+
+	else: if (CurrentState == CharacterState.CHARGED_MIDDLE):
+		UpdateState(CharacterState.HITTING_MIDDLE)
+
+	else: if (CurrentState == CharacterState.CHARGED_TOP):
+		UpdateState(CharacterState.HITTING_TOP)
+
+	else: if (CurrentState == CharacterState.CHARGED_LOW):
+		UpdateState(CharacterState.HITTING_LOW)
+		
+	else:
+		#print("{0} - Couldn't process hit".format([GetFightName()]))
+		return
+
+	AtackStarted.emit(Direction)
+	
+	if (CurrentCombo[0] == Direction):
+		CurrentCombo.pop_front()
+
 func IsDuckingCorrectly() -> bool:
 	var CorrectDuck : Array[CharacterState]
 	match (Target.CurrentState):

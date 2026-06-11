@@ -8,6 +8,7 @@ class_name MonsterGroup
 @export var Mon : Monster
 @export var LastKnownPosition : Vector3i
 @export var PickedMat : Material
+
 @export_file var Drop : String
 
 signal Respawned

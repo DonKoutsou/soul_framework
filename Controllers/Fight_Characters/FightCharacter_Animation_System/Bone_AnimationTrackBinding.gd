@@ -21,8 +21,9 @@ func Handle(anim : Animation, animationProgress : float, _progressionAmmount : f
 		var current_pose = skel.get_bone_pose_position(bone_index)
 		
 		var target_pose = anim.position_track_interpolate(track_index, animationProgress)
-
+		
 		var final_position = lerp(current_pose, target_pose, blendValue)
+		
 			
 		skel.set_bone_pose_position(bone_index, final_position)
 

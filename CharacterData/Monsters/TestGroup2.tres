@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("2_xrjlr")
 Mon = ExtResource("1_hp2gk")
+Height = 0.2
 metadata/_custom_type_script = "uid://dqgbru225q4ul"

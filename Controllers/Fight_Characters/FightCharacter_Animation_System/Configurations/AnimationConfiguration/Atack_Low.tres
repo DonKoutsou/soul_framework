@@ -5,20 +5,13 @@
 
 [resource]
 script = ExtResource("2_1qmd7")
-AlwaysR = false
 AnimName = "Atack_Low"
-BlendInAnim = ""
 BlendCurve = ExtResource("1_evyrd")
 BlendOutAnim = "Charge_Low"
+AllowTransitionWithoutBlendOut = true
 BlendOutCurve = ExtResource("1_evyrd")
 Blend_Duration = 0.3
 Blend_Out_Duration = 0.3
-OnCompleteAnim = ""
 InverseSyncBlend = true
-BoneFilter = 4294967295
-AffectedByWeapon = false
-Time_Scale = 1.0
-Loop = false
-AutoComplete = true
 ValidStates = Array[int]([16, 38])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

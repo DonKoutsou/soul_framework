@@ -29,6 +29,7 @@ metadata/_custom_type_script = "uid://bel483m12cmq1"
 script = ExtResource("3_e4xnc")
 MonsterName = "Dummy"
 MonsterStats = Array[ExtResource("2_5k28e")]([SubResource("Resource_t6qoy"), SubResource("Resource_sv068"), SubResource("Resource_epk5n"), SubResource("Resource_csbjq")])
+Height = 0.2
 MonsterWeapons = Array[String](["uid://3adttrer5teh", "uid://cm0d5gw0kuioa", "uid://dovtwiuqcgkvk"])
 Dificulty = 1
 AutoTurns = true

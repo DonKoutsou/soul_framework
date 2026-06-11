@@ -9,6 +9,7 @@ class_name AnimationInfo
 @export var BlendInAnim : String = ""
 @export var BlendCurve : Curve
 @export var BlendOutAnim : String = ""
+@export var AllowTransitionWithoutBlendOut : bool = false
 @export var BlendOutCurve : Curve
 @export var Blend_Duration : float = 1.0
 @export var Blend_Out_Duration : float = 1.0

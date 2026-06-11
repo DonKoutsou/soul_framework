@@ -11,7 +11,6 @@ BlendOutAnim = "Charge_Low"
 BlendOutCurve = ExtResource("1_i3qfs")
 Blend_Duration = 0.15
 Blend_Out_Duration = 0.4
-InverseSyncBlend = true
 Time_Scale = 0.8
 ValidStates = Array[int]([25])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

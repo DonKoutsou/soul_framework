@@ -8,7 +8,7 @@ class_name Monster
 @export_group("Settings")
 ##Monster stats, its mandatory to condigure
 @export var MonsterStats : Array[CharacterStat]
-
+@export var Height : float = 1.0
 ##Possible weapons monster could spawn with
 @export_file("*.tres") var MonsterWeapons : Array[String]
 

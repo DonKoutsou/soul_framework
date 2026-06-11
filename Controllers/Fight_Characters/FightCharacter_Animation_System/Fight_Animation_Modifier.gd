@@ -165,25 +165,25 @@ func StateSwitched(NewState : FightCharacter.CharacterState) -> void:
 			if (animInfo.BlendOutAnim != ""):
 				var blendOutAnimIndex = GetAnimationInfo(animInfo.GetBlendOutAnimationName(CurrentWeaponType, dualDir))
 				
-				if (!GetAnimationActive(blendOutAnimIndex)):
-					continue
+				if (GetAnimationActive(blendOutAnimIndex)):
+					var animToStop = anims[blendOutAnimIndex]
+					var blendOutDir = GetAnimationDualDirection(blendOutAnimIndex)
 					
-				var animToStop = anims[blendOutAnimIndex]
-				var blendOutDir = GetAnimationDualDirection(blendOutAnimIndex)
-				
-				if (animToStop is CombatAnimationInfo and !animToStop.AlwaysR):
-					SetAnimationDualDirection(animIndex, blendOutDir)
-				
-				SetAnimationActive(animIndex, true)
-				SetAnimationBlendDirection(animIndex, true)
-				#animInfo.PassInfo(animToStop.GetInfo())
-				SetAnimationBlendDirection(blendOutAnimIndex, false)
-				
-				if (animInfo.InverseSyncBlend):
-					var time = animator.get_animation(animToStop.GetAnimationName(CurrentWeaponType, dualDir)).length
-					var newTime = time - animProgress[blendOutAnimIndex]
-					cachedPrevanimProgress[animIndex] = animProgress[blendOutAnimIndex]
-					animProgress[animIndex] = newTime
+					if (animToStop is CombatAnimationInfo and !animToStop.AlwaysR):
+						SetAnimationDualDirection(animIndex, blendOutDir)
+					
+					SetAnimationActive(animIndex, true)
+					SetAnimationBlendDirection(animIndex, true)
+					#animInfo.PassInfo(animToStop.GetInfo())
+					SetAnimationBlendDirection(blendOutAnimIndex, false)
+					
+					if (animInfo.InverseSyncBlend):
+						var time = animator.get_animation(animToStop.GetAnimationName(CurrentWeaponType, dualDir)).length
+						var newTime = time - animProgress[blendOutAnimIndex]
+						cachedPrevanimProgress[animIndex] = animProgress[blendOutAnimIndex]
+						animProgress[animIndex] = newTime
+				else: if(!animInfo.AllowTransitionWithoutBlendOut):
+					continue
 			
 			else: if (animInfo is CombatAnimationInfo and !animInfo.AlwaysR):
 				SetAnimationDualDirection(animIndex, randi_range(0, 1) == 0)
@@ -453,18 +453,20 @@ func SetAnimationActive(animationIndex : int, t : bool):
 		return
 		
 	if (t):
-		var anim = anims[animationIndex]
+		#var anim = anims[animationIndex]
 		#print("{0} set to active".format([anim.AnimName]))
 		animActive |= (1 << animationIndex)
+		
+		animBlend[animationIndex] = 0
+		animProgress[animationIndex] = 0
+		SetAnimationBlendDirection(animationIndex, true)
 	else:
-		var anim = anims[animationIndex]
+		#var anim = anims[animationIndex]
 		#print("{0} set to inactive".format([anim.AnimName]))
 		animActive &= ~(1 << animationIndex)
 	
 	#print("toggled {0}".format([anims[animationIndex].AnimName]))
-	animBlend[animationIndex] = 0
-	animProgress[animationIndex] = 0
-	SetAnimationBlendDirection(animationIndex, true)
+	
 
 #-------------------- BLEND DIRECTION ------------------#
 
@@ -476,8 +478,6 @@ func SetAnimationBlendDirection(animationIndex : int, t : bool):
 	if (t):
 		animBlendDirection |= (1 << animationIndex)
 	else:
-		var anim = anims[animationIndex]
-
 		animBlendDirection &= ~(1 << animationIndex)
 
 #---------------------------------------------
