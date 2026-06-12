@@ -187,17 +187,18 @@ func RegisterPlayerCharacter(character : Character) -> void:
 	GetPlayer().ControllingCharacter = character
 	GetPlayer().EquipWeapon(character.CharacterWeapon, false)
 
-func EV_EnemyAtacked(Direction : FightCharacter.AtackSide) -> void:
+func EV_EnemyAtacked(Direction : FightCharacter.AtackSide, power : float) -> void:
 	if (!IsInFight()):
 		return
 	if (!GetPlayer().ControllingCharacter.IsAlive()):
 		return
 	var FightingMonster = CurrentMosters[0]
 	FightingMonster.DamageFatigue(FightingMonster.CharacterWeapon.Stamina_Cost, "", false)
-	var Dmg = FightingMonster.CharacterWeapon.Damage + FightingMonster.DamageBuff
+
+	var Dmg = FightingMonster.CharacterWeapon.Damage + FightingMonster.DamageBuff * power
 	#var finalDamage = Dmg
 	
-	var finalDamage = GetPlayer().Damage(Dmg, Direction, GetEnemy().CurrentWeapon.Stamina_Cost * 0.001, GetEnemy().CurrentWeapon.Stamina_Cost)
+	var finalDamage = GetPlayer().Damage(Dmg, Direction, GetEnemy().CurrentWeapon.Stamina_Cost * 0.001, power)
 	if (finalDamage == 0):
 		#AtackAvoided()
 		return
@@ -210,16 +211,17 @@ func EV_EnemyAtacked(Direction : FightCharacter.AtackSide) -> void:
 	#CurrentStress += 0.5
 	GetPlayer().ControllingCharacter.Damage(finalDamage, FightingMonster)
 
-func EV_PlayerAtacked(Direction : FightCharacter.AtackSide) -> void:
+func EV_PlayerAtacked(Direction : FightCharacter.AtackSide, power : float) -> void:
 	GetPlayer().ControllingCharacter.DamageFatigue(GetPlayer().ControllingCharacter.CharacterWeapon.Stamina_Cost, "", false)
+
 	if (IsInFight()):
 		var FightingMonster = CurrentMosters[0]
 		if (!FightingMonster.IsAlive()):
 			return
 		
-		var Dmg = GetPlayer().ControllingCharacter.CharacterWeapon.Damage + GetPlayer().ControllingCharacter.DamageBuff
+		var Dmg = GetPlayer().ControllingCharacter.CharacterWeapon.Damage + GetPlayer().ControllingCharacter.DamageBuff * power
 		
-		var finalDamage = GetEnemy().Damage(Dmg, Direction, GetPlayer().ControllingCharacter.CharacterWeapon.Stamina_Cost * 0.001, GetPlayer().ControllingCharacter.CharacterWeapon.Stamina_Cost)
+		var finalDamage = GetEnemy().Damage(Dmg, Direction, GetPlayer().ControllingCharacter.CharacterWeapon.Stamina_Cost * 0.001, power)
 		if (finalDamage == 0):
 			return
 		if (finalDamage == -1):

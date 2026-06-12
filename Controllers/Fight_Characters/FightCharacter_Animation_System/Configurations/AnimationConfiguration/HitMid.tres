@@ -7,6 +7,6 @@ script = ExtResource("1_680bq")
 AlwaysR = true
 AnimName = "Hit_Mid"
 Blend_Duration = 0.15
-Blend_Out_Duration = 0.15
+Blend_Out_Duration = 0.5
 ValidStates = Array[int]([29])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

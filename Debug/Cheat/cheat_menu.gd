@@ -17,9 +17,9 @@ func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("Cheat")):
 		visible = !visible
 		if (visible):
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			InputManager.ChangeMouse(Input.MOUSE_MODE_VISIBLE)
 		else:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			InputManager.ChangeMouse(Input.MOUSE_MODE_CAPTURED)
 
 
 func _on_noclip_pressed() -> void:

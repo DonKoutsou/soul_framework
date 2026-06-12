@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://bv801fylom5yv"]
 
 [ext_resource type="Script" uid="uid://bjn5olojcmokl" path="res://Engine/Controllers/World_Manequin/Base_Player_Manequin.gd" id="1_ehe4r"]
+[ext_resource type="CameraAttributesPractical" uid="uid://cdwbgdqot2agh" path="res://Engine/Enviroments/CameraSettings/PlayerManequinCameraAttribures.tres" id="2_n26di"]
 [ext_resource type="Script" uid="uid://cn0rec8qe556" path="res://Engine/Controllers/player_camera.gd" id="3_n26di"]
 [ext_resource type="Script" uid="uid://b54a62p7na65n" path="res://Engine/Stage/Level/InteractionSystem/interaction_cast.gd" id="5_u78rh"]
 [ext_resource type="Texture2D" uid="uid://bfirfv8r5h6rc" path="res://Engine/Assets/UI_Icons/Dot.png" id="6_n3oyg"]
-[ext_resource type="Material" path="res://Engine/Shaders/Materials/LocationMarkerMat.tres" id="8_g4f1h"]
+[ext_resource type="Material" uid="uid://ckhfr0c864ieu" path="res://Engine/Shaders/Materials/LocationMarkerMat.tres" id="8_g4f1h"]
 [ext_resource type="ArrayMesh" uid="uid://bb8vx4ag1r38u" path="res://Engine/Assets/Particles/LocationMesh.obj" id="9_tj6ut"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8cnf6"]
@@ -36,6 +37,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.120648384, 0.2668761)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraRotationPivot/DuckPivot/CameraPovot" unique_id=1985626194]
+attributes = ExtResource("2_n26di")
 doppler_tracking = 1
 current = true
 fov = 45.0

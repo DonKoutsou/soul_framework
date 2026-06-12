@@ -126,15 +126,14 @@ blend_shapes/blendShape1.Closed = 1.0
 [node name="HeadLookModifier" type="LookAtModifier3D" parent="GeneralSkeleton" unique_id=1306085533]
 active = false
 bone_name = "Head"
-primary_rotation_axis = 0
 duration = 0.3
 transition_type = 10
 ease_type = 1
 use_angle_limitation = true
 symmetry_limitation = true
-primary_limit_angle = 6.2831855
+primary_limit_angle = 0.9403834
 primary_damp_threshold = 1.0
-secondary_limit_angle = 0.7853982
+secondary_limit_angle = 0.49864057
 secondary_damp_threshold = 1.0
 
 [node name="MomentumModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=1195575254]
@@ -152,7 +151,7 @@ rotation_order = 2
 top_level = false
 visible = true
 visibility_parent = NodePath("")
-active = false
+active = true
 influence = 1.0
 script = ExtResource("38_5mrp1")
 metadata/_custom_type_script = "uid://bj3feok1xkxq"

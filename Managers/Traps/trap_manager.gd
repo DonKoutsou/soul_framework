@@ -49,7 +49,7 @@ func Update(delta: float) -> void:
 		if (g.Cooldown <= 0):
 			var Setting = GetTrapSetting(g.TrapType)
 			g.Cooldown = Setting.Cooldown
-			var Trap = TrapScenes[g.TrapType].instantiate()
+			var Trap : Node3D = TrapScenes[g.TrapType].instantiate()
 			
 			Trap.transform = Loc
 			Trap.Speed = Setting.CustomData["Speed"]
@@ -58,6 +58,7 @@ func Update(delta: float) -> void:
 			
 			if (g.TrapType == Map.TrapType.FIRE_TRAP):
 				Trap.position -= Vector3.LEFT.rotated(Vector3(0,1,0), Trap.rotation.y) * 0.6
+				Trap.rotation.y -= PI/2
 				Trap.ProjectileRange = Setting.CustomData["Range"]
 			if (g.TrapType == Map.TrapType.FIREPIT_TRAP):
 				Trap.Lifetime = Setting.CustomData["Lifetime"]

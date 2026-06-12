@@ -13,7 +13,7 @@ var IsDead : bool = false
 
 func _ready() -> void:
 	call_deferred("SpawnExplosion")
-	OffsetNode.position.z = - Speed
+	OffsetNode.position.z = Speed
 
 
 func SpawnExplosion() -> void:

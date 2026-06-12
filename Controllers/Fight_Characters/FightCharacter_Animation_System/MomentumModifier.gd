@@ -110,7 +110,7 @@ func ApplyMementum():
 	for bone_idx in previous_bone_rot.size():
 		var currentRot = previous_bone_rot[bone_idx]
 		var previousRot = prevprevious_bone_rot[bone_idx]
-		var newRot = apply_bone_rotation_momentum(currentRot, previousRot, 0.9)
+		var newRot = apply_bone_rotation_momentum(currentRot, previousRot, 0.5)
 		skeleton.set_bone_pose_rotation(bone_idx, newRot)
 		
 		#var result = apply_bone_spring(newRot, simulated_rotations[bone_idx], angular_velocities[bone_idx], delta, 10.0, 0.2)

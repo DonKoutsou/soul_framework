@@ -53,7 +53,7 @@ func PlayTextInstruction(Type : TutorialTypes) -> void:
 	if (!Tutorials.has(Type)):
 		printerr("Missing tutorial for {0}".format([TutorialTypes.keys()[Type]]))
 		return
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	InputManager.ChangeMouse(Input.MOUSE_MODE_VISIBLE)
 	DoneTutorials.append(Type)
 	WorldTimeManager.Instance.StopTime()
 	TutorialPresented.emit()
@@ -66,7 +66,7 @@ func PlayTextInstruction(Type : TutorialTypes) -> void:
 	IsShowingTutorial = true
 
 func TextTutorialEnded() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	InputManager.ChangeMouse(Input.MOUSE_MODE_CAPTURED)
 	WorldTimeManager.Instance.StartTime()
 	TutorialFinished.emit()
 	IsShowingTutorial = false

@@ -330,11 +330,11 @@ func UIToggled(t : bool, AffectTime : bool) -> void:
 	if (t):
 		if (AffectTime):
 			WorldTimeManager.Instance.StopTime()
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		InputManager.ChangeMouse(Input.MOUSE_MODE_VISIBLE)
 	else:
 		if (AffectTime):
 			WorldTimeManager.Instance.StartTime()
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		InputManager.ChangeMouse(Input.MOUSE_MODE_CAPTURED)
 		
 	Manequin.CanMove = !t
 

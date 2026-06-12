@@ -70,7 +70,7 @@ var StepCoolDown : float = 0.4
 func _ready() -> void:
 	Instance = self
 	CamOriginalPosition = Cam.transform
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	InputManager.ChangeMouse(Input.MOUSE_MODE_CAPTURED)
 	#$MeshInstance3D.scale = Vector3(1,1,1) * Level.CurrentWorldScale
 
 func ProcessInput(event: InputEvent) -> void:

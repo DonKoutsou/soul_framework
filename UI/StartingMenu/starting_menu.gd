@@ -27,7 +27,7 @@ func _ready() -> void:
 	tw.tween_property($ColorRect, "modulate", Color(0.0, 0.0, 0.0, 0.0), 1.5)
 	await tw.finished
 	$ColorRect.visible = false
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	InputManager.ChangeMouse(Input.MOUSE_MODE_VISIBLE)
 
 func Hide() -> void:
 	var tw = create_tween()

@@ -23,7 +23,7 @@ var EndCard : EndScreen
 func _ready() -> void:
 	Settings.LoadSettings()
 	
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	InputManager.ChangeMouse(Input.MOUSE_MODE_VISIBLE)
 	
 	var part = await Helper.Instance.LoadThreaded(ParticleScene).Sign
 	var proloaderScene : AssetPreloader = part.instantiate()
@@ -121,7 +121,7 @@ func StartTestMap() -> void:
 
 func GameWon() -> void:
 	get_tree().paused = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	InputManager.ChangeMouse(Input.MOUSE_MODE_VISIBLE)
 	SpawnStartMenu()
 
 func SpawnStartMenu() -> void:

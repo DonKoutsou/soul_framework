@@ -14,7 +14,7 @@ var PreviousInput : Input.MouseMode
 func _ready() -> void:
 	get_tree().paused = true
 	PreviousInput = Input.mouse_mode
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	InputManager.ChangeMouse(Input.MOUSE_MODE_VISIBLE)
 	
 	UISoundMan.GetInstance().Refresh()
 
@@ -22,7 +22,7 @@ func _on_resume_pressed() -> void:
 	Resume.emit()
 	get_tree().paused = false
 	queue_free()
-	Input.mouse_mode = PreviousInput
+	InputManager.ChangeMouse(PreviousInput)
 
 	
 func _on_exit_pressed() -> void:

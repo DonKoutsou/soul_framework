@@ -15,6 +15,7 @@ class_name AnimationInfo
 @export var Blend_Out_Duration : float = 1.0
 @export var OnCompleteAnim : String = ""
 @export var InverseSyncBlend : bool = false
+@export var AllowOverBlend : bool = false
 @export_flags_2d_navigation var BoneFilter : int = 4294967295
 
 @export_group("Speed")

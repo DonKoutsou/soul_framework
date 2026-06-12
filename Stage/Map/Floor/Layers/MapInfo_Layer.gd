@@ -47,7 +47,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 		8:
 			var TrapDat = MapTrapData.new()
 			
-			var rot = deg_to_rad(GetTileRotationDegrees(Vector2i( Pos.x, Pos.z)))
+			var rot = GetTileRotationRadians(Vector2i( Pos.x, Pos.z))
 			var B = Basis().scaled(Vector3(1,1,1) * (map.WorldScale / 2.0))
 			var Trans = Transform3D(B.rotated(Vector3(0,1,0), rot), Pos * map.WorldScale + Vector3i(0,1,0))
 			TrapDat.TrapType = Map.TrapType.FIRE_TRAP

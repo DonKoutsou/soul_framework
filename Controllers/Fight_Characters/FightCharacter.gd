@@ -19,6 +19,8 @@ class_name FightCharacter
 var CurrentState : CharacterState = CharacterState.IDLE
 
 var LookDir : Vector3
+
+var ChargePower : float = 0.0
 #var RecoveryPenalty : float
 
 @export var ControllingCharacter : Actor:
@@ -86,7 +88,7 @@ signal AtackAvoided
 signal AtackBlocked(BlockedDamage : int)
 
 signal AtackStarted(Direction : AtackSide)
-signal AtackPerformed(Direction : AtackSide)
+signal AtackPerformed(Direction : AtackSide, power : float)
 
 signal AtackCharged(Direction : AtackSide)
 signal CharacterDucked(Dir : AtackSide)
@@ -121,6 +123,8 @@ func Update(delta: float) -> void:
 	DuckCoolDown = max(0, DuckCoolDown - delta)
 	ParryCooldDown = max(0, ParryCooldDown - delta)
 	UpdateSkeletonState()
+	if (IsCharging() or IsCharged()):
+		ChargePower = min(ChargePower + delta, 1)
 
 func UpdateSkeletonState() -> void:
 	SkeletonModif.CurrentState = CurrentState
@@ -321,14 +325,14 @@ func OnAtackPerformed(Direction : AtackSide) -> void:
 		
 		ControllingCharacter.BuffNextAtackSpeed(-SpeedBuffBefore)
 		ControllingCharacter.DamageBuff -= DamageBuffBefore
-		AtackPerformed.emit(Direction)
+		AtackPerformed.emit(Direction, ChargePower)
 	else: if (IsRetaliating()):
 		var SpeedBuffBefore = ControllingCharacter.SpeedBuff
 		var DamageBuffBefore = ControllingCharacter.DamageBuff
 		
 		ControllingCharacter.BuffNextAtackSpeed(-SpeedBuffBefore)
 		ControllingCharacter.DamageBuff -= DamageBuffBefore
-		AtackPerformed.emit(Direction)
+		AtackPerformed.emit(Direction, ChargePower)
 	else:
 		print("{0} - Could not perform atack, current state = {1}".format([GetFightName(),CharacterState.keys()[CurrentState]]))
 		return
@@ -368,7 +372,7 @@ func ChargeHit(Direction : AtackSide) -> void:
 		UpdateState(CharacterState.CHARGING_TOP)
 		
 	print("{0} - Charging : {1}".format([GetFightName() ,AtackSide.keys()[Direction]]))
-	
+	ChargePower = 0
 	SetComboWindow(false)
 #----------------------------------------------------
 func Duck(Direction : AtackSide) -> void:
@@ -415,7 +419,7 @@ func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Mag
 		#RecoilTween.set_trans(Tween.TRANS_BACK)
 		#RecoilTween.tween_property(SkeletonModif, "Recoil", GetRecoil(Dir), 0.1)
 		#RecoilTween.pause()
-		SkeletonModif.Recoil = GetRecoil(Dir)
+		SkeletonModif.Recoil = GetRecoil(Dir) * max(0.5, Magnitude)
 		
 	if (IsAttacking()):
 		if (ControllingCharacter.CharacterWeapon.Stamina_Cost > Magnitude):
@@ -697,19 +701,19 @@ func IsDuckingDirCorrect(atack : AtackSide) -> bool:
 func GetRecoil(Dir : AtackSide) -> Vector3:
 	match Dir:
 		AtackSide.LEFT:
-			return Vector3(0,1,-1)
+			return Vector3(0,2,-2)
 
 		AtackSide.RIGHT:
-			return Vector3(0,-1,1)
+			return Vector3(0,-2,2)
 			
 		AtackSide.TOP:
-			return Vector3(1,0,0)
+			return Vector3(2,0,0)
 			
 		AtackSide.MIDDLE:
-			return Vector3(-1,0,0)
+			return Vector3(-2,0,0)
 			
 		AtackSide.LOW:
-			return Vector3(-1,0,0)
+			return Vector3(-2,0,0)
 			
 	return Vector3.ZERO
 

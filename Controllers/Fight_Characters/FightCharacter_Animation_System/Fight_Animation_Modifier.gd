@@ -308,7 +308,7 @@ func HandleRecoil(delta : float) -> void:
 		var newheadRotation = headRest * Quaternion.from_euler(FinalRecoil)
 		get_skeleton().set_bone_pose_rotation(headbone, newheadRotation.normalized())
 
-	Recoil = Recoil.move_toward(Vector3.ZERO, delta * 2 * Custom_Time_Scale)
+	Recoil = Recoil.move_toward(Vector3.ZERO, delta * 4 * Custom_Time_Scale)
 	
 #-----------------------------------------------------------------------------#
 func ProgressAnimation(animIndex : int, delta : float) -> void:
@@ -324,8 +324,13 @@ func ProgressAnimation(animIndex : int, delta : float) -> void:
 			var blend_speed = (1.0 / anim.Blend_Duration)
 			if (anim.AffectedByWeapon):
 				blend_speed *= currentWeaponSpeed
-			var newBlend = move_toward(animBlend[animIndex], 1.0, blend_speed * delta)
-			animBlend[animIndex] = newBlend
+			
+			
+			if (animBlend[animIndex] >= 1.0 and anim.AllowOverBlend):
+				animBlend[animIndex] = move_toward(animBlend[animIndex], 1.2, blend_speed * delta * 0.1)
+			else:
+				animBlend[animIndex] = move_toward(animBlend[animIndex], 1.0, blend_speed * delta)
+
 	else:
 		if anim.Blend_Out_Duration <= 0.0:
 			animBlend[animIndex] = 0.0
