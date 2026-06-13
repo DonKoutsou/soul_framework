@@ -52,6 +52,34 @@ func RecoilFinished() -> void:
 		else:
 			UpdateState(CharacterState.IDLE)
 	
+#----------------------------------------------------
+#Called from animation
+func OnAtackPerformed(Direction : AtackSide) -> void:
+	if (CurrentCombo[0] == Direction):
+		CurrentCombo.pop_front()
+		
+	if (IsAttacking()):
+		SetComboWindow(true)
+		#UpdateState(CharacterState.IDLE)
+		
+		var SpeedBuffBefore = ControllingCharacter.SpeedBuff
+		var DamageBuffBefore = ControllingCharacter.DamageBuff
+		UpdateState(GetRecoveryBasedOnSide(Direction))
+		ControllingCharacter.BuffNextAtackSpeed(-SpeedBuffBefore)
+		ControllingCharacter.DamageBuff -= DamageBuffBefore
+		AtackPerformed.emit(Direction, ChargePower)
+		
+
+		
+	else: if (IsRetaliating()):
+		var SpeedBuffBefore = ControllingCharacter.SpeedBuff
+		var DamageBuffBefore = ControllingCharacter.DamageBuff
+		
+		ControllingCharacter.BuffNextAtackSpeed(-SpeedBuffBefore)
+		ControllingCharacter.DamageBuff -= DamageBuffBefore
+		AtackPerformed.emit(Direction, ChargePower)
+	else:
+		print("{0} - Could not perform atack, current state = {1}".format([GetFightName(),CharacterState.keys()[CurrentState]]))
 
 func SetControllingChar(Char : Actor) -> void:
 	if (Char == null):
@@ -346,8 +374,7 @@ func Hit(Direction : AtackSide) -> void:
 
 	AtackStarted.emit(Direction)
 	
-	if (CurrentCombo[0] == Direction):
-		CurrentCombo.pop_front()
+	
 
 func IsDuckingCorrectly() -> bool:
 	var CorrectDuck : Array[CharacterState]
@@ -422,6 +449,13 @@ func PickAtackDirection() -> AtackSide:
 	
 
 func AnimTreeFinished(anim_name: StringName) -> void:
+	if (anim_name in ["Atack_Top", "Atack_Left", "Atack_Right", "Atack_Middle", "Atack_Low", "2H_Atack_Left", "2H_Atack_Right","2H_Atack_Middle", "Atack_Bow", "Hit_Left_Retaliation", "Hit_Right_Retaliation", "Hit_Mid_Retaliation"]):
+		SetComboWindow(false)
+		if (CurrentState == GetStateBasedOnAnim(anim_name)):
+			if (CurrentCombo.size() > 0):
+				UpdateState(GetStateBasedOnSide(CurrentCombo[0]))
+				return
+			
 	super(anim_name)
 	if (anim_name == "Death"):
 		DeathFinished()

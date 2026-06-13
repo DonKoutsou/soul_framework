@@ -335,7 +335,6 @@ func OnAtackPerformed(Direction : AtackSide) -> void:
 		AtackPerformed.emit(Direction, ChargePower)
 	else:
 		print("{0} - Could not perform atack, current state = {1}".format([GetFightName(),CharacterState.keys()[CurrentState]]))
-		return
 
 #----------------------------------------------------
 func UpdateState(NewState : CharacterState) -> void:
