@@ -1,10 +1,8 @@
 [gd_scene format=3 uid="uid://db3mah6gf2gqg"]
 
 [ext_resource type="Script" uid="uid://gv88tnay1gen" path="res://Engine/Stage/Map/Minimap/minimap.gd" id="1_jahtd"]
-[ext_resource type="TileSet" uid="uid://ffar32u4k25w" path="res://Engine/Stage/Map/MapPieces/Tileset.tres" id="1_ttd1e"]
-[ext_resource type="TileSet" uid="uid://bbclkugrv0mt8" path="res://Engine/Stage/Map/MapPieces/SpawnsTilesetMinimap.tres" id="3_10evq"]
+[ext_resource type="PackedScene" uid="uid://bkvuja3r8xb4o" path="res://Engine/Stage/Map/Minimap/minimap_floor.tscn" id="2_dws6p"]
 [ext_resource type="Texture2D" uid="uid://duriib55mixu7" path="res://Engine/Assets/UI_Icons/Arrow.png" id="3_e31il"]
-[ext_resource type="TileSet" uid="uid://bk5dt8t12i5af" path="res://Engine/Stage/Map/MapPieces/Locks.tres" id="4_10evq"]
 
 [node name="Control" type="PanelContainer" unique_id=1628306122 node_paths=PackedStringArray("LocationLabel", "PlayerSprite", "Camera")]
 anchors_preset = 15
@@ -16,14 +14,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("1_jahtd")
-TileLayers = Dictionary[int, Array]({
--1: [NodePath("HBoxContainer/SubViewportContainer/SubViewport/TileMapLayerFloor-1"), NodePath("HBoxContainer/SubViewportContainer/SubViewport/SpawnsFloor-1"), NodePath("HBoxContainer/SubViewportContainer/SubViewport/LocksFloor-1")],
-0: [NodePath("HBoxContainer/SubViewportContainer/SubViewport/TileMapLayer"), NodePath("HBoxContainer/SubViewportContainer/SubViewport/Spawns"), NodePath("HBoxContainer/SubViewportContainer/SubViewport/Locks")],
-1: [NodePath("HBoxContainer/SubViewportContainer/SubViewport/TileMapLayerFloor1"), NodePath("HBoxContainer/SubViewportContainer/SubViewport/SpawnsFloor1"), NodePath("HBoxContainer/SubViewportContainer/SubViewport/LocksFloor1")]
-})
 LocationLabel = NodePath("Label")
 PlayerSprite = NodePath("HBoxContainer/SubViewportContainer/SubViewport/Camera2D/Sprite2D")
 Camera = NodePath("HBoxContainer/SubViewportContainer/SubViewport/Camera2D")
+minimapFloorScene = ExtResource("2_dws6p")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=786854654]
 show_behind_parent = true
@@ -47,72 +41,9 @@ transparent_bg = true
 handle_input_locally = false
 msaa_2d = 1
 gui_snap_controls_to_pixels = false
-size = Vector2i(624, 464)
+size = Vector2i(640, 480)
 size_2d_override_stretch = true
 render_target_update_mode = 4
-
-[node name="TileMapLayer" type="TileMapLayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=149759413]
-texture_filter = 1
-tile_set = ExtResource("1_ttd1e")
-occlusion_enabled = false
-collision_enabled = false
-navigation_enabled = false
-
-[node name="TileMapLayerFloor-1" type="TileMapLayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=1542127473]
-texture_filter = 1
-tile_set = ExtResource("1_ttd1e")
-occlusion_enabled = false
-collision_enabled = false
-navigation_enabled = false
-
-[node name="Spawns" type="TileMapLayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=468520893]
-texture_filter = 1
-tile_set = ExtResource("3_10evq")
-occlusion_enabled = false
-collision_enabled = false
-navigation_enabled = false
-
-[node name="TileMapLayerFloor1" type="TileMapLayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=907913069]
-texture_filter = 1
-tile_set = ExtResource("1_ttd1e")
-occlusion_enabled = false
-collision_enabled = false
-navigation_enabled = false
-
-[node name="SpawnsFloor-1" type="TileMapLayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=692531137]
-texture_filter = 1
-tile_set = ExtResource("3_10evq")
-occlusion_enabled = false
-collision_enabled = false
-navigation_enabled = false
-
-[node name="SpawnsFloor1" type="TileMapLayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=937790458]
-texture_filter = 1
-tile_set = ExtResource("3_10evq")
-occlusion_enabled = false
-collision_enabled = false
-navigation_enabled = false
-
-[node name="LocksFloor-1" type="TileMapLayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=1237724223]
-texture_filter = 1
-tile_set = ExtResource("4_10evq")
-occlusion_enabled = false
-collision_enabled = false
-navigation_enabled = false
-
-[node name="Locks" type="TileMapLayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=149528643]
-texture_filter = 1
-tile_set = ExtResource("4_10evq")
-occlusion_enabled = false
-collision_enabled = false
-navigation_enabled = false
-
-[node name="LocksFloor1" type="TileMapLayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=2099821875]
-texture_filter = 1
-tile_set = ExtResource("4_10evq")
-occlusion_enabled = false
-collision_enabled = false
-navigation_enabled = false
 
 [node name="Camera2D" type="Camera2D" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=1697422732]
 zoom = Vector2(0.8, 0.8)
@@ -120,6 +51,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/SubViewportContainer/SubViewport/Camera2D" unique_id=644538945]
+z_index = 1
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("3_e31il")
 

@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bkvuja3r8xb4o"]
+
+[ext_resource type="Script" uid="uid://d8t6df6l51y" path="res://Engine/Stage/Map/Minimap/minimap_floor.gd" id="1_1h28s"]
+[ext_resource type="TileSet" uid="uid://ffar32u4k25w" path="res://Engine/Stage/Map/MapPieces/Tileset.tres" id="1_ma3u2"]
+[ext_resource type="TileSet" uid="uid://bbclkugrv0mt8" path="res://Engine/Stage/Map/MapPieces/SpawnsTilesetMinimap.tres" id="2_1h28s"]
+[ext_resource type="TileSet" uid="uid://bk5dt8t12i5af" path="res://Engine/Stage/Map/MapPieces/Locks.tres" id="3_yjimc"]
+
+[node name="MinimapFloor" type="Node2D" unique_id=1281372679 node_paths=PackedStringArray("Layers")]
+script = ExtResource("1_1h28s")
+Layers = [NodePath("TileMapLayerFloor-1"), NodePath("SpawnsFloor-1"), NodePath("LocksFloor-1")]
+
+[node name="TileMapLayerFloor-1" type="TileMapLayer" parent="." unique_id=1866262192]
+texture_filter = 1
+tile_set = ExtResource("1_ma3u2")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="SpawnsFloor-1" type="TileMapLayer" parent="." unique_id=1126503720]
+texture_filter = 1
+tile_set = ExtResource("2_1h28s")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="LocksFloor-1" type="TileMapLayer" parent="." unique_id=2075638329]
+texture_filter = 1
+tile_set = ExtResource("3_yjimc")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false

@@ -18,6 +18,7 @@ var LastPosition : Vector3i
 var PlayerPos : Vector3i
 var ActualPos : Vector3
 signal PositionChanged(OriginalPos : Vector3, Pos : Vector3, Rot : float, Moved : bool)
+signal PositionPassed(passedPosition : Vector3)
 signal HitWall(Pos, Rot)
 signal HitGap(Pos, Rot)
 signal OrientationChanged(Pos : Vector3, Rot : float)
@@ -559,16 +560,20 @@ func HandleWalk(event: InputEvent) -> void:
 		NewPosition = PlayerPos
 		MessageBox.RegisterEvent("Way is blocked", false)
 	if (cell.type == CellData.CELLTYPE.DOWN_STAIRS):
+		PositionPassed.emit(NewPosition)
 		var stairCell = cell
 		while(stairCell.type == CellData.CELLTYPE.DOWN_STAIRS):
 			NewPosition += ((dir * Level.CurrentWorldScale) as Vector3i) - ( Vector3i(0,1,0) * Level.CurrentWorldScale)
+			PositionPassed.emit(NewPosition)
 			stairCell = mapData.GetCell(Helper.PlayerPositionToMap(NewPosition))
 		
 		get_tree().call_group("Enviroments", "ElevationChanged", false)
 	if (cell.type == CellData.CELLTYPE.UP_STAIRS):
+		PositionPassed.emit(NewPosition)
 		var stairCell = cell
 		while(stairCell.type == CellData.CELLTYPE.UP_STAIRS):
 			NewPosition += ((dir * Level.CurrentWorldScale) as Vector3i) + ( Vector3i(0,1,0) * Level.CurrentWorldScale)
+			PositionPassed.emit(NewPosition)
 			stairCell = mapData.GetCell(Helper.PlayerPositionToMap(NewPosition))
 			
 		get_tree().call_group("Enviroments", "ElevationChanged", true)

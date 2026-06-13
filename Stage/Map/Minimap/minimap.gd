@@ -1,14 +1,14 @@
 extends PanelContainer
 
 class_name Minimap
-
-@export var TileLayers : Dictionary[int, Array]
-
 @export var LocationLabel : Label
 @export var PlayerSprite : Sprite2D
 @export var Camera : Camera2D
+
+@export var minimapFloorScene : PackedScene
 #@export var TravelLine : TravelHistory
 
+var mapFloors : Dictionary[int, MinimapFloor]
 var InitialSize : Vector2
 var MapBig : bool = false
 
@@ -25,24 +25,36 @@ static var Instance : Minimap
 var StoredData : Dictionary[Map.LocationName, MinimapData]
 
 func StoreCurrentWorldData(CurrentWorldName : Map.LocationName) -> void:
+	var map : Map = Stage.CurrentWorld.MData
+	
 	var Data = MinimapData.new()
-	for Floor in range(-1, 1):
+	for g in map.Floors:
+		var FloorIndex = g.FloorNumber
 		var FloorData : Dictionary = {}
 		for Layer in 3:
 			var LayerData : Dictionary[Vector2i, int] = {}
-			var UsedCells : Array[Vector2i] = get_node(TileLayers[Floor][Layer]).get_used_cells()
+			var UsedCells : Array[Vector2i] = mapFloors[FloorIndex].Layers[Layer].get_used_cells()
 			for CellCoords in UsedCells:
-				LayerData[CellCoords] = get_node(TileLayers[Floor][Layer]).get_cell_atlas_coords(CellCoords).x
+				LayerData[CellCoords] = mapFloors[FloorIndex].Layers[Layer].get_cell_atlas_coords(CellCoords).x
 			FloorData[Layer] = LayerData
 			
-		Data.FloorData[Floor] = FloorData
+		Data.FloorData[FloorIndex] = FloorData
 	StoredData[CurrentWorldName] = Data
 
 func LoadWorldData(CurrentWorldName : Map.LocationName) -> void:
-	for Floor in range(-1, 1):
-		for Layer in 3:
-			get_node(TileLayers[Floor][Layer]).clear()
-			
+	for g in mapFloors:
+		mapFloors[g].queue_free()
+
+	mapFloors.clear()
+	
+	var map : Map = Stage.CurrentWorld.MData
+	
+	for g in map.Floors:
+		var FloorIndex = g.FloorNumber
+		var newMiniMapFLoor : MinimapFloor = minimapFloorScene.instantiate()
+		$HBoxContainer/SubViewportContainer/SubViewport.add_child(newMiniMapFLoor)
+		mapFloors[FloorIndex] = newMiniMapFLoor
+
 	if (!StoredData.has(CurrentWorldName)):
 		return
 		
@@ -56,11 +68,9 @@ func LoadWorldData(CurrentWorldName : Map.LocationName) -> void:
 				var Value = LayerData[CellCoords]
 				var TileRotation = Stage.CurrentWorld.MData.GetFloor(Floor).GetLayer(FloorLayer.LayerType.MAZE).Testtile(CellCoords)
 				if (Layer == 0):
-					get_node(TileLayers[Floor][Layer]).set_cell(CellCoords, 10 , Vector2i(Value, 0), TileRotation)
+					mapFloors[Floor].Layers[Layer].set_cell(CellCoords, 10 , Vector2i(Value, 0), TileRotation)
 				else:
-					get_node(TileLayers[Floor][Layer]).set_cell(CellCoords, 0 , Vector2i(Value, 0), TileRotation)
-			
-			
+					mapFloors[Floor].Layers[Layer].set_cell(CellCoords, 0 , Vector2i(Value, 0), TileRotation)
 			
 func _ready() -> void:
 	InitialSize = size
@@ -88,52 +98,52 @@ func OnPositionSeen(Pos : Vector3i) -> void:
 	#Get index of texture in atlas
 	var TileIndex = Vector2i(AtlasCoords.x, 0)
 	var TileRotation = Mp.GetFloor(Floor).GetLayer(FloorLayer.LayerType.MAZE).Testtile(mappos)
-	if (!TileLayers.keys().has(CurrentFloor)):
-		return
-	get_node(TileLayers[CurrentFloor][0]).set_cell(mappos, 10, TileIndex, TileRotation)
+	#if (!mapFloors.keys().has(CurrentFloor)):
+		#return
+	mapFloors[Floor].Layers[0].set_cell(mappos, 10, TileIndex, TileRotation)
 	
 	#Check if lock
 	if (cell.HasData("Locks")):
-		get_node(TileLayers[CurrentFloor][2]).set_cell(mappos, 0, Vector2i(0,0))
+		mapFloors[Floor].Layers[2].set_cell(mappos, 0, Vector2i(0,0))
 	else: if (cell.HasData("Chest")):
-		get_node(TileLayers[CurrentFloor][2]).set_cell(mappos, 0, Vector2i(0,0))
+		mapFloors[Floor].Layers[2].set_cell(mappos, 0, Vector2i(0,0))
 	else: if (cell.HasData("MasterLocks")):
-		get_node(TileLayers[CurrentFloor][2]).set_cell(mappos, 0, Vector2i(2,0))
+		mapFloors[Floor].Layers[2].set_cell(mappos, 0, Vector2i(2,0))
 	else : if (cell.HasData("Trap")):
-		get_node(TileLayers[CurrentFloor][2]).set_cell(mappos, 0, Vector2i(5,0))
+		mapFloors[Floor].Layers[2].set_cell(mappos, 0, Vector2i(5,0))
 	else : if (cell.HasData("Door") and cell.Custom_Data["Door"].Blocked):
-		get_node(TileLayers[CurrentFloor][2]).set_cell(mappos, 0, Vector2i(4,0))
+		mapFloors[Floor].Layers[2].set_cell(mappos, 0, Vector2i(4,0))
 	else : if (cell.type == CellData.CELLTYPE.BONEFIRE):
-		get_node(TileLayers[CurrentFloor][2]).set_cell(mappos, 0, Vector2i(15,0))
+		mapFloors[Floor].Layers[2].set_cell(mappos, 0, Vector2i(15,0))
 	else:
-		get_node(TileLayers[CurrentFloor][2]).erase_cell(mappos)
+		mapFloors[Floor].Layers[2].erase_cell(mappos)
 		
 	#Check if ladder
 	if (cell.type == CellData.CELLTYPE.UP_LADDER):
-		get_node(TileLayers[CurrentFloor][1]).set_cell(mappos, 0, Vector2i(4,0))
+		mapFloors[Floor].Layers[1].set_cell(mappos, 0, Vector2i(4,0))
 	if (cell.type == CellData.CELLTYPE.DOWN_LADDER):
-		get_node(TileLayers[CurrentFloor][1]).set_cell(mappos, 0, Vector2i(5,0))
+		mapFloors[Floor].Layers[1].set_cell(mappos, 0, Vector2i(5,0))
 	if (cell.type == CellData.CELLTYPE.FALL):
-		get_node(TileLayers[CurrentFloor][1]).set_cell(mappos, 0, Vector2i(6,0))
+		mapFloors[Floor].Layers[1].set_cell(mappos, 0, Vector2i(6,0))
 	
 func OnBlockOpened(Pos : Vector3i) -> void:
 	
 	if (IsOusideMap(Pos)):
 		return
 		
-	get_node(TileLayers[Pos.y][2]).erase_cell(Vector2i(Pos.x, Pos.z))
+	mapFloors[Pos.y].Layers[2].erase_cell(Vector2i(Pos.x, Pos.z))
 
 func OnBlockClosed(Pos : Vector3i) -> void:
 	if (IsOusideMap(Pos)):
 		return
 		
-	get_node(TileLayers[Pos.y][2]).set_cell(Vector2i(Pos.x, Pos.z), 0, Vector2i(4,0))
+	mapFloors[Pos.y].Layers[2].set_cell(Vector2i(Pos.x, Pos.z), 0, Vector2i(4,0))
 
 func OnDoorUnlocked(Pos : Vector3i) -> void:
 	if (IsOusideMap(Pos)):
 		return
 		
-	get_node(TileLayers[Pos.y][2]).erase_cell(Vector2i(Pos.x, Pos.z))
+	mapFloors[Pos.y].Layers[2].erase_cell(Vector2i(Pos.x, Pos.z))
 
 func OnPositionVisited(Pos : Vector3i, Direction : float) -> void:
 	
@@ -143,16 +153,23 @@ func OnPositionVisited(Pos : Vector3i, Direction : float) -> void:
 		#return
 		
 	var Floor = Pos.y
-	for FloorIndex in TileLayers.keys():
-		for Layer in TileLayers[FloorIndex]:
-			get_node(Layer).visible = FloorIndex == Floor
+	for FloorIndex in mapFloors.keys():
+		for Layer in mapFloors[FloorIndex].Layers:
+			if (FloorIndex > Floor):
+				Layer.hide()
+			else: if (FloorIndex < Floor):
+				Layer.show()
+				Layer.modulate.a = 0.2
+			else:
+				Layer.show()
+				Layer.modulate.a = 1.0
 	#TravelLine.NewPoint(Pos - (Vector2.LEFT.rotated(-Direction) * 4))
 	PlPos = (mappos * 16.0) + Vector2(8,8)
 	#Allign camera to position, Add 8 to center it to tile
 	Camera.position = PlPos
 	#Rotate tile to face direction 
 	PlayerSprite.rotation = -Direction
-	CurrentFloor = Floor
+	#CurrentFloor = Floor
 	#Find the tile coordinates
 	#var mappos = Vector2(Pos)
 	#check if outside map

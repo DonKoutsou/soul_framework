@@ -301,7 +301,7 @@ func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visite
 		]
 
 		for neighbor in neighbors:
-			if start.distance_to(current + neighbor) < dist and current + neighbor in tile_coords and neighbor + current not in visited and !CantReach(current, neighbor) and !CantReach(current + neighbor, neighbor * -1):
+			if start.distance_to(current + neighbor) < dist and current + neighbor in tile_coords and neighbor + current not in visited and !CantReach(current, neighbor):
 				stack.push_back(neighbor + current)
 	
 	return room

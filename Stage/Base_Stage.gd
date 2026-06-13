@@ -296,6 +296,7 @@ func SpawnPlayer() -> void:
 	Manequin = PlayerControllerScene.instantiate() as BasePlayerManequin
 	
 	Manequin.PositionChanged.connect(PlayerPositionChanged)
+	Manequin.PositionPassed.connect(PositionPassedBy)
 	Manequin.HitWall.connect(WallHit)
 	Manequin.OrientationChanged.connect(PlayerOrientationChanged)
 	
@@ -433,6 +434,12 @@ func PlayerOrientationChanged(PlayerPosition : Vector3, PlayerOrientation : floa
 	UIMan.MiniMp.OnPositionVisited(Pos, PlayerOrientation)
 	CurrentWorld.MonsterMan.TakeAction()
 	CurrentWorld.PlayerPositionChanged(PlayerPosition, Vector3.FORWARD.rotated(Vector3(0,1,0), PlayerOrientation))
+
+func PositionPassedBy(passedPossition : Vector3i) -> void:
+	
+	var Pos = Helper.PlayerPositionToMap(passedPossition)
+
+	UIMan.MiniMp.OnPositionSeen(Vector3i(Pos))
 
 func PlayerPositionChanged(OriginalPlayerPosition : Vector3, NewPlayerPosition : Vector3, PlayerOrientation : float, Moved : bool = true) -> void:
 	#if (Moved):
