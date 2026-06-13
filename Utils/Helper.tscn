@@ -4,11 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://dnhgfeeqnuy3o" path="res://Engine/Assets/UI_Icons/Stars.png" id="2_awhd0"]
 [ext_resource type="Script" uid="uid://71nkokj6dvfo" path="res://Engine/Debug/fps.gd" id="3_q7cds"]
 
-[node name="Helper" type="CanvasLayer" unique_id=384128540 node_paths=PackedStringArray("BlackLoadingRect", "LoadingUI", "VersionLabel")]
+[node name="Helper" type="CanvasLayer" unique_id=384128540 node_paths=PackedStringArray("BlackLoadingRect", "LoadingUI", "LoadingProgress", "VersionLabel")]
 layer = 999
 script = ExtResource("1_8jy8v")
 BlackLoadingRect = NodePath("Control/ColorRect")
 LoadingUI = NodePath("Control")
+LoadingProgress = NodePath("Control/VBoxContainer/ProgressBar")
 VersionLabel = NodePath("Label")
 
 [node name="Control" type="Control" parent="." unique_id=1820261857]
@@ -28,26 +29,36 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=1502982144]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=2013274736]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -70.0
+offset_left = -64.5
 offset_top = -20.0
-offset_right = 90.0
+offset_right = 64.5
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Control/HBoxContainer" unique_id=727498338]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=1502982144]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer" unique_id=727498338]
 layout_mode = 2
 text = "LOADING STUFF"
 
-[node name="Label2" type="Label" parent="Control/HBoxContainer" unique_id=757513268]
+[node name="Label2" type="Label" parent="Control/VBoxContainer/HBoxContainer" unique_id=757513268]
 layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Control/VBoxContainer" unique_id=2074864000]
+layout_mode = 2
+show_percentage = false
 
 [node name="TextureRect" type="TextureRect" parent="Control" unique_id=1096350233]
 layout_mode = 1

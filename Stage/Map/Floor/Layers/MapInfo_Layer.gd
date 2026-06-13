@@ -65,7 +65,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 		#Guilotine
 		10:
 			var TrapDat = MapTrapData.new()
-			var rot = deg_to_rad(GetTileRotationDegrees( Vector2i(Pos.x, Pos.z)))
+			var rot = GetTileRotationRadians( Vector2i(Pos.x, Pos.z))
 			var Trans = Transform3D(Basis().rotated(Vector3(0,1,0), rot), Pos * map.WorldScale)
 			TrapDat.TrapTransform = Trans
 			TrapDat.TrapType = Map.TrapType.GUILOTINE_TRAP
@@ -74,7 +74,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 		#Blocking decoration
 		11:
 			var t = Transform3D(Basis(), Pos * map.WorldScale)
-			t = t.rotated_local(Vector3(0,1,0), deg_to_rad(GetTileRotationDegrees(Vector2i(Pos.x, Pos.z))))
+			t = t.rotated_local(Vector3(0,1,0), GetTileRotationRadians( Vector2i(Pos.x, Pos.z)))
 			cellDat.AddData("BlockingDeco", t)
 			#Data.BlockingDecoration[Pos] = t
 			tempLayerData.SpawnDeco = false
@@ -93,7 +93,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 		#Spawnpoint
 		14:
 			map.Data.SpawnPoint = Pos
-			map.Data.SpawnRot = deg_to_rad(GetTileRotationDegrees(Vector2i(Pos.x, Pos.z)))
+			map.Data.SpawnRot = GetTileRotationRadians(Vector2i(Pos.x, Pos.z))
 		#Fire pit
 		15:
 			cellDat.type = CellData.CELLTYPE.BONEFIRE

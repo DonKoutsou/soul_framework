@@ -13,29 +13,15 @@ func HandleCell(_cellDat : CellData, _Pos : Vector3i, _map : Map, _tempLayerData
 #----------------------------------------------------------------
 func Testtile(pos : Vector2i) -> int:
 	var tile_alternate : int = 0
-	var rot = GetTileRotationDegrees(pos)
+	var rot = GetTileRotationRadians(pos)
 	match rot:
-		-90.0:
+		PI/2:
 			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H
 		180.0:
 			tile_alternate = TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V
-		90.0:
+		-PI/2:
 			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V
 	return tile_alternate
-
-#----------------------------------------------------------------
-func GetTileRotationDegrees(pos : Vector2i) -> float:
-	var rot : float = 0
-	
-	if is_cell_flipped_h(pos) == false and is_cell_flipped_v(pos) == false:
-		rot = 0
-	elif is_cell_flipped_h(pos) == true and is_cell_flipped_v(pos) == false:
-		rot = -90
-	elif is_cell_flipped_h(pos) == false and is_cell_flipped_v(pos) == true:
-		rot = 90
-	elif is_cell_flipped_h(pos) == true and is_cell_flipped_v(pos) == true:
-		rot = 180
-	return rot
 
 #----------------------------------------------------------------
 func GetTileRotationRadians(pos : Vector2i) -> float:
@@ -44,9 +30,9 @@ func GetTileRotationRadians(pos : Vector2i) -> float:
 	if is_cell_flipped_h(pos) == false and is_cell_flipped_v(pos) == false:
 		rot = 0
 	elif is_cell_flipped_h(pos) == true and is_cell_flipped_v(pos) == false:
-		rot = PI/2
-	elif is_cell_flipped_h(pos) == false and is_cell_flipped_v(pos) == true:
 		rot = -PI/2
+	elif is_cell_flipped_h(pos) == false and is_cell_flipped_v(pos) == true:
+		rot = PI/2
 	elif is_cell_flipped_h(pos) == true and is_cell_flipped_v(pos) == true:
 		rot = PI
 	return rot

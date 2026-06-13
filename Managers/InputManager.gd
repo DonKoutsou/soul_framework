@@ -8,7 +8,7 @@ static var Instance : InputManager
 
 signal PausePressed
 
-static var prevMouseMode
+static var prevMouseMode = Input.MOUSE_MODE_VISIBLE
 static var MouseIn : bool = false
 
 func _ready() -> void:

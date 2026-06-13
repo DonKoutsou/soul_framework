@@ -25,7 +25,7 @@ func _ready() -> void:
 	
 	InputManager.ChangeMouse(Input.MOUSE_MODE_VISIBLE)
 	
-	var part = await Helper.Instance.LoadThreaded(ParticleScene).Sign
+	var part = await Helper.Instance.LoadThreaded(ParticleScene).Finished
 	var proloaderScene : AssetPreloader = part.instantiate()
 	add_child(proloaderScene)
 	
@@ -44,7 +44,8 @@ func _ready() -> void:
 
 func StartGame() -> void:
 	Menu.PlayIntro()
-	var StageSc = await Helper.Instance.LoadThreaded(StageScene).Sign
+	
+	var StageSc = await Helper.Instance.LoadThreaded(StageScene).Finished
 	GameInstance = StageSc.instantiate() as Stage
 	
 	await Menu.Hide()
@@ -56,7 +57,7 @@ func StartGame() -> void:
 	GameInstance.GameSaved.connect(SaveGame)
 	GameInstance.GameClosed.connect(BackToMenu)
 	#await GameInstance.LoadedLevels
-	await get_tree().create_timer(1).timeout
+	#await get_tree().create_timer(1).timeout
 	
 	set_process_input(true)
 
@@ -85,7 +86,7 @@ func LoadGame() -> void:
 	
 	Menu.PlayIntro()
 		
-	var StageSc = await Helper.Instance.LoadThreaded(StageScene).Sign
+	var StageSc = await Helper.Instance.LoadThreaded(StageScene).Finished
 	GameInstance = StageSc.instantiate() as Stage
 	
 	await Menu.Hide()
@@ -103,7 +104,7 @@ func LoadGame() -> void:
 
 func StartTestMap() -> void:
 	Menu.PlayIntro()
-	var StageSc = await Helper.Instance.LoadThreaded(StageScene).Sign
+	var StageSc = await Helper.Instance.LoadThreaded(StageScene).Finished
 	GameInstance = StageSc.instantiate() as Stage
 
 	await Menu.Hide()

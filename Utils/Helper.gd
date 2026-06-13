@@ -4,6 +4,7 @@ class_name Helper
 
 @export var BlackLoadingRect : ColorRect
 @export var LoadingUI : Control
+@export var LoadingProgress : ProgressBar
 @export var VersionLabel : Label
 
 static var Instance : Helper
@@ -11,6 +12,8 @@ static var r : RandomNumberGenerator
 
 var FakeLoadingHappening : bool = false
 
+var loadProg : float
+var loadTw : Tween
 
 func _ready() -> void:
 	Instance = self
@@ -172,7 +175,7 @@ static func get_node_aabb(node : Node, exclude_top_level_transform: bool = true)
 
 func LoadThreaded(File : String) -> SignalObject:
 	var Sign = SignalObject.new()
-	
+	LoadingProgress.value = 0
 	#var t = Thread.new()
 	ResourceLoader.load_threaded_request(File, "", true, ResourceLoader.CACHE_MODE_REUSE)
 	
@@ -190,7 +193,7 @@ func FakeLoading(t : bool, ShowBlack : bool = false, CustomText : String = " Loa
 	DotAmmount = 0
 	LoadingUI.visible = t
 	BlackLoadingRect.visible = ShowBlack
-	LoadingUI.get_node("HBoxContainer/Label").text = CustomText
+	LoadingUI.get_node("VBoxContainer/HBoxContainer/Label").text = CustomText
 	FakeLoadingHappening = t
 
 var DotAmmount : int = 0
@@ -204,22 +207,32 @@ func _physics_process(delta: float) -> void:
 	var t = ""
 	for g in DotAmmount:
 		t += "."
-	LoadingUI.get_node("HBoxContainer/Label2").text = t
+	LoadingUI.get_node("VBoxContainer/HBoxContainer/Label2").text = t
 	DotAmmount += 1
 	if DotAmmount > 3:
 		DotAmmount = 0
 
 func _CheckForFinishedLoad(Sign : SignalObject, File : String) -> void:
-	var Status = ResourceLoader.load_threaded_get_status(File)
+	var prog : Array = []
+	var Status = ResourceLoader.load_threaded_get_status(File, prog)
+	loadProg = prog[0] * 100
 	if (Status == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED):
 		_LoadFinished(Sign, ResourceLoader.load_threaded_get(File))
+
 	else:
-		CallLater(_CheckForFinishedLoad.bind(Sign, File), 0.1)
+		call_deferred("_CheckForFinishedLoad", Sign, File)
+
+		#Sign.Progressed.emit(prog[0])
+	if (loadProg != LoadingProgress.value):
+		if (loadTw != null):
+			loadTw.kill()
+		loadTw = create_tween()
+		loadTw.tween_property(LoadingProgress, "value", loadProg, 0.5)
 
 func _LoadFinished(Sign : SignalObject, File : PackedScene) -> void:
 	LoadingUI.visible = FakeLoadingHappening
 	set_physics_process(FakeLoadingHappening)
-	Sign.Sign.emit(File)
+	Sign.Finished.emit(File)
 
 func CallLater(Call : Callable, t : float = 1) -> void:
 	await get_tree().create_timer(t).timeout

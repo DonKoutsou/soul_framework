@@ -71,6 +71,7 @@ func AddSpawn(mesh : RID, pos : Vector3i, loc : Transform3D, index : int, collis
 	var data : Dictionary = {}
 	data["Instance"] = Instance
 	data["Collision"] = collision
+	data["Transform"] = loc
 	spawnList[pos].append(data)
 	if (collision != null):
 		QueueCollider(collision)
@@ -80,8 +81,10 @@ func AddSpawn(mesh : RID, pos : Vector3i, loc : Transform3D, index : int, collis
 	RenderingServer.instance_set_transform(Instance, loc)
 	if (material_override != null):
 		RenderingServer.instance_geometry_set_material_override(Instance, material_override.get_rid())
+		
 	if (matOverride.get_id() != 0):
 		RenderingServer.instance_geometry_set_material_override(Instance, matOverride)
+
 
 func Update(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
 	Sc = get_world_3d().scenario

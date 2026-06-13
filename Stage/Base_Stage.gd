@@ -406,7 +406,7 @@ func DigComplete(Pos : Vector3i) -> void:
 	
 	var cell = CurrentWorld.GetMapData().cells[Pos]
 	if (cell.HasData("Item")):
-		var It = load(cell.Custom_Data["Item"])
+		var It = cell.Custom_Data["Item"]
 		cell.Custom_Data.erase("Item")
 
 		MessageBox.RegisterEvent("You dug out an item")
@@ -495,7 +495,7 @@ func PlayerPositionChanged(OriginalPlayerPosition : Vector3, NewPlayerPosition :
 		Fight.GetPlayer().ExtendHand()
 		
 		#Retrieve Item and Remove from world data
-		var it = load(cell.Custom_Data["Item"])
+		var it = cell.Custom_Data["Item"]
 		cell.Custom_Data.erase("Item")
 		UIMan.Inv.AddItem(it)
 		
@@ -756,7 +756,7 @@ func HandleLever(Pos : Vector3i, PlayerPosition : Vector3, PlayerOrientation : f
 	var Height = PlayerPosition.y / Level.CurrentWorldScale.y
 	
 	var WrapedOrientation = snappedf(wrapf(PlayerOrientation, -PI, PI), 0.0001)
-	var WeappedTileRotation = wrapf(deg_to_rad(CurrentWorld.MData.GetFloor(roundi(Height)).GetLayer(FloorLayer.LayerType.LEVERS).GetTileRotationDegrees(pos)) + (PI / 2), -PI, PI)
+	var WeappedTileRotation = wrapf(CurrentWorld.MData.GetFloor(roundi(Height)).GetLayer(FloorLayer.LayerType.LEVERS).GetTileRotationRadians(pos) + (PI / 2), -PI, PI)
 	
 	if (!is_equal_approx(WrapedOrientation, WeappedTileRotation)):
 		return false
@@ -1037,15 +1037,15 @@ func EV_MonsterKilled(MonGroup : MonsterGroup, _GoldReward : int) -> void:
 	
 	var Mon = MonGroup.Mon
 	
-	if (MonGroup.Drop != ""):
+	if (MonGroup.Drop != null):
 		MessageBox.RegisterEvent("{0} dropped an item".format([Mon.MonsterName]))
-		var drop = load(MonGroup.Drop)
+		var drop = MonGroup.Drop
 		UIMan.Inv.AddItem(drop)
 		var chAnim =  load(Item_animation).instantiate() as ChestAnimation
 		Node_Spawn_Loc.add_child(chAnim)
 		chAnim.Init(drop)
 		if (drop is KeyItem or drop is UnlockItem):
-			MonGroup.Drop = ""
+			MonGroup.Drop = null
 	
 	if (Mon.Drop != null):
 		var r = randi_range(0,9)
@@ -1055,7 +1055,7 @@ func EV_MonsterKilled(MonGroup : MonsterGroup, _GoldReward : int) -> void:
 			UIMan.Inv.AddItem(Mon.Drop)
 			var chAnim =  load(Item_animation).instantiate() as ChestAnimation
 			Node_Spawn_Loc.add_child(chAnim)
-			chAnim.Init(load(MonGroup.Drop))
+			chAnim.Init(MonGroup.Drop)
 
 
 func EV_CharacterDeath(Char : Character) -> void:
@@ -1136,7 +1136,7 @@ func EV_ItemUsed(It : Item) -> void:
 		#else:
 		playerCharacter.CharacterWeapon = It.WeaponsRes
 		Fight.GetPlayer().EquipWeapon(It.WeaponsRes)
-		UIMan.Inv.ChangeWeapon(It.WeaponsRes)
+		#UIMan.Inv.ChangeWeapon(It.WeaponsRes)
 		
 	CurrentWorld.MonsterMan.TakeAction()
 	var Data : Dictionary = {

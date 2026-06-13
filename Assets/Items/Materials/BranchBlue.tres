@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ds6onayeb3co"]
+
+[ext_resource type="Shader" uid="uid://dcjmc7ch6w5tw" path="res://Engine/Shaders/BaseMat/Base_Simple_Dither_Transparent_Mat.gdshader" id="1_t4fmh"]
+[ext_resource type="Texture2D" uid="uid://dx4mvcpf0fto5" path="res://Engine/Assets/Items/Textures/LeafSet019_1K-PNG_Blue_Color.png" id="2_t4fmh"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_t4fmh")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/alpha_scale = 1.0
+shader_parameter/billboard = false
+shader_parameter/particle_billboard = false
+shader_parameter/y_billboard = false
+shader_parameter/keep_scale = false
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("2_t4fmh")

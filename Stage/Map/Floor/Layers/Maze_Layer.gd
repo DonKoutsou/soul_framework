@@ -12,20 +12,19 @@ func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : Tem
 	var index = get_cell_atlas_coords(Vector2i(Pos.x, Pos.z)).x
 
 	var pos = Pos * map.WorldScale
-	var rot = deg_to_rad(GetTileRotationDegrees(Vector2i(Pos.x, Pos.z)))
-	var rot2 = GetTileRotationRadians(Vector2i(Pos.x, Pos.z))
+	var rot = GetTileRotationRadians(Vector2i(Pos.x, Pos.z))
 	match (index):
 	#Wall
 		1:
-			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
 	#Corner
 		2:
-			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot2), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
 	#Corner
 		3:
-			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot2), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
 		#TJunction
 		4:
@@ -35,16 +34,16 @@ func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : Tem
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 	#Corridor
 		5:
-			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
 	#Cap
 		6:
-			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
 	#T section
 		7:
-			AddWallToData(cell,  GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell,  GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.DOWN, rot, pos))
 	#Door
@@ -52,19 +51,19 @@ func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : Tem
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
 		9:
-			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot2), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
 			
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
 		10:
-			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot2), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
 			
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
 		11:
-			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
 			
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
@@ -75,14 +74,14 @@ func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : Tem
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.RIGHT, tempData)
 		13:
-			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot2), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
 			
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
 		14:
-			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
 			
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
@@ -90,8 +89,8 @@ func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : Tem
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.RIGHT, tempData)
 		15:
-			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot2), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
 			
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
@@ -99,34 +98,34 @@ func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : Tem
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.RIGHT, tempData)
 		16:
-			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot2), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.LEFT.rotated(rot), tempData), GetMeshPlecement(Vector2i.LEFT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
 		17:
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
-			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
 		18:
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
-			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
 		19:
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
-			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot2), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
-			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot2), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.RIGHT.rotated(rot), tempData), GetMeshPlecement(Vector2i.RIGHT, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
 		20:
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.UP, rot, pos))
 		21:
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
 		22:
-			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.DOWN, rot, pos))
 		23:
-			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 		24:
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
@@ -136,7 +135,7 @@ func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : Tem
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.DOWN, rot, pos))
 		26:
-			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot2), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.DOWN.rotated(rot), tempData), GetMeshPlecement(Vector2i.DOWN, rot, pos))
 			
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
@@ -144,7 +143,7 @@ func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : Tem
 			
 			cell.AddDataArr("Corners", GetMeshPlecement(Vector2i.RIGHT, rot, pos))
 		27:
-			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot2), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
+			AddWallToData(cell, GetWallType(Pos, Vector2.UP.rotated(rot), tempData), GetMeshPlecement(Vector2i.UP, rot, pos))
 			
 			cell.AddDataArr("DoorWalls", GetMeshPlecement(Vector2i.LEFT, rot, pos))
 			CheckForDoors(cell, Pos, pos, rot, Vector2i.LEFT, tempData)

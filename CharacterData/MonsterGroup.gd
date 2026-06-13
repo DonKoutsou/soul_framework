@@ -9,7 +9,7 @@ class_name MonsterGroup
 @export var LastKnownPosition : Vector3i
 @export var PickedMat : Material
 
-@export_file var Drop : String
+@export var Drop : Item
 
 signal Respawned
 
@@ -23,7 +23,7 @@ var PickedDecorations : Dictionary[String, int] = {
 
 var variant_index : int = 0
 
-func RegisterMonster(monster : Monster, r : RandomNumberGenerator, drop : String = "") -> void:
+func RegisterMonster(monster : Monster, r : RandomNumberGenerator, drop : Item = null) -> void:
 	Mon = monster
 	Drop = drop
 	Init(r)

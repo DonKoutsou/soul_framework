@@ -370,7 +370,7 @@ func EV_MonsterKilled(MonGroup : MonsterGroup) -> void:
 	var GoldReward : int = roundi(randf_range(MonGroup.Mon.GoldReward * 0.8, MonGroup.Mon.GoldReward * 1.2))
 	
 	var Mon = MonGroup.Mon
-	MessageBox.RegisterEvent("{0} killed, gained {1} [img={32}x{32}]res://Assets/ItemIcons/Gold.png[/img]".format([Mon.MonsterName, GoldReward]))
+	MessageBox.RegisterEvent("{0} killed, gained {1} light fragments".format([Mon.MonsterName, GoldReward]))
 
 	EnemyKilled.emit(MonGroup, GoldReward)
 

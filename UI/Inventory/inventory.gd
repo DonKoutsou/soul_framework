@@ -333,7 +333,8 @@ func _on_options_next() -> void:
 	if (it is WeaponItem):
 		Cont.ToggleEquipped(it.WeaponsRes.Equipped)
 		#It.WeaponsRes.OnWeaponEquiped.connect(WeaponItemEquipped.bind(It))
-
+	else:
+		Cont.ToggleEquipped(false)
 
 func _on_options_prev() -> void:
 	CurrentlyShownIndex = wrap(CurrentlyShownIndex - 1, 0, InventoryContents.size())
@@ -346,4 +347,6 @@ func _on_options_prev() -> void:
 	
 	if (it is WeaponItem):
 		Cont.ToggleEquipped(it.WeaponsRes.Equipped)
+	else:
+		Cont.ToggleEquipped(false)
 		#It.WeaponsRes.OnWeaponEquiped.connect(WeaponItemEquipped.bind(It))

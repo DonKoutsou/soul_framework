@@ -119,6 +119,7 @@ func PlayerPositionChanged(Pos : Vector3, Rot : Vector3) -> void:
 	QueuedUpdate = true
 	if (Engine.is_editor_hint()):
 		Positions = GetMapData().get_points_in_square(Helper.PlayerPositionToMap(Pos), LoadDistance + 2)
+		BackgroundMesh.position = Pos * Vector3(1,0,1)
 		return
 	
 	Positions = GetMapData().get_points_in_square(Helper.PlayerPositionToMap(Pos), LoadDistance)

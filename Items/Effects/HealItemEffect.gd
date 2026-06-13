@@ -12,9 +12,9 @@ func HealChar(Char : Character, ItemSource : Item) -> void:
 	if (Percentile):
 		AmmountToHeal = roundi(Char.GetStat(CharacterStat.STATS.MAX_HP) * (HealAmm / 100.0))
 	if (Resurect):
-			Char.Heal(AmmountToHeal, ItemSource.ItemIcon.resource_path)
+		Char.Heal(AmmountToHeal)
 	else: if (Char.IsAlive()):
-		Char.Heal(AmmountToHeal, ItemSource.ItemIcon.resource_path)
+		Char.Heal(AmmountToHeal)
 
 func ApplyEffect(Data : Dictionary) -> void:
 	var source = Data["Source"] as Item

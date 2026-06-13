@@ -31,7 +31,7 @@ func GetItemDesc() -> String:
 		text += "[p]Only usable by [color=#1695bdff]{0}[/color]".format([UsableBy.CharacterName])
 	
 	if (Value > -1):
-		text += "[p]Value : [img={16}x{16}]res://Assets/ItemIcons/Gold.png[/img]{0}".format([Value])
+		text += "[p]Value : {0}".format([Value])
 	else:
 		text += "[p][color=#e44d42ff]Can't be sold[/color]"
 	return text

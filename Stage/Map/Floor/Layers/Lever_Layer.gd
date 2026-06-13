@@ -13,7 +13,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, _tempLayerData : 
 		
 		var LevelPos = Pos * map.WorldScale
 		var RoundedPos = Vector3i(LevelPos)
-		var rot = deg_to_rad(GetTileRotationDegrees(Vector2i(Pos.x, Pos.z)))
+		var rot = GetTileRotationRadians(Vector2i(Pos.x, Pos.z))
 		var T = Transform3D(Basis().rotated(Vector3(0,1,0), rot), RoundedPos + Vector3i(0,1,0))
 		LData.Trans = T
 

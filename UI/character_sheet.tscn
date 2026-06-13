@@ -31,7 +31,7 @@ shadow_size = 2
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3h2wq"]
 bg_color = Color(0, 0, 0, 0.8)
 
-[node name="CharacterSheet" type="PanelContainer" unique_id=2017737270 node_paths=PackedStringArray("CharacterHealthBar", "CharacterHealthBar2", "CharacterHealthLabel", "CharacterStaminaBar", "CharacterStaminaBar2", "CharacterStaminaLabel", "CharacterManaBar", "CharacterManaBar2", "CharacterManaLabel", "CharacterManaText", "DeathPanel", "Portrait", "FloaterParent", "FloaterParentBot", "StunnTex")]
+[node name="CharacterSheet" type="PanelContainer" unique_id=2017737270 node_paths=PackedStringArray("CharacterHealthBar", "CharacterHealthBar2", "CharacterHealthLabel", "CharacterStaminaBar", "CharacterStaminaBar2", "CharacterStaminaLabel", "CharacterManaBar", "CharacterManaBar2", "CharacterManaLabel", "CharacterManaText", "DeathPanel", "FloaterParent", "FloaterParentBot", "StunnTex")]
 texture_filter = 1
 custom_minimum_size = Vector2(200, 0)
 anchors_preset = 8
@@ -50,18 +50,17 @@ size_flags_vertical = 10
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ky1d0")
 script = ExtResource("1_hrdcl")
-CharacterHealthBar = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/HealthBar")
-CharacterHealthBar2 = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/HealthBar/HealthBar2")
-CharacterHealthLabel = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/HealthBar/Label")
-CharacterStaminaBar = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/StaminaBar")
-CharacterStaminaBar2 = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/StaminaBar/StaminaBar2")
-CharacterStaminaLabel = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/StaminaBar/Label")
-CharacterManaBar = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/ManaBar")
-CharacterManaBar2 = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/ManaBar/ManaBar2")
-CharacterManaLabel = NodePath("HBoxContainer/HBoxContainer/VBoxContainer2/ManaBar/Label")
+CharacterHealthBar = NodePath("HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/HealthBar")
+CharacterHealthBar2 = NodePath("HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/HealthBar/HealthBar2")
+CharacterHealthLabel = NodePath("HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/HealthBar/Label")
+CharacterStaminaBar = NodePath("HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/StaminaBar")
+CharacterStaminaBar2 = NodePath("HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/StaminaBar/StaminaBar2")
+CharacterStaminaLabel = NodePath("HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/StaminaBar/Label")
+CharacterManaBar = NodePath("HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/ManaBar")
+CharacterManaBar2 = NodePath("HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/ManaBar/ManaBar2")
+CharacterManaLabel = NodePath("HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/ManaBar/Label")
 CharacterManaText = NodePath("HBoxContainer/HBoxContainer/VBoxContainer/Label3")
 DeathPanel = NodePath("DeathPanel")
-Portrait = NodePath("")
 SlashAnim = ExtResource("2_qv1ju")
 FloaterParent = NodePath("Control/VBoxContainer")
 FloaterParentBot = NodePath("Control/VBoxContainer2")
@@ -101,13 +100,17 @@ theme_override_font_sizes/font_size = 12
 text = "MP"
 vertical_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/HBoxContainer" unique_id=1301644375]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/HBoxContainer" unique_id=862180038]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/HBoxContainer/PanelContainer" unique_id=1301644375]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 1
 
-[node name="HealthBar" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1966639464]
+[node name="HealthBar" type="ProgressBar" parent="HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2" unique_id=1966639464]
 custom_minimum_size = Vector2(8, 18)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -118,7 +121,7 @@ theme_override_styles/fill = ExtResource("4_b766n")
 value = 31.38
 show_percentage = false
 
-[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/VBoxContainer2/HealthBar" unique_id=966564328]
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/HealthBar" unique_id=966564328]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -134,7 +137,7 @@ text = "23 / 23"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HealthBar2" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2/HealthBar" unique_id=552858553]
+[node name="HealthBar2" type="ProgressBar" parent="HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/HealthBar" unique_id=552858553]
 show_behind_parent = true
 custom_minimum_size = Vector2(8, 18)
 layout_mode = 1
@@ -151,7 +154,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ky1d0")
 value = 55.94
 show_percentage = false
 
-[node name="StaminaBar" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1415063316]
+[node name="StaminaBar" type="ProgressBar" parent="HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2" unique_id=1415063316]
 custom_minimum_size = Vector2(8, 18)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -162,7 +165,7 @@ theme_override_styles/fill = ExtResource("5_3h2wq")
 value = 31.38
 show_percentage = false
 
-[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/VBoxContainer2/StaminaBar" unique_id=1122144672]
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/StaminaBar" unique_id=1122144672]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -178,7 +181,7 @@ text = "23 / 23"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StaminaBar2" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2/StaminaBar" unique_id=636485069]
+[node name="StaminaBar2" type="ProgressBar" parent="HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/StaminaBar" unique_id=636485069]
 show_behind_parent = true
 custom_minimum_size = Vector2(8, 18)
 layout_mode = 1
@@ -195,8 +198,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ky1d0")
 value = 55.94
 show_percentage = false
 
-[node name="ManaBar" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2" unique_id=61922574]
-visible = false
+[node name="ManaBar" type="ProgressBar" parent="HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2" unique_id=61922574]
 custom_minimum_size = Vector2(8, 18)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -204,10 +206,10 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_qv1ju")
 theme_override_styles/fill = ExtResource("6_ky1d0")
-value = 31.38
+value = 5.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/VBoxContainer2/ManaBar" unique_id=1123182742]
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/ManaBar" unique_id=1123182742]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -223,7 +225,7 @@ text = "23 / 23"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ManaBar2" type="ProgressBar" parent="HBoxContainer/HBoxContainer/VBoxContainer2/ManaBar" unique_id=2109278743]
+[node name="ManaBar2" type="ProgressBar" parent="HBoxContainer/HBoxContainer/PanelContainer/VBoxContainer2/ManaBar" unique_id=2109278743]
 show_behind_parent = true
 custom_minimum_size = Vector2(8, 18)
 layout_mode = 1
