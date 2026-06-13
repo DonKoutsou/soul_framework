@@ -559,10 +559,18 @@ func HandleWalk(event: InputEvent) -> void:
 		NewPosition = PlayerPos
 		MessageBox.RegisterEvent("Way is blocked", false)
 	if (cell.type == CellData.CELLTYPE.DOWN_STAIRS):
-		NewPosition += ((dir * Level.CurrentWorldScale) as Vector3i) - ( Vector3i(0,1,0) * Level.CurrentWorldScale)
+		var stairCell = cell
+		while(stairCell.type == CellData.CELLTYPE.DOWN_STAIRS):
+			NewPosition += ((dir * Level.CurrentWorldScale) as Vector3i) - ( Vector3i(0,1,0) * Level.CurrentWorldScale)
+			stairCell = mapData.GetCell(Helper.PlayerPositionToMap(NewPosition))
+		
 		get_tree().call_group("Enviroments", "ElevationChanged", false)
 	if (cell.type == CellData.CELLTYPE.UP_STAIRS):
-		NewPosition += ((dir * Level.CurrentWorldScale) as Vector3i) + ( Vector3i(0,1,0) * Level.CurrentWorldScale)
+		var stairCell = cell
+		while(stairCell.type == CellData.CELLTYPE.UP_STAIRS):
+			NewPosition += ((dir * Level.CurrentWorldScale) as Vector3i) + ( Vector3i(0,1,0) * Level.CurrentWorldScale)
+			stairCell = mapData.GetCell(Helper.PlayerPositionToMap(NewPosition))
+			
 		get_tree().call_group("Enviroments", "ElevationChanged", true)
 	
 	PlMapPos = Helper.PlayerPositionToMap(NewPosition)

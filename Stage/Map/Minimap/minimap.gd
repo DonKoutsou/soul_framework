@@ -88,6 +88,8 @@ func OnPositionSeen(Pos : Vector3i) -> void:
 	#Get index of texture in atlas
 	var TileIndex = Vector2i(AtlasCoords.x, 0)
 	var TileRotation = Mp.GetFloor(Floor).GetLayer(FloorLayer.LayerType.MAZE).Testtile(mappos)
+	if (!TileLayers.keys().has(CurrentFloor)):
+		return
 	get_node(TileLayers[CurrentFloor][0]).set_cell(mappos, 10, TileIndex, TileRotation)
 	
 	#Check if lock

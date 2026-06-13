@@ -63,7 +63,7 @@ func _ready() -> void:
 		return
 	MonsterMan.MonsterMetPlayer.connect(MonsterMetPlayer)
 	MonsterMan.SetLoadDist(LoadDistance)
-	
+
 
 func SetBG() -> void:
 	BackgroundMesh.scale = (CurrentWorldScale * LoadDistance) * 2
@@ -85,8 +85,8 @@ func Update(delta: float) -> void:
 	if (QueuedUpdate):
 		UpdateMultiMeshes()
 		QueuedUpdate = false
-	if (Engine.is_editor_hint()):
-		return
+	#if (Engine.is_editor_hint()):
+		#return
 	if (!Paused):
 		MonsterMan.Update(delta)
 		TrapMan.Update(delta)
@@ -109,29 +109,25 @@ func configure_map(M : Map) ->void:
 	PropMeshSpawner.SpawnMeshes(M.Props)
 	AudioMan.Data = MData
 
-
 func PlayerPositionChanged(Pos : Vector3, Rot : Vector3) -> void:
 	PropMeshSpawner.PlayerPositionChanged(Pos, Rot)
-	
 	
 	QueuedToUpdate.clear()
 	QueuedToUpdate.append_array(LevelMultimesh.LevelMultimeshTypes.values())
 	QueuedUpdate = true
 	if (Engine.is_editor_hint()):
-		Positions = GetMapData().get_points_in_square(Helper.PlayerPositionToMap(Pos), LoadDistance + 2)
+		Positions = GetMapData().get_points_in_square(Helper.PlayerPositionToMap(Pos), LoadDistance)
 		BackgroundMesh.position = Pos * Vector3(1,0,1)
+		TrapMan.PlPositionChanged(GetMapData(), Positions)
 		return
 	
 	Positions = GetMapData().get_points_in_square(Helper.PlayerPositionToMap(Pos), LoadDistance)
 	
 	var tw = create_tween()
 	tw.tween_property(BackgroundMesh, "position", Pos - Vector3(0, 1, 0), 0.6)
-	#BackgroundMesh.position = Pos
 	
 	TrapMan.PlPositionChanged(GetMapData(), Positions)
 	MonsterMan.PlPositionChanged(Pos)
-	#BackgroundMesh.position = Pos
-	#PropMeshSpawner.PosChanged(Pos, MData.Data)
 
 func MonsterMetPlayer(Group : MonsterGroup) -> void:
 	EnemyMet.emit(Group)
@@ -375,8 +371,6 @@ func UpdateMapCharacters() -> void:
 			Rec.position = Vector3(realPos) + Vector3(0, 0.1 ,0)
 			
 			call_deferred("add_child", Rec)
-
-
 
 func UpdatePlate(pos : Vector3i) -> void:
 	MultiMeshes[LevelMultimesh.LevelMultimeshTypes.PLATES].UpdatePlate(GetMapData(), pos)
