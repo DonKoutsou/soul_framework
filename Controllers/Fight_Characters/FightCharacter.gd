@@ -73,7 +73,8 @@ enum CharacterState{
 	RECOVERING_HIT_LOW,
 	RECOVERING_HIT_MIDDLE,
 	EXTEND_HAND,
-	DIG
+	DIG,
+	TAUNT
 }
 
 enum AtackSide{
@@ -219,6 +220,13 @@ func SetControllingChar(Char : Actor) -> void:
 func SpeedChanged() -> void:
 	var animSpeed = GetAnimSpeed()
 	SkeletonModif.currentWeaponSpeed = animSpeed
+
+#----------------------------------------------------
+func ApplyVisuals(Visuals : Node3D) -> void:
+	sk.add_child(Visuals)
+	for g : MeshInstance3D in Visuals.get_children():
+		g.skeleton = g.get_path_to(sk)
+
 #----------------------------------------------------
 func EquipWeapon(W : Weapon, Notify : bool = true) -> void:
 	ComboWindowOpen = false
@@ -735,6 +743,9 @@ func IsBlocking() -> bool:
 #----------------------------------------------------
 func IsRecoiling() -> bool:
 	return CurrentState in [CharacterState.RECOIL_LEFT, CharacterState.RECOIL_RIGHT, CharacterState.RECOIL_MID]
+#----------------------------------------------------
+func IsTaunting() -> bool:
+	return CurrentState in [CharacterState.TAUNT]
 #----------------------------------------------------
 func Shout() -> void:
 	pass

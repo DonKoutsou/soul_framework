@@ -22,7 +22,6 @@ var Visuals : Node3D
 
 var MedianDecisionCooldown : float = 0
 var Acting : bool
-var Taunting : bool
 
 var FlowUp : bool = false
 var FlowPos : float
@@ -36,12 +35,14 @@ var ComboCatalogue : Array[Array]
 ##Current Combe being executed
 var CurrentCombo : Array[AtackSide]
 
+#------------------------------------------------------------------------------
 func _ready() -> void:
 	super()
 	monsterR = RandomNumberGenerator.new()
 	var pl : Player = Target
 	LookAtNode.target_node = LookAtNode.get_path_to(pl.Cam)
 
+#------------------------------------------------------------------------------
 func SetControllingChar(Char : Actor) -> void:
 	if (Char == null):
 		Visuals.queue_free()
@@ -55,45 +56,26 @@ func SetControllingChar(Char : Actor) -> void:
 	
 	var Group = Char as MonsterGroup
 
-
 	for DecoType : String in Decorations.keys():
 		Decorations[DecoType].clear()
 			
 	BodyModels.clear()
 	
-	var skely : PackedScene = await Helper.Instance.LoadThreaded(Group.Mon.Skeleton).Finished
-	var incommingSkel : Skeleton3D = skely.instantiate()
+	var skeletonScene : PackedScene = await Helper.Instance.LoadThreaded(Group.Mon.Skeleton).Finished
+	var incommingSkel : Skeleton3D = skeletonScene.instantiate()
 
-	sk.clear_bones()
-	
-	for boneIndex in incommingSkel.get_bone_count():
-		sk.add_bone(incommingSkel.get_bone_name(boneIndex))
-		
-		var parentIndex = incommingSkel.get_bone_parent(boneIndex)
-		if (parentIndex != -1):
-			sk.set_bone_parent(boneIndex, parentIndex)
-		
-		sk.set_bone_global_pose(boneIndex, incommingSkel.get_bone_global_pose(boneIndex))
+	CreateSkeleton(incommingSkel)
 	
 	if (Visuals != null):
 		ClearVisuals()
 	
 	var visualScene : PackedScene = await Helper.Instance.LoadThreaded(Group.Mon.Visuals).Finished
 	Visuals = visualScene.instantiate()
-	sk.add_child(Visuals)
-	for g : MeshInstance3D in Visuals.get_children():
-		g.skeleton = g.get_path_to(sk)
-		
-		if (g.name.contains("Deco")):
-			Decorations[g.name.substr(0, 2)].append(g)
-		else: if g.name.contains("B_"):
-			BodyModels.append(g)
+	ApplyVisuals(Visuals)
 	
 	for g in BodyModels:
 		g.set_surface_override_material(0, Group.PickedMat)
 		g.set_instance_shader_parameter("variant_index", Group.variant_index)
-	
-	#Visuals.BindMesh(sk)
 	
 	MedianDecisionCooldown = Group.Mon.GetDecisionCooldown()
 	UpdateState(CharacterState.IDLE)
@@ -101,7 +83,7 @@ func SetControllingChar(Char : Actor) -> void:
 	Blocking = false
 	Parrying = false
 	StartingParry = false
-	UpdateCharacterCombos()
+	GenerateCombos()
 	
 	Char.Exposed.connect(Exposed)
 	Char.SpeedBuffed.connect(SpeedChanged)
@@ -113,27 +95,63 @@ func SetControllingChar(Char : Actor) -> void:
 	
 	
 	ControllingCharacterSet.emit()
+
+#------------------------------------------------------------------------------
+#Apply bones from incomming skeleton to this scenes skeleton
+func CreateSkeleton(incommingSkel : Skeleton3D) -> void:
+	sk.clear_bones()
 	
-func UpdateCharacterCombos() -> void:
+	for boneIndex in incommingSkel.get_bone_count():
+		sk.add_bone(incommingSkel.get_bone_name(boneIndex))
+		
+		var parentIndex = incommingSkel.get_bone_parent(boneIndex)
+		if (parentIndex != -1):
+			sk.set_bone_parent(boneIndex, parentIndex)
+		
+		sk.set_bone_global_pose(boneIndex, incommingSkel.get_bone_global_pose(boneIndex))
+
+#----------------------------------------------------
+func ApplyVisuals(viz : Node3D) -> void:
+	sk.add_child(viz)
+	for g : MeshInstance3D in viz.get_children():
+		g.skeleton = g.get_path_to(sk)
+		if (g.name.contains("Deco")):
+			Decorations[g.name.substr(0, 2)].append(g)
+		else: if g.name.contains("B_"):
+			BodyModels.append(g)
+
+		
+#----------------------------------------------------------------------
+func GenerateCombos() -> void:
 	var availableAttacks = [AtackSide.TOP, AtackSide.LEFT, AtackSide.RIGHT, AtackSide.MIDDLE]
+	#Make sure to keep the combo size within the characer's stamina range.
+	var maxHitAmmount = floori(ControllingCharacter.GetMaxFatigue() / GetRequiredStaminaForHit())
+	
 	ComboCatalogue.clear()
 	#create 3 combos of 3 hits
 	for g in 3:
 		var combo : Array[AtackSide]
 		combo.append(availableAttacks.pick_random())
 		
-		for z in randi_range(1, 3):
+		for z in min(randi_range(1, 3), maxHitAmmount - 1):
+			#we make sure that each combo is on different side cause animation system can't support same side attacks
 			var pickedAttack = availableAttacks.pick_random()
 			while combo[z] == pickedAttack:
 				pickedAttack = availableAttacks.pick_random()
 			combo.append(pickedAttack)
-			
+		
 		ComboCatalogue.append(combo)
-	
-	CurrentCombo = ComboCatalogue.pick_random().duplicate()
+	PickNewCombo()
 
+#----------------------------------------------------------------------
 func PickNewCombo() -> void:
 	CurrentCombo = ComboCatalogue.pick_random().duplicate()
+	
+#----------------------------------------------------------------------
+#Force to pick new 
+func CancelHits() -> void:
+	super()
+	CurrentCombo.clear()
 
 #----------------------------------------------------------------------
 #Decission making function
@@ -163,8 +181,8 @@ func GetCharacterActions() -> Callable:
 			ActionWeights.append(goodWeight)
 	
 	
-	#if (!IsCharging() and HasStaminaForHit()):
-	if (!IsCharging()):
+	if (!IsCharging() and HasStaminaForHit()):
+	#if (!IsCharging()):
 	#else: if (!IsCharging()):
 		#if (IsCharged()):
 			#ActionList.append(CancelHits)
@@ -215,7 +233,7 @@ func GetCharacterActions() -> Callable:
 			var direction : AtackSide
 			if (CurrentCombo.size() == 0):
 				ActionList.append(PickNewCombo)
-				ActionWeights.append(0.3)
+				ActionWeights.append(0.1)
 				direction = PickAtackDirection()
 			else:
 				direction = CurrentCombo[0]
@@ -244,14 +262,13 @@ func GetCharacterActions() -> Callable:
 			
 
 	if (ActionList.size() == 0):
-		
 		ActionList.append(DoNothing)
 		ActionWeights.append(1)
-		#if (CurrentState == CharacterState.IDLE):
-			#ActionList.append(Taunt)
-			#ActionWeights.append(1)
+		if (CurrentState == CharacterState.IDLE):
+			ActionList.append(Taunt)
+			ActionWeights.append(1)
 		#return DoNothing
-	
+		
 	return ActionList[monsterR.rand_weighted(ActionWeights)]
 
 
@@ -313,6 +330,7 @@ func GetDuckDirectionBasedOnState(State : CharacterState) -> AtackSide:
 		_:
 			return AtackSide.MIDDLE
 
+#------------------------------------------------------------------------------
 func PickAtackDirection() -> AtackSide:
 	var AvailableAtackDirections : Array
 	if (ControllingCharacter.Mon.Dificulty <= Monster.MonsterDifficulty.C):
@@ -336,15 +354,16 @@ func PickAtackDirection() -> AtackSide:
 		
 	return AvailableAtackDirections.pick_random()
 	
-
+#------------------------------------------------------------------------------
 func AnimTreeFinished(anim_name: StringName) -> void:
 	super(anim_name)
 	if (anim_name == "Death"):
 		DeathFinished()
 
-	if (anim_name == "Taunt"):
-		Taunting = false
+	if (anim_name == "Taunt" and IsTaunting()):
+		UpdateState(CharacterState.IDLE)
 
+#------------------------------------------------------------------------------
 func UpdateAnims(delta : float) -> void:
 	super(delta)
 	if (Dead):
@@ -354,6 +373,7 @@ func UpdateAnims(delta : float) -> void:
 	else:
 		LookAtNode.influence = min(1, LookAtNode.influence + (delta))
 
+#------------------------------------------------------------------------------
 func Update(delta: float) -> void:
 	if (Dead):
 		return
@@ -392,6 +412,12 @@ func Update(delta: float) -> void:
 func GetFightName() -> String:
 	return "Enemy"
 
+#------------------------------------------------------------------------------
+func HasStaminaForHit() -> bool:
+	if (CurrentCombo.size() > 0):
+		return ControllingCharacter.GetMaxFatigue() - ControllingCharacter.Fatigue > GetRequiredStaminaForHit() * CurrentCombo.size()
+	return ControllingCharacter.GetMaxFatigue() - ControllingCharacter.Fatigue > GetRequiredStaminaForHit()
+
 #-------------------------------------------------------------------
 #Dummy function called when we want enemy to keep doing what they are doing
 func DoNothing() -> void:
@@ -399,8 +425,7 @@ func DoNothing() -> void:
 
 #-------------------------------------------------------------------
 func Taunt() -> void:
-	pass
-	#Taunting = true
+	UpdateState(CharacterState.TAUNT)
 	#AnimTree.set("parameters/TauntShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 #-------------------------------------------------------------------
@@ -437,17 +462,20 @@ func RecoilFinished() -> void:
 		else:
 			UpdateState(CharacterState.IDLE)
 
+#------------------------------------------------------------------------------
 func Defeated() -> void:
 	Dead = true
 	CancelHits()
 	UpdateState(FightCharacter.CharacterState.DEATH)
 	UpdateSkeletonState()
-	
+
+#------------------------------------------------------------------------------
 func DeathFinished() -> void:
 	
 	queue_free()
 	DeathAnimFin.emit()
 
+#------------------------------------------------------------------------------
 func ClearVisuals() -> void:
 	ControllingCharacter.Exposed.disconnect(Exposed)
 	ControllingCharacter.SpeedBuffed.disconnect(SpeedChanged)

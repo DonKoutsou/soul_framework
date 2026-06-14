@@ -51,10 +51,8 @@ func SetControllingChar(Char : Actor) -> void:
 	var c : Character = Char
 	
 	var Visuals = load(c.Visuals).instantiate()
-	sk.add_child(Visuals)
-	for g : MeshInstance3D in Visuals.get_children():
-		g.skeleton = g.get_path_to(sk)
-
+	ApplyVisuals(Visuals)
+	
 func SetRightHandLocator(t : float) -> void:
 	if (LanternHandTween != null and LanternHandTween.is_valid()):
 		LanternHandTween.kill()

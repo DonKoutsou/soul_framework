@@ -35,6 +35,7 @@
 [ext_resource type="Resource" uid="uid://dow2t0bu5ba6n" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Hit_Right_Retaliation.tres" id="32_7dhat"]
 [ext_resource type="Resource" uid="uid://ch16mqvgbjpp4" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Hit_Left_Retaliation.tres" id="33_1nfmo"]
 [ext_resource type="Resource" uid="uid://bg4gjsi8u2f3a" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Hit_Mid_Retaliation.tres" id="34_msqrw"]
+[ext_resource type="Resource" uid="uid://dm6ivbnsibt1" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Taunt.tres" id="35_5mrp1"]
 [ext_resource type="Resource" uid="uid://do5uxwtrkt31b" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Stun.tres" id="35_rif2c"]
 [ext_resource type="Resource" uid="uid://dfwyrnlf06arg" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Death.tres" id="36_ynkxg"]
 [ext_resource type="Script" uid="uid://bj3feok1xkxq" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/MomentumModifier.gd" id="38_5mrp1"]
@@ -85,7 +86,7 @@ CurrentWeaponType = 1
 currentWeaponSpeed = 0.6
 RecoilCurve = SubResource("Curve_kw201")
 animator = NodePath("../../AnimationPlayer")
-anims = Array[ExtResource("6_c3124")]([ExtResource("7_fxlpe"), ExtResource("8_idwut"), ExtResource("9_346la"), ExtResource("10_u1yga"), ExtResource("11_6amx8"), ExtResource("12_54r4c"), ExtResource("13_rsh0k"), ExtResource("16_j76hl"), ExtResource("19_imyf8"), ExtResource("22_42pm0"), ExtResource("25_07b8e"), ExtResource("14_i0p3c"), ExtResource("17_rhc6q"), ExtResource("20_7p8ku"), ExtResource("23_i7be4"), ExtResource("26_3qlyl"), ExtResource("15_cd1oo"), ExtResource("18_e5vxb"), ExtResource("21_ifhe0"), ExtResource("24_2d3ej"), ExtResource("27_xdwjo"), ExtResource("28_ed8mm"), ExtResource("29_ya6kn"), ExtResource("30_iepkp"), ExtResource("30_ohxwn"), ExtResource("32_7dhat"), ExtResource("33_1nfmo"), ExtResource("34_msqrw"), ExtResource("35_rif2c"), ExtResource("36_ynkxg")])
+anims = Array[ExtResource("6_c3124")]([ExtResource("7_fxlpe"), ExtResource("8_idwut"), ExtResource("9_346la"), ExtResource("10_u1yga"), ExtResource("11_6amx8"), ExtResource("12_54r4c"), ExtResource("13_rsh0k"), ExtResource("16_j76hl"), ExtResource("19_imyf8"), ExtResource("22_42pm0"), ExtResource("25_07b8e"), ExtResource("14_i0p3c"), ExtResource("17_rhc6q"), ExtResource("20_7p8ku"), ExtResource("23_i7be4"), ExtResource("26_3qlyl"), ExtResource("15_cd1oo"), ExtResource("18_e5vxb"), ExtResource("21_ifhe0"), ExtResource("24_2d3ej"), ExtResource("27_xdwjo"), ExtResource("28_ed8mm"), ExtResource("29_ya6kn"), ExtResource("30_iepkp"), ExtResource("30_ohxwn"), ExtResource("32_7dhat"), ExtResource("33_1nfmo"), ExtResource("34_msqrw"), ExtResource("35_rif2c"), ExtResource("36_ynkxg"), ExtResource("35_5mrp1")])
 metadata/_custom_type_script = "uid://2o6tgcat6qck"
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=352902681]
@@ -104,7 +105,6 @@ transform = Transform3D(-0.15100369, 0.12252966, -0.98090994, -0.92727983, 0.326
 
 [node name="SwipeMesh" type="MeshInstance3D" parent="GeneralSkeleton/Palm_L/WeaponPlacement" unique_id=1253460155]
 transform = Transform3D(125.00001, 0, 0, 0, 44.999992, 0, 0, 0, 125.00001, 0, 0, 0)
-visible = false
 material_override = ExtResource("4_84woi")
 mesh = ExtResource("5_66mam")
 blend_shapes/blendShape1.Closed = 1.0
@@ -118,7 +118,6 @@ transform = Transform3D(-0.15100369, 0.12252966, -0.98090994, -0.92727983, 0.326
 
 [node name="SwipeMesh" type="MeshInstance3D" parent="GeneralSkeleton/Palm_L2/WeaponPlacement" unique_id=1282154268]
 transform = Transform3D(125.00001, 0, 0, 0, 44.999992, 0, 0, 0, 125.00001, 0, 0, 0)
-visible = false
 material_override = ExtResource("4_84woi")
 mesh = ExtResource("5_66mam")
 blend_shapes/blendShape1.Closed = 1.0

@@ -380,7 +380,7 @@ func ProgressAnimation(animIndex : int, delta : float) -> void:
 		if (anim.AffectedByWeapon):
 			blendOutDuration /= currentWeaponSpeed
 			
-		var timeUntilBlendOut = (remainingBlendTime * blendOutDuration) - delta
+		var timeUntilBlendOut = (remainingBlendTime * blendOutDuration) - (delta * 4)
 		
 		
 		if (animProgress[animIndex] + timeUntilBlendOut > currentAnim.length):

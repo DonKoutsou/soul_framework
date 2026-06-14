@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AnimationInfo" format=3 uid="uid://dm6ivbnsibt1"]
+
+[ext_resource type="Curve" uid="uid://cot3ch0uluahv" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/EaseOut.tres" id="1_c7t48"]
+[ext_resource type="Script" uid="uid://bl0vbdv76yftl" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/AnimationInfo.gd" id="2_d2ybx"]
+
+[resource]
+script = ExtResource("2_d2ybx")
+AnimName = "Taunt"
+BlendCurve = ExtResource("1_c7t48")
+BlendOutCurve = ExtResource("1_c7t48")
+Blend_Duration = 0.3
+Blend_Out_Duration = 0.3
+ValidStates = Array[int]([42])
+metadata/_custom_type_script = "uid://bl0vbdv76yftl"

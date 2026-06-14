@@ -10,19 +10,19 @@
 [ext_resource type="ArrayMesh" uid="uid://cgdfvwqi5kv82" path="res://Engine/Assets/Player/B_Dummy_LeftUpperLeg.res" id="8_g5xiv"]
 [ext_resource type="ArrayMesh" uid="uid://bc2twcyydvled" path="res://Engine/Assets/Player/B_Dummy_RightUpperLeg.res" id="9_nejc3"]
 [ext_resource type="ArrayMesh" uid="uid://ddw3jblt3ivm" path="res://Engine/Assets/Player/B_Dummy_RightMiddleIntermediate.res" id="10_q3lxh"]
-[ext_resource type="ArrayMesh" uid="uid://d20bf3cfsl1vq" path="res://Engine/Assets/Player/B_Dummy_RightMiddleProximal.res" id="11_qxej2"]
-[ext_resource type="ArrayMesh" uid="uid://b6uqf455vgqah" path="res://Engine/Assets/Player/B_Dummy_RightThumbDistal.res" id="12_j4scf"]
-[ext_resource type="ArrayMesh" uid="uid://vpnobob8cs25" path="res://Engine/Assets/Player/B_Dummy_RightThumbProximal.res" id="13_4w4uy"]
-[ext_resource type="ArrayMesh" uid="uid://bpgycsfqykbcb" path="res://Engine/Assets/Player/B_Dummy_LeftHand.res" id="14_78ut0"]
-[ext_resource type="ArrayMesh" uid="uid://d12yix41cxtvg" path="res://Engine/Assets/Player/B_Dummy_LeftMiddleIntermediate.res" id="15_xd6u7"]
-[ext_resource type="ArrayMesh" uid="uid://c4ck4a1rmhfqo" path="res://Engine/Assets/Player/B_Dummy_LeftMiddleProximal.res" id="16_teuxl"]
-[ext_resource type="ArrayMesh" uid="uid://cxcpmj3ft7r05" path="res://Engine/Assets/Player/B_Dummy_LeftThumbDistal.res" id="17_k62ek"]
-[ext_resource type="ArrayMesh" uid="uid://b5cuhjfh73p5y" path="res://Engine/Assets/Player/B_Dummy_LeftThumbProximal.res" id="18_gl0g0"]
-[ext_resource type="ArrayMesh" uid="uid://bbckcx03wmtmy" path="res://Engine/Assets/Player/B_Dummy_LeftThumbMetacarpal.res" id="19_wwuxi"]
-[ext_resource type="ArrayMesh" uid="uid://b1a14nxganojx" path="res://Engine/Assets/Player/B_Dummy_LeftLowerArm.res" id="20_2qo6i"]
-[ext_resource type="ArrayMesh" uid="uid://ccgva4w7wf6fn" path="res://Engine/Assets/Player/B_Dummy_RightHand.res" id="21_ult5g"]
-[ext_resource type="ArrayMesh" uid="uid://uwgvqn4inlj0" path="res://Engine/Assets/Player/B_Dummy_RightThumbMetacarpal.res" id="22_ntl47"]
-[ext_resource type="ArrayMesh" uid="uid://duad30kkvj8qh" path="res://Engine/Assets/Player/B_Dummy_RightLowerArm.res" id="23_3cgm2"]
+[ext_resource type="ArrayMesh" uid="uid://b6uqf455vgqah" path="res://Engine/Assets/Player/B_Dummy_RightThumbDistal.res" id="11_qxej2"]
+[ext_resource type="ArrayMesh" uid="uid://vpnobob8cs25" path="res://Engine/Assets/Player/B_Dummy_RightThumbProximal.res" id="12_j4scf"]
+[ext_resource type="ArrayMesh" uid="uid://bpgycsfqykbcb" path="res://Engine/Assets/Player/B_Dummy_LeftHand.res" id="13_4w4uy"]
+[ext_resource type="ArrayMesh" uid="uid://d12yix41cxtvg" path="res://Engine/Assets/Player/B_Dummy_LeftMiddleIntermediate.res" id="14_78ut0"]
+[ext_resource type="ArrayMesh" uid="uid://c4ck4a1rmhfqo" path="res://Engine/Assets/Player/B_Dummy_LeftMiddleProximal.res" id="15_xd6u7"]
+[ext_resource type="ArrayMesh" uid="uid://cxcpmj3ft7r05" path="res://Engine/Assets/Player/B_Dummy_LeftThumbDistal.res" id="16_teuxl"]
+[ext_resource type="ArrayMesh" uid="uid://b5cuhjfh73p5y" path="res://Engine/Assets/Player/B_Dummy_LeftThumbProximal.res" id="17_k62ek"]
+[ext_resource type="ArrayMesh" uid="uid://bbckcx03wmtmy" path="res://Engine/Assets/Player/B_Dummy_LeftThumbMetacarpal.res" id="18_gl0g0"]
+[ext_resource type="ArrayMesh" uid="uid://b1a14nxganojx" path="res://Engine/Assets/Player/B_Dummy_LeftLowerArm.res" id="19_wwuxi"]
+[ext_resource type="ArrayMesh" uid="uid://duad30kkvj8qh" path="res://Engine/Assets/Player/B_Dummy_RightLowerArm.res" id="20_2qo6i"]
+[ext_resource type="ArrayMesh" uid="uid://uwgvqn4inlj0" path="res://Engine/Assets/Player/B_Dummy_RightThumbMetacarpal.res" id="21_ult5g"]
+[ext_resource type="ArrayMesh" uid="uid://d20bf3cfsl1vq" path="res://Engine/Assets/Player/B_Dummy_RightMiddleProximal.res" id="22_ntl47"]
+[ext_resource type="ArrayMesh" uid="uid://ccgva4w7wf6fn" path="res://Engine/Assets/Player/B_Dummy_RightHand.res" id="23_3cgm2"]
 
 [sub_resource type="Skin" id="Skin_8yeie"]
 bind_count = 31
@@ -984,102 +984,6 @@ bind/30/name = &"CameraBone"
 bind/30/bone = 30
 bind/30/pose = Transform3D(-1, -1.196239e-11, 6.2783295e-07, -8.697907e-15, 1.0000004, 1.9039615e-05, -6.2783295e-07, 1.903961e-05, -1, -4.605478e-09, -0.77100044, 0.007335527)
 
-[sub_resource type="Skin" id="Skin_scuoh"]
-bind_count = 31
-bind/0/name = &"Root"
-bind/0/bone = 0
-bind/0/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0024026036, 0)
-bind/1/name = &"Hips"
-bind/1/bone = 1
-bind/1/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5517121, 0)
-bind/2/name = &"LeftUpperLeg"
-bind/2/bone = 2
-bind/2/pose = Transform3D(-1, 0, 0, 0, -1, 0, 0, 0, 1, 0.0452373, 0.54889584, 0.00020066049)
-bind/3/name = &"LeftLowerLeg"
-bind/3/bone = 3
-bind/3/pose = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, -0.06947304, 0.2877282, -0.008564633)
-bind/4/name = &"LeftFoot"
-bind/4/bone = 4
-bind/4/pose = Transform3D(-1, 0, 0, 0, 0, 1, 0, 1, 0, 0.097296305, 0.04741538, -0.038216323)
-bind/5/name = &"RightUpperLeg"
-bind/5/bone = 5
-bind/5/pose = Transform3D(-1, 0, 0, 0, -1, 0, 0, 0, 1, -0.04523729, 0.54889584, 0.00020066035)
-bind/6/name = &"RightLowerLeg"
-bind/6/bone = 6
-bind/6/pose = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, 0.06947305, 0.28772813, -0.008564631)
-bind/7/name = &"RightFoot"
-bind/7/bone = 7
-bind/7/pose = Transform3D(-1, 0, 0, 0, 0, 1, 0, 1, 0, -0.097296305, 0.04741539, -0.038216263)
-bind/8/name = &"Spine"
-bind/8/bone = 8
-bind/8/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8048736e-17, -0.6166278, 0.007582489)
-bind/9/name = &"UpperChest"
-bind/9/bone = 9
-bind/9/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0213786e-16, -0.73430926, 0.015164976)
-bind/10/name = &"LeftShoulder"
-bind/10/bone = 10
-bind/10/pose = Transform3D(0, 0, 1, 1, 0, 0, 0, 1, 0, 0.009805603, -0.02262, -0.8256079)
-bind/11/name = &"LeftUpperArm"
-bind/11/bone = 11
-bind/11/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.051640034, -0.109754, 0.78291243)
-bind/12/name = &"LeftLowerArm"
-bind/12/bone = 12
-bind/12/pose = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0.6511692, -0.18695638, 0.072157115)
-bind/13/name = &"LeftHand"
-bind/13/bone = 13
-bind/13/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.026133735, -0.2545046, 0.51581615)
-bind/14/name = &"LeftMiddleProximal"
-bind/14/bone = 14
-bind/14/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.025119323, -0.27352104, 0.45436043)
-bind/15/name = &"LeftMiddleIntermediate"
-bind/15/bone = 15
-bind/15/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.026395721, -0.27597573, 0.4285733)
-bind/16/name = &"LeftThumbMetacarpal"
-bind/16/bone = 16
-bind/16/pose = Transform3D(0, 1, 0, 0.8169927, 0, 0.5777019, 0.5777019, 0, -0.81699276, -0.5158162, -0.19283088, -0.16837886)
-bind/17/name = &"LeftThumbProximal"
-bind/17/bone = 17
-bind/17/pose = Transform3D(0, 1, 0, 0.8169927, 0, 0.5777019, 0.5777019, 0, -0.81699276, -0.49145228, -0.20435287, -0.14235029)
-bind/18/name = &"LeftThumbDistal"
-bind/18/bone = 18
-bind/18/pose = Transform3D(0, 1, 0, 0.81699264, 0, 0.57770187, 0.57770187, 0, -0.8169927, -0.47224888, -0.2046535, -0.13331275)
-bind/19/name = &"WeaponPlacement.L"
-bind/19/bone = 19
-bind/19/pose = Transform3D(-0.95473945, -0.2959234, -0.030025441, 0.2955676, -0.955191, 0.015766773, -0.033345822, 0.0061785635, 0.99942434, 0.394843, 0.41789174, 0.03141833)
-bind/20/name = &"RightShoulder"
-bind/20/bone = 20
-bind/20/pose = Transform3D(0, 0, -1, -1, 0, 0, 0, 1, 0, -0.009805603, -0.02262, -0.8256079)
-bind/21/name = &"RightUpperArm"
-bind/21/bone = 21
-bind/21/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.051640004, -0.10975401, 0.78291243)
-bind/22/name = &"RightLowerArm"
-bind/22/bone = 22
-bind/22/pose = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -0.6511692, -0.1869564, 0.072157055)
-bind/23/name = &"RightHand"
-bind/23/bone = 23
-bind/23/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.026133627, -0.2545047, 0.5158161)
-bind/24/name = &"RightMiddleProximal"
-bind/24/bone = 24
-bind/24/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.025119215, -0.27352116, 0.45436037)
-bind/25/name = &"RightMiddleIntermediate"
-bind/25/bone = 25
-bind/25/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.026395613, -0.27597588, 0.42857322)
-bind/26/name = &"RightThumbMetacarpal"
-bind/26/bone = 26
-bind/26/pose = Transform3D(0, -1, 0, -0.8169927, 0, 0.5777019, -0.5777019, 0, -0.81699276, 0.5158161, -0.19283104, -0.16837886)
-bind/27/name = &"RightThumbProximal"
-bind/27/bone = 27
-bind/27/pose = Transform3D(0, -1, 0, -0.8169927, 0, 0.5777019, -0.5777019, 0, -0.81699276, 0.49145216, -0.20435305, -0.14235023)
-bind/28/name = &"RightThumbDistal"
-bind/28/bone = 28
-bind/28/pose = Transform3D(0, -1, 0, -0.81699264, 0, 0.57770187, -0.57770187, 0, -0.8169927, 0.47224885, -0.20465364, -0.13331275)
-bind/29/name = &"WeaponPlacement.R"
-bind/29/bone = 29
-bind/29/pose = Transform3D(-0.95473945, 0.29592356, 0.030025208, -0.29556787, -0.95519143, 0.015766837, 0.033345506, 0.0061787246, 0.99942446, -0.39484313, 0.41789174, 0.03141807)
-bind/30/name = &"CameraBone"
-bind/30/bone = 30
-bind/30/pose = Transform3D(-1, -1.196239e-11, 6.2783295e-07, -8.697907e-15, 1.0000004, 1.9039615e-05, -6.2783295e-07, 1.903961e-05, -1, -4.605478e-09, -0.77100044, 0.007335527)
-
 [sub_resource type="Skin" id="Skin_uqtfr"]
 bind_count = 31
 bind/0/name = &"Root"
@@ -1944,7 +1848,7 @@ bind/30/name = &"CameraBone"
 bind/30/bone = 30
 bind/30/pose = Transform3D(-1, -1.196239e-11, 6.2783295e-07, -8.697907e-15, 1.0000004, 1.9039615e-05, -6.2783295e-07, 1.903961e-05, -1, -4.605478e-09, -0.77100044, 0.007335527)
 
-[sub_resource type="Skin" id="Skin_hpyej"]
+[sub_resource type="Skin" id="Skin_2h4bn"]
 bind_count = 31
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -2136,7 +2040,7 @@ bind/30/name = &"CameraBone"
 bind/30/bone = 30
 bind/30/pose = Transform3D(-1, -1.196239e-11, 6.2783295e-07, -8.697907e-15, 1.0000004, 1.9039615e-05, -6.2783295e-07, 1.903961e-05, -1, -4.605478e-09, -0.77100044, 0.007335527)
 
-[sub_resource type="Skin" id="Skin_2h4bn"]
+[sub_resource type="Skin" id="Skin_scuoh"]
 bind_count = 31
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -2232,96 +2136,192 @@ bind/30/name = &"CameraBone"
 bind/30/bone = 30
 bind/30/pose = Transform3D(-1, -1.196239e-11, 6.2783295e-07, -8.697907e-15, 1.0000004, 1.9039615e-05, -6.2783295e-07, 1.903961e-05, -1, -4.605478e-09, -0.77100044, 0.007335527)
 
-[node name="" type="Node3D" unique_id=1317079579]
+[sub_resource type="Skin" id="Skin_hpyej"]
+bind_count = 31
+bind/0/name = &"Root"
+bind/0/bone = 0
+bind/0/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0024026036, 0)
+bind/1/name = &"Hips"
+bind/1/bone = 1
+bind/1/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5517121, 0)
+bind/2/name = &"LeftUpperLeg"
+bind/2/bone = 2
+bind/2/pose = Transform3D(-1, 0, 0, 0, -1, 0, 0, 0, 1, 0.0452373, 0.54889584, 0.00020066049)
+bind/3/name = &"LeftLowerLeg"
+bind/3/bone = 3
+bind/3/pose = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, -0.06947304, 0.2877282, -0.008564633)
+bind/4/name = &"LeftFoot"
+bind/4/bone = 4
+bind/4/pose = Transform3D(-1, 0, 0, 0, 0, 1, 0, 1, 0, 0.097296305, 0.04741538, -0.038216323)
+bind/5/name = &"RightUpperLeg"
+bind/5/bone = 5
+bind/5/pose = Transform3D(-1, 0, 0, 0, -1, 0, 0, 0, 1, -0.04523729, 0.54889584, 0.00020066035)
+bind/6/name = &"RightLowerLeg"
+bind/6/bone = 6
+bind/6/pose = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, 0.06947305, 0.28772813, -0.008564631)
+bind/7/name = &"RightFoot"
+bind/7/bone = 7
+bind/7/pose = Transform3D(-1, 0, 0, 0, 0, 1, 0, 1, 0, -0.097296305, 0.04741539, -0.038216263)
+bind/8/name = &"Spine"
+bind/8/bone = 8
+bind/8/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8048736e-17, -0.6166278, 0.007582489)
+bind/9/name = &"UpperChest"
+bind/9/bone = 9
+bind/9/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0213786e-16, -0.73430926, 0.015164976)
+bind/10/name = &"LeftShoulder"
+bind/10/bone = 10
+bind/10/pose = Transform3D(0, 0, 1, 1, 0, 0, 0, 1, 0, 0.009805603, -0.02262, -0.8256079)
+bind/11/name = &"LeftUpperArm"
+bind/11/bone = 11
+bind/11/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.051640034, -0.109754, 0.78291243)
+bind/12/name = &"LeftLowerArm"
+bind/12/bone = 12
+bind/12/pose = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0.6511692, -0.18695638, 0.072157115)
+bind/13/name = &"LeftHand"
+bind/13/bone = 13
+bind/13/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.026133735, -0.2545046, 0.51581615)
+bind/14/name = &"LeftMiddleProximal"
+bind/14/bone = 14
+bind/14/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.025119323, -0.27352104, 0.45436043)
+bind/15/name = &"LeftMiddleIntermediate"
+bind/15/bone = 15
+bind/15/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.026395721, -0.27597573, 0.4285733)
+bind/16/name = &"LeftThumbMetacarpal"
+bind/16/bone = 16
+bind/16/pose = Transform3D(0, 1, 0, 0.8169927, 0, 0.5777019, 0.5777019, 0, -0.81699276, -0.5158162, -0.19283088, -0.16837886)
+bind/17/name = &"LeftThumbProximal"
+bind/17/bone = 17
+bind/17/pose = Transform3D(0, 1, 0, 0.8169927, 0, 0.5777019, 0.5777019, 0, -0.81699276, -0.49145228, -0.20435287, -0.14235029)
+bind/18/name = &"LeftThumbDistal"
+bind/18/bone = 18
+bind/18/pose = Transform3D(0, 1, 0, 0.81699264, 0, 0.57770187, 0.57770187, 0, -0.8169927, -0.47224888, -0.2046535, -0.13331275)
+bind/19/name = &"WeaponPlacement.L"
+bind/19/bone = 19
+bind/19/pose = Transform3D(-0.95473945, -0.2959234, -0.030025441, 0.2955676, -0.955191, 0.015766773, -0.033345822, 0.0061785635, 0.99942434, 0.394843, 0.41789174, 0.03141833)
+bind/20/name = &"RightShoulder"
+bind/20/bone = 20
+bind/20/pose = Transform3D(0, 0, -1, -1, 0, 0, 0, 1, 0, -0.009805603, -0.02262, -0.8256079)
+bind/21/name = &"RightUpperArm"
+bind/21/bone = 21
+bind/21/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.051640004, -0.10975401, 0.78291243)
+bind/22/name = &"RightLowerArm"
+bind/22/bone = 22
+bind/22/pose = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -0.6511692, -0.1869564, 0.072157055)
+bind/23/name = &"RightHand"
+bind/23/bone = 23
+bind/23/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.026133627, -0.2545047, 0.5158161)
+bind/24/name = &"RightMiddleProximal"
+bind/24/bone = 24
+bind/24/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.025119215, -0.27352116, 0.45436037)
+bind/25/name = &"RightMiddleIntermediate"
+bind/25/bone = 25
+bind/25/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.026395613, -0.27597588, 0.42857322)
+bind/26/name = &"RightThumbMetacarpal"
+bind/26/bone = 26
+bind/26/pose = Transform3D(0, -1, 0, -0.8169927, 0, 0.5777019, -0.5777019, 0, -0.81699276, 0.5158161, -0.19283104, -0.16837886)
+bind/27/name = &"RightThumbProximal"
+bind/27/bone = 27
+bind/27/pose = Transform3D(0, -1, 0, -0.8169927, 0, 0.5777019, -0.5777019, 0, -0.81699276, 0.49145216, -0.20435305, -0.14235023)
+bind/28/name = &"RightThumbDistal"
+bind/28/bone = 28
+bind/28/pose = Transform3D(0, -1, 0, -0.81699264, 0, 0.57770187, -0.57770187, 0, -0.8169927, 0.47224885, -0.20465364, -0.13331275)
+bind/29/name = &"WeaponPlacement.R"
+bind/29/bone = 29
+bind/29/pose = Transform3D(-0.95473945, 0.29592356, 0.030025208, -0.29556787, -0.95519143, 0.015766837, 0.033345506, 0.0061787246, 0.99942446, -0.39484313, 0.41789174, 0.03141807)
+bind/30/name = &"CameraBone"
+bind/30/bone = 30
+bind/30/pose = Transform3D(-1, -1.196239e-11, 6.2783295e-07, -8.697907e-15, 1.0000004, 1.9039615e-05, -6.2783295e-07, 1.903961e-05, -1, -4.605478e-09, -0.77100044, 0.007335527)
 
-[node name="B_Dummy_Hips" type="MeshInstance3D" parent="." unique_id=1213205262]
+[node name="" type="Node3D" unique_id=25704955]
+
+[node name="B_Dummy_Hips" type="MeshInstance3D" parent="." unique_id=1737762094]
 mesh = ExtResource("1_x7npx")
 skin = SubResource("Skin_8yeie")
 
-[node name="B_Dummy_LeftFoot" type="MeshInstance3D" parent="." unique_id=656958971]
+[node name="B_Dummy_LeftFoot" type="MeshInstance3D" parent="." unique_id=240820241]
 mesh = ExtResource("2_lfwey")
 skin = SubResource("Skin_81p8x")
 
-[node name="B_Dummy_RightFoot" type="MeshInstance3D" parent="." unique_id=1765684320]
+[node name="B_Dummy_RightFoot" type="MeshInstance3D" parent="." unique_id=529489587]
 mesh = ExtResource("3_3vkq1")
 skin = SubResource("Skin_xo76m")
 
-[node name="B_Dummy_LeftLowerLeg" type="MeshInstance3D" parent="." unique_id=1728663152]
+[node name="B_Dummy_LeftLowerLeg" type="MeshInstance3D" parent="." unique_id=1994098321]
 mesh = ExtResource("4_xd3pp")
 skin = SubResource("Skin_ecc0r")
 
-[node name="B_Dummy_RightLowerLeg" type="MeshInstance3D" parent="." unique_id=1463660217]
+[node name="B_Dummy_RightLowerLeg" type="MeshInstance3D" parent="." unique_id=1185802950]
 mesh = ExtResource("5_2xsyg")
 skin = SubResource("Skin_4gnnn")
 
-[node name="B_Dummy_LeftUpperArm" type="MeshInstance3D" parent="." unique_id=1804644000]
+[node name="B_Dummy_LeftUpperArm" type="MeshInstance3D" parent="." unique_id=1601325934]
 mesh = ExtResource("6_72bp8")
 skin = SubResource("Skin_0b3c5")
 
-[node name="B_Dummy_RightUpperArm" type="MeshInstance3D" parent="." unique_id=1076858780]
+[node name="B_Dummy_RightUpperArm" type="MeshInstance3D" parent="." unique_id=345617449]
 mesh = ExtResource("7_hdsah")
 skin = SubResource("Skin_gqpcm")
 
-[node name="B_Dummy_LeftUpperLeg" type="MeshInstance3D" parent="." unique_id=188347365]
+[node name="B_Dummy_LeftUpperLeg" type="MeshInstance3D" parent="." unique_id=358063045]
 mesh = ExtResource("8_g5xiv")
 skin = SubResource("Skin_2jwy5")
 
-[node name="B_Dummy_RightUpperLeg" type="MeshInstance3D" parent="." unique_id=343247074]
+[node name="B_Dummy_RightUpperLeg" type="MeshInstance3D" parent="." unique_id=364819037]
 mesh = ExtResource("9_nejc3")
 skin = SubResource("Skin_0ur5e")
 
-[node name="B_Dummy_RightMiddleIntermediate" type="MeshInstance3D" parent="." unique_id=696017973]
+[node name="B_Dummy_RightMiddleIntermediate" type="MeshInstance3D" parent="." unique_id=241763184]
 mesh = ExtResource("10_q3lxh")
 skin = SubResource("Skin_rgsat")
 
-[node name="B_Dummy_RightMiddleProximal" type="MeshInstance3D" parent="." unique_id=1830570617]
+[node name="B_Dummy_RightThumbDistal" type="MeshInstance3D" parent="." unique_id=676263376]
 mesh = ExtResource("11_qxej2")
-skin = SubResource("Skin_scuoh")
-
-[node name="B_Dummy_RightThumbDistal" type="MeshInstance3D" parent="." unique_id=682506967]
-mesh = ExtResource("12_j4scf")
 skin = SubResource("Skin_uqtfr")
 
-[node name="B_Dummy_RightThumbProximal" type="MeshInstance3D" parent="." unique_id=474664418]
-mesh = ExtResource("13_4w4uy")
+[node name="B_Dummy_RightThumbProximal" type="MeshInstance3D" parent="." unique_id=111328155]
+mesh = ExtResource("12_j4scf")
 skin = SubResource("Skin_bn7pb")
 
-[node name="B_Dummy_LeftHand" type="MeshInstance3D" parent="." unique_id=1838960582]
-mesh = ExtResource("14_78ut0")
+[node name="B_Dummy_LeftHand" type="MeshInstance3D" parent="." unique_id=890703667]
+mesh = ExtResource("13_4w4uy")
 skin = SubResource("Skin_qdlj5")
 
-[node name="B_Dummy_LeftMiddleIntermediate" type="MeshInstance3D" parent="." unique_id=1886907775]
-mesh = ExtResource("15_xd6u7")
+[node name="B_Dummy_LeftMiddleIntermediate" type="MeshInstance3D" parent="." unique_id=1316382159]
+mesh = ExtResource("14_78ut0")
 skin = SubResource("Skin_7ukja")
 
-[node name="B_Dummy_LeftMiddleProximal" type="MeshInstance3D" parent="." unique_id=1502419972]
-mesh = ExtResource("16_teuxl")
+[node name="B_Dummy_LeftMiddleProximal" type="MeshInstance3D" parent="." unique_id=1775505043]
+mesh = ExtResource("15_xd6u7")
 skin = SubResource("Skin_x34kr")
 
-[node name="B_Dummy_LeftThumbDistal" type="MeshInstance3D" parent="." unique_id=1937780815]
-mesh = ExtResource("17_k62ek")
+[node name="B_Dummy_LeftThumbDistal" type="MeshInstance3D" parent="." unique_id=1119746358]
+mesh = ExtResource("16_teuxl")
 skin = SubResource("Skin_6l2yc")
 
-[node name="B_Dummy_LeftThumbProximal" type="MeshInstance3D" parent="." unique_id=829672605]
-mesh = ExtResource("18_gl0g0")
+[node name="B_Dummy_LeftThumbProximal" type="MeshInstance3D" parent="." unique_id=1117193233]
+mesh = ExtResource("17_k62ek")
 skin = SubResource("Skin_ynub0")
 
-[node name="B_Dummy_LeftThumbMetacarpal" type="MeshInstance3D" parent="." unique_id=1695608296]
-mesh = ExtResource("19_wwuxi")
+[node name="B_Dummy_LeftThumbMetacarpal" type="MeshInstance3D" parent="." unique_id=1623923948]
+mesh = ExtResource("18_gl0g0")
 skin = SubResource("Skin_j5kru")
 
-[node name="B_Dummy_LeftLowerArm" type="MeshInstance3D" parent="." unique_id=1771856268]
-mesh = ExtResource("20_2qo6i")
+[node name="B_Dummy_LeftLowerArm" type="MeshInstance3D" parent="." unique_id=29213257]
+mesh = ExtResource("19_wwuxi")
 skin = SubResource("Skin_ik0w8")
 
-[node name="B_Dummy_RightHand" type="MeshInstance3D" parent="." unique_id=652942975]
-mesh = ExtResource("21_ult5g")
-skin = SubResource("Skin_hpyej")
+[node name="B_Dummy_RightLowerArm" type="MeshInstance3D" parent="." unique_id=2084638884]
+mesh = ExtResource("20_2qo6i")
+skin = SubResource("Skin_2h4bn")
 
-[node name="B_Dummy_RightThumbMetacarpal" type="MeshInstance3D" parent="." unique_id=1174417982]
-mesh = ExtResource("22_ntl47")
+[node name="B_Dummy_RightThumbMetacarpal" type="MeshInstance3D" parent="." unique_id=640991457]
+mesh = ExtResource("21_ult5g")
 skin = SubResource("Skin_k4v68")
 
-[node name="B_Dummy_RightLowerArm" type="MeshInstance3D" parent="." unique_id=1190322390]
+[node name="B_Dummy_RightMiddleProximal" type="MeshInstance3D" parent="." unique_id=1381534151]
+mesh = ExtResource("22_ntl47")
+skin = SubResource("Skin_scuoh")
+
+[node name="B_Dummy_RightHand" type="MeshInstance3D" parent="." unique_id=1659245861]
 mesh = ExtResource("23_3cgm2")
-skin = SubResource("Skin_2h4bn")
+skin = SubResource("Skin_hpyej")
