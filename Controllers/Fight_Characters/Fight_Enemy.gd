@@ -24,9 +24,6 @@ var MedianDecisionCooldown : float = 0
 var Acting : bool
 var Taunting : bool
 
-#var DualHanded : bool
-#var SecondHandCurrentState : CharacterState = CharacterState.IDLE
-
 var FlowUp : bool = false
 var FlowPos : float
 
@@ -34,9 +31,9 @@ signal DeathAnimFin
 
 var monsterR : RandomNumberGenerator
 
-##Array of arrays containing AtackSide
+##Array of arrays containing AtackSides
 var ComboCatalogue : Array[Array]
-
+##Current Combe being executed
 var CurrentCombo : Array[AtackSide]
 
 func _ready() -> void:
@@ -44,42 +41,6 @@ func _ready() -> void:
 	monsterR = RandomNumberGenerator.new()
 	var pl : Player = Target
 	LookAtNode.target_node = LookAtNode.get_path_to(pl.Cam)
-
-func RecoilFinished() -> void:
-	if (IsRecoiling()):
-		if (Retaliate):
-			UpdateState(GetStateBasedOnSide(GetAtackBasedOnState()))
-		else:
-			UpdateState(CharacterState.IDLE)
-	
-#----------------------------------------------------
-#Called from animation
-func OnAtackPerformed(Direction : AtackSide) -> void:
-	if (CurrentCombo[0] == Direction):
-		CurrentCombo.pop_front()
-		
-	if (IsAttacking()):
-		SetComboWindow(true)
-		#UpdateState(CharacterState.IDLE)
-		
-		var SpeedBuffBefore = ControllingCharacter.SpeedBuff
-		var DamageBuffBefore = ControllingCharacter.DamageBuff
-		UpdateState(GetRecoveryBasedOnSide(Direction))
-		ControllingCharacter.BuffNextAtackSpeed(-SpeedBuffBefore)
-		ControllingCharacter.DamageBuff -= DamageBuffBefore
-		AtackPerformed.emit(Direction, ChargePower)
-		
-
-		
-	else: if (IsRetaliating()):
-		var SpeedBuffBefore = ControllingCharacter.SpeedBuff
-		var DamageBuffBefore = ControllingCharacter.DamageBuff
-		
-		ControllingCharacter.BuffNextAtackSpeed(-SpeedBuffBefore)
-		ControllingCharacter.DamageBuff -= DamageBuffBefore
-		AtackPerformed.emit(Direction, ChargePower)
-	else:
-		print("{0} - Could not perform atack, current state = {1}".format([GetFightName(),CharacterState.keys()[CurrentState]]))
 
 func SetControllingChar(Char : Actor) -> void:
 	if (Char == null):
@@ -100,7 +61,8 @@ func SetControllingChar(Char : Actor) -> void:
 			
 	BodyModels.clear()
 	
-	var incommingSkel : Skeleton3D = load(Group.Mon.Skeleton).instantiate()
+	var skely : PackedScene = await Helper.Instance.LoadThreaded(Group.Mon.Skeleton).Finished
+	var incommingSkel : Skeleton3D = skely.instantiate()
 
 	sk.clear_bones()
 	
@@ -115,8 +77,9 @@ func SetControllingChar(Char : Actor) -> void:
 	
 	if (Visuals != null):
 		ClearVisuals()
-		
-	Visuals = load(Group.Mon.Visuals).instantiate()
+	
+	var visualScene : PackedScene = await Helper.Instance.LoadThreaded(Group.Mon.Visuals).Finished
+	Visuals = visualScene.instantiate()
 	sk.add_child(Visuals)
 	for g : MeshInstance3D in Visuals.get_children():
 		g.skeleton = g.get_path_to(sk)
@@ -133,21 +96,23 @@ func SetControllingChar(Char : Actor) -> void:
 	#Visuals.BindMesh(sk)
 	
 	MedianDecisionCooldown = Group.Mon.GetDecisionCooldown()
-	Char.Exposed.connect(Exposed)
-	Char.SpeedBuffed.connect(SpeedChanged)
-	
 	UpdateState(CharacterState.IDLE)
 	Dead = false
 	Blocking = false
 	Parrying = false
 	StartingParry = false
+	UpdateCharacterCombos()
+	
+	Char.Exposed.connect(Exposed)
+	Char.SpeedBuffed.connect(SpeedChanged)
 	
 	for DecoType : String in Decorations.keys():
 		for g in Decorations[DecoType].size():
 			var deco : MeshInstance3D = Decorations[DecoType][g]
 			deco.visible = Group.PickedDecorations[DecoType] == g
 	
-	UpdateCharacterCombos()
+	
+	ControllingCharacterSet.emit()
 	
 func UpdateCharacterCombos() -> void:
 	var availableAttacks = [AtackSide.TOP, AtackSide.LEFT, AtackSide.RIGHT, AtackSide.MIDDLE]
@@ -155,33 +120,40 @@ func UpdateCharacterCombos() -> void:
 	#create 3 combos of 3 hits
 	for g in 3:
 		var combo : Array[AtackSide]
-		for z in 3:
-			combo.append(availableAttacks.pick_random())
+		combo.append(availableAttacks.pick_random())
+		
+		for z in randi_range(1, 3):
+			var pickedAttack = availableAttacks.pick_random()
+			while combo[z] == pickedAttack:
+				pickedAttack = availableAttacks.pick_random()
+			combo.append(pickedAttack)
+			
 		ComboCatalogue.append(combo)
 	
 	CurrentCombo = ComboCatalogue.pick_random().duplicate()
-			
+
+func PickNewCombo() -> void:
+	CurrentCombo = ComboCatalogue.pick_random().duplicate()
+
+#----------------------------------------------------------------------
+#Decission making function
 func GetCharacterActions() -> Callable:
 	if (Engine.is_editor_hint()):
 		return DoNothing
-		
+	
+	if (IsRecoiling() or IsRetaliating() or IsAttacking()):
+		return DoNothing
+	
 	var ActionList : Array[Callable] = []
 	var ActionWeights : PackedFloat32Array = []
 	
+	#The Bigger the difficulty of the monster the bigger this weight is
 	var goodWeight : float = ControllingCharacter.Mon.GetGoodActionWeight()
+	#The lower the difficulty of the monster the bigger this weight is
 	var badWeight : float = ControllingCharacter.Mon.GetGoodActionWeight()
-	
-	if (IsRecoiling() or IsRetaliating()):
-		return DoNothing
-	
-	
-	if (IsAttacking()):
-		return DoNothing
-		#ActionList.append(DoNothing)
-		#ActionWeights.append(badWeight)
-		
+
 	if (Target.IsCharged() or Target.CurrentState in [CharacterState.HITTING_LEFT, CharacterState.HITTING_MIDDLE, CharacterState.HITTING_RIGHT]):
-		if (Parrying or StartingParry or Blocking or IsDuckingCorrectly()):
+		if (Parrying or StartingParry or Blocking or IsDuckingCorrectly(CurrentState ,Target.CurrentState)):
 			ActionList.append(DoNothing)
 			ActionWeights.append(goodWeight)
 		else:
@@ -191,148 +163,79 @@ func GetCharacterActions() -> Callable:
 			ActionWeights.append(goodWeight)
 	
 	
-	#else: if (!IsCharging() and HasStaminaForHit()):
+	#if (!IsCharging() and HasStaminaForHit()):
 	if (!IsCharging()):
-		if (IsCharged()):
-			ActionList.append(DoNothing)
-			ActionWeights.append(1 - ChargePower)
 	#else: if (!IsCharging()):
 		#if (IsCharged()):
 			#ActionList.append(CancelHits)
 			#ActionWeights.append(1.0)
-		match (CurrentState):
-			CharacterState.CHARGED_LEFT:
-				
-				
-				if (CurrentCombo[0] == AtackSide.LEFT):
-					ActionList.append(Hit.bind(AtackSide.LEFT))
-					ActionWeights.append(0.5)
+			
+		if (IsCharged()):
+			ActionList.append(DoNothing)
+			ActionWeights.append(1 - ChargePower)
+			
+			var chargeDir = GetAtackBasedOnState()
 
-				if (Target.CurrentState == CharacterState.DUCKING_RIGHT):
-					ActionList.append(CancelHits)
-					ActionWeights.append(0.3)
-					ActionList.append(Hit.bind(AtackSide.LEFT))
-					ActionWeights.append(0.1)
-				else:
-					ActionList.append(CancelHits)
-					ActionWeights.append(0.1)
-					ActionList.append(Hit.bind(AtackSide.LEFT))
-					ActionWeights.append(0.3)
-					if (Target.IsStunned() or Target.IsRecovering()):
-						ActionList.append(Hit.bind(AtackSide.LEFT))
-						ActionWeights.append(goodWeight)
-			
-			CharacterState.CHARGED_TOP:
-				if (CurrentCombo[0] == AtackSide.TOP):
-					ActionList.append(Hit.bind(AtackSide.TOP))
-					ActionWeights.append(0.5)
-					
-				if (Target.IsDucking()):
-					ActionList.append(CancelHits)
-					ActionWeights.append(0.3)
-					ActionList.append(Hit.bind(AtackSide.TOP))
-					ActionWeights.append(0.1)
-				else:
-					ActionList.append(CancelHits)
-					ActionWeights.append(0.1)
-					ActionList.append(Hit.bind(AtackSide.TOP))
-					ActionWeights.append(0.3)
-					if (Target.IsStunned() or Target.IsRecovering()):
-						ActionList.append(Hit.bind(AtackSide.TOP))
-						ActionWeights.append(goodWeight)
-			
-			CharacterState.CHARGED_RIGHT:
-				if (CurrentCombo[0] == AtackSide.RIGHT):
-					ActionList.append(Hit.bind(AtackSide.RIGHT))
-					ActionWeights.append(0.5)
-					
-				if (Target.CurrentState == CharacterState.DUCKING_LEFT):
-					ActionList.append(CancelHits)
-					ActionWeights.append(0.3)
-					ActionList.append(Hit.bind(AtackSide.RIGHT))
-					ActionWeights.append(0.1)
-				else:
-					ActionList.append(CancelHits)
-					ActionWeights.append(0.1)
-					ActionList.append(Hit.bind(AtackSide.RIGHT))
-					ActionWeights.append(0.3)
-					if (Target.IsStunned() or Target.IsRecovering()):
-						ActionList.append(Hit.bind(AtackSide.RIGHT))
-						ActionWeights.append(goodWeight)
-						
-			CharacterState.CHARGED_MIDDLE:
-				if (CurrentCombo[0] == AtackSide.MIDDLE):
-					ActionList.append(Hit.bind(AtackSide.MIDDLE))
-					ActionWeights.append(0.5)
-					
-				if (Target.IsDucking()):
-					ActionList.append(CancelHits)
-					ActionWeights.append(0.3)
-					ActionList.append(Hit.bind(AtackSide.MIDDLE))
-					ActionWeights.append(0.1)
-				else:
-					ActionList.append(CancelHits)
-					ActionWeights.append(0.1)
-					ActionList.append(Hit.bind(AtackSide.MIDDLE))
-					ActionWeights.append(0.3)
-					if (Target.IsStunned() or Target.IsRecovering()):
-						ActionList.append(Hit.bind(AtackSide.MIDDLE))
-						ActionWeights.append(goodWeight)
-						
-			CharacterState.CHARGED_LOW:
-				if (CurrentCombo[0] == AtackSide.LOW):
-					ActionList.append(Hit.bind(AtackSide.LOW))
-					ActionWeights.append(0.5)
-					
-				if (Target.IsDucking()):
-					ActionList.append(CancelHits)
-					ActionWeights.append(0.3)
-					ActionList.append(Hit.bind(AtackSide.LOW))
-					ActionWeights.append(0.1)
-				else:
-					ActionList.append(CancelHits)
-					ActionWeights.append(0.1)
-					ActionList.append(Hit.bind(AtackSide.LOW))
-					ActionWeights.append(0.3)
-					if (Target.IsStunned() or Target.Blocking or Target.IsRecovering()):
-						ActionList.append(Hit.bind(AtackSide.LOW))
-						ActionWeights.append(goodWeight)
-			CharacterState.DUCKING_LEFT:
-				if (!IsDuckingCorrectly()):
-					ActionList.append(UnDuck.bind(AtackSide.LEFT))
+			#If target is duccking properly
+			if IsDuckingCorrectly(Target.CurrentState ,CurrentState):
+				#Potential to cancel hit if player is ducking correctly
+				ActionList.append(CancelHits)
+				ActionWeights.append(goodWeight)
+				#Potential for lower lever enemies to still perform "wrong" hits
+				ActionList.append(Hit.bind(chargeDir))
+				ActionWeights.append(badWeight)
+			else:
+				#Allwas a small chance to cancel hit for whifs
+				ActionList.append(CancelHits)
+				ActionWeights.append(0.1)
+				ActionList.append(Hit.bind(chargeDir))
+				ActionWeights.append(0.3)
+				#Exrta potential to initiate a hit if player is stunned
+				if (Target.IsStunned() or Target.IsRecovering()):
+					ActionList.append(Hit.bind(chargeDir))
 					ActionWeights.append(goodWeight)
-					
-			CharacterState.DUCKING_RIGHT:
-				if (!IsDuckingCorrectly()):
-					ActionList.append(UnDuck.bind(AtackSide.RIGHT))
-					ActionWeights.append(goodWeight)
-			CharacterState.PARRY:
+		
+		else: if (IsDucking()):
+			if (!IsDuckingCorrectly(CurrentState ,Target.CurrentState)):
+				var duckDir = GetAtackBasedOnState()
+				ActionList.append(UnDuck.bind(duckDir))
+				ActionWeights.append(goodWeight)
+		
+		else: if (IsParrying()):
 				ActionList.append(StopParry)
 				ActionWeights.append(goodWeight)
-			_:
-				if (CurrentCombo.size() == 0):
-					CurrentCombo = ComboCatalogue.pick_random().duplicate()
-				
-				var direction = CurrentCombo[0]
+		
+		else: if (IsRecoveringHit()):
+			if (CurrentCombo.size() > 0):
+				ChargePower = 0.2
+				ActionList.append(Hit.bind(CurrentCombo[0]))
+				ActionWeights.append(1.0)
+		
+		else: if (CurrentState == CharacterState.IDLE):
+			var direction : AtackSide
+			if (CurrentCombo.size() == 0):
+				ActionList.append(PickNewCombo)
+				ActionWeights.append(0.3)
+				direction = PickAtackDirection()
+			else:
+				direction = CurrentCombo[0]
+
+			ActionList.append(ChargeHit.bind(direction))
+			ActionWeights.append(0.1)
+			
+			if (Target.IsStunned() or Target.IsRecovering()):
 				ActionList.append(ChargeHit.bind(direction))
-				ActionWeights.append(0.1)
-				
-				ActionList.append(ChargeHit.bind(PickAtackDirection()))
-				ActionWeights.append(0.1)
-				
-				if (Target.IsStunned() or Target.IsRecovering()):
-					ActionList.append(ChargeHit.bind(direction))
-					ActionWeights.append(goodWeight)
+				ActionWeights.append(goodWeight)
 					
 	else:
 		match (CurrentState):
 			CharacterState.DUCKING_LEFT:
-				if (!IsDuckingCorrectly()):
+				if (!IsDuckingCorrectly(CurrentState ,Target.CurrentState)):
 					ActionList.append(UnDuck.bind(AtackSide.LEFT))
 					ActionWeights.append(goodWeight)
 					
 			CharacterState.DUCKING_RIGHT:
-				if (!IsDuckingCorrectly()):
+				if (!IsDuckingCorrectly(CurrentState ,Target.CurrentState)):
 					ActionList.append(UnDuck.bind(AtackSide.RIGHT))
 					ActionWeights.append(goodWeight)
 			CharacterState.PARRY:
@@ -350,35 +253,21 @@ func GetCharacterActions() -> Callable:
 		#return DoNothing
 	
 	return ActionList[monsterR.rand_weighted(ActionWeights)]
-	
-#----------------------------------------------------
+
+
+#------------------------------------------------------------------------------
 func Hit(Direction : AtackSide) -> void:
-	if (CurrentState == CharacterState.CHARGED_LEFT):
-		UpdateState(CharacterState.HITTING_LEFT)
-
-	else: if (CurrentState == CharacterState.CHARGED_RIGHT):
-		UpdateState(CharacterState.HITTING_RIGHT)
-
-	else: if (CurrentState == CharacterState.CHARGED_MIDDLE):
-		UpdateState(CharacterState.HITTING_MIDDLE)
-
-	else: if (CurrentState == CharacterState.CHARGED_TOP):
-		UpdateState(CharacterState.HITTING_TOP)
-
-	else: if (CurrentState == CharacterState.CHARGED_LOW):
-		UpdateState(CharacterState.HITTING_LOW)
-		
-	else:
-		#print("{0} - Couldn't process hit".format([GetFightName()]))
-		return
+	if (CurrentCombo.find(Direction) == 0):
+		CurrentCombo.pop_front()
+	
+	UpdateState(GetStateBasedOnSide(Direction))
 
 	AtackStarted.emit(Direction)
-	
-	
 
-func IsDuckingCorrectly() -> bool:
+#------------------------------------------------------------------------------
+func IsDuckingCorrectly(deffenderState : CharacterState, AttackerState : CharacterState) -> bool:
 	var CorrectDuck : Array[CharacterState]
-	match (Target.CurrentState):
+	match (AttackerState):
 		CharacterState.HITTING_LEFT:
 			CorrectDuck.append(CharacterState.DUCKING_RIGHT)
 		CharacterState.HITTING_RIGHT:
@@ -400,9 +289,9 @@ func IsDuckingCorrectly() -> bool:
 		CharacterState.CHARGED_RIGHT:
 			CorrectDuck.append(CharacterState.DUCKING_LEFT)
 			
-	return CurrentState in CorrectDuck
+	return deffenderState in CorrectDuck
 
-
+#------------------------------------------------------------------------------
 func GetDuckDirectionBasedOnState(State : CharacterState) -> AtackSide:
 	match (State):
 		CharacterState.HITTING_LEFT:
@@ -449,13 +338,6 @@ func PickAtackDirection() -> AtackSide:
 	
 
 func AnimTreeFinished(anim_name: StringName) -> void:
-	if (anim_name in ["Atack_Top", "Atack_Left", "Atack_Right", "Atack_Middle", "Atack_Low", "2H_Atack_Left", "2H_Atack_Right","2H_Atack_Middle", "Atack_Bow", "Hit_Left_Retaliation", "Hit_Right_Retaliation", "Hit_Mid_Retaliation"]):
-		SetComboWindow(false)
-		if (CurrentState == GetStateBasedOnAnim(anim_name)):
-			if (CurrentCombo.size() > 0):
-				UpdateState(GetStateBasedOnSide(CurrentCombo[0]))
-				return
-			
 	super(anim_name)
 	if (anim_name == "Death"):
 		DeathFinished()
@@ -506,22 +388,28 @@ func Update(delta: float) -> void:
 	print("Enemy performs action {0}".format([Action]))
 	Action.call()
 
+#-------------------------------------------------------------------
 func GetFightName() -> String:
 	return "Enemy"
 
+#-------------------------------------------------------------------
+#Dummy function called when we want enemy to keep doing what they are doing
 func DoNothing() -> void:
 	pass
 
+#-------------------------------------------------------------------
 func Taunt() -> void:
 	pass
 	#Taunting = true
 	#AnimTree.set("parameters/TauntShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
+#-------------------------------------------------------------------
 func CancelTaunt() -> void:
 	pass 
 	#Taunting = false
 	#AnimTree.set("parameters/TauntShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT)
 
+#-------------------------------------------------------------------
 func Damage(DamageAmm : int, Direction : AtackSide, ShakeAmm : float, AtackWeight : float) -> int:
 	var finalDamage = super(DamageAmm, Direction, ShakeAmm, AtackWeight)
 	if (finalDamage == DamageAmm):
@@ -538,6 +426,16 @@ func Damage(DamageAmm : int, Direction : AtackSide, ShakeAmm : float, AtackWeigh
 		HitParticles.emitting = true
 	
 	return finalDamage
+
+#-------------------------------------------------------------------
+#Used to initiate retaliation from enemy, Retaliate is set in the Recoil function
+func RecoilFinished() -> void:
+	if (IsRecoiling()):
+		if (Retaliate):
+			ChargePower = 0.2
+			Hit(GetAtackBasedOnState())
+		else:
+			UpdateState(CharacterState.IDLE)
 
 func Defeated() -> void:
 	Dead = true

@@ -37,12 +37,14 @@ func DoDialogue(Diag : String) -> void:
 
 func ConfigureCharacter(character : Character) -> void:
 	Char = character
-	var vis : PackedScene = load(character.Visuals)
+	var vis : PackedScene = await Helper.Instance.LoadThreaded(character.Visuals).Finished
 	var visuals = vis.instantiate()
+	ApplyVisualsToSkeleton(visuals)
+
+func ApplyVisualsToSkeleton(visuals : Node3D) -> void:
 	Skel.add_child(visuals)
 	for g : MeshInstance3D in visuals.get_children():
 		g.skeleton = g.get_path_to(Skel)
-	
 
 func HandExtended() -> void:
 	var p = LightPartScene.instantiate() as LightPart

@@ -24,6 +24,7 @@ class_name AnimationInfo
 #@export var SpeedMulti : float = 1.0
 
 @export_group("State")
+@export var AllowRestart : bool = false
 @export var Loop : bool = false
 #@export var BreakLoop : bool = false
 @export var AutoComplete : bool = true

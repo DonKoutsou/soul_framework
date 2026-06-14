@@ -29,10 +29,11 @@ func _ready() -> void:
 
 
 func SpawnEnemy(actor : MonsterGroup) -> void:
-	var scene : PackedScene = load(EnemyScene)
+	var scene : PackedScene = await Helper.Instance.LoadThreaded(EnemyScene).Finished
 	En = scene.instantiate()
 	En.Target = Pl
 	En.ControllingCharacter = actor
+	await En.ControllingCharacterSet
 	En.EquipWeapon(actor.CharacterWeapon)
 	add_child(En)
 	En.position = $EnemySpawnLoc.position

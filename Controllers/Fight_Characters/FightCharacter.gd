@@ -16,6 +16,7 @@ class_name FightCharacter
 @export_group("Settings")
 @export var Can_Retaliate : bool = false
 
+var StateUpdated : bool = true
 var CurrentState : CharacterState = CharacterState.IDLE
 
 var LookDir : Vector3
@@ -27,6 +28,8 @@ var ChargePower : float = 0.0
 	set(value):
 		ControllingCharacter = value
 		SetControllingChar(ControllingCharacter)
+
+signal ControllingCharacterSet
 
 enum CharacterState{
 	IDLE,
@@ -127,6 +130,7 @@ func Update(delta: float) -> void:
 		ChargePower = min(ChargePower + delta, 1)
 
 func UpdateSkeletonState() -> void:
+	
 	SkeletonModif.CurrentState = CurrentState
 
 func UpdateAnims(delta : float) -> void:
@@ -209,7 +213,7 @@ func GetReadyForFight() -> void:
 func SetControllingChar(Char : Actor) -> void:
 	Char.Exposed.connect(Exposed)
 	Char.SpeedBuffed.connect(SpeedChanged)
-	
+	ControllingCharacterSet.emit()
 	
 
 func SpeedChanged() -> void:
@@ -273,8 +277,6 @@ func GetAnimSpeed() -> float:
 #----------------------------------------------------
 #Function called to cancel any charged hits
 func CancelHits() -> void:
-	#print("{0} - Canceling hits".format([GetFightName()]))
-
 	SetComboWindow(false)
 	
 	if (IsAttacking()):
@@ -290,6 +292,7 @@ func CancelHits() -> void:
 		UpdateState(CharacterState.IDLE)
 
 	AtackCanceled.emit()
+	ChargePower = 0
 #----------------------------------------------------
 func Hit(Direction : AtackSide) -> void:
 	if (CurrentState == CharacterState.CHARGED_LEFT):
@@ -335,10 +338,13 @@ func OnAtackPerformed(Direction : AtackSide) -> void:
 		AtackPerformed.emit(Direction, ChargePower)
 	else:
 		print("{0} - Could not perform atack, current state = {1}".format([GetFightName(),CharacterState.keys()[CurrentState]]))
+		
+	ChargePower = 0
 
 #----------------------------------------------------
 func UpdateState(NewState : CharacterState) -> void:
 	CurrentState = NewState
+	StateUpdated = true
 	print("{0} - Updated State to {1}".format([GetFightName(),CharacterState.keys()[NewState]]))
 	
 	
@@ -371,7 +377,7 @@ func ChargeHit(Direction : AtackSide) -> void:
 		UpdateState(CharacterState.CHARGING_TOP)
 		
 	print("{0} - Charging : {1}".format([GetFightName() ,AtackSide.keys()[Direction]]))
-	ChargePower = 0
+	
 	SetComboWindow(false)
 #----------------------------------------------------
 func Duck(Direction : AtackSide) -> void:
@@ -438,7 +444,7 @@ func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Mag
 			UpdateState(CharacterState.RECOIL_LEFT)
 		AtackSide.RIGHT:
 			UpdateState(CharacterState.RECOIL_RIGHT)
-		AtackSide.MIDDLE:
+		AtackSide.MIDDLE, AtackSide.TOP, AtackSide.LOW:
 			UpdateState(CharacterState.RECOIL_MID)
 	
 #----------------------------------------------------
@@ -673,6 +679,10 @@ func IsStunned() -> bool:
 func IsRecovering() -> bool:
 	return CurrentState in [CharacterState.RECOVERING_LEFT, CharacterState.RECOVERING_RIGHT, CharacterState.RECOVERING_LOW, CharacterState.RECOVERING_MIDDLE, CharacterState.RECOVERING_TOP]
 #----------------------------------------------------
+func IsRecoveringHit() -> bool:
+	return CurrentState in [CharacterState.RECOVERING_HIT_LEFT, CharacterState.RECOVERING_HIT_RIGHT, CharacterState.RECOVERING_HIT_LOW, CharacterState.RECOVERING_HIT_MIDDLE, CharacterState.RECOVERING_HIT_TOP]
+
+#----------------------------------------------------
 func IsAttacking() -> bool:
 	return CurrentState in [CharacterState.HITTING_LEFT, CharacterState.HITTING_RIGHT, CharacterState.HITTING_MIDDLE, CharacterState.HITTING_LOW, CharacterState.HITTING_TOP]
 
@@ -687,7 +697,10 @@ func IsCharged() -> bool:
 #----------------------------------------------------
 func IsDucking() -> bool:
 	return CurrentState in [CharacterState.DUCKING_LEFT, CharacterState.DUCKING_RIGHT]
-
+#----------------------------------------------------
+func IsParrying() -> bool:
+	return CurrentState in [CharacterState.PARRY]
+#----------------------------------------------------
 func IsDuckingDirCorrect(atack : AtackSide) -> bool:
 	match atack:
 		AtackSide.LEFT:

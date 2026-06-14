@@ -83,11 +83,11 @@ func ToggleHeadBob(t : bool) -> void:
 func EnemyDeathComplete() -> void:
 	if (CurrentMosters.size() > 0):
 		var PickedGroup = CurrentMosters[0]
-		SpawnEnemy(PickedGroup)
+		await SpawnEnemy(PickedGroup)
 		FightWorld.EnemyIntroAnim()
 
 func SpawnEnemy(monsterActor : MonsterGroup) -> void:
-	FightWorld.SpawnEnemy(monsterActor)
+	await FightWorld.SpawnEnemy(monsterActor)
 	GetEnemy().AtackPerformed.connect(EV_EnemyAtacked)
 	GetEnemy().AtackAvoided.connect(EV_OutgoingAvoided)
 	GetEnemy().AtackBlocked.connect(EV_OutgoingBlocked)
@@ -114,7 +114,7 @@ func StartFight() -> void:
 
 	MessageBox.RegisterEvent("{0} is ambushed by a {1}".format([GetPlayer().ControllingCharacter.CharacterName, enemyCombatant.Mon.MonsterName]))
 
-	SpawnEnemy(enemyCombatant)
+	await SpawnEnemy(enemyCombatant)
 	var tw2 = create_tween()
 	tw2.tween_method(UpdateAlpha, 0.0, 1.0, 1)
 	
@@ -248,7 +248,7 @@ func EV_IncommingParried() -> void:
 	Effect.emit(ItemEffect.EffectTiming.ON_PARRY, Data)
 	
 	FightingMonster.DamageFatigue(GetPlayer().ControllingCharacter.CharacterWeapon.Stamina_Cost / 2)
-	GetEnemy().Recoil()
+	GetEnemy().Recoil(FightCharacter.AtackSide.MIDDLE, false, 100)
 	PlayerCamera.start_shake(0.02,0.3, false, true)
 	
 	WorldTimeManager.Instance.FreezeTime(0)
