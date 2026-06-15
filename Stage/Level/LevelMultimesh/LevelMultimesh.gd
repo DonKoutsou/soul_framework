@@ -5,7 +5,8 @@ class_name LevelMultimesh
 
 @export var geometry : Mesh
 @export var material_override : Material
-var T : Thread
+
+var threadTaskID : int = -1
 var collider : Shape3D
 signal Finished
 
@@ -90,20 +91,20 @@ func Update(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerat
 	Sc = get_world_3d().scenario
 	RemoveOldSpawns(positions)
 	
-	if (T != null):
+	if (threadTaskID >= 0):
 		call_deferred("AwaitAndStart", Data, positions)
 		return
 	#M = Mutex.new()
-	T = Thread.new()
-	T.start(Process.bind(Data, positions, r))
+	
+	threadTaskID = WorkerThreadPool.add_task(Process.bind(Data, positions, r))
 	
 	#var Dat = Data.GetDataForLayerType(MultimeshType)
 
 func AwaitAndStart(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
-	if (T != null):
-		await Finished
-	T = Thread.new()
-	T.start(Process.bind(Data, positions, r))
+	if (threadTaskID >= 0):
+		WorkerThreadPool.wait_for_task_completion(threadTaskID)
+	threadTaskID = WorkerThreadPool.add_task(Process.bind(Data, positions, r))
+
 
 func Process(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
 	for mapPos : Vector3i in positions:
@@ -116,8 +117,8 @@ func Process(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenera
 
 func Finish() -> void:
 	#print("finished updating {0}".format([get_script().get_global_name()]))
-	T.wait_to_finish()
-	T = null
+	WorkerThreadPool.wait_for_task_completion(threadTaskID)
+	threadTaskID = -1
 	Finished.emit()
 
 func GetLayerType() -> LevelMultimeshTypes:

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WeaponItem" format=3 uid="uid://crhsm7emi5jwy"]
+
+[ext_resource type="Script" uid="uid://l1yv1ffimeej" path="res://Engine/Items/Effects/ItemEffect.gd" id="1_lqvpd"]
+[ext_resource type="Resource" uid="uid://dovtwiuqcgkvk" path="res://Engine/Weapons/Config/Base_TwoHanded.tres" id="2_lqvpd"]
+[ext_resource type="Script" uid="uid://ojmne3pkd664" path="res://Engine/Items/WeaponItem.gd" id="3_csdsd"]
+
+[resource]
+script = ExtResource("3_csdsd")
+WeaponsRes = ExtResource("2_lqvpd")
+ItemName = "Sword"
+Value = -1
+metadata/_custom_type_script = "uid://dnwn8l0kfkmcy"

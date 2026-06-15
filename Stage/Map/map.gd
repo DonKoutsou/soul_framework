@@ -38,6 +38,8 @@ class_name Map
 var Data : MapData
 var AccumulatedHours : int
 
+var generationThreadTaskID : int = -1
+signal GenerationFinished
 
 enum LocationName{
 	Base,
@@ -184,17 +186,17 @@ func GetVisible(Pos : Vector3i) -> Array:
 func LoadMapData(MData : MapData) -> void:
 	Data = MData
 
-signal GenerationFinished
+
 
 func StartGenerationThread(SpawnMonsterOverride : bool = SpawnMonsters) -> void:
-	var t = Thread.new()
-	t.start(generate_maze.bind(t, SpawnMonsterOverride))
+	generationThreadTaskID = WorkerThreadPool.add_task(generate_maze.bind(SpawnMonsterOverride))
 
-func ThreadedGenerationFinished(t : Thread) -> void:
-	t.wait_to_finish()
+
+func ThreadedGenerationFinished() -> void:
+	WorkerThreadPool.wait_for_task_completion(generationThreadTaskID)
 	GenerationFinished.emit()
 
-func generate_maze(Thr : Thread, spawnMons : bool) -> void:
+func generate_maze(spawnMons : bool) -> void:
 	Data = MapData.new()
 	
 	var r = RandomNumberGenerator.new()
@@ -404,7 +406,7 @@ func generate_maze(Thr : Thread, spawnMons : bool) -> void:
 		wall.VariantIndex = r.randi_range(1, 2)
 	#store random
 	Data.SaveRandomState(r.get_state())
-	call_deferred("ThreadedGenerationFinished", Thr)
+	call_deferred("ThreadedGenerationFinished")
 
 
 

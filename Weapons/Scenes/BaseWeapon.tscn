@@ -1,15 +1,20 @@
 [gd_scene format=3 uid="uid://ca14mcyfwm5si"]
 
 [ext_resource type="Script" uid="uid://j6mkhdxpp661" path="res://Engine/Weapons/FightWeapon.gd" id="1_iieg7"]
+[ext_resource type="PackedScene" uid="uid://bf58xeuue3pn8" path="res://Engine/Particles/Impact.tscn" id="2_lk8us"]
 [ext_resource type="PackedScene" uid="uid://dqpweb46lax44" path="res://Engine/Particles/damage_buff2.tscn" id="4_nuaue"]
 [ext_resource type="PackedScene" uid="uid://i3p1shhctus" path="res://Engine/Particles/speed_buff2.tscn" id="5_11257"]
 [ext_resource type="PackedScene" uid="uid://fiuajpm4l4lj" path="res://Engine/Particles/Spark.tscn" id="6_mv1gy"]
 
-[node name="FightWeapon" type="Node3D" unique_id=114680310 node_paths=PackedStringArray("DamageBuff", "SpeedBuff", "spark")]
+[node name="FightWeapon" type="Node3D" unique_id=114680310 node_paths=PackedStringArray("DamageBuff", "SpeedBuff", "spark", "Impact")]
 script = ExtResource("1_iieg7")
 DamageBuff = NodePath("DamageBuff")
 SpeedBuff = NodePath("SpeedBuff")
 spark = NodePath("Spark")
+Impact = NodePath("Impact")
+
+[node name="Impact" parent="." unique_id=942870742 instance=ExtResource("2_lk8us")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17322999, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=787913972]
 layers = 1048575
@@ -23,7 +28,7 @@ emitting = false
 transform = Transform3D(1.4814814, 0, 0, 0, 1.4814816, 0, 0, 0, 1.4814812, 0, 0, 0)
 visible = false
 
-[node name="Spark" parent="." unique_id=942870742 instance=ExtResource("6_mv1gy")]
+[node name="Spark" parent="." unique_id=299880622 instance=ExtResource("6_mv1gy")]
 transform = Transform3D(1.4814819, 0, 0, 0, 1.4814806, 0, 0, 0, 1.4814827, 0, 0.17403662, 0)
 layers = 524289
 cast_shadow = 0

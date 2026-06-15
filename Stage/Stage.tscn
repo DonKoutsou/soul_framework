@@ -11,7 +11,7 @@
 process_mode = 1
 script = ExtResource("1_mimum")
 StartingCharacter = ExtResource("2_mimum")
-StartingItems = Array[String](["res://Engine/Items/ItemConfigs/Lantern.tres", "res://Engine/Items/ItemConfigs/Base_Sword.tres"])
+StartingItems = Array[String](["res://Engine/Items/ItemConfigs/Lantern.tres", "res://Engine/Items/ItemConfigs/Base_Sword.tres", "res://Engine/Items/ItemConfigs/Base_TwoHanded.tres"])
 PlayerControllerFilePath = "uid://bv801fylom5yv"
 LockPuzzleFilePath = "uid://bbdkk3wj35li5"
 FightPackedScene = "uid://bdk7tkd10dc1i"

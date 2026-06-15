@@ -337,6 +337,7 @@ func OnAtackPerformed(Direction : AtackSide) -> void:
 		ControllingCharacter.BuffNextAtackSpeed(-SpeedBuffBefore)
 		ControllingCharacter.DamageBuff -= DamageBuffBefore
 		AtackPerformed.emit(Direction, ChargePower)
+
 	else: if (IsRetaliating()):
 		var SpeedBuffBefore = ControllingCharacter.SpeedBuff
 		var DamageBuffBefore = ControllingCharacter.DamageBuff
@@ -435,7 +436,7 @@ func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Mag
 		SkeletonModif.Recoil = GetRecoil(Dir) * max(0.5, Magnitude)
 		
 	if (IsAttacking()):
-		if (ControllingCharacter.CharacterWeapon.Stamina_Cost > Magnitude):
+		if (ControllingCharacter.CharacterWeapon.Stamina_Cost * ChargePower > Magnitude):
 			return
 
 	CancelHits()

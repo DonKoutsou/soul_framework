@@ -34,6 +34,7 @@ static var EnemyOccupiedSlots : PackedVector3Array
 var SpawnPoint : Vector3
 var SpawnRotation : float
 
+var builderThreadTaskID : int = -1
 
 var Characters : Dictionary[Vector3i, MapCharacter]
 
@@ -145,11 +146,11 @@ func RedoMap(SpawnMonsters : bool = true) -> void:
 	StartBuildingThread(SpawnMonsters)
 
 func StartBuildingThread(SpawnMonsters : bool = true) -> void:
-	var t = Thread.new()
-	t.start(BuildMaze.bind(t, SpawnMonsters))
+	builderThreadTaskID = WorkerThreadPool.add_task(BuildMaze.bind(SpawnMonsters))
 
-func BuildingFinished(Thr : Thread) -> void:
-	Thr.wait_to_finish()
+func BuildingFinished() -> void:
+	WorkerThreadPool.wait_for_task_completion(builderThreadTaskID)
+	builderThreadTaskID = -1
 	
 func NotifyFinished() -> void:
 	GenerationFinished.emit()
@@ -189,7 +190,7 @@ func ApplyGlobals() -> void:
 	QueuedUpdate = true
 
 #MAZE GENERATION
-func BuildMaze(Thr : Thread, SpawnMonsters : bool) -> void:
+func BuildMaze(SpawnMonsters : bool) -> void:
 	var Data = MData.Data
 	var SpawnP = Data.SpawnPoint as Vector3i
 
@@ -221,7 +222,7 @@ func BuildMaze(Thr : Thread, SpawnMonsters : bool) -> void:
 		DialogueT.position = CurrentWorldScale * TextPos
 
 	call_deferred("NotifyFinished")
-	call_deferred("BuildingFinished", Thr)
+	call_deferred("BuildingFinished")
 
 
 func UpdateMultiMeshes() -> void:

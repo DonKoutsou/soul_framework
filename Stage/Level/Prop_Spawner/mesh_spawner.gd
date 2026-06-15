@@ -9,7 +9,7 @@ var Instances : Dictionary[RID, Transform3D]
 var PlayerPosition : Vector3
 var PlayerRotation : Vector3
 
-var CheckThread : Thread
+var threadTaskID : int = -1
 
 #array of RIDs
 var spawnedInstanced : Dictionary[Vector3i, Array]
@@ -27,8 +27,7 @@ func _exit_tree() -> void:
 func PlayerPositionChanged(NewPos : Vector3, Rot : Vector3) -> void:
 	PlayerPosition = NewPos
 	PlayerRotation = Rot
-	CheckThread = Thread.new()
-	CheckThread.start(Check)
+	threadTaskID = WorkerThreadPool.add_task(Check)
 
 func PosChanged(NewPos : Vector3, data : MapData) -> void:
 	var Positions = get_points_in_square(Helper.PlayerPositionToMap(NewPos), 2)
@@ -117,4 +116,4 @@ func Check() -> void:
 	
 	
 func CheckingFinished() -> void:
-	CheckThread.wait_to_finish()
+	WorkerThreadPool.wait_for_task_completion(threadTaskID)

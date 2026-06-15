@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b63snluv13jfb" path="res://Engine/UI/character_sheet.tscn" id="5_wflq5"]
 [ext_resource type="PackedScene" uid="uid://b5vjfchiemu6t" path="res://Engine/Dialogue/dialogue_box.tscn" id="13_xtsij"]
 
-[node name="UIManager" type="CanvasLayer" unique_id=151584909 node_paths=PackedStringArray("MiniMp", "Inv", "CharacterSheetPlecement", "DiedLabel", "Diag", "MBox")]
+[node name="UIManager" type="CanvasLayer" unique_id=151584909 node_paths=PackedStringArray("MiniMp", "CharacterSheetPlecement", "DiedLabel", "Diag", "MBox")]
 process_mode = 1
 script = ExtResource("1_laqw3")
 RestInterfaceFilePath = "uid://dv6o1vvcipy2u"
@@ -22,7 +22,6 @@ PauseM = ExtResource("3_qdedj")
 SettingsMenuScene = ExtResource("4_h5t5g")
 CheatMenu = ExtResource("5_ur5k7")
 MiniMp = NodePath("Minimap")
-Inv = NodePath("")
 CharacterSheetPlecement = NodePath("VBoxContainer/CharacterSheets")
 DiedLabel = NodePath("DiedLabel")
 Diag = NodePath("DialogueBox")
