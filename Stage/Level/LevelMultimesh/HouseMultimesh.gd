@@ -26,7 +26,7 @@ func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator 
 
 	var collision = CollisionShape3D.new()
 	collision.shape = collider
-	var ColliderPos = trans.translated(Vector3(0,Level.CurrentWorldScale.y / 2.0, 0)).rotated_local(Vector3(0,1,0), -PI / 2.0)
+	var ColliderPos = trans.translated(Vector3(0,Level.CurrentWorldScale.y / 2.0, 0))
 	collision.transform = ColliderPos
 	#collision.scale = Level.CurrentWorldScale
 	AddSpawn(geometry.get_rid(), pos, trans, 0, collision)

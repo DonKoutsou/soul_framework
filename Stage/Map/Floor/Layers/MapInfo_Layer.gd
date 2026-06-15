@@ -115,7 +115,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 			tempLayerData.SpawnDeco = false
 		#House
 		19:
-			var rot2 = GetTileRotationRadians(Vector2i(Pos.x, Pos.z))
+			var rot2 = -GetTileRotationRadians(Vector2i(Pos.x, Pos.z)) - Vector2.LEFT.angle()
 			var T = Transform3D(Basis().rotated(Vector3(0,1,0), rot2), (Pos * map.WorldScale))
 			cellDat.Custom_Data["House"] = T
 		# Recruit 1
