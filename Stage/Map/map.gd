@@ -26,9 +26,9 @@ class_name Map
 @export var MovableCatalogue : Array[MovableSwitchCallInfo]
 @export var PlateCatalogue : Array[PreassurePlateCallInfo]
 @export var ProjectileSwitchCatalogue : Array[ProjectileSwitchCallInfo]
-@export_file("*.res") var ItemCaralogue : Array[String]
-@export_file("*.res") var MonsterCatalogue : Array[String]
-@export_file("*.res") var CharacterCatalogue : Array[String]
+@export_file("*.tres") var ItemCaralogue : Array[String]
+@export_file("*.tres") var MonsterCatalogue : Array[String]
+@export_file("*.tres") var CharacterCatalogue : Array[String]
 
 @export_group("Prop Configuration")
 #Array of Transform3D
