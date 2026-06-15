@@ -762,7 +762,7 @@ func HandleLever(Pos : Vector3i, PlayerPosition : Vector3, PlayerOrientation : f
 	var Height = PlayerPosition.y / Level.CurrentWorldScale.y
 	
 	var WrapedOrientation = snappedf(wrapf(PlayerOrientation, -PI, PI), 0.0001)
-	var WeappedTileRotation = wrapf(CurrentWorld.MData.GetFloor(roundi(Height)).GetLayer(FloorLayer.LayerType.LEVERS).GetTileRotationRadians(pos) + (PI / 2), -PI, PI)
+	var WeappedTileRotation = wrapf(CurrentWorld.MData.GetFloor(roundi(Height)).GetLayer(FloorLayer.LayerType.LEVERS).GetTileRotationRadians(pos) - (PI / 2), -PI, PI)
 	
 	if (!is_equal_approx(WrapedOrientation, WeappedTileRotation)):
 		return false

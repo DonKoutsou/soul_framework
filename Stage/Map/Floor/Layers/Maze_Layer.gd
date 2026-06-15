@@ -57,7 +57,7 @@ func AddWallToData(cell : CellData, WallType : String, Transform : Transform3D) 
 
 func CheckForDoors(cell : CellData, MapPos : Vector3i, LevelPos : Vector3, rot : float, MeshPlecement : Vector2i, tempData : TempGenerationData) -> void:
 	if (tempData.Locks.has(MapPos)):
-		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, rot, Vector3i(0,1,0))
+		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, -rot, Vector3i(0,1,0))
 		var DoorD = DoorData.NewData(GetMeshPlecement(MeshPlecement, rot, LevelPos), OppositeLocation)
 		DoorD.DoorMapPosition = MapPos
 		DoorD.LockDat = tempData.Locks[MapPos]
@@ -65,21 +65,21 @@ func CheckForDoors(cell : CellData, MapPos : Vector3i, LevelPos : Vector3, rot :
 		cell.AddData("Door", DoorD)
 		cell.AddDataArr("Locks", GetMeshPlecement(MeshPlecement, rot, LevelPos))
 	else: if (tempData.MasterLocks.has(MapPos)):
-		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, rot, Vector3i(0,1,0))
+		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, -rot, Vector3i(0,1,0))
 		var DoorD = DoorData.NewData(GetMeshPlecement(MeshPlecement, rot, LevelPos), OppositeLocation)
 		cell.AddData("Door", DoorD)
 		cell.AddDataArr("MasterLocks", GetMeshPlecement(MeshPlecement, rot, LevelPos))
 	else : if (tempData.Blocks.has(MapPos)):
-		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, rot, Vector3i(0,1,0))
+		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, -rot, Vector3i(0,1,0))
 		var DoorD = DoorData.NewData(GetMeshPlecement(MeshPlecement, rot, LevelPos), OppositeLocation)
 		DoorD.Blocked = true
 		cell.AddData("Door", DoorD)
 	else : if (cell.HasData("Door")):
-		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, rot, Vector3i(0,1,0))
+		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, -rot, Vector3i(0,1,0))
 		var DoorD = DoorData.NewData(GetMeshPlecement(MeshPlecement, rot, LevelPos), OppositeLocation)
 		cell.AddData("Door", DoorD)
 	else :if (cell.HasData("LightDoor")):
-		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, rot, Vector3i(0,1,0))
+		var OppositeLocation = MapPos + Helper.rotate_vector3i(Vector3i.LEFT, -rot, Vector3i(0,1,0))
 		var DoorD = LightDoorData.NewData(GetMeshPlecement(MeshPlecement, rot, LevelPos), OppositeLocation)
 		cell.AddData("LightDoor", DoorD)
 
