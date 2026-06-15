@@ -124,6 +124,7 @@ custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 
 [node name="Credits" type="Control" parent="." unique_id=505903250]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
