@@ -6,7 +6,7 @@
 [ext_resource type="Environment" uid="uid://d3s6de5yiplew" path="res://Engine/Enviroments/FightSceneEnviroment.tres" id="5_pxlco"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4x8rd"]
-size = Vector2(40, 40)
+size = Vector2(20, 20)
 
 [node name="FightWorld" type="Node3D" unique_id=741307255 node_paths=PackedStringArray("Pl", "BGMesh", "env")]
 script = ExtResource("1_pxlco")
@@ -22,7 +22,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.107, -0.65739554)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1195239368]
-transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00012588501, -0.08019504, -7.982004)
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0, -0.08, -2.229)
 material_override = ExtResource("4_w2p7j")
 mesh = SubResource("PlaneMesh_4x8rd")
 skeleton = NodePath("../..")

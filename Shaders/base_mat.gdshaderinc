@@ -31,11 +31,11 @@ render_mode
 	diffuse_lambert,
 	specular_schlick_ggx,
 #endif
-
+/*
 #ifdef CLOUD
 	fog_disabled,
 #endif
-
+*/
 vertex_lighting;
 
 // ============================================================================
