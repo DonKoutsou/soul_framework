@@ -23,7 +23,7 @@ func ProcessPosition(Data : MapData, pos : Vector3i, r : RandomNumberGenerator =
 				
 					Trans = Trans.rotated_local(Vector3(0,1,0), r.randf_range(-PI * 2, PI * 2))
 				#M.unlock()
-			if (AllowOnCeiling):
+			if (AllowOnCeiling and cell.spawnCeiling):
 				Trans = Trans.rotated_local(Vector3(0,0,1), PI)
 				Trans = Trans.translated_local(Vector3(0, -Level.CurrentWorldScale.y + 0.2, 0))
 			

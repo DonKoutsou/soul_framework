@@ -140,8 +140,8 @@ func SpawnFight() -> void:
 	Fight.Effect.connect(UIMan.Inv.ApplyEffects)
 	Fight.EnviromentalAttack.connect(AtackEnviroment)
 	Fight.TutorialToggled.connect(UIToggled)
+	Fight.GetPlayer().StepPerformed.connect(StepPerformed)
 	
-	Fight.GetPlayer()
 
 func _input(event: InputEvent) -> void:
 	if (CurrentFreeCam != null):
@@ -310,12 +310,11 @@ func SpawnPlayer() -> void:
 	Manequin.MovableLifted.connect(MovableLifted)
 	Manequin.RegisterPlayerCharacter(playerCharacter)
 	
-	
 	Fight.FightStared.connect(Manequin.FightToggled.bind(true))
 	Fight.FightEnded.connect(Manequin.FightToggled.bind(false))
 	Fight.GetPlayer().CharacterDucked.connect(Manequin.Duck)
 	Fight.GetPlayer().CharacterUnducked.connect(Manequin.UnDuck)
-	Fight.GetPlayer().StepPerformed.connect(StepPerformed)
+	
 	
 	DialogueMan.ManequinSpawned(Manequin)
 	
