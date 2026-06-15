@@ -4,15 +4,15 @@ class_name FightWeapon
 
 @export var DamageBuff : GPUParticles3D
 @export var SpeedBuff : GPUParticles3D
-@export var spark: GPUParticles3D
+@export var spark: SubEmmiterParticle3D
 @export var Impact : GPUParticles3D
 @export var HandPlacement : Node3D
 @export var wepSound : AudioManager.Sound = AudioManager.Sound.SWORD_CLASH
 
 func Sparks() -> void:
 	AudioManager.Instance.PlaySound(wepSound, -5, 0.3)
-	spark.restart()
-	spark.emitting = true
+
+	spark.StartEmmision()
 
 func DoImpact() -> void:
 	Impact.restart()

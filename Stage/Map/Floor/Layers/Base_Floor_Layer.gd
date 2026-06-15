@@ -37,8 +37,8 @@ func GetTileRotationRadians(pos : Vector2i) -> float:
 	match [flip_v, flip_h, transpose]:
 		[false, false, false]: rot = 0.0   # No rotation
 		[true, true, false]: rot = PI   # 180 degrees
-		[true, false, true]: rot = PI / 2  # 90 degrees clockwise
-		[false, true, true]: rot = -PI / 2   # 270 degrees clockwise (or -90)
+		[true, false, true]: rot = -PI / 2  # 90 degrees clockwise
+		[false, true, true]: rot = PI / 2   # 270 degrees clockwise (or -90)
 		
 	return rot
 
@@ -57,8 +57,8 @@ func GetTileDirection(pos : Vector2i) -> Vector2:
 	match [flip_v, flip_h, transpose]:
 		[false, false, false]: Dir = Vector2.RIGHT   # No rotation
 		[true, true, false]: Dir = Vector2.LEFT   # 180 degrees
-		[true, false, true]: Dir = Vector2.DOWN  # 90 degrees clockwise
-		[false, true, true]: Dir = Vector2.UP   # 270 degrees clockwise (or -90)
+		[true, false, true]: Dir = Vector2.UP  # 90 degrees clockwise
+		[false, true, true]: Dir = Vector2.DOWN   # 270 degrees clockwise (or -90)
 		
 	return Dir
 

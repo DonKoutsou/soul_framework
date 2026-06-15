@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c3v1lq4fsttds"]
 
 [ext_resource type="Script" uid="uid://hxxsah6n6oak" path="res://Engine/Stage/Level/Level.gd" id="1_8kag3"]
+[ext_resource type="ArrayMesh" uid="uid://lo1s4lyagpp4" path="res://Engine/Assets/Map_Geometry/WallCollider.res" id="2_252yv"]
 [ext_resource type="PackedScene" uid="uid://bualon7naga6t" path="res://Engine/Stage/NPC.tscn" id="4_jnjmb"]
 [ext_resource type="PackedScene" uid="uid://g1v6rflwacfo" path="res://Engine/Controllers/World_Manequin/Enemy_Manequin.tscn" id="6_tijfw"]
 [ext_resource type="PackedScene" uid="uid://cnge62u6oksn7" path="res://Engine/Particles/ParticlePacks/BaseParticlePack.tscn" id="7_24ms2"]
@@ -88,11 +89,7 @@
 [ext_resource type="ArrayMesh" uid="uid://citgqs1idf274" path="res://Engine/Assets/Map_Geometry/BG.res" id="92_yg26m"]
 [ext_resource type="Material" uid="uid://cs5qavhmjdtgy" path="res://Engine/Shaders/Materials/BackgroundMat.tres" id="93_im3oe"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_24ms2"]
-center_offset = Vector3(-0.5, 0.5, 0)
-orientation = 0
-
-[sub_resource type="Resource" id="Resource_24ms2"]
+[sub_resource type="Resource" id="Resource_sjhj7"]
 resource_local_to_scene = true
 script = ExtResource("15_keskx")
 TrapType = 1
@@ -103,7 +100,7 @@ CustomData = {
 }
 metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
 
-[sub_resource type="Resource" id="Resource_252yv"]
+[sub_resource type="Resource" id="Resource_fg3x2"]
 resource_local_to_scene = true
 script = ExtResource("15_keskx")
 Cooldown = 3.0
@@ -112,7 +109,7 @@ CustomData = {
 }
 metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
 
-[sub_resource type="Resource" id="Resource_sjhj7"]
+[sub_resource type="Resource" id="Resource_jyopp"]
 resource_local_to_scene = true
 script = ExtResource("15_keskx")
 TrapType = 2
@@ -141,13 +138,13 @@ height = 0.3
 radial_segments = 4
 rings = 2
 
-[node name="DungeonLevel19" type="Node3D" unique_id=127161226 node_paths=PackedStringArray("MonsterMan", "TrapMan", "AudioMan", "AmbientAudio", "PropMeshSpawner", "BackgroundMesh", "ProjectileSwitchArea")]
+[node name="DungeonLevel20" type="Node3D" unique_id=127161226 node_paths=PackedStringArray("MonsterMan", "TrapMan", "AudioMan", "AmbientAudio", "PropMeshSpawner", "BackgroundMesh", "ProjectileSwitchArea")]
 script = ExtResource("1_8kag3")
 MonsterMan = NodePath("MonsterManager")
 TrapMan = NodePath("TrapManager")
 AudioMan = NodePath("LevelAudioManager")
 AmbientAudio = NodePath("AudioStreamPlayer")
-WallCollider = SubResource("QuadMesh_24ms2")
+WallCollider = ExtResource("2_252yv")
 PropMeshSpawner = NodePath("MeshSpawner")
 BackgroundMesh = NodePath("MeshInstance3D")
 ProjectileSwitchArea = NodePath("ProjectileSwitch/ProjectileSwitchCollision")
@@ -166,7 +163,7 @@ LoadDistance = 4
 script = ExtResource("15_jnjmb")
 
 [node name="TrapManager" parent="." unique_id=287800843 instance=ExtResource("14_b7w5u")]
-TrapSetting = Array[ExtResource("15_keskx")]([SubResource("Resource_24ms2"), SubResource("Resource_252yv"), SubResource("Resource_sjhj7"), SubResource("Resource_d87ld")])
+TrapSetting = Array[ExtResource("15_keskx")]([SubResource("Resource_sjhj7"), SubResource("Resource_fg3x2"), SubResource("Resource_jyopp"), SubResource("Resource_d87ld")])
 TrapScenes = Dictionary[int, PackedScene]({
 0: ExtResource("10_il8c7"),
 1: ExtResource("11_gp8xr"),
@@ -417,7 +414,7 @@ autoplay = true
 bus = &"SFX"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=958300129]
-transform = Transform3D(16, 0, 0, 0, 16, 0, 0, 0, 16, 0, 0, 0)
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
 material_override = ExtResource("93_im3oe")
 mesh = ExtResource("92_yg26m")
 

@@ -144,11 +144,11 @@ script = ExtResource("1_bvnat")
 Cam = NodePath("Camera3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1591494481]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -1, 0)
 mesh = ExtResource("2_tiktn")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=1061024559]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 2)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -1, 2)
 mesh = ExtResource("2_5pfv0")
 
 [node name="MeshInstance3D23" type="MeshInstance3D" parent="." unique_id=2093026753]
@@ -160,7 +160,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, 
 mesh = ExtResource("2_5pfv0")
 
 [node name="MeshInstance3D25" type="MeshInstance3D" parent="." unique_id=1404082598]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, 8.742278e-08)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2, -1, 8.742278e-08)
 mesh = ExtResource("2_5pfv0")
 
 [node name="MeshInstance3D26" type="MeshInstance3D" parent="." unique_id=715143072]
@@ -168,23 +168,23 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, 
 mesh = ExtResource("5_tiktn")
 
 [node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=1462037615]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -2)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -1, -2)
 mesh = ExtResource("2_5pfv0")
 
 [node name="MeshInstance3D7" type="MeshInstance3D" parent="." unique_id=2049096531]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -1, -2)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -1, -2)
 mesh = ExtResource("2_5pfv0")
 
 [node name="MeshInstance3D14" type="MeshInstance3D" parent="." unique_id=1784984094]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, -1, -2)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, -1, -2)
 mesh = ExtResource("2_5pfv0")
 
 [node name="MeshInstance3D15" type="MeshInstance3D" parent="." unique_id=866341750]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, -1, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -2)
 mesh = ExtResource("2_5pfv0")
 
 [node name="MeshInstance3D16" type="MeshInstance3D" parent="." unique_id=1305973674]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 1.9996855, -1, -4.339218e-05)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9996855, -1, -4.339218e-05)
 mesh = ExtResource("2_5pfv0")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=37810533]
@@ -204,15 +204,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -2)
 mesh = ExtResource("5_tiktn")
 
 [node name="MeshInstance3D17" type="MeshInstance3D" parent="." unique_id=44633001]
-transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 2, 1, -2)
+transform = Transform3D(-1, -1.509958e-07, 0, 1.509958e-07, -1, 0, 0, 0, 1, 2, 1, -2)
 mesh = ExtResource("5_tiktn")
 
 [node name="MeshInstance3D18" type="MeshInstance3D" parent="." unique_id=1848204094]
-transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 1, -2)
+transform = Transform3D(-1, -1.509958e-07, 0, 1.509958e-07, -1, 0, 0, 0, 1, 0, 1, -2)
 mesh = ExtResource("5_tiktn")
 
 [node name="MeshInstance3D28" type="MeshInstance3D" parent="." unique_id=1787638766]
-transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, -2, 1.0000002, 0)
+transform = Transform3D(-1, -1.509958e-07, 0, 1.509958e-07, -1, 0, 0, 0, 1, -2, 1.0000002, 0)
 mesh = ExtResource("5_tiktn")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=145218122]
@@ -221,7 +221,7 @@ shadow_normal_bias = 0.0
 directional_shadow_max_distance = 2.0
 
 [node name="MeshInstance3D6" type="MeshInstance3D" parent="." unique_id=1197113131]
-transform = Transform3D(1.435, 0, 0, 0, 1.7174103, 0, 0, 0, 2.1806664, -0.9052422, -1.2684474, -0.00023525953)
+transform = Transform3D(-1.435, 0, -1.9063991e-07, 0, 1.7174103, 0, 1.2545168e-07, 0, -2.1806664, -0.9052422, -1.2684474, -0.00023525953)
 material_override = ExtResource("8_atcex")
 mesh = ExtResource("2_5pfv0")
 

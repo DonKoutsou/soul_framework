@@ -9,6 +9,8 @@ func _ready() -> void:
 		finished.connect(queue_free)
 
 func StartEmmision() -> void:
+	restart()
 	emitting = true
 	for g in SubEmmiters:
+		g.restart()
 		g.emitting = true

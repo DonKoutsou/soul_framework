@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://fiuajpm4l4lj"]
 
+[ext_resource type="Script" uid="uid://cfwkwwubgbwaj" path="res://Engine/Utils/SubEmmiterParticle3D.gd" id="1_l0do3"]
+[ext_resource type="Shader" uid="uid://5xosl8jgb5kl" path="res://Engine/Shaders/BaseMat/Base_Simple_Transparent_Emissive_Part_Mat.gdshader" id="2_p24ht"]
+[ext_resource type="Texture2D" uid="uid://t7wwx8j6b12w" path="res://Engine/Assets/Textures/LLight.png" id="3_8h23a"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bkmyc"]
 albedo_color = Color(0.82276577, 0.5263845, 0.20737559, 1)
 emission_enabled = true
@@ -29,7 +33,42 @@ height = 0.25
 radial_segments = 4
 rings = 1
 
-[node name="Spark" type="GPUParticles3D" unique_id=942870742 groups=["Particles"]]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8h23a"]
+render_priority = 0
+shader = ExtResource("2_p24ht")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/alpha_scale = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metal = 0.0
+shader_parameter/specular = 0.0
+shader_parameter/ao = 1.0
+shader_parameter/ao_light_affect = 1.0
+shader_parameter/emission = Color(0.82276577, 0.5263845, 0.20737559, 1)
+shader_parameter/emission_energy_multiplier = 99.9999977648
+shader_parameter/billboard = false
+shader_parameter/particle_billboard = true
+shader_parameter/y_billboard = false
+shader_parameter/keep_scale = true
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("3_8h23a")
+
+[sub_resource type="Curve" id="Curve_p24ht"]
+_data = [Vector2(0, 0.0063072443), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 4.013811, -3.2110636, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_8h23a"]
+curve = SubResource("Curve_p24ht")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6pb30"]
+gravity = Vector3(0, 0, 0)
+scale_min = 0.29999998
+scale_max = 0.29999998
+scale_curve = SubResource("CurveTexture_8h23a")
+
+[sub_resource type="QuadMesh" id="QuadMesh_hh2uo"]
+
+[node name="Spark" type="GPUParticles3D" unique_id=942870742 node_paths=PackedStringArray("SubEmmiters") groups=["Particles"]]
 material_override = SubResource("StandardMaterial3D_bkmyc")
 emitting = false
 amount = 20
@@ -38,3 +77,14 @@ explosiveness = 1.0
 transform_align = 2
 process_material = SubResource("ParticleProcessMaterial_bkmyc")
 draw_pass_1 = SubResource("SphereMesh_l23i4")
+script = ExtResource("1_l0do3")
+SubEmmiters = [NodePath("GPUParticles3D")]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=616534153]
+material_override = SubResource("ShaderMaterial_8h23a")
+emitting = false
+amount = 1
+lifetime = 0.2
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_6pb30")
+draw_pass_1 = SubResource("QuadMesh_hh2uo")

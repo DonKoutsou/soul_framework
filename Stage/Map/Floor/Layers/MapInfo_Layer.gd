@@ -49,7 +49,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 		8:
 			var TrapDat = MapTrapData.new()
 			
-			var rot = GetTileRotationRadians(Vector2i( Pos.x, Pos.z))
+			var rot = -GetTileRotationRadians(Vector2i( Pos.x, Pos.z)) - Vector2.LEFT.angle()
 			var B = Basis().scaled(Vector3(1,1,1) * (map.WorldScale / 2.0))
 			var Trans = Transform3D(B.rotated(Vector3(0,1,0), rot), Pos * map.WorldScale + Vector3i(0,1,0))
 			TrapDat.TrapType = Map.TrapType.FIRE_TRAP
@@ -95,7 +95,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 		#Spawnpoint
 		14:
 			map.Data.SpawnPoint = Pos
-			map.Data.SpawnRot = GetTileRotationRadians(Vector2i(Pos.x, Pos.z))
+			map.Data.SpawnRot = -GetTileRotationRadians(Vector2i(Pos.x, Pos.z)) - Vector2.LEFT.angle()
 		#Fire pit
 		15:
 			cellDat.type = CellData.CELLTYPE.BONEFIRE
@@ -140,7 +140,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 			cellDat.type = CellData.CELLTYPE.GAP
 		#Stairs going up
 		24:
-			var rot2 = GetTileRotationRadians(Vector2i(Pos.x, Pos.z))
+			var rot2 = -GetTileRotationRadians(Vector2i(Pos.x, Pos.z)) - Vector2.LEFT.angle()
 			var T = Transform3D(Basis().rotated(Vector3(0,1,0), rot2), (Pos * map.WorldScale))
 			cellDat.Custom_Data["UP_STAIRS"] = T
 			cellDat.type = CellData.CELLTYPE.UP_STAIRS
@@ -149,7 +149,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 			tempLayerData.SpawnCeiling = false
 		#Stairs going down
 		25: 
-			var rot2 = GetTileRotationRadians(Vector2i(Pos.x, Pos.z))
+			var rot2 = -GetTileRotationRadians(Vector2i(Pos.x, Pos.z)) - Vector2.LEFT.angle()
 			var Position = Vector3i(Pos.x, Pos.y - 1, Pos.z)
 			var T = Transform3D(Basis().rotated(Vector3(0,1,0), rot2), (Position * map.WorldScale))
 			cellDat.Custom_Data["DOWN_STAIRS"] = T

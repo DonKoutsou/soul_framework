@@ -51,8 +51,8 @@ func ToggleDoor(Data : MapData, Pos : Vector3i) -> void:
 		DoorDat.Blocked = false
 		OppositeDoorDat.Blocked = false
 	
-	var NewDoorPosition : Transform3D = DoorDat.DoorTransform.rotated_local(Vector3(0,1,0), PI/2).translated_local(Vector3(0.6,0,-0.7))
+	var NewDoorPosition : Transform3D = DoorDat.DoorTransform.rotated_local(Vector3(0,1,0), PI/2).translated_local(-Vector3(0.6,0,-0.7))
 	DoorDat.OpenDoorTransform = NewDoorPosition
-	OppositeDoorDat.OpenDoorTransform = NewDoorPosition.rotated_local(Vector3(0,1,0), PI).translated_local(Vector3(CurrentWorldScale.x,0,0))
+	OppositeDoorDat.OpenDoorTransform = NewDoorPosition.rotated_local(Vector3(0,1,0), PI).translated_local(-Vector3(CurrentWorldScale.x,0,0))
 	
 	AudioManager.Instance.PlaySoundLocational(AudioManager.Sound.DOOR_OPEN, Pos * CurrentWorldScale, -5, 0.2, 1, true, 5)
