@@ -27,28 +27,39 @@ func Testtile(pos : Vector2i) -> int:
 func GetTileRotationRadians(pos : Vector2i) -> float:
 	var rot : float = 0
 	
-	if is_cell_flipped_h(pos) == false and is_cell_flipped_v(pos) == false:
-		rot = 0
-	elif is_cell_flipped_h(pos) == true and is_cell_flipped_v(pos) == false:
-		rot = -PI/2
-	elif is_cell_flipped_h(pos) == false and is_cell_flipped_v(pos) == true:
-		rot = PI/2
-	elif is_cell_flipped_h(pos) == true and is_cell_flipped_v(pos) == true:
-		rot = PI
+	var alt_tile = get_cell_alternative_tile(pos)
+
+	# Test for the engine's built-in transform flags
+	var flip_h = alt_tile & TileSetAtlasSource.TRANSFORM_FLIP_H > 0
+	var flip_v = alt_tile & TileSetAtlasSource.TRANSFORM_FLIP_V > 0
+	var transpose = alt_tile & TileSetAtlasSource.TRANSFORM_TRANSPOSE > 0
+
+	match [flip_v, flip_h, transpose]:
+		[false, false, false]: rot = 0.0   # No rotation
+		[true, true, false]: rot = PI   # 180 degrees
+		[true, false, true]: rot = PI / 2  # 90 degrees clockwise
+		[false, true, true]: rot = -PI / 2   # 270 degrees clockwise (or -90)
+		
 	return rot
+
 
 #----------------------------------------------------------------
 func GetTileDirection(pos : Vector2i) -> Vector2:
 	var Dir : Vector2 = Vector2.RIGHT
 	
-	if is_cell_flipped_h(pos) == false and is_cell_flipped_v(pos) == false:
-		Dir = Vector2.RIGHT
-	elif is_cell_flipped_h(pos) == true and is_cell_flipped_v(pos) == false:
-		Dir = Vector2.DOWN
-	elif is_cell_flipped_h(pos) == false and is_cell_flipped_v(pos) == true:
-		Dir = Vector2.UP
-	elif is_cell_flipped_h(pos) == true and is_cell_flipped_v(pos) == true:
-		Dir = Vector2.LEFT
+	var alt_tile = get_cell_alternative_tile(pos)
+
+	# Test for the engine's built-in transform flags
+	var flip_h = alt_tile & TileSetAtlasSource.TRANSFORM_FLIP_H > 0
+	var flip_v = alt_tile & TileSetAtlasSource.TRANSFORM_FLIP_V > 0
+	var transpose = alt_tile & TileSetAtlasSource.TRANSFORM_TRANSPOSE > 0
+
+	match [flip_v, flip_h, transpose]:
+		[false, false, false]: Dir = Vector2.RIGHT   # No rotation
+		[true, true, false]: Dir = Vector2.LEFT   # 180 degrees
+		[true, false, true]: Dir = Vector2.DOWN  # 90 degrees clockwise
+		[false, true, true]: Dir = Vector2.UP   # 270 degrees clockwise (or -90)
+		
 	return Dir
 
 func GetDebugData(_map : Map, _floorIndex : int) -> Dictionary[String, Variant]:

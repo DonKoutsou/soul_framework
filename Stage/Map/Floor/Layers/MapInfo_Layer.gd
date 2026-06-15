@@ -38,7 +38,9 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 			#AddDeco = false
 		#Wall crack
 		6:
-			tempData.Cracks[Pos] = GetTileDirection(Vector2i( Pos.x, Pos.z))
+			var dir = GetTileDirection(Vector2i( Pos.x, Pos.z))
+			tempData.Cracks[Pos] = dir
+			#print(dir)
 		#Light door
 		7:
 			cellDat.AddData("LightDoor", LightDoorData.new())
