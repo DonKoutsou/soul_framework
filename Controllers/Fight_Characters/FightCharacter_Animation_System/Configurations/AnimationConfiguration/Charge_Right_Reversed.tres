@@ -8,9 +8,9 @@
 script = ExtResource("2_kc6jb")
 AnimName = "Charge_Right_Reversed"
 BlendCurve = ExtResource("1_e8m1d")
+Blend_Duration = 0.3
 BlendOutAnim = "Charge_Right"
 BlendOutCurve = ExtResource("2_o72u7")
-Blend_Duration = 0.3
 Blend_Out_Duration = 0.4
 Time_Scale = 0.8
 ValidStates = Array[int]([23])

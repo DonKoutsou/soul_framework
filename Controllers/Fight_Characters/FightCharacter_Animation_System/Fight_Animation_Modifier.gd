@@ -178,10 +178,11 @@ func StateSwitched(NewState : FightCharacter.CharacterState) -> void:
 					SetAnimationBlendDirection(blendOutAnimIndex, false)
 					
 					if (animInfo.InverseSyncBlend):
-						var time = animator.get_animation(animToStop.GetAnimationName(CurrentWeaponType, dualDir)).length
-						var newTime = time - animProgress[blendOutAnimIndex]
+						var animLength = animator.get_animation(animToStop.GetAnimationName(CurrentWeaponType, dualDir)).length
+						var newTime = animLength - animProgress[blendOutAnimIndex]
 						cachedPrevanimProgress[animIndex] = animProgress[blendOutAnimIndex]
-						animProgress[animIndex] = newTime
+						#cap the ammount
+						animProgress[animIndex] = min(newTime, animLength * animInfo.MaxSyncNormalised)
 				else: if(!animInfo.AllowTransitionWithoutBlendOut):
 					continue
 			
@@ -347,11 +348,12 @@ func ProgressAnimation(animIndex : int, delta : float) -> void:
 			
 	
 	if (anim.Loop):
-		var blend_speed = (delta * anim.Time_Scale)
+		var progression = (delta * anim.Time_Scale)
 		if (anim.AffectedByWeapon):
-			blend_speed *= currentWeaponSpeed
+			progression *= currentWeaponSpeed
+			
 		cachedPrevanimProgress[animIndex] = animProgress[animIndex]
-		animProgress[animIndex] += blend_speed
+		animProgress[animIndex] += progression
 		#anim.animProgress = wrapf(anim.animProgress + (delta / anim.Time_Scale), 0, animator.get_animation(anim.AnimName).length) 
 		#var remainingTime = currentAnim.length - animProgress
 		if (animProgress[animIndex] > currentAnim.length):
@@ -367,36 +369,43 @@ func ProgressAnimation(animIndex : int, delta : float) -> void:
 	else:
 		if (animProgress[animIndex] > currentAnim.length):
 			return
-		var blend_speed = (delta * anim.Time_Scale)
+			
+		var progression = (delta * anim.Time_Scale)
 		if (anim.AffectedByWeapon):
-			blend_speed *= currentWeaponSpeed
+			progression *= currentWeaponSpeed
 		
 		cachedPrevanimProgress[animIndex] = animProgress[animIndex] #cache previous progress, used to calculate ammount the animation progress by
 		
 		#try to coclulate how far the ending of the animation is and start blending it out eralier
-		var remainingBlendTime = animBlend[animIndex]
-		
-		var blendOutDuration = anim.Blend_Out_Duration * anim.Time_Scale
-		if (anim.AffectedByWeapon):
-			blendOutDuration /= currentWeaponSpeed
+		#if we are already blending out we can skip
+		if (anim.EarlyBlendOut and blendDirection):
+			var remainingBlend = animBlend[animIndex]
 			
-		var timeUntilBlendOut = (remainingBlendTime * blendOutDuration) - (delta * 4)
-		
-		
-		if (animProgress[animIndex] + timeUntilBlendOut > currentAnim.length):
+			var blendOutLength = anim.Blend_Out_Duration
+			
+			var timeUntilBlendOut = remainingBlend * blendOutLength
+			
+			var timeUntilFullProgress = (currentAnim.length - animProgress[animIndex]) / anim.Time_Scale
+			
+			if (timeUntilFullProgress <= timeUntilBlendOut):
+				if (anim.AutoComplete):
+					SetAnimationBlendDirection(animIndex, false)
+				if (anim.OnCompleteAnim != ""):
+					PlayAnim(anim.GetOnCompleteAnimationName(CurrentWeaponType, dualDir))
+			
+		animProgress[animIndex] += progression
+
+		if (animProgress[animIndex] > currentAnim.length):
 			if (anim.AutoComplete):
 				SetAnimationBlendDirection(animIndex, false)
 			if (anim.OnCompleteAnim != ""):
 				PlayAnim(anim.GetOnCompleteAnimationName(CurrentWeaponType, dualDir))
-		
-		animProgress[animIndex] += blend_speed
-
-		if (animProgress[animIndex] > currentAnim.length):
+					
 			OnAnimationFinished(anim.AnimName)
 			
 #---------------------------------------------
 func OnAnimationFinished(animName : String) -> void:
-	#print("Finished : {0}".format([animName]))
+	print("Finished : {0}".format([animName]))
 	AnimationFinished.emit(animName)
 
 #---------------------------------------------

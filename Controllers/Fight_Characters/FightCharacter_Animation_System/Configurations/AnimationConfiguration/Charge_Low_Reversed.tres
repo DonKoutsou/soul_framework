@@ -7,9 +7,9 @@
 script = ExtResource("2_dify5")
 AnimName = "Charge_Low_Reversed"
 BlendCurve = ExtResource("1_i3qfs")
+Blend_Duration = 0.3
 BlendOutAnim = "Charge_Low"
 BlendOutCurve = ExtResource("1_i3qfs")
-Blend_Duration = 0.3
 Blend_Out_Duration = 0.4
 Time_Scale = 0.8
 ValidStates = Array[int]([25])

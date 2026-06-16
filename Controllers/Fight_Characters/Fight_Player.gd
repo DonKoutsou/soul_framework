@@ -429,7 +429,7 @@ func SetLookModif(Value : float) -> void:
 	LookTween.pause()
 
 func SetFightStance(t : bool) -> void:
-	print("Setting fight stance {0}".format([t]))
+	#print("Setting fight stance {0}".format([t]))
 	if (t == true):
 		#state_machine.travel("Idle")
 		UpdateState(CharacterState.IDLE)

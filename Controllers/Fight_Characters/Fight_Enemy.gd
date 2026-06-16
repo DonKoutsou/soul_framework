@@ -99,6 +99,7 @@ func SetControllingChar(Char : Actor) -> void:
 #------------------------------------------------------------------------------
 #Apply bones from incomming skeleton to this scenes skeleton
 func CreateSkeleton(incommingSkel : Skeleton3D) -> void:
+	var hitPartAttachment : BoneAttachment = HitParticles.get_parent()
 	sk.clear_bones()
 	
 	for boneIndex in incommingSkel.get_bone_count():
@@ -109,7 +110,11 @@ func CreateSkeleton(incommingSkel : Skeleton3D) -> void:
 			sk.set_bone_parent(boneIndex, parentIndex)
 		
 		sk.set_bone_global_pose(boneIndex, incommingSkel.get_bone_global_pose(boneIndex))
+		
+		if (sk.get_bone_name(boneIndex) == "Head"):
+			hitPartAttachment.boneID = boneIndex
 
+	
 #----------------------------------------------------
 func ApplyVisuals(viz : Node3D) -> void:
 	sk.add_child(viz)
@@ -335,13 +340,13 @@ func PickAtackDirection() -> AtackSide:
 	var AvailableAtackDirections : Array
 	if (ControllingCharacter.Mon.Dificulty <= Monster.MonsterDifficulty.C):
 		if (Target.CurrentState == CharacterState.DUCKING_RIGHT):
-			print("Monster atacking from right to counter ducking")
+			#print("Monster atacking from right to counter ducking")
 			return AtackSide.RIGHT
 		else : if (Target.CurrentState == CharacterState.DUCKING_LEFT):
-			print("Monster atacking from left to counter ducking")
+			#print("Monster atacking from left to counter ducking")
 			return AtackSide.LEFT
 		else : if (Target.CurrentState == CharacterState.PARRY):
-			print("Monster kicking to counter blocking")
+			#print("Monster kicking to counter blocking")
 			return AtackSide.LOW
 		else:
 			AvailableAtackDirections = [AtackSide.RIGHT, AtackSide.LEFT, AtackSide.TOP]
@@ -405,7 +410,7 @@ func Update(delta: float) -> void:
 	#Collect actions and choose what to perform
 	
 	var Action = GetCharacterActions()
-	print("Enemy performs action {0}".format([Action]))
+	#print("Enemy performs action {0}".format([Action]))
 	Action.call()
 
 #-------------------------------------------------------------------

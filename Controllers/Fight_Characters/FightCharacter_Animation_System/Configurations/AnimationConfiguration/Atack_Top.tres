@@ -7,13 +7,13 @@
 script = ExtResource("2_0kfh4")
 AnimName = "Atack_Top"
 BlendCurve = ExtResource("1_661hh")
+Blend_Duration = 0.3
 BlendOutAnim = "Charge_Top"
 AllowTransitionWithoutBlendOut = true
 BlendOutCurve = ExtResource("1_661hh")
-Blend_Duration = 0.3
 Blend_Out_Duration = 0.3
 InverseSyncBlend = true
+MaxSyncNormalised = 0.3
 AffectedByWeapon = true
-AllowRestart = null
 ValidStates = Array[int]([15, 37])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

@@ -177,7 +177,7 @@ func GetFightName() -> String:
 	return ""
 
 func SetComboWindow(t : bool) -> void:
-	print("{0} - Combo window open = {1}".format([GetFightName(), t]))
+	#print("{0} - Combo window open = {1}".format([GetFightName(), t]))
 	ComboWindowOpen = t
 #----------------------------------------------------
 func StopParry(force : bool = false) -> void:
@@ -345,8 +345,8 @@ func OnAtackPerformed(Direction : AtackSide) -> void:
 		ControllingCharacter.BuffNextAtackSpeed(-SpeedBuffBefore)
 		ControllingCharacter.DamageBuff -= DamageBuffBefore
 		AtackPerformed.emit(Direction, ChargePower)
-	else:
-		print("{0} - Could not perform atack, current state = {1}".format([GetFightName(),CharacterState.keys()[CurrentState]]))
+	#else:
+		#print("{0} - Could not perform atack, current state = {1}".format([GetFightName(),CharacterState.keys()[CurrentState]]))
 		
 	ChargePower = 0
 
@@ -354,7 +354,7 @@ func OnAtackPerformed(Direction : AtackSide) -> void:
 func UpdateState(NewState : CharacterState) -> void:
 	CurrentState = NewState
 	StateUpdated = true
-	print("{0} - Updated State to {1}".format([GetFightName(),CharacterState.keys()[NewState]]))
+	#print("{0} - Updated State to {1}".format([GetFightName(),CharacterState.keys()[NewState]]))
 	
 	
 #----------------------------------------------------
@@ -371,7 +371,7 @@ func ChargeHit(Direction : AtackSide) -> void:
 			return
 	#Cant start a hit unless we are on idle
 	if (CurrentState != CharacterState.IDLE and !ComboWindowOpen):
-		print("{0} - Cant start a hit unless we are on idle".format([GetFightName()]))
+		#print("{0} - Cant start a hit unless we are on idle".format([GetFightName()]))
 		return
 
 	if (Direction == AtackSide.LEFT):
@@ -385,7 +385,7 @@ func ChargeHit(Direction : AtackSide) -> void:
 	else: if (Direction == AtackSide.TOP):
 		UpdateState(CharacterState.CHARGING_TOP)
 		
-	print("{0} - Charging : {1}".format([GetFightName() ,AtackSide.keys()[Direction]]))
+	#print("{0} - Charging : {1}".format([GetFightName() ,AtackSide.keys()[Direction]]))
 	
 	SetComboWindow(false)
 #----------------------------------------------------
@@ -480,7 +480,7 @@ func Damage(DamageAmm : int, Direction : AtackSide, _ShakeAmm : float, AtackWeig
 		Recoil(Direction, true, AtackWeight)
 		return 0
 	
-	print("{0} - Damaged".format([GetFightName()]))
+	#print("{0} - Damaged".format([GetFightName()]))
 	
 	Recoil(Direction, true, AtackWeight)
 	return DamageAmm
@@ -507,7 +507,7 @@ func HasStaminaForHit() -> bool:
  #----------------------------------------------------
 var fadingout : bool = false
 func AnimTreeFinished(anim_name: StringName) -> void:
-	print("{0} - Anim finished {1}".format([GetFightName(),anim_name]))
+	#print("{0} - Anim finished {1}".format([GetFightName(),anim_name]))
 	#if (anim_name in ["Hit_Left", "Hit_Right", "Hit_Mid"] and IsRecoiling()):
 		#UpdateState(CharacterState.IDLE)
 	
@@ -728,7 +728,7 @@ func GetRecoil(Dir : AtackSide) -> Vector3:
 			return Vector3(0,-2,2)
 			
 		AtackSide.TOP:
-			return Vector3(2,0,0)
+			return Vector3(-2,0,0)
 			
 		AtackSide.MIDDLE:
 			return Vector3(-2,0,0)

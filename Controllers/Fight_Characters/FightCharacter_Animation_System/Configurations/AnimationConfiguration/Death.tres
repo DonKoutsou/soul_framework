@@ -6,6 +6,8 @@
 script = ExtResource("1_2owjx")
 AnimName = "Death"
 Blend_Duration = 0.15
+EarlyBlendOut = false
 Blend_Out_Duration = 0.15
+AutoComplete = false
 ValidStates = Array[int]([34])
 metadata/_custom_type_script = "uid://bl0vbdv76yftl"

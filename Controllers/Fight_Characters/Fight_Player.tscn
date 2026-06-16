@@ -125,6 +125,7 @@ active = true
 influence = 1.0
 script = ExtResource("17_22ek7")
 WeaponCurve = ExtResource("5_ttegh")
+CurrentWeaponType = 1
 RecoilCurve = SubResource("Curve_22ek7")
 animator = NodePath("../../AnimationPlayer")
 anims = Array[ExtResource("9_ga5p4")]([ExtResource("10_57y0o"), ExtResource("11_x4p7r"), ExtResource("12_kyleq"), ExtResource("13_endcp"), ExtResource("14_7u03s"), ExtResource("15_j7887"), ExtResource("16_uwlqa"), ExtResource("17_gpdat"), ExtResource("18_u1g0i"), ExtResource("19_m5kv2"), ExtResource("22_pc6nx"), ExtResource("25_btr13"), ExtResource("28_bqsjn"), ExtResource("31_e5kpb"), ExtResource("20_upm8t"), ExtResource("23_n25ff"), ExtResource("26_jpaba"), ExtResource("29_xjw76"), ExtResource("32_s781g"), ExtResource("21_tcu7f"), ExtResource("24_6lemw"), ExtResource("27_67617"), ExtResource("30_o4q42"), ExtResource("33_mjjn8"), ExtResource("34_wmvpl"), ExtResource("35_0de3s"), ExtResource("36_jmdvu"), ExtResource("37_wyigv"), ExtResource("34_krl06")])
@@ -144,7 +145,6 @@ bone_idx = 29
 
 [node name="WeaponPlacement" type="Node3D" parent="GeneralSkeleton/BoneAttachment3D" unique_id=2136917447]
 transform = Transform3D(0.0048682285, 0.1156679, -0.99327606, -0.9994029, 0.034539543, -0.00087609846, 0.034205973, 0.99268717, 0.11576699, -0.01770631, 0.045, -0.007187872)
-visible = false
 
 [node name="SwipeMesh" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D/WeaponPlacement" unique_id=1407660072]
 transform = Transform3D(49.985, 0, 0, 0, 49.985, 0, 0, 0, 49.985, 1.0910663e-08, 0.66057384, 5.54057e-10)
@@ -286,6 +286,10 @@ active = false
 influence = 1.0
 script = ExtResource("45_y0045")
 metadata/_custom_type_script = "uid://bj3feok1xkxq"
+
+[node name="PinJoint2D" type="PinJoint2D" parent="GeneralSkeleton" unique_id=965428901]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="GeneralSkeleton/PinJoint2D" unique_id=487493657]
 
 [node name="FlowPivot" type="Node3D" parent="." unique_id=1898368749]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16990097, 0.5131718, -0.19746694)

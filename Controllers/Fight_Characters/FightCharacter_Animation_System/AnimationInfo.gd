@@ -6,16 +6,26 @@ class_name AnimationInfo
 @export var AnimName : String = ""
 
 @export_group("Blend Settings")
+@export var AllowOverBlend : bool = false
+@export_subgroup("Blend In")
 @export var BlendInAnim : String = ""
 @export var BlendCurve : Curve
+@export var Blend_Duration : float = 1.0
+@export_subgroup("Blend Out")
 @export var BlendOutAnim : String = ""
+##Will start blending out just before the animation finishes
+@export var EarlyBlendOut : bool = true
 @export var AllowTransitionWithoutBlendOut : bool = false
 @export var BlendOutCurve : Curve
-@export var Blend_Duration : float = 1.0
 @export var Blend_Out_Duration : float = 1.0
-@export var OnCompleteAnim : String = ""
+
+##Animation will have its progress synced with animation being blended out
 @export var InverseSyncBlend : bool = false
-@export var AllowOverBlend : bool = false
+##Max ammount value will be synced with Blend out Anim
+@export_range(0, 1.0, 0.1) var MaxSyncNormalised : float = 0
+
+@export_subgroup("")
+@export var OnCompleteAnim : String = ""
 @export_flags_2d_navigation var BoneFilter : int = 4294967295
 
 @export_group("Speed")
