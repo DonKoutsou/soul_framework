@@ -221,8 +221,8 @@ func PlayAnim(animName : String) -> void:
 #---------------------------------------------
 func UpdateWeaponSpeed(newSpeed : float) -> void:
 	var normalisedSpeed = GetWeaponSpeedNormalised(newSpeed)
-	var first = clampf(lerpf(0.0, 1.0, normalisedSpeed), 0.0, 1.0)
-	var second = clampf(lerpf(3.5, 1.0, normalisedSpeed), 1.0, 3.5)
+	var first = clampf(lerpf(1.0, 0.0, normalisedSpeed), 0.0, 1.0)
+	var second = clampf(lerpf(1.0, 3.5, normalisedSpeed), 1.0, 3.5)
 	WeaponCurve.set_point_right_tangent(0, first)
 	WeaponCurve.set_point_left_tangent(1, second)
 	WeaponCurve.bake()

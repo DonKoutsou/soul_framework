@@ -706,4 +706,3 @@ func UnDuck() -> void:
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if (area is DialogueTrigger):
 		DialogueMet.emit(area.position, area.Dialogues)
-		area.queue_free()

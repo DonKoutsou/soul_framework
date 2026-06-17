@@ -71,8 +71,9 @@ func ProcessFatigue(character : FightCharacter,delta : float) -> void:
 		character.ControllingCharacter.HealFatigue(delta * 16)
 
 func ProcessInput(event: InputEvent) -> void:
-	FightWorld.Pl.ProcessInput(event)
 	TutorialMan.ProcessInput(event)
+	FightWorld.Pl.ProcessInput(event)
+	
 
 func IsInFight() -> bool:
 	return InFight

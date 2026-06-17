@@ -27,11 +27,13 @@ func RemoveOldSpawns(positions : Array[Vector3i]) -> void:
 			continue
 			
 		for data : Dictionary in spawnList[pos]:
-			var rid : RID = data["Instance"]
-			RenderingServer.free_rid(rid)
-			var col : CollisionShape3D = data["Collision"]
-			if (col != null):
-				col.queue_free()
+			if (data.has("Instance")):
+				var rid : RID = data["Instance"]
+				RenderingServer.free_rid(rid)
+			if (data.has("Collision")):
+				var col : Node3D = data["Collision"]
+				if (col != null):
+					col.queue_free()
 		
 		spawnList.erase(pos)
 
@@ -39,11 +41,13 @@ func RemoveSpot(_Data : MapData, Pos : Vector3i) -> void:
 	if (!spawnList.has(Pos)):
 		return
 	for data : Dictionary in spawnList[Pos]:
-		var rid : RID = data["Instance"]
-		RenderingServer.free_rid(rid)
-		var col : CollisionShape3D = data["Collision"]
-		if (col != null):
-			col.queue_free()
+		if (data.has("Instance")):
+			var rid : RID = data["Instance"]
+			RenderingServer.free_rid(rid)
+		if (data.has("Collision")):
+			var col : Node3D = data["Collision"]
+			if (col != null):
+				col.queue_free()
 	spawnList.erase(Pos)
 	
 
@@ -53,7 +57,7 @@ func RemoveIndex(_Data : MapData, pos : Vector3i, index : int) -> void:
 			var data : Dictionary = spawnList[pos][instanceIndex]
 			var rid : RID = data["Instance"]
 			RenderingServer.free_rid(rid)
-			var col : CollisionShape3D = data["Collision"]
+			var col : Node3D = data["Collision"]
 			if (col != null):
 				col.queue_free()
 			
@@ -176,4 +180,5 @@ enum LevelMultimeshTypes{
 	TRANSITIONS,
 	FIRE_TRAP,
 	HOUSE,
+	TEXT
 }

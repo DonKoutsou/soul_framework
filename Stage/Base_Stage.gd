@@ -346,15 +346,13 @@ func DialogueMet(Pos : Vector3i, Dialogues : DialogueContainer) -> void:
 	if (Dialogues.Dialogues.size() == 0):
 		return
 	UIMan.Diag.DoDialogue(Dialogues)
-	CurrentWorld.GetMapData().Texts.erase(Helper.PlayerPositionToMap(Pos))
+	CurrentWorld.RemoveFrom(LevelMultimesh.LevelMultimeshTypes.TEXT, [Helper.PlayerPositionToMap(Pos)])
+	CurrentWorld.GetMapData().GetCell(Helper.PlayerPositionToMap(Pos)).Custom_Data.erase("Text")
 	
 	
 func AssistanceToggled(t : bool) -> void:
 	Fight.AtackIndicatorUI.ToggleHelp(t)
 	
-	
-
-
 
 func RecruitTeleport(mapCharacter : MapCharacter, NewLocation : Map.LocationName, Pos : Vector3i) -> void:
 	var loc = StoredWorlds[NewLocation]

@@ -11,8 +11,6 @@ class_name MapData
 @export var Doors : Dictionary[Vector3i, Map.LocationName]
 @export var Exits : Dictionary[Vector3i, Map.LocationName]
 
-@export var Texts : Dictionary[Vector3i, DialogueContainer]
-
 @export var MapDir : String
 @export var level : String
 @export var RandomSeed : int

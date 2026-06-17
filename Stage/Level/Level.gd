@@ -213,13 +213,7 @@ func BuildMaze(SpawnMonsters : bool) -> void:
 			
 			MonsterMan.call_deferred("AddMonster", m)
 			if (!monHouse.IsAlive()):
-				m.call_deferred("Dead") 
-				
-	for TextPos in GetMapData().Texts:
-		var DialogueT = DialogueTriggerScene.instantiate() as DialogueTrigger
-		DialogueT.Dialogues = GetMapData().Texts[TextPos].duplicate()
-		call_deferred("add_child", DialogueT)
-		DialogueT.position = CurrentWorldScale * TextPos
+				m.call_deferred("Dead")
 
 	call_deferred("NotifyFinished")
 	call_deferred("BuildingFinished")

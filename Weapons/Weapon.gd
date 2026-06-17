@@ -15,7 +15,7 @@ var Equipped : bool = false
 
 signal OnWeaponEquiped(t : bool)
 
-const WEAPON_MIN_SPEED : float = 0.6
+const WEAPON_MIN_SPEED : float = 0.8
 const WEAPON_MAX_SPEED : float = 1.5
 
 func WeaponEquiped(t : bool) -> void:
