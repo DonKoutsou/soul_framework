@@ -165,6 +165,17 @@ func get_points_in_square(center: Vector3i, distance: int) -> Array[Vector3i]:
 
 	return points
 
+func get_points_in_square_2D(center: Vector2i, distance: int) -> Array[Vector2i]:
+	var points : Array[Vector2i]
+	if (Data.cells.has(center)):
+		points.append(center)
+	for x in range(-distance, distance + 1):
+		for y in range(-distance, distance + 1):
+			var loc = center + Vector2i(x, y)
+			points.append(loc)
+
+	return points
+
 
 func GetVisible(Pos : Vector3i) -> Array:
 	var Suroundings : Array[Vector2i]

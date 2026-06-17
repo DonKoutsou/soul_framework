@@ -9,7 +9,7 @@ func GetLayerType() -> FloorLayer.LayerType:
 	return FloorLayer.LayerType.MAZE
 
 func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : TempLayerGenerationData, tempData : TempGenerationData) -> void:
-	var index = get_cell_atlas_coords(Vector2i(Pos.x, Pos.z)).x
+	#var index = get_cell_atlas_coords(Vector2i(Pos.x, Pos.z)).x
 
 	var pos = Pos * map.WorldScale
 	var rot = GetTileRotationRadians(Vector2i(Pos.x, Pos.z))
@@ -18,22 +18,76 @@ func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : Tem
 	
 	for wall : Vector2 in dat.get_custom_data("Walls"):
 		var wallDir = wall.rotated(rot)
-		if Pos == Vector3i(2, 0 , -3):
-			
-			print(Pos)
-			print(wall)
-			print(rot)
-			print(tempData.Cracks)
 			
 		AddWallToData(cell, GetWallType(Pos, wallDir, tempData), GetMeshPlecement(wall, rot, pos))
 	
-	for corner : Vector2 in dat.get_custom_data("Corners"):
-		cell.AddDataArr("Corners", GetMeshPlecement(corner, rot, pos))
+	#for corner : Vector2 in dat.get_custom_data("Corners"):
+		#cell.AddDataArr("Corners", GetMeshPlecement(corner, rot, pos))
 	
 	for wall : Vector2 in dat.get_custom_data("DoorWalls"):
 		cell.AddDataArr("DoorWalls", GetMeshPlecement(wall, rot, pos))
 		CheckForDoors(cell, Pos, pos, rot, wall, tempData)
 	
+	
+	var centerPointData : PackedVector2Array = GetTileWallData(Vector2i(Pos.x, Pos.z))
+	
+	var topPoint = Vector2i(Pos.x, Pos.z) + Vector2i(0, -1)
+	var topPointData : PackedVector2Array = GetTileWallData(topPoint)
+	
+	var bottomPoint = Vector2i(Pos.x, Pos.z) + Vector2i(0, 1)
+	var bottomPointData : PackedVector2Array = GetTileWallData(bottomPoint)
+	
+	var leftPoint = Vector2i(Pos.x, Pos.z) + Vector2i(-1, 0)
+	var leftPointData : PackedVector2Array = GetTileWallData(leftPoint)
+	
+	var rightPoint = Vector2i(Pos.x, Pos.z) + Vector2i(1, 0)
+	var rightPointData : PackedVector2Array = GetTileWallData(rightPoint)
+	
+	#check top left corner
+	if (!centerPointData.has(Vector2.UP) and !centerPointData.has(Vector2.LEFT)):
+		if (leftPointData.has(Vector2.UP) and !leftPointData.has(Vector2.RIGHT)):
+			cell.AddDataArr("Corners", GetMeshPlecement(Vector2.UP, 0, pos))
+		else: if (topPointData.has(Vector2.LEFT) and !topPointData.has(Vector2.DOWN)):
+			cell.AddDataArr("Corners", GetMeshPlecement(Vector2.UP, 0, pos))
+		
+	# check top right corner
+	if (!centerPointData.has(Vector2.UP) and !centerPointData.has(Vector2.RIGHT)):
+		if (rightPointData.has(Vector2.UP) and !rightPointData.has(Vector2.LEFT)):
+			cell.AddDataArr("Corners", GetMeshPlecement(Vector2.RIGHT, 0, pos))
+		else: if (topPointData.has(Vector2.RIGHT) and !topPointData.has(Vector2.DOWN)):
+			cell.AddDataArr("Corners", GetMeshPlecement(Vector2.RIGHT, 0, pos))
+
+
+	# check bottom right corner
+	if (!centerPointData.has(Vector2.DOWN) and !centerPointData.has(Vector2.RIGHT)):
+		if (rightPointData.has(Vector2.DOWN) and !rightPointData.has(Vector2.LEFT)):
+			cell.AddDataArr("Corners", GetMeshPlecement(Vector2.DOWN, 0, pos))
+		else: if (bottomPointData.has(Vector2.RIGHT) and !bottomPointData.has(Vector2.UP)):
+			cell.AddDataArr("Corners", GetMeshPlecement(Vector2.DOWN, 0, pos))
+
+
+	# check bottom left corner
+	if (!centerPointData.has(Vector2.DOWN) and !centerPointData.has(Vector2.LEFT)):
+		if (leftPointData.has(Vector2.DOWN) and !leftPointData.has(Vector2.RIGHT)):
+			cell.AddDataArr("Corners", GetMeshPlecement(Vector2.LEFT, 0, pos))
+		else: if (bottomPointData.has(Vector2.LEFT) and !bottomPointData.has(Vector2.UP)):
+			cell.AddDataArr("Corners", GetMeshPlecement(Vector2.LEFT, 0, pos))
+
+
+func GetTileWallData(tile : Vector2i) -> PackedVector2Array:
+	var wallData : PackedVector2Array = []
+	if (tile in get_used_cells()):
+		var rot = GetTileRotationRadians(tile)
+		var dat : TileData = get_cell_tile_data(tile)
+		
+		for wall : Vector2 in dat.get_custom_data("Walls"):
+			wallData.append(wall.rotated(rot).round())
+		
+		for wall : Vector2 in dat.get_custom_data("DoorWalls"):
+			wallData.append(wall.rotated(rot).round())
+		
+	return wallData
+
 func GetMeshPlecement(Dir : Vector2, Rot : float, Pos : Vector3) -> Transform3D:
 	var T : Transform3D
 	var B = Basis().rotated(Vector3(0,1,0), -Rot - Dir.angle())
