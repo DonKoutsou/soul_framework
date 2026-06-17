@@ -10,14 +10,14 @@ class_name AnimationInfo
 @export_subgroup("Blend In")
 @export var BlendInAnim : String = ""
 @export var BlendCurve : Curve
-@export var Blend_Duration : float = 1.0
+@export_range(0, 1.0, 0.1) var Blend_Duration : float = 1.0
 @export_subgroup("Blend Out")
 @export var BlendOutAnim : String = ""
 ##Will start blending out just before the animation finishes
 @export var EarlyBlendOut : bool = true
 @export var AllowTransitionWithoutBlendOut : bool = false
 @export var BlendOutCurve : Curve
-@export var Blend_Out_Duration : float = 1.0
+@export_range(0, 1.0, 0.1) var Blend_Out_Duration : float = 1.0
 
 ##Animation will have its progress synced with animation being blended out
 @export var InverseSyncBlend : bool = false

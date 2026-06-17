@@ -194,7 +194,7 @@ func EV_EnemyAtacked(Direction : FightCharacter.AtackSide, power : float) -> voi
 	if (!GetPlayer().ControllingCharacter.IsAlive()):
 		return
 	var FightingMonster = CurrentMosters[0]
-	FightingMonster.DamageFatigue(FightingMonster.CharacterWeapon.Stamina_Cost, "", false)
+	FightingMonster.DamageFatigue(FightingMonster.CharacterWeapon.Stamina_Cost * power, "", false)
 
 	var Dmg = FightingMonster.CharacterWeapon.Damage + FightingMonster.DamageBuff * power
 	#var finalDamage = Dmg
@@ -213,7 +213,7 @@ func EV_EnemyAtacked(Direction : FightCharacter.AtackSide, power : float) -> voi
 	GetPlayer().ControllingCharacter.Damage(finalDamage, FightingMonster)
 
 func EV_PlayerAtacked(Direction : FightCharacter.AtackSide, power : float) -> void:
-	GetPlayer().ControllingCharacter.DamageFatigue(GetPlayer().ControllingCharacter.CharacterWeapon.Stamina_Cost, "", false)
+	GetPlayer().ControllingCharacter.DamageFatigue(GetPlayer().ControllingCharacter.CharacterWeapon.Stamina_Cost * power, "", false)
 
 	if (IsInFight()):
 		var FightingMonster = CurrentMosters[0]

@@ -6,8 +6,8 @@
 script = ExtResource("1_18k7y")
 AnimName = "Lantern"
 BlendInAnim = "SwordSeath"
-BlendOutAnim = "SwordUnseath"
 Blend_Duration = 0.0
+BlendOutAnim = "SwordUnseath"
 Blend_Out_Duration = 0.3
 Loop = true
 AutoComplete = false

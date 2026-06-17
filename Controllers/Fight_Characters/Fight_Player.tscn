@@ -104,7 +104,6 @@ libraries/ = ExtResource("2_ttegh")
 
 [node name="GeneralSkeleton" parent="." unique_id=1728014551 instance=ExtResource("2_tiq7d")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
-modifier_callback_mode_process = 2
 
 [node name="MyModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=1069785363 node_paths=PackedStringArray("animator")]
 unique_name_in_owner = false
@@ -124,8 +123,8 @@ visibility_parent = NodePath("")
 active = true
 influence = 1.0
 script = ExtResource("17_22ek7")
+CurrentState = 1
 WeaponCurve = ExtResource("5_ttegh")
-CurrentWeaponType = 1
 RecoilCurve = SubResource("Curve_22ek7")
 animator = NodePath("../../AnimationPlayer")
 anims = Array[ExtResource("9_ga5p4")]([ExtResource("10_57y0o"), ExtResource("11_x4p7r"), ExtResource("12_kyleq"), ExtResource("13_endcp"), ExtResource("14_7u03s"), ExtResource("15_j7887"), ExtResource("16_uwlqa"), ExtResource("17_gpdat"), ExtResource("18_u1g0i"), ExtResource("19_m5kv2"), ExtResource("22_pc6nx"), ExtResource("25_btr13"), ExtResource("28_bqsjn"), ExtResource("31_e5kpb"), ExtResource("20_upm8t"), ExtResource("23_n25ff"), ExtResource("26_jpaba"), ExtResource("29_xjw76"), ExtResource("32_s781g"), ExtResource("21_tcu7f"), ExtResource("24_6lemw"), ExtResource("27_67617"), ExtResource("30_o4q42"), ExtResource("33_mjjn8"), ExtResource("34_wmvpl"), ExtResource("35_0de3s"), ExtResource("36_jmdvu"), ExtResource("37_wyigv"), ExtResource("34_krl06")])
@@ -139,12 +138,13 @@ bone = 8
 origin_offset = Vector3(-0.2, -0.1, 0)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1077415663]
-transform = Transform3D(-0.94398093, -0.29025272, 0.15701415, 0.29585132, -0.95514524, 0.0130211245, 0.14619176, 0.05874448, 0.9875108, -0.2547268, 0.5156195, 0.006251273)
+transform = Transform3D(-0.032341987, -0.033664122, 0.99890995, 0.98188233, 0.18563259, 0.038046468, -0.18671098, 0.9820423, 0.027050313, -0.16974118, 0.76864684, 0.15790895)
 bone_name = "WeaponPlacement.R"
 bone_idx = 29
 
 [node name="WeaponPlacement" type="Node3D" parent="GeneralSkeleton/BoneAttachment3D" unique_id=2136917447]
 transform = Transform3D(0.0048682285, 0.1156679, -0.99327606, -0.9994029, 0.034539543, -0.00087609846, 0.034205973, 0.99268717, 0.11576699, -0.01770631, 0.045, -0.007187872)
+visible = false
 
 [node name="SwipeMesh" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D/WeaponPlacement" unique_id=1407660072]
 transform = Transform3D(49.985, 0, 0, 0, 49.985, 0, 0, 0, 49.985, 1.0910663e-08, 0.66057384, 5.54057e-10)
@@ -198,7 +198,7 @@ skeleton = NodePath("../../../../..")
 script = ExtResource("14_tc1am")
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1819386683]
-transform = Transform3D(-1, -8.697901e-15, -6.278329e-07, -1.1962389e-11, 0.9999997, 1.9039608e-05, 6.278329e-07, 1.9039602e-05, -1, 1.6701878e-16, 0.771, 0.0073502064)
+transform = Transform3D(-1, 9.3132e-10, -5.65667e-07, 9.205439e-10, 0.9999997, 1.9050782e-05, 5.65667e-07, 1.9050776e-05, -1, 4.8525355e-14, 0.7747954, 0.0073502064)
 bone_name = "CameraBone"
 bone_idx = 30
 

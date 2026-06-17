@@ -18,8 +18,6 @@ var Menu : StartingMenu
 var GameInstance : Stage
 var EndCard : EndScreen
 
-
-
 func _ready() -> void:
 	Settings.LoadSettings()
 	
@@ -40,7 +38,6 @@ func _ready() -> void:
 	Menu.LoadPressed.connect(LoadGame)
 	#Menu.SettingsPressed.connect(ToggleSettings)
 	set_process_input(false)
-
 
 func StartGame() -> void:
 	Menu.PlayIntro()

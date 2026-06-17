@@ -111,6 +111,8 @@ func RegisterCharacter(group : MonsterGroup) -> void:
 		
 		Skel.set_bone_global_pose(boneIndex, incommingSkel.get_bone_global_pose(boneIndex))
 	
+	incommingSkel.queue_free()
+	
 	visuals = load(pickedArchetype.Mon.Visuals).instantiate()
 	Skel.add_child(visuals)
 	for g : MeshInstance3D in visuals.get_children():

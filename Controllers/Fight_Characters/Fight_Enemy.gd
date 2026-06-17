@@ -65,6 +65,7 @@ func SetControllingChar(Char : Actor) -> void:
 	var incommingSkel : Skeleton3D = skeletonScene.instantiate()
 
 	CreateSkeleton(incommingSkel)
+	incommingSkel.queue_free()
 	
 	if (Visuals != null):
 		ClearVisuals()
