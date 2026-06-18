@@ -1024,6 +1024,7 @@ func AtackEnviroment() -> void:
 		for g : WallData in lookingCell.Custom_Data["Walls"]:
 			if (g.Cracked):
 				lookingCrackedWall = g
+				break
 				
 		if (crackedWall != null and lookingCrackedWall != null):
 			CurrentWorld.BreakWall(MapPos, crackedWall, LookingMapPos,lookingCrackedWall)

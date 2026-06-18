@@ -3,8 +3,6 @@ extends BaseFloorLayer
 
 class_name MazeFloorLayer
 
-
-
 func GetLayerType() -> FloorLayer.LayerType:
 	return FloorLayer.LayerType.MAZE
 
@@ -18,17 +16,16 @@ func HandleCell(cell : CellData, Pos : Vector3i, map : Map, _tempLayerData : Tem
 	
 	for wall : Vector2 in dat.get_custom_data("Walls"):
 		var wallDir = wall.rotated(rot)
-			
 		AddWallToData(cell, GetWallType(Pos, wallDir, tempData), GetMeshPlecement(wall, rot, pos))
-	
-	#for corner : Vector2 in dat.get_custom_data("Corners"):
-		#cell.AddDataArr("Corners", GetMeshPlecement(corner, rot, pos))
 	
 	for wall : Vector2 in dat.get_custom_data("DoorWalls"):
 		cell.AddDataArr("DoorWalls", GetMeshPlecement(wall, rot, pos))
 		CheckForDoors(cell, Pos, pos, rot, wall, tempData)
 	
-	
+	#check if cracks remain in the temp data
+	if (tempData.Cracks.has(Pos)):
+		printerr("Crack cound not be mapped in {0}".format(Pos))
+		
 	var centerPointData : PackedVector2Array = GetTileWallData(Vector2i(Pos.x, Pos.z))
 	
 	var topPoint = Vector2i(Pos.x, Pos.z) + Vector2i(0, -1)
@@ -98,6 +95,7 @@ func GetWallType(MapPos : Vector3i, Direction : Vector2, tempData : TempGenerati
 	var WallType = "Walls"
 	if (tempData.Cracks.keys().has(MapPos)):
 		if (tempData.Cracks[MapPos].is_equal_approx(Direction)):
+			tempData.Cracks.erase(MapPos)
 			WallType = "BrokenWalls"
 	return WallType
 

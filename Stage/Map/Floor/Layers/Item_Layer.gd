@@ -45,9 +45,11 @@ func GetDebugData(map : Map, _floorIndex : int) -> Dictionary[String, Variant]:
 		var Index = get_cell_atlas_coords(itemPos).x
 		
 		var text : String = ""
+		var col = DebugStringColor
 		
 		if (map.ItemCaralogue.size() <= Index):
 			text = "INVALID!!!!!!!!!!\nSEND HELP"
+			col = Color(1,0,0)
 		else:
 			var it : Item = load(map.ItemCaralogue[Index])
 			text = it.ItemName

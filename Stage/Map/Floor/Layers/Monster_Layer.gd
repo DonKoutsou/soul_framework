@@ -24,10 +24,12 @@ func GetDebugData(map : Map, _floorIndex : int) -> Dictionary[String, Variant]:
 		var Index = get_cell_atlas_coords(monsterPosition).x
 		
 		var text : String = ""
+		var col = DebugStringColor
 		
 		if (map.MonsterCatalogue.size() - 1 < Index):
 			printerr("Monster of Index {0} hasn't been configured in {1}".format([Index, map.LocationName.keys()[map.LevelName]]))
 			text = "Invalid"
+			col = Color(1,0,0)
 		else:
 			var mon : Monster = load(map.MonsterCatalogue[Index])
 			text = mon.MonsterName

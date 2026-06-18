@@ -175,16 +175,16 @@ text = "Development : Koutsouradis Antonios"
 underline = 1
 uri = "https://www.artstation.com/koutsou"
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1362182678]
+[node name="VBoxContainer32" type="VBoxContainer" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1362182678]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainer3" unique_id=1563234612]
+[node name="Label" type="Label" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainer32" unique_id=1563234612]
 layout_mode = 2
 text = "Textures"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LinkButton2" type="LinkButton" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainer3" unique_id=302748731]
+[node name="LinkButton2" type="LinkButton" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainer32" unique_id=302748731]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/outline_size = 8

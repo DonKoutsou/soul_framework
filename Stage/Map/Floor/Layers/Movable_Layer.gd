@@ -21,10 +21,12 @@ func GetDebugData(map : Map, _floorIndex : int) -> Dictionary[String, Variant]:
 		
 		var Index = get_cell_atlas_coords(MovablePosition).x
 		var text : String = ""
-
+		var col = DebugStringColor
+		
 		if (map.MovableCatalogue.size() - 1 < Index):
 			printerr("Movable of Index {0} hasn't been configured in {1}".format([Index, map.LocationName.keys()[map.LevelName]]))
 			text = "Invalid"
+			col = Color(1,0,0)
 		else:
 			var Dat = map.MovableCatalogue[Index]
 			text = "{0}\n{1}".format([Index, PreassuerPlateData.SwitchElement.keys()[Dat.Element]])

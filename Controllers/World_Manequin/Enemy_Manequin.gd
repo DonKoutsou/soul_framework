@@ -14,7 +14,7 @@ class_name EnemyManequin
 @export var Area : Area3D
 @export var Sound : AudioStreamPlayer3D
 @export var Scream : AudioStreamPlayer3D
-@export var AnimTree : AnimationTree
+@export var AnimModifier : Fight_Animation_Modifier
 @export var Skel : Skeleton3D
 @export var AlarmStateLabel : Label3D
 @export var HeadRotationPivot : Node3D
@@ -89,6 +89,7 @@ func _ready() -> void:
 	position = CurrentPosition * Level.CurrentWorldScale
 	G.LastKnownPosition = position
 	Level.EnemyOccupiedSlots.append(CurrentPosition)
+	AnimModifier.StateSwitched(FightCharacter.CharacterState.IDLE)
 
 func RegisterCharacter(group : MonsterGroup) -> void:
 	if (group == null):
@@ -122,19 +123,20 @@ func RegisterCharacter(group : MonsterGroup) -> void:
 		else: if g.name.contains("B_"):
 			BodyModels.append(g)
 	
+	
+	
 	var leftWeapon = pickedArchetype.CharacterWeapon.WeaponScene.instantiate()
 	WeaponPlacementL.add_child(leftWeapon)
 	if (pickedArchetype.CharacterWeapon.WeaponType == Fight_Animation_Modifier.WeaponType.TWO_HANDED):
-		AnimTree.set("parameters/Stance_Blend/blend_amount", -1.0)
-		AnimTree.set("parameters/Stance_Walk_Blend/blend_amount", -1.0)
+		AnimModifier.CurrentWeaponType = Fight_Animation_Modifier.WeaponType.TWO_HANDED
+
 	else: if (pickedArchetype.CharacterWeapon.WeaponType == Fight_Animation_Modifier.WeaponType.DUAL):
-		AnimTree.set("parameters/Stance_Blend/blend_amount", 1.0)
-		AnimTree.set("parameters/Stance_Walk_Blend/blend_amount", 1.0)
+		AnimModifier.CurrentWeaponType = Fight_Animation_Modifier.WeaponType.DUAL
+
 		var rightWeapon = pickedArchetype.CharacterWeapon.WeaponScene.instantiate()
 		WeaponPlacementR.add_child(rightWeapon)
 	else:
-		AnimTree.set("parameters/Stance_Blend/blend_amount", 0.0)
-		AnimTree.set("parameters/Stance_Walk_Blend/blend_amount", 0.0)
+		AnimModifier.CurrentWeaponType = Fight_Animation_Modifier.WeaponType.ONE_HANDED
 		
 	for g in BodyModels:
 		g.set_surface_override_material(0, pickedArchetype.PickedMat)
@@ -147,7 +149,7 @@ func RegisterCharacter(group : MonsterGroup) -> void:
 			deco.visible = pickedArchetype.PickedDecorations[DecoType] == g
 
 func Update(delta: float, PlayerPos : Vector3) -> void:
-	AnimTree.advance(delta)
+	Skel.advance(delta)
 	
 	if (!SeeingPlayer):
 		if (is_instance_valid(MoveTw) and MoveTw.is_valid()):
@@ -276,7 +278,7 @@ func Action(CustomStep : float = 0.6) -> void:
 	MoveTw.finished.connect(WalkingFinished)
 	#print("Mosnter moving from {0} to {1}".format([position, CurrentPosition * Level.CurrentWorldScale]))
 	
-	AnimTree.set("parameters/WalkBlend/blend_amount", 1.0)
+	AnimModifier.Walking = true
 
 func LookAtDirection(DirectionToGo : Vector3i) -> void:
 	
@@ -308,14 +310,9 @@ func LookAtDirection(DirectionToGo : Vector3i) -> void:
 func RotationFinished() -> void:
 	d = 0
 
-func SetWalkBlend(Value : float) -> void:
-	AnimTree.set("parameters/WalkBlend/blend_amount", Value)
-
-func SetRunBlend(Value : float) -> void:
-	AnimTree.set("parameters/RunBlend/blend_amount", Value)
 
 func WalkingFinished() -> void:
-	AnimTree.set("parameters/WalkBlend/blend_amount", 0.0)
+	AnimModifier.Walking = false
 	#AnimTree.set("parameters/WalkBlend/blend_amount", 0.0)
 	
 func GetRandomDirections() -> Array[Vector3i]:
@@ -375,12 +372,7 @@ func JumpToPlayer(_PL : BasePlayerManequin, _ForceLook : bool = true) -> void:
 	MoveTw.tween_property(self, "position", Vector3(NewPos * Level.CurrentWorldScale), Dist / 2.0)
 	MoveTw.finished.connect(JumpFinished)
 	MoveTw.pause()
-	
-	RunTw = create_tween()
-	RunTw.set_ease(Tween.EASE_OUT)
-	RunTw.set_trans(Tween.TRANS_BACK)
-	RunTw.tween_method(SetRunBlend, 0, 1, 0.5)
-	RunTw.pause()
+
 
 func JumpFinished() -> void:
 	SetAlarmState(AlarmState.IDLE)
@@ -388,11 +380,6 @@ func JumpFinished() -> void:
 	GoingAfterPlayer = false
 	PlayerCast.enabled = true
 	d = 0
-	RunTw = create_tween()
-	RunTw.set_ease(Tween.EASE_OUT)
-	RunTw.set_trans(Tween.TRANS_BACK)
-	RunTw.tween_method(SetRunBlend, 1, 0, 0.5)
-	RunTw.pause()
 	
 
 func PlayerMet() -> void:

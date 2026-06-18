@@ -50,7 +50,7 @@ func Update(delta: float) -> void:
 		Died.emit()
 		Finished.emit()
 		queue_free()
-	if (dest.distance_squared_to(global_position) > 40):
+	if (dest.distance_squared_to(global_position) > 200):
 		Died.emit()
 		queue_free()
 		

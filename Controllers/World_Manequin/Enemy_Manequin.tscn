@@ -3,72 +3,16 @@
 [ext_resource type="Script" uid="uid://dke4aimiytcrd" path="res://Engine/Controllers/World_Manequin/Enemy_Manequin.gd" id="2_bqo2l"]
 [ext_resource type="AudioStream" uid="uid://cicrjeo3klcpj" path="res://Engine/Assets/Sounds/Voice.mp3" id="3_j1ohr"]
 [ext_resource type="AudioStream" uid="uid://c35hd0vilu1jj" path="res://Engine/Assets/Sounds/Scream.mp3" id="4_q6hbr"]
+[ext_resource type="Script" uid="uid://2o6tgcat6qck" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Fight_Animation_Modifier.gd" id="4_wuk6f"]
+[ext_resource type="Script" uid="uid://bl0vbdv76yftl" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/AnimationInfo.gd" id="5_8c6xk"]
 [ext_resource type="AnimationLibrary" uid="uid://dkpao1mofh7ko" path="res://Engine/Controllers/Fight_Characters/EnemyRig/EnemyRigAnimationLib.tres" id="6_ihg1j"]
+[ext_resource type="Resource" uid="uid://b5vqjjy1pi4ci" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Idle.tres" id="6_nullh"]
+[ext_resource type="Resource" uid="uid://yqqkgd2xk3vk" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Walk_Enemy.tres" id="7_nullh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gv6m8"]
 height = 1.5
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sa4iq"]
-animation = &"Walk"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aj0m2"]
-animation = &"Run"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qv5qo"]
-animation = &"2H_Walk"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xjd2g"]
-animation = &"2H_Idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gv6m8"]
-animation = &"R_Idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x0roc"]
-animation = &"Walk"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_02o2w"]
-animation = &"Idle"
-
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_a2sg0"]
-
-[sub_resource type="AnimationNodeBlend3" id="AnimationNodeBlend3_qv5qo"]
-
-[sub_resource type="AnimationNodeBlend3" id="AnimationNodeBlend3_5y7nx"]
-
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_sa4iq"]
-
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_sa4iq"]
-
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_a2sg0"]
-graph_offset = Vector2(-703.68414, -210.46147)
-nodes/output/position = Vector2(546.6667, 160)
-nodes/Animation/node = SubResource("AnimationNodeAnimation_02o2w")
-nodes/Animation/position = Vector2(-400, -80)
-nodes/WalkBlend/node = SubResource("AnimationNodeBlend2_sa4iq")
-nodes/WalkBlend/position = Vector2(-13.333333, 93.333336)
-"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_sa4iq")
-"nodes/Animation 2/position" = Vector2(-720, 560)
-nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_sa4iq")
-nodes/TimeScale/position = Vector2(-253.33333, 400)
-"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_aj0m2")
-"nodes/Animation 3/position" = Vector2(66.666664, 453.33334)
-nodes/RunBlend/node = SubResource("AnimationNodeBlend2_a2sg0")
-nodes/RunBlend/position = Vector2(280, 133.33333)
-nodes/Stance_Walk_Blend/node = SubResource("AnimationNodeBlend3_5y7nx")
-nodes/Stance_Walk_Blend/position = Vector2(-453.33334, 493.33334)
-"nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_qv5qo")
-"nodes/Animation 4/position" = Vector2(-693.3333, 346.66666)
-"nodes/Animation 5/node" = SubResource("AnimationNodeAnimation_xjd2g")
-"nodes/Animation 5/position" = Vector2(-413.33334, -306.66666)
-"nodes/Animation 6/node" = SubResource("AnimationNodeAnimation_gv6m8")
-"nodes/Animation 6/position" = Vector2(-409.29324, 155.03564)
-nodes/Stance_Blend/node = SubResource("AnimationNodeBlend3_qv5qo")
-nodes/Stance_Blend/position = Vector2(-186.66667, -93.333336)
-"nodes/Animation 7/node" = SubResource("AnimationNodeAnimation_x0roc")
-"nodes/Animation 7/position" = Vector2(-666.6667, 880)
-node_connections = [&"output", 0, &"RunBlend", &"WalkBlend", 0, &"Stance_Blend", &"WalkBlend", 1, &"TimeScale", &"TimeScale", 0, &"Stance_Walk_Blend", &"RunBlend", 0, &"WalkBlend", &"RunBlend", 1, &"Animation 3", &"Stance_Walk_Blend", 0, &"Animation 4", &"Stance_Walk_Blend", 1, &"Animation 2", &"Stance_Walk_Blend", 2, &"Animation 7", &"Stance_Blend", 0, &"Animation 5", &"Stance_Blend", 1, &"Animation", &"Stance_Blend", 2, &"Animation 6"]
-
-[node name="EnemyManequin" type="Node3D" unique_id=2044947179 node_paths=PackedStringArray("Cast", "PlayerCast", "WeaponPlacementL", "WeaponPlacementR", "Area", "Sound", "Scream", "AnimTree", "Skel", "AlarmStateLabel", "HeadRotationPivot")]
+[node name="EnemyManequin" type="Node3D" unique_id=2044947179 node_paths=PackedStringArray("Cast", "PlayerCast", "WeaponPlacementL", "WeaponPlacementR", "Area", "Sound", "Scream", "AnimModifier", "Skel", "AlarmStateLabel", "HeadRotationPivot")]
 script = ExtResource("2_bqo2l")
 Cast = NodePath("RayCast3D")
 PlayerCast = NodePath("GeneralSkeleton/PlayerCast")
@@ -77,7 +21,7 @@ WeaponPlacementR = NodePath("GeneralSkeleton/WeaponAtatchment_R/WeaponPlacementR
 Area = NodePath("GeneralSkeleton/Area3D")
 Sound = NodePath("Idle_Sound")
 Scream = NodePath("Player_Located_Sound")
-AnimTree = NodePath("GeneralSkeleton/AnimationTree")
+AnimModifier = NodePath("GeneralSkeleton/Fight_Animation_Modifier")
 Skel = NodePath("GeneralSkeleton")
 AlarmStateLabel = NodePath("GeneralSkeleton/AlarmStateLabel")
 HeadRotationPivot = NodePath("Node3D")
@@ -115,6 +59,29 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, -0.2551171
 
 [node name="GeneralSkeleton" type="Skeleton3D" parent="." unique_id=1672969582]
 unique_name_in_owner = true
+modifier_callback_mode_process = 2
+
+[node name="Fight_Animation_Modifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=1771879100 node_paths=PackedStringArray("animator")]
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+rotation_edit_mode = 0
+rotation_order = 2
+top_level = false
+visible = true
+visibility_parent = NodePath("")
+active = true
+influence = 1.0
+script = ExtResource("4_wuk6f")
+animator = NodePath("../AnimationPlayer")
+anims = Array[ExtResource("5_8c6xk")]([ExtResource("6_nullh"), ExtResource("7_nullh")])
+metadata/_custom_type_script = "uid://2o6tgcat6qck"
 
 [node name="Hear_Rotation_Modifier" type="LookAtModifier3D" parent="GeneralSkeleton" unique_id=1388580164]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
@@ -176,16 +143,6 @@ shape = SubResource("CapsuleShape3D_gv6m8")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GeneralSkeleton" unique_id=990735659]
 root_node = NodePath("../..")
 libraries/ = ExtResource("6_ihg1j")
-
-[node name="AnimationTree" type="AnimationTree" parent="GeneralSkeleton" unique_id=1673104848]
-root_node = NodePath("%GeneralSkeleton/..")
-tree_root = SubResource("AnimationNodeBlendTree_a2sg0")
-anim_player = NodePath("../AnimationPlayer")
-parameters/WalkBlend/blend_amount = 0.39
-parameters/TimeScale/scale = 1.0
-parameters/RunBlend/blend_amount = 0.0
-parameters/Stance_Walk_Blend/blend_amount = 0.0
-parameters/Stance_Blend/blend_amount = 0.0
 
 [node name="PlayerCast" type="RayCast3D" parent="GeneralSkeleton" unique_id=1658494653]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66774756, 0)
