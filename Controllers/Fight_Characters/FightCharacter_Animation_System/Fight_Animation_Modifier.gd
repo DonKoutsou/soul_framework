@@ -109,7 +109,8 @@ func BuildAnimationCache(anim_name : String) -> void:
 		var type = anim.track_get_type(track)
 		
 		var path : NodePath = anim.track_get_path(track)
-		var targetNode = animator.get_parent().get_node(path)
+		
+		var targetNode = animator.get_parent().get_node_or_null(path)
 		
 		match type:
 			Animation.TYPE_VALUE:

@@ -57,6 +57,9 @@ transform = Transform3D(0.9999998, 0, 0, 0, 1, 0, 0, 0, 0.9999998, 0, 0.11957443
 [node name="HeadRotPosition" type="Node3D" parent="Node3D" unique_id=1026861910]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, -0.25511718, 2.0000002)
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=990735659]
+libraries/ = ExtResource("6_ihg1j")
+
 [node name="GeneralSkeleton" type="Skeleton3D" parent="." unique_id=1672969582]
 unique_name_in_owner = true
 modifier_callback_mode_process = 2
@@ -79,7 +82,7 @@ visibility_parent = NodePath("")
 active = true
 influence = 1.0
 script = ExtResource("4_wuk6f")
-animator = NodePath("../AnimationPlayer")
+animator = NodePath("../../AnimationPlayer")
 anims = Array[ExtResource("5_8c6xk")]([ExtResource("6_nullh"), ExtResource("7_nullh")])
 metadata/_custom_type_script = "uid://2o6tgcat6qck"
 
@@ -139,10 +142,6 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GeneralSkeleton/Area3D" unique_id=732455192]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 shape = SubResource("CapsuleShape3D_gv6m8")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GeneralSkeleton" unique_id=990735659]
-root_node = NodePath("../..")
-libraries/ = ExtResource("6_ihg1j")
 
 [node name="PlayerCast" type="RayCast3D" parent="GeneralSkeleton" unique_id=1658494653]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66774756, 0)
