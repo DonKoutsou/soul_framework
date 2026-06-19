@@ -39,7 +39,7 @@
 [ext_resource type="Animation" uid="uid://b6fu6e6wdsa6y" path="res://Engine/Controllers/Fight_Characters/PlayerRig/Animations/Parry_Recover.tres" id="37_xk0bw"]
 [ext_resource type="Animation" uid="uid://c4jn8spencqfr" path="res://Engine/Controllers/Fight_Characters/PlayerRig/Animations/Walk.tres" id="38_58nr3"]
 
-[sub_resource type="Animation" id="Animation_ead6k"]
+[sub_resource type="Animation" id="Animation_7o3us"]
 resource_name = "2H_Charge_Left"
 length = 0.5416667
 step = 0.008333334
@@ -315,7 +315,7 @@ tracks/36/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_axogg"]
+[sub_resource type="Animation" id="Animation_cck3i"]
 resource_name = "2H_Charge_Right"
 length = 0.5
 step = 0.008333334
@@ -591,7 +591,7 @@ tracks/36/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_6kci1"]
+[sub_resource type="Animation" id="Animation_472th"]
 resource_name = "2H_Charge_Top"
 length = 0.5416667
 step = 0.008333334
@@ -867,7 +867,7 @@ tracks/36/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_hixir"]
+[sub_resource type="Animation" id="Animation_pefcr"]
 resource_name = "Charge_Left"
 length = 0.5416667
 step = 0.008333334
@@ -1155,7 +1155,7 @@ tracks/37/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_ks473"]
+[sub_resource type="Animation" id="Animation_5g6xn"]
 resource_name = "Charge_Low"
 length = 0.5416667
 step = 0.008333334
@@ -1443,7 +1443,7 @@ tracks/37/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_0spi3"]
+[sub_resource type="Animation" id="Animation_eiwjb"]
 resource_name = "Charge_Right"
 length = 0.5
 step = 0.008333334
@@ -1731,7 +1731,7 @@ tracks/37/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_egan3"]
+[sub_resource type="Animation" id="Animation_kvk5g"]
 resource_name = "Charge_Top"
 length = 0.5416667
 step = 0.008333334
@@ -2765,11 +2765,11 @@ _data = {
 &"2H_Atack_Right": ExtResource("2_cck3i"),
 &"2H_Atack_Top": ExtResource("3_472th"),
 &"2H_Charge_Left": ExtResource("4_pefcr"),
-&"2H_Charge_Left_Reversed": SubResource("Animation_ead6k"),
+&"2H_Charge_Left_Reversed": SubResource("Animation_7o3us"),
 &"2H_Charge_Right": ExtResource("5_5g6xn"),
-&"2H_Charge_Right_Reversed": SubResource("Animation_axogg"),
+&"2H_Charge_Right_Reversed": SubResource("Animation_cck3i"),
 &"2H_Charge_Top": ExtResource("6_eiwjb"),
-&"2H_Charge_Top_Reversed": SubResource("Animation_6kci1"),
+&"2H_Charge_Top_Reversed": SubResource("Animation_472th"),
 &"2H_Duck_Left": ExtResource("7_kvk5g"),
 &"2H_Duck_Left_Recover": ExtResource("8_04oe6"),
 &"2H_Duck_Right": ExtResource("9_tlmci"),
@@ -2795,13 +2795,13 @@ _data = {
 &"BOW_SwordSeath": ExtResource("29_lrvcc"),
 &"BOW_SwordUnseath": ExtResource("30_jfbyq"),
 &"Charge_Left": ExtResource("31_x5pk2"),
-&"Charge_Left_Reversed": SubResource("Animation_hixir"),
+&"Charge_Left_Reversed": SubResource("Animation_pefcr"),
 &"Charge_Low": ExtResource("32_u88yk"),
-&"Charge_Low_Reversed": SubResource("Animation_ks473"),
+&"Charge_Low_Reversed": SubResource("Animation_5g6xn"),
 &"Charge_Right": ExtResource("33_2oceh"),
-&"Charge_Right_Reversed": SubResource("Animation_0spi3"),
+&"Charge_Right_Reversed": SubResource("Animation_eiwjb"),
 &"Charge_Top": ExtResource("34_qpjx6"),
-&"Charge_Top_Reversed": SubResource("Animation_egan3"),
+&"Charge_Top_Reversed": SubResource("Animation_kvk5g"),
 &"Death": SubResource("Animation_r6t8r"),
 &"Dig": ExtResource("35_qur20"),
 &"Duck_Left": ExtResource("22_327n0"),

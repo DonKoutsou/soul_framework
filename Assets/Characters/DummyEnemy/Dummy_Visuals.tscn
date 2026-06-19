@@ -1,26 +1,26 @@
 [gd_scene format=3 uid="uid://css3evm50uubp"]
 
-[ext_resource type="ArrayMesh" uid="uid://cay4gx2clc3o3" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_Hips.res" id="1_q3ryk"]
-[ext_resource type="ArrayMesh" uid="uid://d1j7xthqpqlfs" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_Spine.res" id="2_mogba"]
-[ext_resource type="ArrayMesh" uid="uid://dat85sbnjyhxt" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightUpperLeg.res" id="3_ubpuj"]
-[ext_resource type="ArrayMesh" uid="uid://dchcomxn1dhkn" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightFoot.res" id="4_c3487"]
-[ext_resource type="ArrayMesh" uid="uid://dr63ento7dc52" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightLowerLeg.res" id="5_px6wd"]
-[ext_resource type="ArrayMesh" uid="uid://b4iatlpjvb6dm" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightUpperArm.res" id="6_pqlyg"]
-[ext_resource type="ArrayMesh" uid="uid://cwixh1f0b87xi" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightLowerArm.res" id="7_aeayq"]
-[ext_resource type="ArrayMesh" uid="uid://bmufv31wai0kv" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_UpperChest.res" id="8_yax2x"]
-[ext_resource type="ArrayMesh" uid="uid://b8mqwg3hnekvg" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_Head.res" id="9_fff2a"]
-[ext_resource type="ArrayMesh" uid="uid://du301637lmekw" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftUpperLeg.res" id="10_jcsmp"]
-[ext_resource type="ArrayMesh" uid="uid://dwv7g1yrn6526" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftLowerLeg.res" id="11_ye3uc"]
-[ext_resource type="ArrayMesh" uid="uid://ba48ffuipi1u0" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftFoot.res" id="12_yl8m8"]
-[ext_resource type="ArrayMesh" uid="uid://da6h5yu0g7ixm" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftUpperArm.res" id="13_2iaps"]
-[ext_resource type="ArrayMesh" uid="uid://b64f7cb7h5ig4" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftLowerArm.res" id="14_xbphh"]
-[ext_resource type="ArrayMesh" uid="uid://byjq5817efrk" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftHand.res" id="15_cuxjj"]
-[ext_resource type="ArrayMesh" uid="uid://pdfossi3bsi2" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightHand.res" id="16_scner"]
-[ext_resource type="ArrayMesh" uid="uid://dy6jslhvu1kfm" path="res://Engine/Assets/Characters/DummyEnemy/HE_Deco1_Head.res" id="17_n0jvb"]
-[ext_resource type="ArrayMesh" uid="uid://cmthjeawccu4c" path="res://Engine/Assets/Characters/DummyEnemy/LS_Deco1_LeftUpperArm.res" id="18_a3jqq"]
-[ext_resource type="ArrayMesh" uid="uid://dubl4gii2jc8d" path="res://Engine/Assets/Characters/DummyEnemy/RS_Deco1_RightUpperArm.res" id="19_6naa4"]
+[ext_resource type="ArrayMesh" uid="uid://cyqc7bdbyts56" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_Hips.tres" id="1_q3ryk"]
+[ext_resource type="ArrayMesh" uid="uid://c6if4u1bnl2ub" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_Spine.tres" id="2_mogba"]
+[ext_resource type="ArrayMesh" uid="uid://bghivaq2e55ug" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightUpperLeg.tres" id="3_ubpuj"]
+[ext_resource type="ArrayMesh" uid="uid://ddo8vkl20ueib" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightFoot.tres" id="4_c3487"]
+[ext_resource type="ArrayMesh" uid="uid://cepbisctbeiag" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightLowerLeg.tres" id="5_px6wd"]
+[ext_resource type="ArrayMesh" uid="uid://b45yagjyplk5f" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightUpperArm.tres" id="6_pqlyg"]
+[ext_resource type="ArrayMesh" uid="uid://dc0ncl8awhchb" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightLowerArm.tres" id="7_aeayq"]
+[ext_resource type="ArrayMesh" uid="uid://de7jjmyllkca6" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_UpperChest.tres" id="8_yax2x"]
+[ext_resource type="ArrayMesh" uid="uid://btdo8gjud4gl0" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_Head.tres" id="9_fff2a"]
+[ext_resource type="ArrayMesh" uid="uid://d1kwb43fgk1tv" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftUpperLeg.tres" id="10_jcsmp"]
+[ext_resource type="ArrayMesh" uid="uid://ccd6ku8rcnxq7" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftLowerLeg.tres" id="11_ye3uc"]
+[ext_resource type="ArrayMesh" uid="uid://bcuir6ur6es07" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftFoot.tres" id="12_yl8m8"]
+[ext_resource type="ArrayMesh" uid="uid://babvglnk8krd3" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftUpperArm.tres" id="13_2iaps"]
+[ext_resource type="ArrayMesh" uid="uid://cj30jtri8o6f0" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftLowerArm.tres" id="14_xbphh"]
+[ext_resource type="ArrayMesh" uid="uid://bi8xyes1p7dyo" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_LeftHand.tres" id="15_cuxjj"]
+[ext_resource type="ArrayMesh" uid="uid://ctbxybk37qh21" path="res://Engine/Assets/Characters/DummyEnemy/B_Dummy_RightHand.tres" id="16_scner"]
+[ext_resource type="ArrayMesh" uid="uid://srm1pdr1j6d2" path="res://Engine/Assets/Characters/DummyEnemy/HE_Deco1_Head.tres" id="17_n0jvb"]
+[ext_resource type="ArrayMesh" uid="uid://g0rlfqgxvrvw" path="res://Engine/Assets/Characters/DummyEnemy/LS_Deco1_LeftUpperArm.tres" id="18_a3jqq"]
+[ext_resource type="ArrayMesh" uid="uid://c5fjqr77la3q1" path="res://Engine/Assets/Characters/DummyEnemy/RS_Deco1_RightUpperArm.tres" id="19_6naa4"]
 
-[sub_resource type="Skin" id="Skin_eysyx"]
+[sub_resource type="Skin" id="Skin_cbrag"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -101,7 +101,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_xl3tu"]
+[sub_resource type="Skin" id="Skin_63ikm"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -182,7 +182,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_g32xw"]
+[sub_resource type="Skin" id="Skin_sfqr6"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -263,7 +263,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_70fqv"]
+[sub_resource type="Skin" id="Skin_kk463"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -344,7 +344,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_tm7rw"]
+[sub_resource type="Skin" id="Skin_tks5v"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -425,7 +425,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_joghs"]
+[sub_resource type="Skin" id="Skin_ckg66"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -506,7 +506,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_n1q8o"]
+[sub_resource type="Skin" id="Skin_l2kt1"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -587,7 +587,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_2r8st"]
+[sub_resource type="Skin" id="Skin_tisfo"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -668,7 +668,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_ke38a"]
+[sub_resource type="Skin" id="Skin_hehjl"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -749,7 +749,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_7ny0u"]
+[sub_resource type="Skin" id="Skin_hbcp0"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -830,7 +830,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_p3yrw"]
+[sub_resource type="Skin" id="Skin_8dhps"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -911,7 +911,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_ssvqp"]
+[sub_resource type="Skin" id="Skin_00l0o"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -992,7 +992,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_v4jku"]
+[sub_resource type="Skin" id="Skin_4csyr"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -1073,7 +1073,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_x0ugy"]
+[sub_resource type="Skin" id="Skin_q0qpo"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -1154,7 +1154,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_vmgu0"]
+[sub_resource type="Skin" id="Skin_8munk"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -1235,7 +1235,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_od1h8"]
+[sub_resource type="Skin" id="Skin_18a2y"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -1316,7 +1316,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_tycy6"]
+[sub_resource type="Skin" id="Skin_u88we"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -1397,7 +1397,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_53sd4"]
+[sub_resource type="Skin" id="Skin_xhsql"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -1478,7 +1478,7 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[sub_resource type="Skin" id="Skin_eli3m"]
+[sub_resource type="Skin" id="Skin_t8m4e"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -1559,82 +1559,82 @@ bind/25/name = &"WeaponPlacement.R"
 bind/25/bone = 25
 bind/25/pose = Transform3D(-0.97195715, 0.2324362, 0.03568175, -0.22992949, -0.9711603, 0.063096255, 0.049318388, 0.053122718, 0.99736935, -0.36861432, 0.4360055, 0.0067832144)
 
-[node name="" type="Node3D" unique_id=1320451578]
+[node name="" type="Node3D" unique_id=771091124]
 
-[node name="B_Dummy_Hips" type="MeshInstance3D" parent="." unique_id=808316932]
+[node name="B_Dummy_Hips" type="MeshInstance3D" parent="." unique_id=1521777685]
 mesh = ExtResource("1_q3ryk")
-skin = SubResource("Skin_eysyx")
+skin = SubResource("Skin_cbrag")
 
-[node name="B_Dummy_Spine" type="MeshInstance3D" parent="." unique_id=67431439]
+[node name="B_Dummy_Spine" type="MeshInstance3D" parent="." unique_id=1484488264]
 mesh = ExtResource("2_mogba")
-skin = SubResource("Skin_xl3tu")
+skin = SubResource("Skin_63ikm")
 
-[node name="B_Dummy_RightUpperLeg" type="MeshInstance3D" parent="." unique_id=1357889670]
+[node name="B_Dummy_RightUpperLeg" type="MeshInstance3D" parent="." unique_id=1957065411]
 mesh = ExtResource("3_ubpuj")
-skin = SubResource("Skin_g32xw")
+skin = SubResource("Skin_sfqr6")
 
-[node name="B_Dummy_RightFoot" type="MeshInstance3D" parent="." unique_id=1901633409]
+[node name="B_Dummy_RightFoot" type="MeshInstance3D" parent="." unique_id=2105534698]
 mesh = ExtResource("4_c3487")
-skin = SubResource("Skin_70fqv")
+skin = SubResource("Skin_kk463")
 
-[node name="B_Dummy_RightLowerLeg" type="MeshInstance3D" parent="." unique_id=253173838]
+[node name="B_Dummy_RightLowerLeg" type="MeshInstance3D" parent="." unique_id=1928665250]
 mesh = ExtResource("5_px6wd")
-skin = SubResource("Skin_tm7rw")
+skin = SubResource("Skin_tks5v")
 
-[node name="B_Dummy_RightUpperArm" type="MeshInstance3D" parent="." unique_id=1155501834]
+[node name="B_Dummy_RightUpperArm" type="MeshInstance3D" parent="." unique_id=979327818]
 mesh = ExtResource("6_pqlyg")
-skin = SubResource("Skin_joghs")
+skin = SubResource("Skin_ckg66")
 
-[node name="B_Dummy_RightLowerArm" type="MeshInstance3D" parent="." unique_id=1514336318]
+[node name="B_Dummy_RightLowerArm" type="MeshInstance3D" parent="." unique_id=175019062]
 mesh = ExtResource("7_aeayq")
-skin = SubResource("Skin_n1q8o")
+skin = SubResource("Skin_l2kt1")
 
-[node name="B_Dummy_UpperChest" type="MeshInstance3D" parent="." unique_id=101847278]
+[node name="B_Dummy_UpperChest" type="MeshInstance3D" parent="." unique_id=739759919]
 mesh = ExtResource("8_yax2x")
-skin = SubResource("Skin_2r8st")
+skin = SubResource("Skin_tisfo")
 
-[node name="B_Dummy_Head" type="MeshInstance3D" parent="." unique_id=470389088]
+[node name="B_Dummy_Head" type="MeshInstance3D" parent="." unique_id=1474206470]
 mesh = ExtResource("9_fff2a")
-skin = SubResource("Skin_ke38a")
+skin = SubResource("Skin_hehjl")
 
-[node name="B_Dummy_LeftUpperLeg" type="MeshInstance3D" parent="." unique_id=335580218]
+[node name="B_Dummy_LeftUpperLeg" type="MeshInstance3D" parent="." unique_id=1369850011]
 mesh = ExtResource("10_jcsmp")
-skin = SubResource("Skin_7ny0u")
+skin = SubResource("Skin_hbcp0")
 
-[node name="B_Dummy_LeftLowerLeg" type="MeshInstance3D" parent="." unique_id=428895137]
+[node name="B_Dummy_LeftLowerLeg" type="MeshInstance3D" parent="." unique_id=327469415]
 mesh = ExtResource("11_ye3uc")
-skin = SubResource("Skin_p3yrw")
+skin = SubResource("Skin_8dhps")
 
-[node name="B_Dummy_LeftFoot" type="MeshInstance3D" parent="." unique_id=1770353336]
+[node name="B_Dummy_LeftFoot" type="MeshInstance3D" parent="." unique_id=977355672]
 mesh = ExtResource("12_yl8m8")
-skin = SubResource("Skin_ssvqp")
+skin = SubResource("Skin_00l0o")
 
-[node name="B_Dummy_LeftUpperArm" type="MeshInstance3D" parent="." unique_id=1197199424]
+[node name="B_Dummy_LeftUpperArm" type="MeshInstance3D" parent="." unique_id=991672780]
 mesh = ExtResource("13_2iaps")
-skin = SubResource("Skin_v4jku")
+skin = SubResource("Skin_4csyr")
 
-[node name="B_Dummy_LeftLowerArm" type="MeshInstance3D" parent="." unique_id=603540182]
+[node name="B_Dummy_LeftLowerArm" type="MeshInstance3D" parent="." unique_id=1289696226]
 mesh = ExtResource("14_xbphh")
-skin = SubResource("Skin_x0ugy")
+skin = SubResource("Skin_q0qpo")
 
-[node name="B_Dummy_LeftHand" type="MeshInstance3D" parent="." unique_id=1083286153]
+[node name="B_Dummy_LeftHand" type="MeshInstance3D" parent="." unique_id=1336988069]
 mesh = ExtResource("15_cuxjj")
-skin = SubResource("Skin_vmgu0")
+skin = SubResource("Skin_8munk")
 
-[node name="B_Dummy_RightHand" type="MeshInstance3D" parent="." unique_id=1270556033]
+[node name="B_Dummy_RightHand" type="MeshInstance3D" parent="." unique_id=1048852768]
 mesh = ExtResource("16_scner")
-skin = SubResource("Skin_od1h8")
+skin = SubResource("Skin_18a2y")
 
-[node name="HE_Deco1_Head" type="MeshInstance3D" parent="." unique_id=971037009]
+[node name="HE_Deco1_Head" type="MeshInstance3D" parent="." unique_id=436135867]
 mesh = ExtResource("17_n0jvb")
-skin = SubResource("Skin_tycy6")
+skin = SubResource("Skin_u88we")
 
-[node name="LS_Deco1_LeftUpperArm" type="MeshInstance3D" parent="." unique_id=1263388436]
+[node name="LS_Deco1_LeftUpperArm" type="MeshInstance3D" parent="." unique_id=1547652526]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00025386398, 0.0063369498, 0.013969822)
 mesh = ExtResource("18_a3jqq")
-skin = SubResource("Skin_53sd4")
+skin = SubResource("Skin_xhsql")
 
-[node name="RS_Deco1_RightUpperArm" type="MeshInstance3D" parent="." unique_id=652741857]
+[node name="RS_Deco1_RightUpperArm" type="MeshInstance3D" parent="." unique_id=1832830799]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00025386398, 0.0063369498, 0.013969822)
 mesh = ExtResource("19_6naa4")
-skin = SubResource("Skin_eli3m")
+skin = SubResource("Skin_t8m4e")

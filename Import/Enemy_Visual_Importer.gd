@@ -56,16 +56,16 @@ func _post_import(scene):
 			if (boneName == ""):
 
 				printerr("Missing bone name skipping skinning")
-				ResourceSaver.save(mesh, filePath + "{0}.res".format([g.name]),ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
-				g.mesh = load(filePath + "{0}.res".format([g.name]))
+				ResourceSaver.save(mesh, filePath + "{0}.tres".format([g.name]),ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
+				g.mesh = load(filePath + "{0}.tres".format([g.name]))
 			else:
 				var skinnedMesh : ArrayMesh = build_skinned_mesh(mesh, skeleton, boneName)
 				
 				for surface in mesh.get_surface_count():
 					skinnedMesh.surface_set_material(surface, mesh.surface_get_material(surface))
 					
-				ResourceSaver.save(skinnedMesh, filePath + "{0}.res".format([g.name]),ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
-				g.mesh = load(filePath + "{0}.res".format([g.name]))
+				ResourceSaver.save(skinnedMesh, filePath + "{0}.tres".format([g.name]),ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
+				g.mesh = load(filePath + "{0}.tres".format([g.name]))
 				g.skin = skinnedMesh.get_meta("generated_skin")
 			#g.mesh = load()
 		
