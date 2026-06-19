@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://l2fkypepswu7"]
 
-[node name="GeneralSkeleton" type="Skeleton3D" unique_id=2018517152]
+[node name="GeneralSkeleton" type="Skeleton3D" unique_id=1639867173]
 unique_name_in_owner = true
 bones/0/name = "Root"
 bones/0/parent = -1

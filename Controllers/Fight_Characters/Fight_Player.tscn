@@ -153,7 +153,7 @@ material_override = ExtResource("5_yoq75")
 cast_shadow = 0
 mesh = ExtResource("6_bhhdu")
 skeleton = NodePath("../../../..")
-blend_shapes/blendShape1.Closed = 1.0
+blend_shapes/blendShape1.Closed = 0.0
 
 [node name="ShovelMesh" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D" unique_id=1518276128]
 transform = Transform3D(-0.2246674, -0.07785466, -0.63173425, -0.6044671, 0.23598836, 0.1858871, 0.19942187, 0.62759316, -0.14826587, -0.0042126095, 0.019956905, -0.008214641)
