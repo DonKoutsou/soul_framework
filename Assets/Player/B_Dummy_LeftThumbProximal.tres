@@ -1,0 +1,116 @@
+[gd_resource type="ArrayMesh" format=4 uid="uid://dwrdyfitx5ono"]
+
+[ext_resource type="Material" uid="uid://cavltigxfech8" path="res://Engine/Shaders/Materials/Dummy.tres" id="1_335m3"]
+
+[sub_resource type="Skin" id="Skin_8aeti"]
+bind_count = 31
+bind/0/name = &"Root"
+bind/0/bone = 0
+bind/0/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0024026036, 0)
+bind/1/name = &"Hips"
+bind/1/bone = 1
+bind/1/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5517121, 0)
+bind/2/name = &"LeftUpperLeg"
+bind/2/bone = 2
+bind/2/pose = Transform3D(-1, 0, 0, 0, -1, 0, 0, 0, 1, 0.0452373, 0.54889584, 0.00020066049)
+bind/3/name = &"LeftLowerLeg"
+bind/3/bone = 3
+bind/3/pose = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, -0.06947304, 0.2877282, -0.008564633)
+bind/4/name = &"LeftFoot"
+bind/4/bone = 4
+bind/4/pose = Transform3D(-1, 0, 0, 0, 0, 1, 0, 1, 0, 0.097296305, 0.04741538, -0.038216323)
+bind/5/name = &"RightUpperLeg"
+bind/5/bone = 5
+bind/5/pose = Transform3D(-1, 0, 0, 0, -1, 0, 0, 0, 1, -0.04523729, 0.54889584, 0.00020066035)
+bind/6/name = &"RightLowerLeg"
+bind/6/bone = 6
+bind/6/pose = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, 0.06947305, 0.28772813, -0.008564631)
+bind/7/name = &"RightFoot"
+bind/7/bone = 7
+bind/7/pose = Transform3D(-1, 0, 0, 0, 0, 1, 0, 1, 0, -0.097296305, 0.04741539, -0.038216263)
+bind/8/name = &"Spine"
+bind/8/bone = 8
+bind/8/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8048736e-17, -0.6166278, 0.007582489)
+bind/9/name = &"UpperChest"
+bind/9/bone = 9
+bind/9/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0213786e-16, -0.73430926, 0.015164976)
+bind/10/name = &"LeftShoulder"
+bind/10/bone = 10
+bind/10/pose = Transform3D(0, 0, 1, 1, 0, 0, 0, 1, 0, 0.009805603, -0.02262, -0.8256079)
+bind/11/name = &"LeftUpperArm"
+bind/11/bone = 11
+bind/11/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.051640034, -0.109754, 0.78291243)
+bind/12/name = &"LeftLowerArm"
+bind/12/bone = 12
+bind/12/pose = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0.6511692, -0.18695638, 0.072157115)
+bind/13/name = &"LeftHand"
+bind/13/bone = 13
+bind/13/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.026133735, -0.2545046, 0.51581615)
+bind/14/name = &"LeftMiddleProximal"
+bind/14/bone = 14
+bind/14/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.025119323, -0.27352104, 0.45436043)
+bind/15/name = &"LeftMiddleIntermediate"
+bind/15/bone = 15
+bind/15/pose = Transform3D(0, 0, -1, 1, 0, 0, 0, -1, 0, -0.026395721, -0.27597573, 0.4285733)
+bind/16/name = &"LeftThumbMetacarpal"
+bind/16/bone = 16
+bind/16/pose = Transform3D(0, 1, 0, 0.8169927, 0, 0.5777019, 0.5777019, 0, -0.81699276, -0.5158162, -0.19283088, -0.16837886)
+bind/17/name = &"LeftThumbProximal"
+bind/17/bone = 17
+bind/17/pose = Transform3D(0, 1, 0, 0.8169927, 0, 0.5777019, 0.5777019, 0, -0.81699276, -0.49145228, -0.20435287, -0.14235029)
+bind/18/name = &"LeftThumbDistal"
+bind/18/bone = 18
+bind/18/pose = Transform3D(0, 1, 0, 0.81699264, 0, 0.57770187, 0.57770187, 0, -0.8169927, -0.47224888, -0.2046535, -0.13331275)
+bind/19/name = &"WeaponPlacement.L"
+bind/19/bone = 19
+bind/19/pose = Transform3D(-0.95473945, -0.2959234, -0.030025441, 0.2955676, -0.955191, 0.015766773, -0.033345822, 0.0061785635, 0.99942434, 0.394843, 0.41789174, 0.03141833)
+bind/20/name = &"RightShoulder"
+bind/20/bone = 20
+bind/20/pose = Transform3D(0, 0, -1, -1, 0, 0, 0, 1, 0, -0.009805603, -0.02262, -0.8256079)
+bind/21/name = &"RightUpperArm"
+bind/21/bone = 21
+bind/21/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.051640004, -0.10975401, 0.78291243)
+bind/22/name = &"RightLowerArm"
+bind/22/bone = 22
+bind/22/pose = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -0.6511692, -0.1869564, 0.072157055)
+bind/23/name = &"RightHand"
+bind/23/bone = 23
+bind/23/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.026133627, -0.2545047, 0.5158161)
+bind/24/name = &"RightMiddleProximal"
+bind/24/bone = 24
+bind/24/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.025119215, -0.27352116, 0.45436037)
+bind/25/name = &"RightMiddleIntermediate"
+bind/25/bone = 25
+bind/25/pose = Transform3D(0, 0, 1, -1, 0, 0, 0, -1, 0, 0.026395613, -0.27597588, 0.42857322)
+bind/26/name = &"RightThumbMetacarpal"
+bind/26/bone = 26
+bind/26/pose = Transform3D(0, -1, 0, -0.8169927, 0, 0.5777019, -0.5777019, 0, -0.81699276, 0.5158161, -0.19283104, -0.16837886)
+bind/27/name = &"RightThumbProximal"
+bind/27/bone = 27
+bind/27/pose = Transform3D(0, -1, 0, -0.8169927, 0, 0.5777019, -0.5777019, 0, -0.81699276, 0.49145216, -0.20435305, -0.14235023)
+bind/28/name = &"RightThumbDistal"
+bind/28/bone = 28
+bind/28/pose = Transform3D(0, -1, 0, -0.81699264, 0, 0.57770187, -0.57770187, 0, -0.8169927, 0.47224885, -0.20465364, -0.13331275)
+bind/29/name = &"WeaponPlacement.R"
+bind/29/bone = 29
+bind/29/pose = Transform3D(-0.95473945, 0.29592356, 0.030025208, -0.29556787, -0.95519143, 0.015766837, 0.033345506, 0.0061787246, 0.99942446, -0.39484313, 0.41789174, 0.03141807)
+bind/30/name = &"CameraBone"
+bind/30/bone = 30
+bind/30/pose = Transform3D(-1, -1.196239e-11, 6.2783295e-07, -8.697907e-15, 1.0000004, 1.9039615e-05, -6.2783295e-07, 1.903961e-05, -1, -4.605478e-09, -0.77100044, 0.007335527)
+
+[resource]
+_surfaces = [{
+"aabb": AABB(0.23827974, 0.47148043, -0.0014516711, 0.015202925, 0.023453474, 0.015323877),
+"attribute_data": PackedByteArray("2Ko6P/gN1T45sDk/mkK8PlXMMD/QB7k+cq8xP/Y+tD6rwi0/7C/DPtSWLD8+fsg+RpqsPnY9LT92gqc+fIAyP03CxT4iczM/pRuwPggTKj8vP68+qto6P6NZoz6fODU/doKnPnyAMj+rwi0/7C/DPlXMMD/QB7k+RpqsPnY9LT8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAgD93WDg/UknCPk2MPD/Qfs0+4TwvPzZkvj72+zs/rHbRPq/UqT4xDjA/KNS/PigHNT93mrU+A583P+E8Lz82ZL4+r9SpPjEOMD93mrU+A583P02MPD/Qfs0+9vs7P6x20T4vP68+qto6PyjUvz4oBzU/2Ko6P/gN1T64ljs/emvBPvSjOj/WNsY+sG08P4Dcxj7grjk/pPzKPhKQNj++Vcc+VOY4PzqPzj5N/Tc/oHDSPoRKNT/EWcs+vp00P25R0D5r4rg+sFMyPxxttT5qtTQ/TfS9PpCAMz83jrs+8DswP/5JwT4mnjE/pu2yPhEUNz85sDk/mkK8PrBtPD+A3MY+uJY7P3prwT4="),
+"bone_aabbs": [AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0.23827974, 0.47148043, -0.0014516711, 0.015202925, 0.023453474, 0.015323877)],
+"format": 34359745559,
+"index_count": 156,
+"index_data": PackedByteArray("FgAlAAEAFgABAAMAFgADAAIAFgACABgAFgAmACUAJgAnACUAJgAXACcAJgAoABcAKAAmABYAKAAZABcAFgAYACkAKAAWACkAKQAYAAQAKAAqABkAKgAAABkAKgArAAAAKAAsACoALAArACoAKAApACwAKQAEACwALAAtACsALQAsAAQALQAEAAUALgAvADAABgAvAC4ACQAGAC4ACQAuADEAMQAuADAABgAaAC8AMQAwADIACAAyADAACAAwABsAHAAbADAAHAAwAC8ALwAaAAcALwAzABwALwAHADMACgAcADMAMwAHAAsAMwALAAoADAAdAA4ADAAeAB0AHgANAB0AHgAPAA0AEAARABIAEwAUABUAHwAgACEAHwAiACAAIwAfACEAIwAhACQANAA1ACAANAA2ADUA"),
+"material": ExtResource("1_335m3"),
+"primitive": 3,
+"skin_data": PackedByteArray("EQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAABEAAAAAAAAA//8AAAAAAAARAAAAAAAAAP//AAAAAAAAEQAAAAAAAAD//wAAAAAAAA=="),
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 55,
+"vertex_data": PackedByteArray("57t5Pk6e/D4AAtA64qOBPoun9z4AFEc7EJ9+PlMg8j5AYjM87jB/PsVt8T6AVts7zI13Pjis8j5ASGM8axR0PuF28j7A2So8m/9zPtBZ8j6Aztg76mZ7PuJl8T4AQjg757t5Pk6e/D4AAtA6axR0PuF28j7A2So84qOBPoun9z4AFEc77jB/PsVt8T6AVts76mZ7PuJl8T4AQjg7zI13Pjis8j5ASGM8EJ9+PlMg8j5AYjM8m/9zPtBZ8j6Aztg7axR0PuF28j7A2So8zI13Pjis8j5ASGM8m/9zPtBZ8j6Aztg7EJ9+PlMg8j5AYjM87jB/PsVt8T6AVts76mZ7PuJl8T4AQjg7rIeAPuFI+D6AgPY7avN+Pt1O/T6AMbQ7BZF7Pn9u8j6AW1484JV7Pvpn/T4A+HA7kgR3PgW18T4A/i87G/x6PrN5+j4AJGe65ieAPqGo9z4ARr66BZF7Pn9u8j6AW148kgR3PgW18T4A/i875ieAPqGo9z4ARr66avN+Pt1O/T6AMbQ74JV7Pvpn/T4A+HA74qOBPoun9z4AFEc7G/x6PrN5+j4AJGe657t5Pk6e/D4AAtA6e8iBPiXv+T4ARKU7RNyAPmxf+j6Aq9E7yuKAPlnS+z4Atrs7lLN9Pj4l+z4ALew7dbF8PsGa+D7A3hk84zN6PnNg+z4AAM874xd4Poq2+j4AGF07tfJ4PtW5+D4AsRM84T53Pmc6+D6A56Y7dIB3Ptih9z4A6g075sF6PrFr9j4AgDK58gF5Pi89+T4AQGQ44T53Pmc6+D6A56Y74xd4Poq2+j4AGF07uwp/Pv199j4AUEw54qOBPoun9z4AFEc7yuKAPlnS+z4Atrs7e8iBPiXv+T4ARKU7VioZqjWv1xP82rles8ITDEDFaIIWzcwQCeN/U2/FiAThXrGfU7n8FkEyjJwaojETSA7srXKKKg5Q4lkc4EEnDFYqGarxo3sbQTKMnJih4xb82rle68x7Cgnjf1PTx8ADcnM0IMPpJrqedEIbi/CsmQhzwSARSZ02EnWbGvHwwpkdh58N////P550Qhv///8/EnWbGv///z8Ic8Eg////PwFpLC7///8/cnM0IP///z8tvoeD+syIEgV64KdCxsYWTphXmILHvBRSVj2oFr63FykMjSUeYg0OGQgvzImA3QaU1pIS47TrBP5z3h2SHpk4LnTCHeTuS5ku3KHTyjD54b7e4tKcntPUQNsb1toPeN7k3jLTV7ZzOFnY1d2eNj3dWdjV3T8hl5VywlV6er/+Dx2uPYxPwwkRKZ1ilfelwgTVhPqkA8xtGSGSw5w/yowW0lX6pM26hhdkIDGks6GkEPFZc6Bkt1IVviY+m2edqhD+BaqvEI0NBQARRh2xYcYHXAPjwsOETQO+Jj6bv5zDEmQgMaSgnHgWj9c5HmlFJgPk3jLTpahZzwrkx92iqbXWCuTH3bq5IM4=")
+}]
+metadata/generated_skin = SubResource("Skin_8aeti")
