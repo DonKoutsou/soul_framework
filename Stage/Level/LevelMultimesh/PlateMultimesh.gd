@@ -40,7 +40,8 @@ func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator 
 	var instance = spawnList[pos][0]["Instance"]
 	RenderingServer.instance_geometry_set_shader_parameter(instance, "variant_index", variantIndex)
 	RenderingServer.instance_geometry_set_shader_parameter(instance, "instance_emission_energy_multiplier", state)
-
+	
+	
 	
 func GetLayerType() -> LevelMultimeshTypes:
 	return LevelMultimeshTypes.PLATES
