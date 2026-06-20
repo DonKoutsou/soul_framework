@@ -20,6 +20,7 @@ shader_parameter/alpha_scale = 0.800000038
 material = SubResource("ShaderMaterial_j4tua")
 
 [node name="GPUTrail3D" type="GPUParticles3D" unique_id=124510421 groups=["Particles"]]
+instance_shader_parameters/instanceCol = Color(1, 1, 1, 1)
 amount = 12
 lifetime = 12.0
 explosiveness = 1.0

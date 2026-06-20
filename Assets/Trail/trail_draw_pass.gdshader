@@ -1,7 +1,8 @@
 shader_type spatial;
 
-render_mode unshaded,world_vertex_coords,cull_disabled, vertex_lighting;
+render_mode world_vertex_coords,cull_disabled, vertex_lighting;
 
+instance uniform vec3 instanceCol : source_color;
 uniform sampler2D color_ramp : repeat_disable, source_color, hint_default_white;
 uniform sampler2D curve : repeat_disable, hint_default_white;
 
@@ -14,6 +15,9 @@ varying vec2 mesh_uv;
 //uniform int light_steps : hint_range(2, 8) = 4;
 global uniform int dither_size : hint_range(1, 10) = 1;
 uniform float alpha_scale : hint_range(0.0, 1.0) = 1.0;
+
+global uniform float FADE_DISTANCE_START : hint_range(0.0, 100.0, 0.1);
+global uniform float FADE_DISTANCE_END : hint_range(0.0, 100.0, 0.1);
 
 float bayer4x4(ivec2 pos)
 {
@@ -116,6 +120,16 @@ void vertex(){
 }
 
 void fragment(){
+	float fade_distance = length(VERTEX);
+
+	// Use interleaved gradient noise, which is fast but still looks good.
+	const vec3 magic = vec3(0.06711056, 0.00583715, 52.9829189);
+	float fade = clamp(smoothstep(FADE_DISTANCE_END, FADE_DISTANCE_START, fade_distance), 0.0, 1.0);
+	// Use a hard cap to prevent a few stray pixels from remaining when past the fade-out distance.
+	if (fade < 0.001 || fade < fract(magic.z * fract(dot(FRAGCOORD.xy, magic.xy)))) {
+		discard;
+	}
+	
 	vec2 clip0 = clip;
 	float ababab = clip0.x*clip0.y;
 
@@ -125,7 +139,7 @@ void fragment(){
 	}
 
 	vec4 T = textureLod(color_ramp, UV, 0.0);
-	ALBEDO *= T.rgb;
+	ALBEDO = instanceCol;
 	
 	float final_alpha = T.a * alpha_scale;
 
