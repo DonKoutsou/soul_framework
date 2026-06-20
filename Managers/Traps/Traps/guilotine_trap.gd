@@ -13,7 +13,6 @@ var GoingUp : bool = true
 var PlayedInSound : bool = false
 
 var Tw : Tween
-var SwipeTw : Tween
 
 func _ready() -> void:
 	BladeMesh.rotation.z = -PI
@@ -21,7 +20,6 @@ func _ready() -> void:
 
 func Update(delta: float) -> void:
 	Tw.custom_step(delta)
-	SwipeTw.custom_step(delta)
 
 func THing() -> void:
 	BladeSound.play()
