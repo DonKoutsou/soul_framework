@@ -263,7 +263,10 @@ func EquipWeapon(W : Weapon, Notify : bool = true) -> void:
 		#Set position and size of the Swipe mesh
 		#SwipeShape2.position.y = WeaponAbbSize2.y + weaponAABB2.position.y 
 		#SwipeShape2.scale.y = WeaponAbbSize2.y * 100
-		
+	
+	for g in WeaponScenes:
+		g.ToggleTrail(false)
+	
 	var animSpeed = GetAnimSpeed()
 	SkeletonModif.currentWeaponSpeed = animSpeed
 	SkeletonModif.UpdateWeaponType(W.WeaponType)
@@ -296,7 +299,10 @@ func CancelHits() -> void:
 		pass
 	else:
 		UpdateState(CharacterState.IDLE)
-
+	
+	for g in WeaponScenes:
+		g.ToggleTrail(false)
+	
 	AtackCanceled.emit()
 	ChargePower = 0
 #----------------------------------------------------
@@ -319,7 +325,10 @@ func Hit(Direction : AtackSide) -> void:
 	else:
 		#print("{0} - Couldn't process hit".format([GetFightName()]))
 		return
-
+	
+	for g in WeaponScenes:
+		g.ToggleTrail(true)
+		
 	AtackStarted.emit(Direction)
 
 #----------------------------------------------------
@@ -382,7 +391,9 @@ func ChargeHit(Direction : AtackSide) -> void:
 		UpdateState(CharacterState.CHARGING_LOW)
 	else: if (Direction == AtackSide.TOP):
 		UpdateState(CharacterState.CHARGING_TOP)
-		
+	
+	for g in WeaponScenes:
+		g.ToggleTrail(true)
 	#print("{0} - Charging : {1}".format([GetFightName() ,AtackSide.keys()[Direction]]))
 	
 	SetComboWindow(false)
@@ -515,6 +526,8 @@ func AnimTreeFinished(anim_name: StringName) -> void:
 			#state_machine.travel("Idle")
 			#RecoveryPenalty = 0
 			UpdateState(FightCharacter.CharacterState.IDLE)
+			for g in WeaponScenes:
+				g.ToggleTrail(false)
 			
 	if (anim_name in ["Charge_Right_Reversed", "Charge_Left_Reversed", "Charge_Middle_Reversed", "Charge_Low_Reversed", "Charge_Top_Reversed"] and IsRecovering()):
 		SetComboWindow(false)

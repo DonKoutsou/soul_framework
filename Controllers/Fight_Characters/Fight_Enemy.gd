@@ -287,7 +287,10 @@ func Hit(Direction : AtackSide) -> void:
 		CurrentCombo.pop_front()
 	
 	UpdateState(GetStateBasedOnSide(Direction))
-
+	
+	for g in WeaponScenes:
+		g.ToggleTrail(true)
+		
 	AtackStarted.emit(Direction)
 
 #------------------------------------------------------------------------------

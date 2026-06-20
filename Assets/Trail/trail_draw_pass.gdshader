@@ -1,6 +1,6 @@
 shader_type spatial;
 
-render_mode world_vertex_coords,cull_disabled, vertex_lighting;
+render_mode unshaded,world_vertex_coords,cull_disabled, vertex_lighting;
 
 instance uniform vec3 instanceCol : source_color;
 uniform sampler2D color_ramp : repeat_disable, source_color, hint_default_white;

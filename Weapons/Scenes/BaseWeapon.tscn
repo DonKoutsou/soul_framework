@@ -7,11 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://c1pmcdhb3qun8" path="res://Engine/Assets/Trail/WeaponTrail.tscn" id="6_a4af6"]
 [ext_resource type="PackedScene" uid="uid://fiuajpm4l4lj" path="res://Engine/Particles/Spark.tscn" id="6_mv1gy"]
 
-[node name="FightWeapon" type="Node3D" unique_id=114680310 node_paths=PackedStringArray("DamageBuff", "SpeedBuff", "spark", "Impact")]
+[node name="FightWeapon" type="Node3D" unique_id=114680310 node_paths=PackedStringArray("DamageBuff", "SpeedBuff", "spark", "trail", "Impact")]
 script = ExtResource("1_iieg7")
 DamageBuff = NodePath("DamageBuff")
 SpeedBuff = NodePath("SpeedBuff")
 spark = NodePath("Spark")
+trail = NodePath("GPUTrail3D")
 Impact = NodePath("Impact")
 
 [node name="Impact" parent="." unique_id=942870742 instance=ExtResource("2_lk8us")]
