@@ -249,25 +249,13 @@ tracks/34/path = NodePath("%GeneralSkeleton:CameraBone")
 tracks/34/interp = 1
 tracks/34/loop_wrap = true
 tracks/34/keys = PackedFloat32Array(0, 1, 2.9927714e-12, -1, -9.519804e-06, 3.1391642e-07, 0.06666667, 1, 3.774655e-10, -0.9999994, 0.0011833855, 3.1391625e-07, 0.1, 1, 7.4665535e-10, -0.99999726, 0.0023594624, 3.1391556e-07, 0.125, 1, 1.0710098e-09, -0.9999943, 0.0033927134, 3.1391454e-07, 0.15, 1, 1.4428025e-09, -0.9999896, 0.004577081, 3.139131e-07, 0.175, 1, 1.8145752e-09, -0.9999835, 0.0057613854, 3.1391122e-07, 0.2, 1, 2.1863114e-09, -0.9999759, 0.0069455723, 3.1390883e-07, 0.225, 1, 2.526351e-09, -0.9999678, 0.008028789, 3.1390624e-07, 0.25, 1, 2.8505414e-09, -0.99995893, 0.009061518, 3.139035e-07, 0.29166666, 1, 3.2325103e-09, -0.9999472, 0.010278303, 3.1389973e-07, 0.33333334, 1, 3.377073e-09, -0.9999424, 0.010738819, 3.1389825e-07, 0.34166667, 1, 3.039321e-09, -0.9999534, 0.009662887, 3.1390172e-07, 0.35833332, 1, 2.3638045e-09, -0.99997187, 0.007510989, 3.1390758e-07, 0.375, 1, 1.6882761e-09, -0.9999857, 0.0053590513, 3.139119e-07, 0.39166668, 1, 8.277805e-10, -0.9999949, 0.0032116284, 3.0148158e-07, 0.40833333, 1, -3.271708e-11, -0.99999946, 0.0010641941, 2.8904986e-07, 0.41666666, 1, -4.6296605e-10, -1, -9.525391e-06, 2.828335e-07, 1.25, 1, -4.6296605e-10, -1, -9.525391e-06, 2.828335e-07)
-tracks/35/type = "value"
+tracks/35/type = "method"
 tracks/35/imported = false
 tracks/35/enabled = true
-tracks/35/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/35/path = NodePath(".")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
-"times": PackedFloat32Array(0, 1.25),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/36/type = "method"
-tracks/36/imported = false
-tracks/36/enabled = true
-tracks/36/path = NodePath(".")
-tracks/36/interp = 1
-tracks/36/loop_wrap = true
-tracks/36/keys = {
 "times": PackedFloat32Array(0.19746044, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{

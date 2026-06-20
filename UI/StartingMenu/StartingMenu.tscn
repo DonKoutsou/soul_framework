@@ -193,6 +193,24 @@ text = "Kenney Particle Pack"
 underline = 1
 uri = "https://github.com/Calinou/kenney-particle-pack"
 
+[node name="VBoxContainer33" type="VBoxContainer" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1756030344]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainer33" unique_id=829895421]
+layout_mode = 2
+text = "Libraries"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LinkButton2" type="LinkButton" parent="Credits/VBoxContainer/ScrollContainer/VBoxContainer/VBoxContainer33" unique_id=1440687899]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 12
+text = "GPUTrail"
+underline = 1
+uri = "https://github.com/celyk/GPUTrail"
+
 [node name="CloseCredits" type="Button" parent="Credits/VBoxContainer" unique_id=1543997634 groups=["DigitalButtons"]]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2

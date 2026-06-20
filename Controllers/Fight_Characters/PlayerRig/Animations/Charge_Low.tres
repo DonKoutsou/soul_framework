@@ -249,25 +249,13 @@ tracks/34/path = NodePath("%GeneralSkeleton:CameraBone")
 tracks/34/interp = 0
 tracks/34/loop_wrap = true
 tracks/34/keys = PackedFloat32Array(0, 1, -4.6296605e-10, -1, -9.525391e-06, 2.828335e-07)
-tracks/35/type = "value"
+tracks/35/type = "method"
 tracks/35/imported = false
 tracks/35/enabled = true
-tracks/35/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/35/path = NodePath(".")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
-"times": PackedFloat32Array(0, 0.5416667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/36/type = "method"
-tracks/36/imported = false
-tracks/36/enabled = true
-tracks/36/path = NodePath(".")
-tracks/36/interp = 1
-tracks/36/loop_wrap = true
-tracks/36/keys = {
 "times": PackedFloat32Array(0.25),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -275,13 +263,13 @@ tracks/36/keys = {
 "method": &"OnAttackCharged"
 }]
 }
-tracks/37/type = "value"
-tracks/37/imported = false
-tracks/37/enabled = true
-tracks/37/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement:visible")
-tracks/37/interp = 1
-tracks/37/loop_wrap = true
-tracks/37/keys = {
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement:visible")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,

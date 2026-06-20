@@ -239,43 +239,19 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0, 1, -0.3316579, -0.20239198, -0.02966891, 0.9209562, 0.041666668, 1, -0.32327718, -0.18604647, -0.022868205, 0.9275536, 0.083333336, 1, -0.2981607, -0.13844618, -0.0029527748, 0.9444174, 0.125, 1, -0.25679037, -0.060737066, 0.027902301, 0.9641531, 0.16666667, 1, -0.20251295, 0.043749545, 0.06368838, 0.97622657, 0.175, 1, -0.19080766, 0.06843893, 0.07000899, 0.97673297, 0.20833333, 1, -0.1425791, 0.16646422, 0.094691515, 0.97107905, 0.25, 1, -0.08546752, 0.29492962, 0.11367717, 0.94487536, 0.29166666, 1, -0.03143008, 0.41674218, 0.12756208, 0.899481, 0.33333334, 1, 0.030450523, 0.5199811, 0.1558949, 0.8392791, 0.375, 1, 0.08277935, 0.59632134, 0.17944032, 0.7780422, 0.41666666, 1, 0.086240806, 0.6532503, 0.15308703, 0.736472, 0.45833334, 1, 0.04915544, 0.6926303, 0.08819034, 0.71419156, 0.5, 1, 0.022747096, 0.70641804, 0.048457187, 0.7057677)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/enabled = false
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = false
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [0],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_sos6x"]
@@ -450,43 +426,19 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0, 1, -0.18581301, 0.85033834, -0.06327263, 0.488257, 0.008333334, 1, -0.18477845, 0.8500662, -0.06237293, 0.4892382, 0.016666668, 1, -0.18374339, 0.8497917, -0.061473057, 0.490218, 0.025, 1, -0.18270777, 0.8495146, -0.060572997, 0.49119633, 0.033333335, 1, -0.1816716, 0.849235, -0.059672765, 0.49217328, 0.041666668, 1, -0.18063493, 0.848953, -0.058772355, 0.49314877, 0.083333336, 1, -0.16593544, 0.8447547, -0.046428088, 0.5066551, 0.125, 1, -0.14292863, 0.83734494, -0.028227318, 0.5269042, 0.16666667, 1, -0.11346911, 0.8262039, -0.0066422313, 0.55178607, 0.25, 1, -0.047919456, 0.7928195, 0.034848757, 0.6065695, 0.29166666, 1, -0.019504456, 0.77258724, 0.04921222, 0.632698, 0.33333334, 1, 0.0018849851, 0.75238514, 0.057059612, 0.6562449, 0.375, 1, 0.015336462, 0.7341481, 0.05866668, 0.6762763, 0.41666666, 1, 0.021553807, 0.71953267, 0.055573322, 0.69189584, 0.425, 1, 0.02182123, 0.7176174, 0.054620277, 0.69394934, 0.43333334, 1, 0.02208846, 0.71569586, 0.053666756, 0.6959968, 0.45833334, 1, 0.022888966, 0.70989305, 0.050803356, 0.7021019, 0.46666667, 1, 0.022860648, 0.7091998, 0.050334245, 0.7028368, 0.48333332, 1, 0.022803929, 0.7078107, 0.049395837, 0.704304, 0.49166667, 1, 0.022775527, 0.7071148, 0.048926543, 0.7050363, 0.5, 1, 0.022747096, 0.70641804, 0.048457187, 0.7057677)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/enabled = false
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = false
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.35),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [3],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_gwt5y"]
@@ -661,43 +613,19 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0, 1, 0.11025832, 0.6955479, 0.1572846, 0.69232786, 0.016666668, 1, 0.1097732, 0.6956465, 0.156688, 0.6924412, 0.041666668, 1, 0.10904539, 0.69579357, 0.1557929, 0.6926103, 0.05, 1, 0.108360074, 0.6959312, 0.15494996, 0.69276863, 0.058333334, 1, 0.10767466, 0.69606805, 0.15410684, 0.69292617, 0.06666667, 1, 0.106989115, 0.696204, 0.15326352, 0.69308275, 0.075, 1, 0.10630341, 0.6963391, 0.15242003, 0.69323856, 0.083333336, 1, 0.10561759, 0.69647336, 0.15157634, 0.69339347, 0.09166667, 1, 0.1045388, 0.6966827, 0.15024902, 0.69363546, 0.108333334, 1, 0.10238026, 0.6970951, 0.14759304, 0.6941132, 0.125, 1, 0.10022048, 0.69749904, 0.14493525, 0.69458246, 0.13333334, 1, 0.09878746, 0.6977624, 0.14317109, 0.69488907, 0.14166667, 1, 0.097353905, 0.69802207, 0.14140615, 0.69519186, 0.15833333, 1, 0.094485246, 0.69853026, 0.137874, 0.69578654, 0.16666667, 1, 0.09305018, 0.69877875, 0.13610686, 0.6960783, 0.175, 1, 0.091301754, 0.69907653, 0.1339524, 0.6964286, 0.20833333, 1, 0.084300965, 0.7002125, 0.12532413, 0.6977748, 0.25, 1, 0.074217096, 0.7016921, 0.11287867, 0.6995559, 0.29166666, 1, 0.063153066, 0.703104, 0.09919441, 0.7012966, 0.33333334, 1, 0.051834717, 0.7043245, 0.08511524, 0.7028482, 0.375, 1, 0.040928964, 0.70528483, 0.07147489, 0.70412326, 0.38333333, 1, 0.03905793, 0.70542914, 0.06911574, 0.7043205, 0.41666666, 1, 0.031570386, 0.7059418, 0.05967305, 0.70504516, 0.43333334, 1, 0.028924502, 0.7060995, 0.05631438, 0.70527697, 0.45833334, 1, 0.024954695, 0.70631176, 0.051274452, 0.7056004, 0.48333332, 1, 0.023469223, 0.70638436, 0.0493786, 0.7057139, 0.5, 1, 0.022478832, 0.7064304, 0.048114542, 0.70578736)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/enabled = false
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = false
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [2],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_0ilbd"]
@@ -872,43 +800,19 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0, 1, -0.060095347, 0.8435832, 0.01817889, 0.5333155, 0.058333334, 1, -0.0605947, 0.8435384, 0.017288256, 0.5333596, 0.1, 1, -0.061215304, 0.8434827, 0.016232755, 0.53341, 0.14166667, 1, -0.061849464, 0.8434274, 0.015268823, 0.5334527, 0.21666667, 1, -0.062691376, 0.84336853, 0.014600241, 0.5334663, 0.3, 1, -0.06372729, 0.8433218, 0.01479191, 0.5334121, 0.33333334, 1, -0.06470896, 0.84324986, 0.013962782, 0.5334299, 0.375, 1, -0.04268982, 0.82513565, 0.02522834, 0.5627542, 0.41666666, 1, -0.0033346533, 0.780251, 0.043613445, 0.6239352, 0.45833334, 1, 0.019050678, 0.7303098, 0.050156202, 0.6810059, 0.5, 1, 0.022747096, 0.70641804, 0.048457187, 0.7057677)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/enabled = false
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = false
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [1],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_8aop2"]
@@ -1083,43 +987,19 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0, 1, 0.021727279, 0.5835391, -0.06781191, 0.8089571, 0.008333334, 1, 0.022157488, 0.5840694, -0.06695299, 0.8086343, 0.025, 1, 0.023017822, 0.5851276, -0.06523488, 0.80798537, 0.041666668, 1, 0.023878036, 0.5861828, -0.06351643, 0.8073323, 0.05, 1, 0.025077656, 0.58764386, -0.06110098, 0.8064195, 0.058333334, 1, 0.026277019, 0.58909893, -0.058684915, 0.8054986, 0.083333336, 1, 0.029873447, 0.5934279, -0.05143321, 0.80268645, 0.125, 1, 0.039036456, 0.60417277, -0.03262935, 0.7952275, 0.16666667, 1, 0.050502155, 0.6172457, -0.008281272, 0.7851043, 0.25, 1, 0.0731243, 0.6459491, 0.04795028, 0.7583558, 0.29166666, 1, 0.07795722, 0.66009307, 0.071047254, 0.743742, 0.33333334, 1, 0.07434416, 0.6737193, 0.08342231, 0.73049027, 0.375, 1, 0.062187627, 0.68636584, 0.08239087, 0.7198934, 0.41666666, 1, 0.045102794, 0.6968939, 0.07057106, 0.71226716, 0.45833334, 1, 0.029460298, 0.7039152, 0.05567021, 0.707486, 0.46666667, 1, 0.028117884, 0.70442176, 0.054228052, 0.7071484, 0.48333332, 1, 0.025432708, 0.7054259, 0.05134306, 0.70646405, 0.5, 1, 0.022747096, 0.70641804, 0.048457187, 0.7057677)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/enabled = false
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = false
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [4],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_w063s"]
@@ -1294,43 +1174,19 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0, 1, -0.04208262, -0.002125727, -0.06641098, 0.9969023, 0.008333334, 1, -0.042276416, -0.002099177, -0.065681346, 0.9969425, 0.025, 1, -0.04266393, -0.0020460733, -0.064221926, 0.9970212, 0.041666668, 1, -0.043051347, -0.0019929647, -0.06276237, 0.99709755, 0.083333336, 1, -0.045729853, -0.0016253085, -0.05265748, 0.9975637, 0.1, 1, -0.047349364, -0.0014026043, -0.04653567, 0.99779284, 0.125, 1, -0.04977505, -0.0010684447, -0.037349515, 0.9980613, 0.16666667, 1, -0.054839786, -0.00036843316, -0.018102912, 0.998331, 0.20833333, 1, -0.06057213, 0.00042772343, 0.0037896447, 0.99815655, 0.29166666, 1, -0.07262475, 0.0021152336, 0.05020652, 0.9960926, 0.33333334, 1, -0.078250475, 0.0029093472, 0.07205584, 0.9943221, 0.375, 1, -0.08316505, 0.0036064954, 0.09124156, 0.99234354, 0.38333333, 1, -0.083944365, 0.0037173484, 0.09429239, 0.99199224, 0.41666666, 1, -0.087053075, 0.004160375, 0.106485836, 0.9904874, 0.425, 1, -0.08756512, 0.0042334734, 0.10849789, 0.9902236, 0.43333334, 1, -0.08807677, 0.0043065534, 0.110509455, 0.9899554, 0.45, 1, -0.089098915, 0.0044526565, 0.11453114, 0.98940605, 0.45833334, 1, -0.0896094, 0.004525678, 0.116541214, 0.9891248, 0.46666667, 1, -0.08979371, 0.0045520524, 0.117267214, 0.9890222, 0.48333332, 1, -0.09016217, 0.0046047927, 0.11871899, 0.9888152, 0.5, 1, -0.09053043, 0.0046575223, 0.1201705, 0.988606)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/enabled = false
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = false
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [0],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_3lki2"]
@@ -1505,43 +1361,19 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 0
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0.5, 1, -0.107581325, 0.0012350552, 0.12553975, 0.9862376)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/enabled = false
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.5416667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = false
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.35),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [3],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_pstqv"]
@@ -1716,43 +1548,19 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 0
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0.5, 1, -0.107581325, 0.0012350552, 0.12553975, 0.9862376)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/enabled = false
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = false
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [2],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_wvnuh"]
@@ -1927,43 +1735,19 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 0
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0.5, 1, -0.107581325, 0.0012350552, 0.12553975, 0.9862376)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/enabled = false
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = false
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [1],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_pemcj"]
@@ -2138,43 +1922,19 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 0
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0.5, 1, -0.107581325, 0.0012350552, 0.12553975, 0.9862376)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/enabled = false
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = false
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [4],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_ul0d6"]
@@ -2363,30 +2123,6 @@ tracks/24/keys = {
 "method": &"OnAttackCharged"
 }]
 }
-tracks/25/type = "value"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
 
 [sub_resource type="Animation" id="Animation_du3n8"]
 resource_name = "R_Charge_Low"
@@ -2573,18 +2309,6 @@ tracks/24/keys = {
 "args": [3],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/25/type = "value"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_hraum"]
@@ -2773,18 +2497,6 @@ tracks/24/keys = {
 "method": &"OnAttackCharged"
 }]
 }
-tracks/25/type = "value"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
 
 [sub_resource type="Animation" id="Animation_rn3ij"]
 resource_name = "R_Charge_Right"
@@ -2972,18 +2684,6 @@ tracks/24/keys = {
 "method": &"OnAttackCharged"
 }]
 }
-tracks/25/type = "value"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
 
 [sub_resource type="Animation" id="Animation_pvy88"]
 resource_name = "R_Charge_Top"
@@ -3170,18 +2870,6 @@ tracks/24/keys = {
 "args": [4],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/25/type = "value"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_bnkaj"]

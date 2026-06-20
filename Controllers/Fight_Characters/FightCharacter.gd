@@ -7,8 +7,6 @@ class_name FightCharacter
 @export var Anim : AnimationPlayer
 @export var WeaponPlecement : Node3D
 @export var WeaponPlecement2 : Node3D
-@export var SwipeShape : MeshInstance3D
-@export var SwipeShape2 : MeshInstance3D
 
 @export var sk : Skeleton3D
 @export var SkeletonModif : Fight_Animation_Modifier
@@ -246,11 +244,11 @@ func EquipWeapon(W : Weapon, Notify : bool = true) -> void:
 	WeaponScenes.append(WeaponScene)
 	
 	var weaponAABB: AABB = Helper.get_node_aabb(WeaponScene)
-	var WeaponAbbSize = weaponAABB.size
+	#var WeaponAbbSize = weaponAABB.size
 	
 	#Set position and size of the Swipe mesh
-	SwipeShape.position.y = WeaponAbbSize.y + weaponAABB.position.y
-	SwipeShape.scale.y = WeaponAbbSize.y * 100
+	#SwipeShape.position.y = WeaponAbbSize.y + weaponAABB.position.y
+	#SwipeShape.scale.y = WeaponAbbSize.y * 100
 	
 	
 	if (W.WeaponType == Fight_Animation_Modifier.WeaponType.DUAL):
@@ -260,11 +258,11 @@ func EquipWeapon(W : Weapon, Notify : bool = true) -> void:
 		WeaponScene2.wepSound = W.WeaponClashSound
 		
 		var weaponAABB2: AABB = Helper.get_node_aabb(WeaponScene2)
-		var WeaponAbbSize2 = weaponAABB2.size
+		#var WeaponAbbSize2 = weaponAABB2.size
 	
 		#Set position and size of the Swipe mesh
-		SwipeShape2.position.y = WeaponAbbSize2.y + weaponAABB2.position.y 
-		SwipeShape2.scale.y = WeaponAbbSize2.y * 100
+		#SwipeShape2.position.y = WeaponAbbSize2.y + weaponAABB2.position.y 
+		#SwipeShape2.scale.y = WeaponAbbSize2.y * 100
 		
 	var animSpeed = GetAnimSpeed()
 	SkeletonModif.currentWeaponSpeed = animSpeed

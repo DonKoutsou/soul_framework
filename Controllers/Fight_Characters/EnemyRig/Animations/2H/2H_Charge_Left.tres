@@ -172,41 +172,17 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0, 1, 0.022747096, 0.70641804, 0.048457187, 0.7057677, 0.041666668, 1, 0.04915544, 0.6926303, 0.08819034, 0.71419156, 0.083333336, 1, 0.086240806, 0.6532503, 0.15308703, 0.736472, 0.125, 1, 0.08277935, 0.59632134, 0.17944032, 0.7780422, 0.16666667, 1, 0.030450523, 0.5199811, 0.1558949, 0.8392791, 0.20833333, 1, -0.03143008, 0.41674218, 0.12756208, 0.899481, 0.25, 1, -0.08546752, 0.29492962, 0.11367717, 0.94487536, 0.29166666, 1, -0.1425791, 0.16646422, 0.094691515, 0.97107905, 0.325, 1, -0.19080766, 0.06843893, 0.07000899, 0.97673297, 0.33333334, 1, -0.20251295, 0.043749545, 0.06368838, 0.97622657, 0.375, 1, -0.25679037, -0.060737066, 0.027902301, 0.9641531, 0.41666666, 1, -0.2981607, -0.13844618, -0.0029527748, 0.9444174, 0.45833334, 1, -0.32327718, -0.18604647, -0.022868205, 0.9275536, 0.5, 1, -0.3316579, -0.20239198, -0.02966891, 0.9209562)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [0],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }

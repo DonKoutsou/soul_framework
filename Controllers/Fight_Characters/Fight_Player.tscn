@@ -4,8 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://c1l7ysdd53tdg" path="res://Engine/Controllers/Fight_Characters/PlayerRig/PlayerRigSkeleton.tscn" id="2_tiq7d"]
 [ext_resource type="AnimationLibrary" uid="uid://3aa8srjf5dmm" path="res://Engine/Controllers/Fight_Characters/PlayerRig/PlayerRigAnimationLib.tres" id="2_ttegh"]
 [ext_resource type="Curve" uid="uid://htwdrptip8gv" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/WeaponCurve.tres" id="5_ttegh"]
-[ext_resource type="Material" uid="uid://c8xpah88sw5yu" path="res://Engine/Shaders/Materials/SwipeMeshShader.tres" id="5_yoq75"]
-[ext_resource type="ArrayMesh" uid="uid://djcb40udi2miv" path="res://Engine/Assets/Particles/SwipeMesh.res" id="6_bhhdu"]
 [ext_resource type="Script" uid="uid://bl0vbdv76yftl" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/AnimationInfo.gd" id="9_ga5p4"]
 [ext_resource type="Script" uid="uid://cn0rec8qe556" path="res://Engine/Controllers/player_camera.gd" id="9_ksbbd"]
 [ext_resource type="Resource" uid="uid://cf2foygm8meh4" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Idle_Player.tres" id="10_57y0o"]
@@ -78,7 +76,7 @@ stencil_flags = 2
 size = Vector2(0.75, 0.75)
 orientation = 2
 
-[node name="Player" type="Node3D" unique_id=172630672 node_paths=PackedStringArray("Lantern", "Cam", "LeftHandLocator", "LeftHandTrans", "RightHandLocator", "LookMOdif", "FlowPivot", "LanternL", "LLight", "LanternLightMesh", "CameraAttachment", "RewardLocation", "Anim", "WeaponPlecement", "SwipeShape", "sk", "SkeletonModif") groups=["Player"]]
+[node name="Player" type="Node3D" unique_id=172630672 node_paths=PackedStringArray("Lantern", "Cam", "LeftHandLocator", "LeftHandTrans", "RightHandLocator", "LookMOdif", "FlowPivot", "LanternL", "LLight", "LanternLightMesh", "CameraAttachment", "RewardLocation", "Anim", "WeaponPlecement", "sk", "SkeletonModif") groups=["Player"]]
 script = ExtResource("1_nn08x")
 Lantern = NodePath("GeneralSkeleton/BoneAttachment3D/LanternPivot/Lantern")
 Cam = NodePath("GeneralSkeleton/BoneAttachment3D2/PlayerCamera")
@@ -94,7 +92,6 @@ CameraAttachment = NodePath("GeneralSkeleton/BoneAttachment3D2")
 RewardLocation = NodePath("RewardLocation")
 Anim = NodePath("AnimationPlayer")
 WeaponPlecement = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement")
-SwipeShape = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh")
 sk = NodePath("GeneralSkeleton")
 SkeletonModif = NodePath("GeneralSkeleton/MyModifier")
 
@@ -104,7 +101,6 @@ libraries/ = ExtResource("2_ttegh")
 
 [node name="GeneralSkeleton" parent="." unique_id=1728014551 instance=ExtResource("2_tiq7d")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
-modifier_callback_mode_process = 2
 
 [node name="MyModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=1069785363 node_paths=PackedStringArray("animator")]
 unique_name_in_owner = false
@@ -124,7 +120,6 @@ visibility_parent = NodePath("")
 active = true
 influence = 1.0
 script = ExtResource("17_22ek7")
-CurrentState = 1
 WeaponCurve = ExtResource("5_ttegh")
 RecoilCurve = SubResource("Curve_22ek7")
 animator = NodePath("../../AnimationPlayer")
@@ -139,21 +134,12 @@ bone = 8
 origin_offset = Vector3(-0.2, -0.1, 0)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1077415663]
-transform = Transform3D(-0.94398093, -0.29025272, 0.15701415, 0.29585132, -0.95514524, 0.0130211245, 0.14619176, 0.05874448, 0.9875108, -0.2547268, 0.5156195, 0.006251273)
+transform = Transform3D(-0.9614855, -0.13591623, -0.2388981, -0.14275484, -0.49580517, 0.85662025, -0.2348755, 0.85773164, 0.45730698, -0.21174218, 0.69422275, 0.1828556)
 bone_name = "WeaponPlacement.R"
 bone_idx = 29
 
 [node name="WeaponPlacement" type="Node3D" parent="GeneralSkeleton/BoneAttachment3D" unique_id=2136917447]
 transform = Transform3D(0.0048682285, 0.1156679, -0.99327606, -0.9994029, 0.034539543, -0.00087609846, 0.034205973, 0.99268717, 0.11576699, -0.01770631, 0.045, -0.007187872)
-visible = false
-
-[node name="SwipeMesh" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D/WeaponPlacement" unique_id=1407660072]
-transform = Transform3D(49.985, 0, 0, 0, 49.985, 0, 0, 0, 49.985, 1.0910663e-08, 0.66057384, 5.54057e-10)
-material_override = ExtResource("5_yoq75")
-cast_shadow = 0
-mesh = ExtResource("6_bhhdu")
-skeleton = NodePath("../../../..")
-blend_shapes/blendShape1.Closed = 0.0
 
 [node name="ShovelMesh" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D" unique_id=1518276128]
 transform = Transform3D(-0.2246674, -0.07785466, -0.63173425, -0.6044671, 0.23598836, 0.1858871, 0.19942187, 0.62759316, -0.14826587, -0.0042126095, 0.019956905, -0.008214641)
@@ -167,6 +153,7 @@ transform = Transform3D(0.06088456, 0.9899696, -0.1274812, -0.9761332, 0.0323817
 
 [node name="Lantern" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D/LanternPivot" unique_id=1820666340]
 transform = Transform3D(0.5993388, 0, -0.113549784, 0, 0.61000067, 0, 0.11354961, 0, 0.5993397, -0.003124038, 0, -0.0005918744)
+visible = false
 layers = 524288
 cast_shadow = 0
 mesh = ExtResource("39_ttegh")
@@ -199,7 +186,7 @@ skeleton = NodePath("../../../../..")
 script = ExtResource("14_tc1am")
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1819386683]
-transform = Transform3D(-1, -8.697901e-15, -6.278329e-07, -1.1962389e-11, 0.9999997, 1.9039608e-05, 6.278329e-07, 1.9039602e-05, -1, 1.6701878e-16, 0.771, 0.0073502064)
+transform = Transform3D(-1, 9.3132e-10, -5.65667e-07, 9.205439e-10, 0.9999997, 1.9050782e-05, 5.65667e-07, 1.9050776e-05, -1, -8.548842e-14, 0.7781487, 0.0073502064)
 bone_name = "CameraBone"
 bone_idx = 30
 
@@ -287,10 +274,6 @@ active = false
 influence = 1.0
 script = ExtResource("45_y0045")
 metadata/_custom_type_script = "uid://bj3feok1xkxq"
-
-[node name="PinJoint2D" type="PinJoint2D" parent="GeneralSkeleton" unique_id=965428901]
-
-[node name="RigidBody2D" type="RigidBody2D" parent="GeneralSkeleton/PinJoint2D" unique_id=487493657]
 
 [node name="FlowPivot" type="Node3D" parent="." unique_id=1898368749]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16990097, 0.5131718, -0.19746694)

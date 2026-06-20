@@ -7,7 +7,6 @@
 render_priority = 0
 shader = ExtResource("1_egsqh")
 shader_parameter/albedo = Color(0.42903134, 0.42903137, 0.42903125, 1)
-shader_parameter/dither_size = 2
 shader_parameter/alpha_scale = 0.70000003325
 shader_parameter/billboard = false
 shader_parameter/particle_billboard = false

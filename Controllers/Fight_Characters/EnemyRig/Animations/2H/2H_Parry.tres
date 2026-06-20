@@ -172,25 +172,13 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0, 1, 0.031994283, 0.7061424, 0.06382289, 0.7044614, 0.041666668, 1, 0.031994283, 0.7061424, 0.06382289, 0.7044614, 0.083333336, 1, 0.051394377, 0.70568717, 0.09312816, 0.70049375, 0.125, 1, 0.070981145, 0.7059056, 0.11872126, 0.6946685, 0.16666667, 1, 0.08094328, 0.70784396, 0.13179737, 0.68922764, 0.175, 1, 0.080160655, 0.708636, 0.13173145, 0.68851733, 0.18333334, 1, 0.079377905, 0.7094268, 0.1316653, 0.6878059, 0.2, 1, 0.07781198, 0.7110048, 0.13153233, 0.6863795, 0.20833333, 1, 0.07702881, 0.71179193, 0.1314655, 0.6856644, 0.25, 1, 0.062249653, 0.7170099, 0.12120802, 0.6836157, 0.29166666, 1, 0.04190522, 0.72244716, 0.105273254, 0.6820789, 0.33333334, 1, 0.018776199, 0.72737616, 0.085872635, 0.680586, 0.375, 1, -0.004668886, 0.73131454, 0.06510624, 0.6789097, 0.41666666, 1, -0.025564352, 0.73408306, 0.045660827, 0.67704034, 0.45833334, 1, -0.042115305, 0.73578674, 0.029465087, 0.67526, 0.475, 1, -0.046441585, 0.7361588, 0.025031935, 0.67474955, 0.48333332, 1, -0.048604056, 0.7363341, 0.022814982, 0.6744845, 0.5, 1, -0.05292758, 0.7366633, 0.01838043, 0.67393476, 0.51666665, 1, -0.0544848, 0.736771, 0.016732335, 0.6737358, 0.525, 1, -0.055263303, 0.7368235, 0.015908254, 0.673635, 0.5416667, 1, -0.0568201, 0.7369255, 0.014260028, 0.67343074)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.41666666),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.2, 0.35),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -200,16 +188,4 @@ tracks/25/keys = {
 "args": [],
 "method": &"ParryWindowOver"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.41666666),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }

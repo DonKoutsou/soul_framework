@@ -288,25 +288,13 @@ tracks/34/path = NodePath("%GeneralSkeleton:CameraBone")
 tracks/34/interp = 0
 tracks/34/loop_wrap = true
 tracks/34/keys = PackedFloat32Array(0.5416667, 1, 2.9927714e-12, -1, -9.519805e-06, 3.1391644e-07)
-tracks/35/type = "value"
+tracks/35/type = "method"
 tracks/35/imported = false
-tracks/35/enabled = true
-tracks/35/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/35/enabled = false
+tracks/35/path = NodePath(".")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
-"times": PackedFloat32Array(0, 0.5416667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/36/type = "method"
-tracks/36/imported = false
-tracks/36/enabled = false
-tracks/36/path = NodePath(".")
-tracks/36/interp = 1
-tracks/36/loop_wrap = true
-tracks/36/keys = {
 "times": PackedFloat32Array(0.35),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -564,25 +552,13 @@ tracks/34/path = NodePath("%GeneralSkeleton:CameraBone")
 tracks/34/interp = 0
 tracks/34/loop_wrap = true
 tracks/34/keys = PackedFloat32Array(0.5, 1, 2.9927714e-12, -1, -9.519805e-06, 3.1391644e-07)
-tracks/35/type = "value"
+tracks/35/type = "method"
 tracks/35/imported = false
-tracks/35/enabled = true
-tracks/35/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/35/enabled = false
+tracks/35/path = NodePath(".")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/36/type = "method"
-tracks/36/imported = false
-tracks/36/enabled = false
-tracks/36/path = NodePath(".")
-tracks/36/interp = 1
-tracks/36/loop_wrap = true
-tracks/36/keys = {
 "times": PackedFloat32Array(0.35),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -840,25 +816,13 @@ tracks/34/path = NodePath("%GeneralSkeleton:CameraBone")
 tracks/34/interp = 0
 tracks/34/loop_wrap = true
 tracks/34/keys = PackedFloat32Array(0.5416667, 1, 2.9927714e-12, -1, -9.519805e-06, 3.1391644e-07)
-tracks/35/type = "value"
+tracks/35/type = "method"
 tracks/35/imported = false
-tracks/35/enabled = true
-tracks/35/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/35/enabled = false
+tracks/35/path = NodePath(".")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
-"times": PackedFloat32Array(0, 0.5416667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/36/type = "method"
-tracks/36/imported = false
-tracks/36/enabled = false
-tracks/36/path = NodePath(".")
-tracks/36/interp = 1
-tracks/36/loop_wrap = true
-tracks/36/keys = {
 "times": PackedFloat32Array(0.35),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -1116,25 +1080,13 @@ tracks/34/path = NodePath("%GeneralSkeleton:CameraBone")
 tracks/34/interp = 1
 tracks/34/loop_wrap = true
 tracks/34/keys = PackedFloat32Array(0, 1, -3.3126813e-07, -0.9993968, -9.519629e-06, 0.034729086, 0.041666687, 1, -3.2570009e-07, -0.9994169, -9.51984e-06, 0.03414455, 0.07500002, 1, -3.1329955e-07, -0.9994605, -9.520256e-06, 0.032842692, 0.10000002, 1, -3.0074733e-07, -0.999503, -9.520661e-06, 0.031524923, 0.12500001, 1, -2.8656876e-07, -0.9995488, -9.521098e-06, 0.03003642, 0.14166668, 1, -2.7458634e-07, -0.99958587, -9.52145e-06, 0.028778471, 0.15833335, 1, -2.626034e-07, -0.9996213, -9.521787e-06, 0.027520472, 0.17500003, 1, -2.497164e-07, -0.99965763, -9.522132e-06, 0.026167562, 0.19166669, 1, -2.3592523e-07, -0.99969447, -9.522483e-06, 0.024719724, 0.20833336, 1, -2.2213356e-07, -0.99972916, -9.522814e-06, 0.02327184, 0.22500002, 1, -2.0725662e-07, -0.9997643, -9.523149e-06, 0.021710018, 0.25000003, 1, -1.8494026e-07, -0.9998125, -9.5236055e-06, 0.019367188, 0.26666668, 1, -1.6970054e-07, -0.99984217, -9.523888e-06, 0.01776728, 0.28333336, 1, -1.5446031e-07, -0.99986935, -9.5241485e-06, 0.016167326, 0.3, 1, -1.394006e-07, -0.99989367, -9.52438e-06, 0.014586317, 0.3166667, 1, -1.245213e-07, -0.99991524, -9.524585e-06, 0.013024252, 0.33333334, 1, -1.0964175e-07, -0.9999343, -9.524767e-06, 0.011462156, 0.35000002, 1, -9.58469e-08, -0.99994993, -9.524915e-06, 0.010013936, 0.36666667, 1, -8.205182e-08, -0.9999634, -9.525043e-06, 0.008565694, 0.39166668, 1, -6.316695e-08, -0.9999784, -9.525186e-06, 0.0065831104, 0.40833336, 1, -5.1179548e-08, -0.9999858, -9.525256e-06, 0.0053246412, 0.425, 1, -4.045742e-08, -0.9999912, -9.525307e-06, 0.0041990033, 0.45000002, 1, -2.6272152e-08, -0.9999964, -9.525358e-06, 0.0027097978, 0.48333335, 1, -1.2237989e-08, -0.9999993, -9.525385e-06, 0.001236455, 0.5416667, 1, -4.6296605e-10, -1, -9.525391e-06, 2.828335e-07)
-tracks/35/type = "value"
+tracks/35/type = "method"
 tracks/35/imported = false
-tracks/35/enabled = true
-tracks/35/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/35/enabled = false
+tracks/35/path = NodePath(".")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
-"times": PackedFloat32Array(0, 0.5416667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/36/type = "method"
-tracks/36/imported = false
-tracks/36/enabled = false
-tracks/36/path = NodePath(".")
-tracks/36/interp = 1
-tracks/36/loop_wrap = true
-tracks/36/keys = {
 "times": PackedFloat32Array(0.25),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -1142,13 +1094,13 @@ tracks/36/keys = {
 "method": &"OnAttackCharged"
 }]
 }
-tracks/37/type = "value"
-tracks/37/imported = false
-tracks/37/enabled = true
-tracks/37/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement:visible")
-tracks/37/interp = 1
-tracks/37/loop_wrap = true
-tracks/37/keys = {
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement:visible")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -1404,25 +1356,13 @@ tracks/34/path = NodePath("%GeneralSkeleton:CameraBone")
 tracks/34/interp = 0
 tracks/34/loop_wrap = true
 tracks/34/keys = PackedFloat32Array(0.5416667, 1, -4.6296605e-10, -1, -9.525391e-06, 2.828335e-07)
-tracks/35/type = "value"
+tracks/35/type = "method"
 tracks/35/imported = false
-tracks/35/enabled = true
-tracks/35/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/35/enabled = false
+tracks/35/path = NodePath(".")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
-"times": PackedFloat32Array(0, 0.5416667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/36/type = "method"
-tracks/36/imported = false
-tracks/36/enabled = false
-tracks/36/path = NodePath(".")
-tracks/36/interp = 1
-tracks/36/loop_wrap = true
-tracks/36/keys = {
 "times": PackedFloat32Array(0.25),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -1430,13 +1370,13 @@ tracks/36/keys = {
 "method": &"OnAttackCharged"
 }]
 }
-tracks/37/type = "value"
-tracks/37/imported = false
-tracks/37/enabled = true
-tracks/37/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement:visible")
-tracks/37/interp = 1
-tracks/37/loop_wrap = true
-tracks/37/keys = {
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement:visible")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -1692,25 +1632,13 @@ tracks/34/path = NodePath("%GeneralSkeleton:CameraBone")
 tracks/34/interp = 1
 tracks/34/loop_wrap = true
 tracks/34/keys = PackedFloat32Array(0, 1, -3.5575061e-07, 0.99930054, 9.518732e-06, 0.037395876, 0.05, 1, -3.448731e-07, 0.9993427, 9.519135e-06, 0.036253933, 0.075, 1, -3.33253e-07, 0.9993862, 9.519548e-06, 0.035034034, 0.09166667, 1, -3.2352764e-07, 0.9994215, 9.519884e-06, 0.034013044, 0.108333334, 1, -3.1182347e-07, 0.9994625, 9.520275e-06, 0.03278431, 0.125, 1, -3.0011876e-07, 0.999502, 9.520652e-06, 0.03155553, 0.15, 1, -2.781076e-07, 0.9995723, 9.52132e-06, 0.02924474, 0.16666667, 1, -2.6343267e-07, 0.9996162, 9.5217365e-06, 0.02770413, 0.18333334, 1, -2.4677723e-07, 0.9996631, 9.522184e-06, 0.025955603, 0.2, 1, -2.3012103e-07, 0.99970704, 9.522602e-06, 0.024206996, 0.21666667, 1, -2.1296901e-07, 0.99974895, 9.5230025e-06, 0.022406336, 0.23333333, 1, -1.9532116e-07, 0.99978876, 9.523381e-06, 0.02055363, 0.25, 1, -1.7767269e-07, 0.9998252, 9.523728e-06, 0.01870085, 0.26666668, 1, -1.6002376e-07, 0.9998581, 9.524041e-06, 0.016848017, 0.28333333, 1, -1.4237426e-07, 0.9998876, 9.524322e-06, 0.014995127, 0.3, 1, -1.2521956e-07, 0.999913, 9.524564e-06, 0.013194182, 0.325, 1, -1.0022961e-07, 0.9999442, 9.524862e-06, 0.010570673, 0.34166667, 1, -8.455957e-08, 0.99996024, 9.525014e-06, 0.008925593, 0.35833332, 1, -6.9879555e-08, 0.99997276, 9.525134e-06, 0.00738445, 0.375, 1, -5.5199397e-08, 0.99998295, 9.52523e-06, 0.005843291, 0.39166668, 1, -4.348925e-08, 0.9999894, 9.525291e-06, 0.004613931, 0.40833333, 1, -3.177902e-08, 0.9999943, 9.525337e-06, 0.0033845617, 0.43333334, 1, -1.8172667e-08, 0.9999981, 9.525373e-06, 0.0019561325, 0.45833334, 1, -6.545794e-09, 0.99999976, 9.525388e-06, 0.0007355144, 0.46666667, 1, 5.1440425e-09, -0.9999998, -9.525389e-06, -0.00058835495, 0.5, 1, -4.6296605e-10, -1, -9.525391e-06, 2.828335e-07)
-tracks/35/type = "value"
+tracks/35/type = "method"
 tracks/35/imported = false
-tracks/35/enabled = true
-tracks/35/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/35/enabled = false
+tracks/35/path = NodePath(".")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/36/type = "method"
-tracks/36/imported = false
-tracks/36/enabled = false
-tracks/36/path = NodePath(".")
-tracks/36/interp = 1
-tracks/36/loop_wrap = true
-tracks/36/keys = {
 "times": PackedFloat32Array(0.25),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -1718,13 +1646,13 @@ tracks/36/keys = {
 "method": &"OnAttackCharged"
 }]
 }
-tracks/37/type = "value"
-tracks/37/imported = false
-tracks/37/enabled = true
-tracks/37/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement:visible")
-tracks/37/interp = 1
-tracks/37/loop_wrap = true
-tracks/37/keys = {
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement:visible")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -1980,25 +1908,13 @@ tracks/34/path = NodePath("%GeneralSkeleton:CameraBone")
 tracks/34/interp = 1
 tracks/34/loop_wrap = true
 tracks/34/keys = PackedFloat32Array(0, 1, -4.629643e-10, -1, -9.519805e-06, 2.828335e-07, 0.041666687, 1, -8.309481e-10, -0.9999993, -0.0011815996, 2.8283003e-07, 0.058333352, 1, -1.2255754e-09, -0.9999971, -0.0024385448, 2.8282597e-07, 0.07500002, 1, -1.6202001e-09, -0.9999932, -0.0036954845, 2.828214e-07, 0.09166668, 1, -2.1033566e-09, -0.99998635, -0.005234414, 2.828152e-07, 0.10833336, 1, -2.675039e-09, -0.9999752, -0.007055318, 2.8280698e-07, 0.12500001, 1, -3.2467138e-09, -0.9999606, -0.008876201, 2.827978e-07, 0.13333336, 1, -3.58586e-09, -0.9999505, -0.009956441, 2.8279192e-07, 0.14166668, 1, -3.925001e-09, -0.99993914, -0.011036669, 2.8278572e-07, 0.15833335, 1, -4.6032707e-09, -0.999913, -0.01319709, 2.8277225e-07, 0.16666669, 1, -4.942397e-09, -0.99989814, -0.014277275, 2.82765e-07, 0.18333335, 1, -5.6566107e-09, -0.999863, -0.016552195, 2.8274883e-07, 0.20000002, 1, -6.3707937e-09, -0.99982274, -0.018827023, 2.8273112e-07, 0.20833336, 1, -6.727873e-09, -0.99980074, -0.019964404, 2.8272174e-07, 0.21666668, 1, -7.067501e-09, -0.99977857, -0.021046197, 2.8271245e-07, 0.22500002, 1, -7.4071194e-09, -0.99975514, -0.022127964, 2.827028e-07, 0.23333335, 1, -7.7467295e-09, -0.9997307, -0.023209704, 2.8269292e-07, 0.25000003, 1, -8.4259195e-09, -0.9996781, -0.025373103, 2.82672e-07, 0.26666668, 1, -8.9991445e-09, -0.9996301, -0.02719897, 2.8265342e-07, 0.28333336, 1, -9.572339e-09, -0.9995787, -0.029024743, 2.8263386e-07, 0.3, 1, -1.005696e-08, -0.9995327, -0.030568395, 2.8261655e-07, 0.3166667, 1, -1.0453019e-08, -0.99949336, -0.031829957, 2.8260195e-07, 0.33333334, 1, -1.0849063e-08, -0.9994524, -0.03309147, 2.8258685e-07, 0.37500003, 1, -1.1218582e-08, -0.99941266, -0.034268487, 2.825723e-07, 0.38333336, 1, -1.0881937e-08, -0.99944896, -0.03319618, 2.8258555e-07, 0.39166668, 1, -1.0545282e-08, -0.99948394, -0.032123838, 2.8259842e-07, 0.4, 1, -1.0208614e-08, -0.9995178, -0.031051453, 2.8261098e-07, 0.4166667, 1, -9.535243e-09, -0.9995822, -0.028906588, 2.826351e-07, 0.49166667, 1, -2.879187e-09, -0.9999703, -0.007705563, 2.828037e-07, 0.5, 1, -2.14019e-09, -0.9999857, -0.0053517334, 2.828146e-07, 0.5166667, 1, -1.4693052e-09, -0.9999949, -0.00321486, 2.8282318e-07, 0.52500004, 1, -1.1338599e-09, -0.99999774, -0.0021464173, 2.828269e-07, 0.53333336, 1, -7.9841356e-10, -0.9999995, -0.001077972, 2.8283037e-07, 0.5416667, 1, -4.629661e-10, -1, -9.525391e-06, 2.828335e-07)
-tracks/35/type = "value"
+tracks/35/type = "method"
 tracks/35/imported = false
-tracks/35/enabled = true
-tracks/35/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/35/enabled = false
+tracks/35/path = NodePath(".")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/36/type = "method"
-tracks/36/imported = false
-tracks/36/enabled = false
-tracks/36/path = NodePath(".")
-tracks/36/interp = 1
-tracks/36/loop_wrap = true
-tracks/36/keys = {
 "times": PackedFloat32Array(0.25),
 "transitions": PackedFloat32Array(1),
 "values": [{

@@ -3,8 +3,6 @@
 [ext_resource type="Script" uid="uid://02rqqby41hlv" path="res://Engine/Controllers/Fight_Characters/Fight_Enemy.gd" id="2_kw201"]
 [ext_resource type="PackedScene" uid="uid://wt8wxj87hese" path="res://Engine/Particles/DamagePart.tscn" id="3_eattp"]
 [ext_resource type="Curve" uid="uid://htwdrptip8gv" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/WeaponCurve.tres" id="4_5mrp1"]
-[ext_resource type="Material" uid="uid://c8xpah88sw5yu" path="res://Engine/Shaders/Materials/SwipeMeshShader.tres" id="4_84woi"]
-[ext_resource type="ArrayMesh" uid="uid://djcb40udi2miv" path="res://Engine/Assets/Particles/SwipeMesh.res" id="5_66mam"]
 [ext_resource type="Script" uid="uid://bl0vbdv76yftl" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/AnimationInfo.gd" id="6_c3124"]
 [ext_resource type="Resource" uid="uid://b5vqjjy1pi4ci" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Idle.tres" id="7_fxlpe"]
 [ext_resource type="Resource" uid="uid://cdyg6ufhgxywx" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Walk.tres" id="8_idwut"]
@@ -43,18 +41,17 @@
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.49842733), 1.57173, 0.0, 0, 0]
 point_count = 2
 
-[node name="EnemyFighter" type="Node3D" unique_id=1459353260 node_paths=PackedStringArray("LookAtNode", "HitParticles", "Anim", "WeaponPlecement", "WeaponPlecement2", "SwipeShape", "SwipeShape2", "sk", "SkeletonModif")]
+[node name="EnemyFighter" type="Node3D" unique_id=1459353260 node_paths=PackedStringArray("LookAtNode", "HitParticles", "Anim", "WeaponPlecement", "WeaponPlecement2", "sk", "SkeletonModif")]
 script = ExtResource("2_kw201")
 LookAtNode = NodePath("GeneralSkeleton/HeadLookModifier")
 HitParticles = NodePath("GeneralSkeleton/BoneAttachment2/HitParticles")
 Anim = NodePath("AnimationPlayer")
 WeaponPlecement = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement")
 WeaponPlecement2 = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement")
-SwipeShape = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh")
-SwipeShape2 = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh")
 sk = NodePath("GeneralSkeleton")
 SkeletonModif = NodePath("GeneralSkeleton/MyModifier")
 Can_Retaliate = true
+ControllingCharacter = false
 
 [node name="GeneralSkeleton" type="Skeleton3D" parent="." unique_id=1385459663]
 unique_name_in_owner = true
@@ -132,24 +129,12 @@ bone_idx = 20
 [node name="WeaponPlacement" type="Node3D" parent="GeneralSkeleton/Palm_L" unique_id=501842641]
 transform = Transform3D(-0.15100369, 0.12252966, -0.98090994, -0.92727983, 0.32630777, 0.18350817, 0.3425637, 0.9372885, 0.064345635, 0, 0.045, 0)
 
-[node name="SwipeMesh" type="MeshInstance3D" parent="GeneralSkeleton/Palm_L/WeaponPlacement" unique_id=1253460155]
-transform = Transform3D(125.00001, 0, 0, 0, 44.999992, 0, 0, 0, 125.00001, 0, 0, 0)
-material_override = ExtResource("4_84woi")
-mesh = ExtResource("5_66mam")
-blend_shapes/blendShape1.Closed = 1.0
-
 [node name="Palm_L2" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=480455727]
 bone_name = "WeaponPlacement.R"
 bone_idx = 25
 
 [node name="WeaponPlacement" type="Node3D" parent="GeneralSkeleton/Palm_L2" unique_id=1765529614]
 transform = Transform3D(-0.15100369, 0.12252966, -0.98090994, -0.92727983, 0.32630777, 0.18350817, 0.3425637, 0.9372885, 0.064345635, 0, 0.045, 0)
-
-[node name="SwipeMesh" type="MeshInstance3D" parent="GeneralSkeleton/Palm_L2/WeaponPlacement" unique_id=1282154268]
-transform = Transform3D(125.00001, 0, 0, 0, 44.999992, 0, 0, 0, 125.00001, 0, 0, 0)
-material_override = ExtResource("4_84woi")
-mesh = ExtResource("5_66mam")
-blend_shapes/blendShape1.Closed = 1.0
 
 [node name="HeadLookModifier" type="LookAtModifier3D" parent="GeneralSkeleton" unique_id=1306085533]
 active = false

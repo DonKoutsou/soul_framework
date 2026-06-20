@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bf58xeuue3pn8" path="res://Engine/Particles/Impact.tscn" id="2_lk8us"]
 [ext_resource type="PackedScene" uid="uid://dqpweb46lax44" path="res://Engine/Particles/damage_buff2.tscn" id="4_nuaue"]
 [ext_resource type="PackedScene" uid="uid://i3p1shhctus" path="res://Engine/Particles/speed_buff2.tscn" id="5_11257"]
+[ext_resource type="PackedScene" uid="uid://c1pmcdhb3qun8" path="res://Engine/Assets/Trail/WeaponTrail.tscn" id="6_a4af6"]
 [ext_resource type="PackedScene" uid="uid://fiuajpm4l4lj" path="res://Engine/Particles/Spark.tscn" id="6_mv1gy"]
 
 [node name="FightWeapon" type="Node3D" unique_id=114680310 node_paths=PackedStringArray("DamageBuff", "SpeedBuff", "spark", "Impact")]
@@ -34,3 +35,6 @@ layers = 524289
 cast_shadow = 0
 ignore_occlusion_culling = true
 lifetime = 0.5
+
+[node name="GPUTrail3D" parent="." unique_id=124510421 instance=ExtResource("6_a4af6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)

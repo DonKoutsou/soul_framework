@@ -172,27 +172,3 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0, 1, -0.06330782, 0.24094303, 0.06203006, 0.96648383, 0.041666668, 1, -0.06330782, 0.24094303, 0.06203006, 0.96648383, 0.083333336, 1, -0.04255049, 0.3015811, 0.07425032, 0.9495921, 0.125, 1, -0.017291032, 0.3867208, 0.087619476, 0.9178621, 0.16666667, 1, 0.004142055, 0.48120654, 0.09359285, 0.8715868, 0.20833333, 1, 0.017278409, 0.57033515, 0.08735967, 0.81657064, 0.25, 1, 0.022693595, 0.64236337, 0.071959846, 0.76267695, 0.29166666, 1, 0.023237457, 0.68947065, 0.055714983, 0.72179365, 0.33333334, 1, 0.02274711, 0.70641804, 0.04845717, 0.7057677)
-tracks/24/type = "value"
-tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/24/interp = 1
-tracks/24/loop_wrap = true
-tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.33333334),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "value"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.33333334),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}

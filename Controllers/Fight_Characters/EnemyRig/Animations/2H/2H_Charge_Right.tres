@@ -172,41 +172,17 @@ tracks/23/path = NodePath("%GeneralSkeleton:RightHand")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = PackedFloat32Array(0, 1, 0.022747096, 0.70641804, 0.048457187, 0.7057677, 0.041666668, 1, 0.019050678, 0.7303098, 0.050156202, 0.6810059, 0.083333336, 1, -0.0033346533, 0.780251, 0.043613445, 0.6239352, 0.125, 1, -0.04268982, 0.82513565, 0.02522834, 0.5627542, 0.16666667, 1, -0.06470896, 0.84324986, 0.013962782, 0.5334299, 0.2, 1, -0.06372729, 0.8433218, 0.01479191, 0.5334121, 0.28333333, 1, -0.062691376, 0.84336853, 0.014600241, 0.5334663, 0.35833332, 1, -0.061849464, 0.8434274, 0.015268823, 0.5334527, 0.4, 1, -0.061215304, 0.8434827, 0.016232755, 0.53341, 0.44166666, 1, -0.0605947, 0.8435384, 0.017288256, 0.5333596, 0.5, 1, -0.060095347, 0.8435832, 0.01817889, 0.5333155)
-tracks/24/type = "value"
+tracks/24/type = "method"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("GeneralSkeleton/Palm_L/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/25/type = "method"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath(".")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [1],
 "method": &"OnAttackCharged"
 }]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
 }

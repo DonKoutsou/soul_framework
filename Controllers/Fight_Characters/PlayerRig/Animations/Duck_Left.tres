@@ -252,22 +252,10 @@ tracks/34/keys = PackedFloat32Array(0, 1, 0.0069599883, 0.99994385, -0.001657591
 tracks/35/type = "value"
 tracks/35/imported = false
 tracks/35/enabled = true
-tracks/35/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement/SwipeMesh:blend_shapes/blendShape1.Closed")
+tracks/35/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement:visible")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
-"times": PackedFloat32Array(0, 0.29166666),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/36/type = "value"
-tracks/36/imported = false
-tracks/36/enabled = true
-tracks/36/path = NodePath("GeneralSkeleton/BoneAttachment3D/WeaponPlacement:visible")
-tracks/36/interp = 1
-tracks/36/loop_wrap = true
-tracks/36/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,

@@ -6,6 +6,9 @@
 
 [node name="FightWeapon" unique_id=114680310 instance=ExtResource("1_gximx")]
 
-[node name="MeshInstance3D" parent="." index="0" unique_id=787913972]
+[node name="MeshInstance3D" parent="." index="1" unique_id=787913972]
 material_override = ExtResource("2_8ypj2")
 mesh = ExtResource("3_dv3o0")
+
+[node name="GPUTrail3D" parent="." index="5" unique_id=124510421]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32004303, 0)
