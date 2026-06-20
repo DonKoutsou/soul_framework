@@ -41,7 +41,8 @@ func _ready() -> void:
 	monsterR = RandomNumberGenerator.new()
 	var pl : Player = Target
 	LookAtNode.target_node = LookAtNode.get_path_to(pl.Cam)
-
+	GenerateCombos()
+	
 #------------------------------------------------------------------------------
 func SetControllingChar(Char : Actor) -> void:
 	if (Char == null):
@@ -84,7 +85,7 @@ func SetControllingChar(Char : Actor) -> void:
 	Blocking = false
 	Parrying = false
 	StartingParry = false
-	GenerateCombos()
+	
 	
 	Char.Exposed.connect(Exposed)
 	Char.SpeedBuffed.connect(SpeedChanged)
@@ -129,7 +130,9 @@ func ApplyVisuals(viz : Node3D) -> void:
 		
 #----------------------------------------------------------------------
 func GenerateCombos() -> void:
-	var availableAttacks = [AtackSide.TOP, AtackSide.LEFT, AtackSide.RIGHT, AtackSide.MIDDLE]
+	var availableAttacks = [AtackSide.TOP, AtackSide.LEFT, AtackSide.RIGHT]
+	if (CurrentWeapon.Pierce):
+		availableAttacks.append(AtackSide.MIDDLE)
 	#Make sure to keep the combo size within the characer's stamina range.
 	var maxHitAmmount = floori(ControllingCharacter.GetMaxFatigue() / GetRequiredStaminaForHit())
 	

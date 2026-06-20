@@ -194,7 +194,7 @@ func flood_fill(start: Vector2i, tile_coords: Array, visited: Dictionary) -> Arr
 func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visited: Dictionary) -> Array:
 	var room : Array = []
 	var stack := [start]
-
+	var cells = get_used_cells()
 	while stack.size() > 0:
 		var current = stack.pop_back()
 
@@ -211,8 +211,10 @@ func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visite
 			Vector2i.UP,
 			Vector2i.DOWN
 		]
-
+		
 		for neighbor in neighbors:
+			if (!cells.has(current + neighbor)):
+				continue
 			if start.distance_to(current + neighbor) < dist and current + neighbor in tile_coords and neighbor + current not in visited and !CantReach(current, neighbor):
 				stack.push_back(neighbor + current)
 	
@@ -220,101 +222,21 @@ func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visite
 
 ##Used to declare the blocking direction of each of the MAZE tiles
 func CantReach(tilecoords : Vector2, dir : Vector2) -> bool:
-	var index = get_cell_atlas_coords(tilecoords).x
+	var dat : TileData = get_cell_tile_data(tilecoords)
 	var tilerotation = GetTileRotationRadians(tilecoords)
-	var resault : bool
-	match index:
-		0:
-			resault = false
-		1:
-			var rotatedv = Vector2.LEFT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rotatedv)
-		2:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.DOWN.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		3:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.DOWN.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		4:
-			resault = false
-		5:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.RIGHT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot2) or dir.is_equal_approx(rot1)
-		6:
-			var rot1 = Vector2.DOWN.rotated(tilerotation)
-			resault = !dir.is_equal_approx(rot1)
-		7:
-			var rot1 = Vector2.UP.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		8:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		9:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.DOWN.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		10:
-			var rot1 = Vector2.RIGHT.rotated(tilerotation)
-			resault = !dir.is_equal_approx(rot1)
-		11:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.UP.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		12:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.RIGHT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		13:
+	
+	var resault : bool = false
+	
+	for wall : Vector2 in dat.get_custom_data("Walls"):
+		var wallDir = wall.rotated(tilerotation)
+		if (dir.is_equal_approx(wallDir)):
 			resault = true
-		14:
-			var rot1 = Vector2.DOWN.rotated(tilerotation)
-			resault = !dir.is_equal_approx(rot1)
-		15:
+			break
+	
+	for wall : Vector2 in dat.get_custom_data("DoorWalls"):
+		var wallDir = wall.rotated(tilerotation)
+		if (dir.is_equal_approx(wallDir)):
 			resault = true
-		16:
-			resault = true
-		17:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.RIGHT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot2) or dir.is_equal_approx(rot1)
-		18:
-			var rot1 = Vector2.DOWN.rotated(tilerotation)
-			resault = !dir.is_equal_approx(rot1)
-		19:
-			var rot1 = Vector2.UP.rotated(tilerotation)
-			resault = !dir.is_equal_approx(rot1)
-		20:
-			resault = false
-		21:
-			resault = false
-		22:
-			var rot1 = Vector2.UP.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		23:
-			var rot1 = Vector2.UP.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		24:
-			resault = false
-		25:
-			resault = false
-		26:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.DOWN.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		27:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			var rot2 = Vector2.UP.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1) or dir.is_equal_approx(rot2)
-		28:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		29:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
-		30:
-			var rot1 = Vector2.LEFT.rotated(tilerotation)
-			resault = dir.is_equal_approx(rot1)
+			break
+	
 	return resault

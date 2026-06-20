@@ -60,9 +60,8 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	call_deferred("StoreMultiMeshes")
 	call_deferred("SetBG")
-	if (Engine.is_editor_hint()):
-		BackgroundMesh.visible = false
-		return
+	BackgroundMesh.visible = !Engine.is_editor_hint()
+
 	MonsterMan.MonsterMetPlayer.connect(MonsterMetPlayer)
 	MonsterMan.SetLoadDist(LoadDistance)
 
