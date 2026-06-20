@@ -43,6 +43,7 @@ script = ExtResource("3_l1ww7")
 [node name="FightWorld" parent="SubViewportContainer/SubViewport" unique_id=741307255 instance=ExtResource("5_jrdgj")]
 
 [node name="AtackIndicators" parent="." unique_id=1067508434 instance=ExtResource("8_77esn")]
+visible = false
 layout_mode = 1
 mouse_filter = 2
 

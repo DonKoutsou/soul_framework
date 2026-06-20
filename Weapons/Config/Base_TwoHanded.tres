@@ -5,7 +5,6 @@
 
 [resource]
 script = ExtResource("3_yxhgs")
-Speed = 0.8
 Stamina_Cost = 30.0
 Damage = 18.0
 WeaponType = 1

@@ -24,7 +24,7 @@ var CurrentMosters : Array[MonsterGroup]
 
 func _ready() -> void:
 	
-	AtackIndicatorUI.ToggleHelp(true)
+	#AtackIndicatorUI.ToggleHelp(true)
 	
 	FightWorld.EnemyIntroFinished.connect(IntroFinished)
 	

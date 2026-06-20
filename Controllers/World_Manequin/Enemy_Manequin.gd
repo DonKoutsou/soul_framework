@@ -73,7 +73,6 @@ signal Respawned
 
 #Tweens
 var MoveTw : Tween
-var WalkBlendTw : Tween
 var HeadRotTw : Tween
 var RotTw : Tween
 var RunTw : Tween
@@ -123,10 +122,10 @@ func RegisterCharacter(group : MonsterGroup) -> void:
 		else: if g.name.contains("B_"):
 			BodyModels.append(g)
 	
-	
-	
-	var leftWeapon = pickedArchetype.CharacterWeapon.WeaponScene.instantiate()
+	var leftWeapon : FightWeapon = pickedArchetype.CharacterWeapon.WeaponScene.instantiate()
 	WeaponPlacementL.add_child(leftWeapon)
+	leftWeapon.ToggleTrail(false)
+	
 	if (pickedArchetype.CharacterWeapon.WeaponType == Fight_Animation_Modifier.WeaponType.TWO_HANDED):
 		AnimModifier.CurrentWeaponType = Fight_Animation_Modifier.WeaponType.TWO_HANDED
 
@@ -135,6 +134,8 @@ func RegisterCharacter(group : MonsterGroup) -> void:
 
 		var rightWeapon = pickedArchetype.CharacterWeapon.WeaponScene.instantiate()
 		WeaponPlacementR.add_child(rightWeapon)
+		rightWeapon.ToggleTrail(false)
+		
 	else:
 		AnimModifier.CurrentWeaponType = Fight_Animation_Modifier.WeaponType.ONE_HANDED
 		
@@ -154,8 +155,7 @@ func Update(delta: float, PlayerPos : Vector3) -> void:
 	if (!SeeingPlayer):
 		if (is_instance_valid(MoveTw) and MoveTw.is_valid()):
 			MoveTw.custom_step(delta)
-		if (is_instance_valid(WalkBlendTw) and WalkBlendTw.is_valid()):
-			WalkBlendTw.custom_step(delta)
+
 	if (is_instance_valid(RotTw) and RotTw.is_valid()):
 		RotTw.custom_step(delta)
 	if (is_instance_valid(HeadRotTw) and HeadRotTw.is_valid()):

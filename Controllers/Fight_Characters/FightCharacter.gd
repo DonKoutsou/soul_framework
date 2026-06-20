@@ -243,7 +243,7 @@ func EquipWeapon(W : Weapon, Notify : bool = true) -> void:
 	WeaponScene.wepSound = W.WeaponClashSound
 	WeaponScenes.append(WeaponScene)
 	
-	var weaponAABB: AABB = Helper.get_node_aabb(WeaponScene)
+	#var weaponAABB: AABB = Helper.get_node_aabb(WeaponScene)
 	#var WeaponAbbSize = weaponAABB.size
 	
 	#Set position and size of the Swipe mesh
@@ -257,7 +257,7 @@ func EquipWeapon(W : Weapon, Notify : bool = true) -> void:
 		WeaponScenes.append(WeaponScene2)
 		WeaponScene2.wepSound = W.WeaponClashSound
 		
-		var weaponAABB2: AABB = Helper.get_node_aabb(WeaponScene2)
+		#var weaponAABB2: AABB = Helper.get_node_aabb(WeaponScene2)
 		#var WeaponAbbSize2 = weaponAABB2.size
 	
 		#Set position and size of the Swipe mesh

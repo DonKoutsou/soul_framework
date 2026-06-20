@@ -7,5 +7,6 @@ script = ExtResource("1_lsjj0")
 AnimName = "Walk"
 Blend_Duration = 0.5
 Blend_Out_Duration = 0.5
+BoneFilter = 4278255615
 Loop = true
 metadata/_custom_type_script = "uid://bl0vbdv76yftl"

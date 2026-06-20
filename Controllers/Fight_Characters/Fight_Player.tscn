@@ -12,7 +12,6 @@
 [ext_resource type="Resource" uid="uid://b756etlvgnhmh" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Unseath.tres" id="12_kyleq"]
 [ext_resource type="Resource" uid="uid://cs0jqehmsjlch" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Seath.tres" id="13_endcp"]
 [ext_resource type="Resource" uid="uid://cdyg6ufhgxywx" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Walk.tres" id="14_7u03s"]
-[ext_resource type="Texture2D" uid="uid://t7wwx8j6b12w" path="res://Engine/Assets/Textures/LLight.png" id="14_lslt6"]
 [ext_resource type="Script" uid="uid://btyn5d4y5rdmv" path="res://Engine/Controllers/Fight_Characters/lantern_light.gd" id="14_tc1am"]
 [ext_resource type="Resource" uid="uid://duv7d5qm5xwti" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Right.tres" id="15_j7887"]
 [ext_resource type="Resource" uid="uid://c0jflo3f0vfd3" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Right_Recover.tres" id="16_uwlqa"]
@@ -43,6 +42,7 @@
 [ext_resource type="ArrayMesh" uid="uid://drjpt5pqn3tav" path="res://Engine/Assets/Items/Lentern.res" id="39_ttegh"]
 [ext_resource type="Material" uid="uid://c3dr87khiawcx" path="res://Engine/Shaders/Materials/LanternBody.tres" id="40_hmpig"]
 [ext_resource type="Material" uid="uid://bhufvoie07eh7" path="res://Engine/Shaders/Materials/Lantern.tres" id="41_6y68k"]
+[ext_resource type="Texture2D" uid="uid://c20apfcpa40hh" path="res://Engine/Assets/Textures/light_01.png" id="41_y0045"]
 [ext_resource type="CameraAttributesPractical" uid="uid://sqqjtnyqh2gy" path="res://Engine/Enviroments/CameraSettings/FightPlayerCameraAttribures.tres" id="45_hmpig"]
 [ext_resource type="Script" uid="uid://bj3feok1xkxq" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/MomentumModifier.gd" id="45_y0045"]
 
@@ -63,7 +63,7 @@ shading_mode = 0
 disable_ambient_light = true
 disable_fog = true
 disable_specular_occlusion = true
-albedo_texture = ExtResource("14_lslt6")
+albedo_texture = ExtResource("41_y0045")
 texture_filter = 2
 texture_repeat = false
 billboard_mode = 1
@@ -101,7 +101,6 @@ libraries/ = ExtResource("2_ttegh")
 
 [node name="GeneralSkeleton" parent="." unique_id=1728014551 instance=ExtResource("2_tiq7d")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
-modifier_callback_mode_process = 2
 
 [node name="MyModifier" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=1069785363 node_paths=PackedStringArray("animator")]
 unique_name_in_owner = false
@@ -121,10 +120,11 @@ visibility_parent = NodePath("")
 active = true
 influence = 1.0
 script = ExtResource("17_22ek7")
+CurrentState = 1
 WeaponCurve = ExtResource("5_ttegh")
 RecoilCurve = SubResource("Curve_22ek7")
 animator = NodePath("../../AnimationPlayer")
-anims = Array[ExtResource("9_ga5p4")]([ExtResource("10_57y0o"), ExtResource("11_x4p7r"), ExtResource("12_kyleq"), ExtResource("13_endcp"), ExtResource("14_7u03s"), ExtResource("15_j7887"), ExtResource("16_uwlqa"), ExtResource("17_gpdat"), ExtResource("18_u1g0i"), ExtResource("19_m5kv2"), ExtResource("22_pc6nx"), ExtResource("25_btr13"), ExtResource("28_bqsjn"), ExtResource("31_e5kpb"), ExtResource("20_upm8t"), ExtResource("23_n25ff"), ExtResource("26_jpaba"), ExtResource("29_xjw76"), ExtResource("32_s781g"), ExtResource("21_tcu7f"), ExtResource("24_6lemw"), ExtResource("27_67617"), ExtResource("30_o4q42"), ExtResource("33_mjjn8"), ExtResource("34_wmvpl"), ExtResource("35_0de3s"), ExtResource("36_jmdvu"), ExtResource("37_wyigv"), ExtResource("34_krl06")])
+anims = Array[ExtResource("9_ga5p4")]([ExtResource("11_x4p7r"), ExtResource("10_57y0o"), ExtResource("12_kyleq"), ExtResource("13_endcp"), ExtResource("14_7u03s"), ExtResource("15_j7887"), ExtResource("16_uwlqa"), ExtResource("17_gpdat"), ExtResource("18_u1g0i"), ExtResource("19_m5kv2"), ExtResource("22_pc6nx"), ExtResource("25_btr13"), ExtResource("28_bqsjn"), ExtResource("31_e5kpb"), ExtResource("20_upm8t"), ExtResource("23_n25ff"), ExtResource("26_jpaba"), ExtResource("29_xjw76"), ExtResource("32_s781g"), ExtResource("21_tcu7f"), ExtResource("24_6lemw"), ExtResource("27_67617"), ExtResource("30_o4q42"), ExtResource("33_mjjn8"), ExtResource("34_wmvpl"), ExtResource("35_0de3s"), ExtResource("36_jmdvu"), ExtResource("37_wyigv"), ExtResource("34_krl06")])
 metadata/_custom_type_script = "uid://2o6tgcat6qck"
 
 [node name="LookAtModifier3D" type="LookAtModifier3D" parent="GeneralSkeleton" unique_id=751339328]
@@ -135,12 +135,13 @@ bone = 8
 origin_offset = Vector3(-0.2, -0.1, 0)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1077415663]
-transform = Transform3D(-0.94398093, -0.29025272, 0.15701415, 0.29585132, -0.95514524, 0.0130211245, 0.14619176, 0.05874448, 0.9875108, -0.2547268, 0.5156195, 0.006251273)
+transform = Transform3D(-0.039640684, -0.034057654, 0.99863356, 0.99870896, -0.03311953, 0.03851412, 0.03176254, 0.9988711, 0.035326574, -0.16947228, 0.762165, 0.17040916)
 bone_name = "WeaponPlacement.R"
 bone_idx = 29
 
 [node name="WeaponPlacement" type="Node3D" parent="GeneralSkeleton/BoneAttachment3D" unique_id=2136917447]
 transform = Transform3D(0.0048682285, 0.1156679, -0.99327606, -0.9994029, 0.034539543, -0.00087609846, 0.034205973, 0.99268717, 0.11576699, -0.01770631, 0.045, -0.007187872)
+visible = false
 
 [node name="ShovelMesh" type="MeshInstance3D" parent="GeneralSkeleton/BoneAttachment3D" unique_id=1518276128]
 transform = Transform3D(-0.2246674, -0.07785466, -0.63173425, -0.6044671, 0.23598836, 0.1858871, 0.19942187, 0.62759316, -0.14826587, -0.0042126095, 0.019956905, -0.008214641)
@@ -186,7 +187,7 @@ skeleton = NodePath("../../../../..")
 script = ExtResource("14_tc1am")
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1819386683]
-transform = Transform3D(-1, -8.697901e-15, -6.278329e-07, -1.1962389e-11, 0.9999997, 1.9039608e-05, 6.278329e-07, 1.9039602e-05, -1, 1.6701878e-16, 0.771, 0.0073502064)
+transform = Transform3D(-1, 9.3132e-10, -5.65667e-07, 9.205439e-10, 0.9999997, 1.9050782e-05, 5.65667e-07, 1.9050776e-05, -1, 1.2571712e-13, 0.7574959, 0.0073502064)
 bone_name = "CameraBone"
 bone_idx = 30
 

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dajpxd1pnq28d"]
 
-[ext_resource type="Material" path="res://Engine/Shaders/Materials/ItemMa.tres" id="1_ecgm3"]
+[ext_resource type="Material" uid="uid://ciqreujo4w5h6" path="res://Engine/Shaders/Materials/ItemMa.tres" id="1_ecgm3"]
 [ext_resource type="Script" uid="uid://dpf06q7ltelqk" path="res://Engine/Particles/light_part.gd" id="2_xkdrv"]
 [ext_resource type="PackedScene" uid="uid://dxq20d767888h" path="res://Engine/Particles/DeathPartSound.tscn" id="3_4pw8m"]
 [ext_resource type="AudioStream" uid="uid://b0ouxfvsai2bb" path="res://Engine/Assets/Sounds/Light.mp3" id="4_4pw8m"]

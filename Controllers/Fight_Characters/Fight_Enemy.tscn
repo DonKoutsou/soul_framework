@@ -51,7 +51,6 @@ WeaponPlecement2 = NodePath("GeneralSkeleton/Palm_L2/WeaponPlacement")
 sk = NodePath("GeneralSkeleton")
 SkeletonModif = NodePath("GeneralSkeleton/MyModifier")
 Can_Retaliate = true
-ControllingCharacter = false
 
 [node name="GeneralSkeleton" type="Skeleton3D" parent="." unique_id=1385459663]
 unique_name_in_owner = true
