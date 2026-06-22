@@ -10,5 +10,6 @@ AnimName = "Hit_Right"
 BlendCurve = ExtResource("1_ynpuy")
 Blend_Duration = 0.15
 Blend_Out_Duration = 0.5
+AllowRestart = true
 ValidStates = Array[int]([28])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

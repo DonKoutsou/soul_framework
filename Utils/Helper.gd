@@ -219,7 +219,7 @@ func _CheckForFinishedLoad(Sign : SignalObject, File : String) -> void:
 		_LoadFinished(Sign, ResourceLoader.load_threaded_get(File))
 
 	else:
-		call_deferred("_CheckForFinishedLoad", Sign, File)
+		CallLater(_CheckForFinishedLoad.bind(Sign, File), 0.1)
 
 		#Sign.Progressed.emit(prog[0])
 	if (loadProg != LoadingProgress.value):

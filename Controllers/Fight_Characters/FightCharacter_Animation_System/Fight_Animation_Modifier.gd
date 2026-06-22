@@ -139,12 +139,11 @@ func StateSwitched(NewState : FightCharacter.CharacterState) -> void:
 		if (animInfo.ValidStates.size() == 0):
 			continue
 		if (animInfo.ValidStates.has(NewState)):
-			if (GetAnimationActive(animIndex)):
-				continue
 			
 			var dualDir = GetAnimationDualDirection(animIndex)
+			
+			if (animInfo.BlendInAnim != "" and !GetAnimationActive(animIndex)): #If this animation is already playing we dont need to play the "intro" blend in anim
 				
-			if (animInfo.BlendInAnim != ""):
 				var blendInAnimName = animInfo.GetBlendInAnimationName(CurrentWeaponType, dualDir)
 				var blendInAnimIndex = GetAnimationInfo(blendInAnimName)
 				var anim = anims[blendInAnimIndex]
@@ -153,9 +152,9 @@ func StateSwitched(NewState : FightCharacter.CharacterState) -> void:
 					SetAnimationDualDirection(blendInAnimIndex, dualDir)
 					
 				SetAnimationActive(blendInAnimIndex, true)
-				#anim.PassInfo(animInfo.GetInfo())
 				SetAnimationBlendDirection(blendInAnimIndex, true)
 				continue
+				
 			if (animInfo.OnCompleteAnim != ""):
 				var onCompleteAnimIndex = GetAnimationInfo(animInfo.OnCompleteAnim)
 				
@@ -179,16 +178,21 @@ func StateSwitched(NewState : FightCharacter.CharacterState) -> void:
 					SetAnimationBlendDirection(blendOutAnimIndex, false)
 					
 					if (animInfo.InverseSyncBlend):
-						var animLength = animator.get_animation(animToStop.GetAnimationName(CurrentWeaponType, dualDir)).length
-						var newTime = animLength - animProgress[blendOutAnimIndex]
-						cachedPrevanimProgress[animIndex] = animProgress[blendOutAnimIndex]
+						var blendOutAnimLength = animator.get_animation(animToStop.GetAnimationName(CurrentWeaponType, dualDir)).length
+						#var animLength = animator.get_animation(animInfo.GetAnimationName(CurrentWeaponType, dualDir)).length
+						
+						var newTime = max(0, blendOutAnimLength - animProgress[blendOutAnimIndex])
+						cachedPrevanimProgress[animIndex] = 0.0
 						#cap the ammount
-						animProgress[animIndex] = min(newTime, animLength * animInfo.MaxSyncNormalised)
+						animProgress[animIndex] = min(newTime, blendOutAnimLength * animInfo.MaxSyncNormalised)
+						#animBlend[animIndex] = animBlend[blendOutAnimIndex]
+						
 				else: if(!animInfo.AllowTransitionWithoutBlendOut):
 					continue
 			
-			else: if (animInfo is CombatAnimationInfo and !animInfo.AlwaysR):
+			else: if (animInfo is CombatAnimationInfo and !animInfo.AlwaysR and !GetAnimationActive(animIndex)):
 				SetAnimationDualDirection(animIndex, randi_range(0, 1) == 0)
+			
 			
 			SetAnimationActive(animIndex, true)
 			SetAnimationBlendDirection(animIndex, true)
@@ -201,7 +205,7 @@ func StateSwitched(NewState : FightCharacter.CharacterState) -> void:
 
 #---------------------------------------------
 func PlayAnim(animName : String) -> void:
-	#print("playing {0}".format([animName]))
+	print("playing {0}".format([animName]))
 	var animToPlayIndex = GetAnimationInfo(animName)
 	
 	if (GetAnimationActive(animToPlayIndex)):
@@ -464,7 +468,9 @@ func GetAnimationActive(animationIndex : int) -> bool:
 
 #---------------------------------------------
 func SetAnimationActive(animationIndex : int, t : bool):
-	if (GetAnimationActive(animationIndex) == t):
+	var anim = anims[animationIndex]
+	
+	if (GetAnimationActive(animationIndex) == t and !anim.AllowRestart):
 		return
 		
 	if (t):

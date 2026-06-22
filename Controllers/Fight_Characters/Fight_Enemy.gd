@@ -62,7 +62,12 @@ func SetControllingChar(Char : Actor) -> void:
 			
 	BodyModels.clear()
 	
-	var skeletonScene : PackedScene = await Helper.Instance.LoadThreaded(Group.Mon.Skeleton).Finished
+	var skeletonScene : PackedScene
+	if (Engine.is_editor_hint()):
+		skeletonScene = load(Group.Mon.Skeleton)
+	else:
+		skeletonScene = await Helper.Instance.LoadThreaded(Group.Mon.Skeleton).Finished
+		
 	var incommingSkel : Skeleton3D = skeletonScene.instantiate()
 
 	CreateSkeleton(incommingSkel)
@@ -71,7 +76,11 @@ func SetControllingChar(Char : Actor) -> void:
 	if (Visuals != null):
 		ClearVisuals()
 	
-	var visualScene : PackedScene = await Helper.Instance.LoadThreaded(Group.Mon.Visuals).Finished
+	var visualScene : PackedScene 
+	if (Engine.is_editor_hint()):
+		visualScene = load(Group.Mon.Visuals)
+	else:
+		visualScene = await Helper.Instance.LoadThreaded(Group.Mon.Visuals).Finished
 	Visuals = visualScene.instantiate()
 	ApplyVisuals(Visuals)
 	
@@ -471,8 +480,8 @@ func RecoilFinished() -> void:
 		if (Retaliate):
 			ChargePower = 0.2
 			Hit(GetAtackBasedOnState())
-		else:
-			UpdateState(CharacterState.IDLE)
+		#else:
+			#UpdateState(CharacterState.IDLE)
 
 #------------------------------------------------------------------------------
 func Defeated() -> void:

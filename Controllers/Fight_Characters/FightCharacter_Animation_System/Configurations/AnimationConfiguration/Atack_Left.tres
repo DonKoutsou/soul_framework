@@ -7,7 +7,7 @@
 script = ExtResource("2_bxbxw")
 AnimName = "Atack_Left"
 BlendCurve = ExtResource("1_vya4q")
-Blend_Duration = 0.3
+Blend_Duration = 0.5
 BlendOutAnim = "Charge_Left"
 AllowTransitionWithoutBlendOut = true
 BlendOutCurve = ExtResource("1_vya4q")

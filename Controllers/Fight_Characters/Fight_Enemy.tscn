@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://02rqqby41hlv" path="res://Engine/Controllers/Fight_Characters/Fight_Enemy.gd" id="2_kw201"]
 [ext_resource type="PackedScene" uid="uid://wt8wxj87hese" path="res://Engine/Particles/DamagePart.tscn" id="3_eattp"]
 [ext_resource type="Curve" uid="uid://htwdrptip8gv" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/WeaponCurve.tres" id="4_5mrp1"]
-[ext_resource type="Script" uid="uid://bl0vbdv76yftl" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/AnimationInfo.gd" id="6_c3124"]
+[ext_resource type="Script" uid="uid://bl0vbdv76yftl" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/AnimationInfo.gd" id="4_pngl2"]
 [ext_resource type="Resource" uid="uid://b5vqjjy1pi4ci" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Idle.tres" id="7_fxlpe"]
 [ext_resource type="Resource" uid="uid://cdyg6ufhgxywx" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Walk.tres" id="8_idwut"]
 [ext_resource type="Resource" uid="uid://duv7d5qm5xwti" path="res://Engine/Controllers/Fight_Characters/FightCharacter_Animation_System/Configurations/AnimationConfiguration/Duck_Right.tres" id="9_346la"]
@@ -88,13 +88,13 @@ visibility_parent = NodePath("")
 active = true
 influence = 1.0
 script = ExtResource("10_84woi")
-CurrentState = 13
+CurrentState = 14
 WeaponCurve = ExtResource("4_5mrp1")
 CurrentWeaponType = 1
 currentWeaponSpeed = 0.6
 RecoilCurve = SubResource("Curve_kw201")
 animator = NodePath("../../AnimationPlayer")
-anims = Array[ExtResource("6_c3124")]([ExtResource("7_fxlpe"), ExtResource("8_idwut"), ExtResource("9_346la"), ExtResource("10_u1yga"), ExtResource("11_6amx8"), ExtResource("12_54r4c"), ExtResource("13_rsh0k"), ExtResource("16_j76hl"), ExtResource("19_imyf8"), ExtResource("22_42pm0"), ExtResource("25_07b8e"), ExtResource("14_i0p3c"), ExtResource("17_rhc6q"), ExtResource("20_7p8ku"), ExtResource("23_i7be4"), ExtResource("26_3qlyl"), ExtResource("15_cd1oo"), ExtResource("18_e5vxb"), ExtResource("21_ifhe0"), ExtResource("24_2d3ej"), ExtResource("27_xdwjo"), ExtResource("28_ed8mm"), ExtResource("29_ya6kn"), ExtResource("30_iepkp"), ExtResource("30_ohxwn"), ExtResource("35_rif2c"), ExtResource("36_ynkxg"), ExtResource("35_5mrp1")])
+anims = Array[ExtResource("4_pngl2")]([ExtResource("7_fxlpe"), ExtResource("8_idwut"), ExtResource("10_u1yga"), ExtResource("9_346la"), ExtResource("12_54r4c"), ExtResource("11_6amx8"), ExtResource("13_rsh0k"), ExtResource("16_j76hl"), ExtResource("19_imyf8"), ExtResource("22_42pm0"), ExtResource("25_07b8e"), ExtResource("14_i0p3c"), ExtResource("17_rhc6q"), ExtResource("20_7p8ku"), ExtResource("23_i7be4"), ExtResource("26_3qlyl"), ExtResource("15_cd1oo"), ExtResource("18_e5vxb"), ExtResource("21_ifhe0"), ExtResource("24_2d3ej"), ExtResource("27_xdwjo"), ExtResource("28_ed8mm"), ExtResource("29_ya6kn"), ExtResource("30_iepkp"), ExtResource("30_ohxwn"), ExtResource("35_rif2c"), ExtResource("36_ynkxg"), ExtResource("35_5mrp1")])
 metadata/_custom_type_script = "uid://2o6tgcat6qck"
 
 [node name="BoneAttachment2" type="SkeletonModifier3D" parent="GeneralSkeleton" unique_id=1062732263 node_paths=PackedStringArray("Skeleton")]
@@ -116,6 +116,7 @@ active = true
 influence = 1.0
 script = ExtResource("40_0xkhp")
 Skeleton = NodePath("..")
+boneID = 13
 settings = 1
 metadata/_custom_type_script = "uid://cpg2td7bnyj8a"
 

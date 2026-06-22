@@ -6,7 +6,6 @@
 [resource]
 script = ExtResource("2_cvefk")
 AnimName = "Charge_Left"
-AllowOverBlend = true
 BlendCurve = ExtResource("1_dn3xo")
 Blend_Duration = 0.3
 BlendOutCurve = ExtResource("1_dn3xo")

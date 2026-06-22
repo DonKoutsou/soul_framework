@@ -124,13 +124,13 @@ func Update(delta: float) -> void:
 			RecoilTween.kill()
 	DuckCoolDown = max(0, DuckCoolDown - delta)
 	ParryCooldDown = max(0, ParryCooldDown - delta)
-	UpdateSkeletonState()
+	#UpdateSkeletonState()
 	if (IsCharging() or IsCharged()):
 		ChargePower = min(ChargePower + delta, 1)
 
 func UpdateSkeletonState() -> void:
-	
-	SkeletonModif.CurrentState = CurrentState
+	if (CurrentState != SkeletonModif.CurrentState):
+		SkeletonModif.CurrentState = CurrentState
 
 func UpdateAnims(delta : float) -> void:
 	sk.advance(delta)
@@ -361,7 +361,8 @@ func OnAtackPerformed(Direction : AtackSide) -> void:
 func UpdateState(NewState : CharacterState) -> void:
 	CurrentState = NewState
 	StateUpdated = true
-	#print("{0} - Updated State to {1}".format([GetFightName(),CharacterState.keys()[NewState]]))
+	SkeletonModif.CurrentState = CurrentState
+	print("{0} - Updated State to {1}".format([GetFightName(),CharacterState.keys()[NewState]]))
 	
 	
 #----------------------------------------------------
@@ -435,8 +436,8 @@ func UnDuck(Direction : AtackSide) -> bool:
 #----------------------------------------------------
 func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Magnitude : float = 0) -> void:
 	if (HitConnected):
-		if (is_instance_valid(RecoilTween) and RecoilTween.is_valid()):
-			RecoilTween.kill()
+		#if (is_instance_valid(RecoilTween) and RecoilTween.is_valid()):
+			#RecoilTween.kill()
 		#RecoilTween = create_tween()
 		#RecoilTween.set_ease(Tween.EASE_OUT)
 		#RecoilTween.set_trans(Tween.TRANS_BACK)
@@ -445,7 +446,7 @@ func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Mag
 		SkeletonModif.Recoil = GetRecoil(Dir) * max(0.5, Magnitude)
 		
 	if (IsAttacking()):
-		if (ControllingCharacter.CharacterWeapon.Stamina_Cost * ChargePower > Magnitude):
+		if (ChargePower > Magnitude):
 			return
 
 	CancelHits()
@@ -516,11 +517,12 @@ func HasStaminaForHit() -> bool:
  #----------------------------------------------------
 var fadingout : bool = false
 func AnimTreeFinished(anim_name: StringName) -> void:
-	#print("{0} - Anim finished {1}".format([GetFightName(),anim_name]))
-	#if (anim_name in ["Hit_Left", "Hit_Right", "Hit_Mid"] and IsRecoiling()):
-		#UpdateState(CharacterState.IDLE)
+	print("{0} - Anim finished {1}".format([GetFightName(),anim_name]))
 	
-	if (anim_name in ["Atack_Top", "Atack_Left", "Atack_Right", "Atack_Middle", "Atack_Low", "2H_Atack_Left", "2H_Atack_Right","2H_Atack_Middle", "Atack_Bow", "Hit_Left_Retaliation", "Hit_Right_Retaliation", "Hit_Mid_Retaliation"]):
+	if (anim_name in ["Hit_Left", "Hit_Right", "Hit_Mid"] and IsRecoiling()):
+		UpdateState(CharacterState.IDLE)
+	
+	if (anim_name in ["Atack_Top", "Atack_Left", "Atack_Right", "Atack_Middle", "Atack_Low", "Atack_Bow"]):
 		SetComboWindow(false)
 		if (CurrentState == GetStateBasedOnAnim(anim_name)):
 			#state_machine.travel("Idle")

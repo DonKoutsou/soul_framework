@@ -6,7 +6,6 @@
 [resource]
 script = ExtResource("2_ynngw")
 AnimName = "Charge_Middle"
-AllowOverBlend = true
 BlendCurve = ExtResource("1_li8ul")
 Blend_Duration = 0.3
 BlendOutCurve = ExtResource("1_li8ul")

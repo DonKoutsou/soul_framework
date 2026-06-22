@@ -109,8 +109,12 @@ func Update(delta: float) -> void:
 	LanternL.Update(delta)
 	super(delta)
 	
-	if (DuckCoolDown <= 0 and IsDucking() and !Input.is_action_pressed("DuckLeft") and !Input.is_action_pressed("DuckRight")):
-		UnDuck(GetAtackBasedOnState())
+	if (DuckCoolDown <= 0):
+		if (CurrentState == CharacterState.DUCKING_RIGHT and !Input.is_action_pressed("DuckRight")):
+			UnDuck(GetAtackBasedOnState())
+		
+		if (CurrentState == CharacterState.DUCKING_LEFT and !Input.is_action_pressed("DuckLeft")):
+			UnDuck(GetAtackBasedOnState())
 	
 	if (ParryCooldDown <= 0 and IsBlocking() and !Input.is_action_pressed("AtackRight")):
 		StopParry()
@@ -272,9 +276,7 @@ func ProcessInput(event: InputEvent) -> void:
 	if (event.is_action_released("AtackRight")):
 		if (CurrentState == CharacterState.PARRY):
 			StopParry()
-			
-	
-	
+		
 	#Different Behavior if in fight or out since we can still use weapon outside of combat
 	if (InFight):
 		if (event.is_action_pressed("DuckLeft")):

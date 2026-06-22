@@ -12,6 +12,7 @@ Blend_Duration = 0.3
 BlendOutAnim = "Charge_Left"
 BlendOutCurve = ExtResource("2_3mngh")
 Blend_Out_Duration = 0.4
+MaxSyncNormalised = 0.3
 Time_Scale = 0.8
 ValidStates = Array[int]([22])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

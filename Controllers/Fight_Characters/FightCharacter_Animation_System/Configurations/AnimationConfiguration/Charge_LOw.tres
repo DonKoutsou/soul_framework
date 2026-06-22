@@ -7,9 +7,8 @@
 script = ExtResource("2_f33h0")
 AnimName = "Charge_Low"
 BlendCurve = ExtResource("1_o7hcb")
-BlendOutCurve = ExtResource("1_o7hcb")
 Blend_Duration = 0.3
+BlendOutCurve = ExtResource("1_o7hcb")
 Blend_Out_Duration = 0.3
-AllowOverBlend = true
 ValidStates = Array[int]([6, 11])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

@@ -32,7 +32,7 @@ stretch_shrink = 2
 own_world_3d = true
 world_3d = SubResource("World3D_nf1qf")
 handle_input_locally = false
-size = Vector2i(320, 240)
+size = Vector2i(160, 120)
 render_target_update_mode = 4
 script = ExtResource("6_1rf5g")
 

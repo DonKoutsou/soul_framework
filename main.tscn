@@ -30,7 +30,6 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1000366985]
 world_3d = SubResource("World3D_vfyrj")
 handle_input_locally = false
-scaling_3d_mode = 5
 canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true

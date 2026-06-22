@@ -6,8 +6,9 @@
 script = ExtResource("1_3vs87")
 AlwaysR = true
 AnimName = "Duck_Left"
-Blend_Duration = 0.15
-Blend_Out_Duration = 0.3
+Blend_Duration = 0.2
+Blend_Out_Duration = 0.2
+MaxSyncNormalised = 0.5
 AutoComplete = false
 ValidStates = Array[int]([18])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"
