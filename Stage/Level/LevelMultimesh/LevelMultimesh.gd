@@ -5,6 +5,7 @@ class_name LevelMultimesh
 
 @export var geometry : Mesh
 @export var material_override : Material
+@export var Enabled : bool = true
 
 var threadTaskID : int = -1
 var collider : Shape3D

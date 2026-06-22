@@ -6,7 +6,8 @@ signal Finished
 
 func Proc(delta : float) -> void:
 	for g : LevelMultimesh in get_children():
-		g.Proc(delta)
+		if (g.Enabled):
+			g.Proc(delta)
 
 func Update(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
 	call_deferred("Process", Data, positions, r)
@@ -14,8 +15,9 @@ func Update(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerat
 func Process(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
 	#print("Processing {0} children".format([get_child_count()]))
 	for g : LevelMultimesh in get_children():
-		g.Update(Data, positions, r)
-		await g.Finished
+		if (g.Enabled):
+			g.Update(Data, positions, r)
+			await g.Finished
 	Finished.emit()
 
 func GetLayerType() -> LevelMultimeshTypes:

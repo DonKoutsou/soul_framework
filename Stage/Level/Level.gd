@@ -225,7 +225,8 @@ func UpdateMultiMeshes() -> void:
 	for g : LevelMultimesh in MultiMeshes.values():
 		if (QueuedToUpdate.has(g.GetLayerType())):
 			QueuedToUpdate.erase(g.GetLayerType())
-			g.Update(GetMapData(), Positions, r)
+			if (g.Enabled):
+				g.Update(GetMapData(), Positions, r)
 
 	for g : LevelMultiLayerMultimesh in MultiLayerMultiMeshes.values():
 		g.Update(GetMapData(), Positions, r)
