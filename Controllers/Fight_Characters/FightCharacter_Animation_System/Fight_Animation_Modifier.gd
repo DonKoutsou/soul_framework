@@ -208,16 +208,16 @@ func PlayAnim(animName : String) -> void:
 	print("playing {0}".format([animName]))
 	var animToPlayIndex = GetAnimationInfo(animName)
 	
-	if (GetAnimationActive(animToPlayIndex)):
+	var animToPlay = anims[animToPlayIndex]
+	
+	if (GetAnimationActive(animToPlayIndex) and !animToPlay.AllowRestart):
 		return
 		
-	var animToPlay = anims[animToPlayIndex]
 	if (!animToPlay.ValidStates.has(CurrentState)):
 		return
 	
 	SetAnimationActive(animToPlayIndex, true)
-	SetAnimationBlendDirection(animToPlayIndex, true)
-	animBlend[animToPlayIndex] = 0
+
 	if (animToPlay.BlendOutAnim != ""):
 		var dualDir = GetAnimationDualDirection(animToPlayIndex)
 		var animToStopIndex = GetAnimationInfo(animToPlay.GetBlendOutAnimationName(CurrentWeaponType, dualDir))
