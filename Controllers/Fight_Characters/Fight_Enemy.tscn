@@ -88,7 +88,6 @@ visibility_parent = NodePath("")
 active = true
 influence = 1.0
 script = ExtResource("10_84woi")
-CurrentState = 14
 WeaponCurve = ExtResource("4_5mrp1")
 CurrentWeaponType = 1
 currentWeaponSpeed = 0.6
@@ -139,6 +138,7 @@ transform = Transform3D(-0.15100369, 0.12252966, -0.98090994, -0.92727983, 0.326
 [node name="HeadLookModifier" type="LookAtModifier3D" parent="GeneralSkeleton" unique_id=1306085533]
 active = false
 bone_name = "Head"
+bone = 13
 duration = 0.3
 transition_type = 10
 ease_type = 1
