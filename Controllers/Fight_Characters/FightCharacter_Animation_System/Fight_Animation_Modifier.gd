@@ -478,12 +478,13 @@ func SetAnimationActive(animationIndex : int, t : bool):
 		#print("{0} set to active".format([anim.AnimName]))
 		animActive |= (1 << animationIndex)
 		
-		animBlend[animationIndex] = 0
-		animProgress[animationIndex] = 0
+		#animBlend[animationIndex] = 0
+		#animProgress[animationIndex] = 0
 		SetAnimationBlendDirection(animationIndex, true)
 	else:
 		#var anim = anims[animationIndex]
 		#print("{0} set to inactive".format([anim.AnimName]))
+		animProgress[animationIndex] = 0
 		animActive &= ~(1 << animationIndex)
 	
 	#print("toggled {0}".format([anims[animationIndex].AnimName]))

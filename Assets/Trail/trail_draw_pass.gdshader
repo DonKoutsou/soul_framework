@@ -19,6 +19,9 @@ uniform float alpha_scale : hint_range(0.0, 1.0) = 1.0;
 global uniform float FADE_DISTANCE_START : hint_range(0.0, 100.0, 0.1);
 global uniform float FADE_DISTANCE_END : hint_range(0.0, 100.0, 0.1);
 
+global uniform float JITTER;
+global uniform ivec2 RESOLUTION;
+
 float bayer4x4(ivec2 pos)
 {
 	const float matrix[16] = {
@@ -82,6 +85,27 @@ mat4 translation_matrix(vec3 pos) {
     );
 }
 
+vec4 snap_to_position(vec4 clip_pos)
+{
+	 // Perspective divide -> NDC
+    vec3 ndc = clip_pos.xyz / clip_pos.w;
+
+    vec2 snap_resolution =
+        floor(vec2(RESOLUTION) * (1.0 - JITTER));
+
+    // NDC [-1,1] -> Screen [0,1]
+    vec2 screen = ndc.xy * 0.5 + 0.5;
+
+    // Snap to pixel grid
+    screen = floor(screen * snap_resolution) / snap_resolution;
+
+    // Screen [0,1] -> NDC [-1,1]
+    ndc.xy = screen * 2.0 - 1.0;
+
+    // Back to clip space
+    return vec4(ndc * clip_pos.w, clip_pos.w);
+}
+
 void vertex(){
 	mesh_uv = UV;
 	mat4 my_model_matrix = MODEL_MATRIX;
@@ -117,6 +141,14 @@ void vertex(){
 
 	clip.x = dot(VERTEX - INV_VIEW_MATRIX[3].xyz,cross(my_model_matrix[1].xyz - INV_VIEW_MATRIX[3].xyz,my_model_matrix[2].xyz - INV_VIEW_MATRIX[3].xyz));
 	clip.y = dot(VERTEX - INV_VIEW_MATRIX[3].xyz,cross(my_model_matrix[3].xyz - INV_VIEW_MATRIX[3].xyz,my_model_matrix[0].xyz - INV_VIEW_MATRIX[3].xyz));
+	
+	vec4 clip_pos =
+        PROJECTION_MATRIX *
+        VIEW_MATRIX *
+        vec4(VERTEX, 1.0);
+
+    POSITION = snap_to_position(clip_pos);
+
 }
 
 void fragment(){

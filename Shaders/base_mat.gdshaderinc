@@ -333,7 +333,7 @@ uniform float TimeScale = 1.0;
 // VARYINGS
 // ============================================================================
 
-//varying vec3 world_pos;
+varying vec3 world_pos;
 
 
 // ============================================================================
@@ -509,30 +509,42 @@ vec4 triplanar_texture_array(
 
 vec4 snap_to_position(vec4 clip_pos)
 {
-	vec4 snapped = clip_pos;
+	 // Perspective divide -> NDC
+    vec3 ndc = clip_pos.xyz / clip_pos.w;
 
-	snapped.xyz /= clip_pos.w;
+    vec2 snap_resolution =
+        floor(vec2(RESOLUTION) * (1.0 - JITTER));
 
-	vec2 snap_resolution =
-		floor(vec2(RESOLUTION) * (1.0 - JITTER));
+    // NDC [-1,1] -> Screen [0,1]
+    vec2 screen = ndc.xy * 0.5 + 0.5;
 
-	snapped.x =
-		floor(snap_resolution.x * snapped.x)
-		/ snap_resolution.x;
+    // Snap to pixel grid
+    screen = floor(screen * snap_resolution) / snap_resolution;
 
-	snapped.y =
-		floor(snap_resolution.y * snapped.y)
-		/ snap_resolution.y;
+    // Screen [0,1] -> NDC [-1,1]
+    ndc.xy = screen * 2.0 - 1.0;
 
-	snapped.xyz *= clip_pos.w;
-
-	return snapped;
+    // Back to clip space
+    return vec4(ndc * clip_pos.w, clip_pos.w);
 }
 
 #endif
 
+#ifdef CAUSTICS
+// ============================================================================
+// WATER CAUSTICS
+// ============================================================================
+
+uniform sampler2D caustics_tex;
+global uniform float WATER_LEVEL = 0.0;
+uniform float caustics_scale = 0.1;
+uniform float caustics_strength = 0.3;
+uniform vec2 caustics_scroll = vec2(0.1, 0.05);
+
+#endif
+
 void vertex() {
-	//world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 
 	#ifdef FOLIAGE
 	float time_offset = sin(TimeOffset * TimeScale);
@@ -832,6 +844,17 @@ void fragment() {
 		vec2 pixUV = floor(base_uv * 512.0) / 512.0;
 		float shade = pattern(pixUV * zoom);
 		albedo_tex = colormap(shade, pixUV);
+	#endif
+	
+	#ifdef CAUSTICS
+	if (world_pos.y < WATER_LEVEL)
+    {
+        vec2 cuv = world_pos.xz * caustics_scale +TIME * caustics_scroll;
+
+        float caustics = texture(caustics_tex, cuv).r;
+
+        albedo_tex *= mix(1.0,1.0 + caustics,caustics_strength);
+    }
 	#endif
 	
 	ALBEDO = albedo_tex.rgb * albedo.rgb;

@@ -10,6 +10,7 @@ BlendCurve = ExtResource("1_dn3xo")
 Blend_Duration = 0.3
 BlendOutCurve = ExtResource("1_dn3xo")
 Blend_Out_Duration = 0.3
+AffectedByWeapon = true
 AutoComplete = false
 ValidStates = Array[int]([3, 8])
 metadata/_custom_type_script = "uid://bkqk3nyk4pe2r"

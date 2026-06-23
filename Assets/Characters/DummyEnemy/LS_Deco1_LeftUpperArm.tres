@@ -2,7 +2,7 @@
 
 [ext_resource type="Material" uid="uid://d01w180fqfjnm" path="res://Engine/Shaders/Materials/Metal_UV.tres" id="1_c7vog"]
 
-[sub_resource type="Skin" id="Skin_xhsql"]
+[sub_resource type="Skin" id="Skin_c7vog"]
 bind_count = 26
 bind/0/name = &"Root"
 bind/0/bone = 0
@@ -98,4 +98,4 @@ _surfaces = [{
 "vertex_count": 49,
 "vertex_data": PackedByteArray("SeEFPm5ePj+gSSY7h/wqPjKtTj/wmme8Dg0gPv1IQT9gOTK84sf8PSlwST9gFYk8OxY9PgyqPj9A+f68DaxJPlabOj+Lo0K98Sw8Pg1kPz+ZfHS9/m0pPqbqTz8j5IC90PodPgjvQj/bHpu9LK71PdJDTD8zfcG97vACPra1QD98XLe9M3jQPc7SUj+g9Js8ZxmrPYaTVT/EUY48QyufPewEWT+gEqE7fU+hPRqYXD84yCu8lL/4PT0GXD9/f0W9XwGiPcEfXj9sUfa8OcSePb6bXT9GY069mYGaPWTgWj9Bi4u9vqukPcciWD94qKq9np/JPb6MVT9pn7S9lL/4PT0GXD9/f0W90qfmPV1vUD+Nfbu9/m0pPqbqTz8j5IC9LK71PdJDTD8zfcG9h/wqPjKtTj/wmme8iZ7tPbKpTT/ogo884sf8PSlwST9gFYk82lkVPmvkSz/A1Nk7iFQ6PmzHUD9qfx29MHQSPvAyTj84QKy9LM7iPaWSVj8Accy5rMX6PQY4Wz/gcIe8cT8FPhLKXj86nwC9b4/ePSVDWD8O7Yi9cT8FPhLKXj86nwC92IwRPjY8VD8bvVe9MEMaPqaYVD8jbhO9rMX6PQY4Wz/gcIe8OwkDPo+ZUj/KaaC9b4/ePSVDWD8O7Yi9np/JPb6MVT9pn7S9MHQSPvAyTj84QKy9iFQ6PmzHUD9qfx29iJwSPtFjUz/UJp+8LM7iPaWSVj8Accy5krQFPmZ5UD9Aj6072lkVPmvkSz/A1Nk7M3jQPc7SUj+g9Js8eqnAbqXYNeGDwyyAYNw66g2yQ3VM3m3jeanAbm7WuuFIxgaEzOly6SntUZTbDBr+I/LowU8Pw5iS9HbFfRiRmM/8Es/gHMOdkfyjKfUhxJ+R/KQpSR+eoMGYlrX61XHywZiXtXzS3fSdlIezGNEv8smMTb5b0Vn1CLCF9+Udgo9jhszuGwtR/MW0m/UuIk6N0cAb7tMkDo+Kv07pFx41kIm/TunxHCiRo9h40eEh1o6012LhcR8zmGvCh9/UEiuTBd2g5d0dip3JoTm0O+BI8DmjOJ1Y1dnqBaBRlkXWVuaasCl0KdkW5CrtUJSQDQz+2/3Uz+AgFJ1+lHez4NLT8LaKh8Il1hTzYobM7gwLdPvdwD/u0yLjkAvPw67jD8H8c85n2E8YAJL2uVnBRQ3l/BGyF58T0e7zH9Iv3sgcJJUb1CraIiFzkYvTDt5PIq+S6s6h4a4a3pbkqYTPRgz3/Pmp8qgE2yHxUqmJoqzV6+9Rpf6jqNpb7K+h3qan3VrqqqV1otjSku8=")
 }]
-metadata/generated_skin = SubResource("Skin_xhsql")
+metadata/generated_skin = SubResource("Skin_c7vog")
