@@ -159,7 +159,7 @@ func _input(event: InputEvent) -> void:
 	
 	UIMan.ProcessInput(event)
 	
-	if (UIManager.AnyUIOpen()):
+	if (UIManager.AnyUIOpen() or CheatMenu.Open):
 		return
 	
 	Fight.ProcessInput(event)

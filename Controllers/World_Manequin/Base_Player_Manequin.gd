@@ -560,23 +560,10 @@ func HandleWalk(event: InputEvent) -> void:
 		NewPosition = PlayerPos
 		MessageBox.RegisterEvent("Way is blocked", false)
 	if (cell.type == CellData.CELLTYPE.DOWN_STAIRS):
-		PositionPassed.emit(NewPosition)
-		var stairCell = cell
-		while(stairCell.type == CellData.CELLTYPE.DOWN_STAIRS):
-			NewPosition += ((dir * Level.CurrentWorldScale) as Vector3i) - ( Vector3i(0,1,0) * Level.CurrentWorldScale)
-			PositionPassed.emit(NewPosition)
-			stairCell = mapData.GetCell(Helper.PlayerPositionToMap(NewPosition))
-		
-		get_tree().call_group("Enviroments", "ElevationChanged", false)
+		NewPosition = HandleStairDownCellTraversal(NewPosition, dir, cell, mapData)
+
 	if (cell.type == CellData.CELLTYPE.UP_STAIRS):
-		PositionPassed.emit(NewPosition)
-		var stairCell = cell
-		while(stairCell.type == CellData.CELLTYPE.UP_STAIRS):
-			NewPosition += ((dir * Level.CurrentWorldScale) as Vector3i) + ( Vector3i(0,1,0) * Level.CurrentWorldScale)
-			PositionPassed.emit(NewPosition)
-			stairCell = mapData.GetCell(Helper.PlayerPositionToMap(NewPosition))
-			
-		get_tree().call_group("Enviroments", "ElevationChanged", true)
+		NewPosition = HandleStairUpCellTraversal(NewPosition, dir, cell, mapData)
 	
 	PlMapPos = Helper.PlayerPositionToMap(NewPosition)
 	cell = mapData.cells[PlMapPos]
@@ -629,6 +616,34 @@ func HandleWalk(event: InputEvent) -> void:
 	
 	CheckForMovable()
 	#AudioManager.Instance.PlaySound(Stage.CurrentWorld.StepSound, -2, 0.1)
+
+func HandleStairUpCellTraversal(pos : Vector3i, dir : Vector3i, cell : CellData, mapData : MapData) -> Vector3i:
+	var NewPos = pos
+	PositionPassed.emit(NewPos)
+	var stairCell = cell
+	
+	while(stairCell.type == CellData.CELLTYPE.UP_STAIRS):
+		NewPos += ((dir * Level.CurrentWorldScale) as Vector3i) + ( Vector3i(0,1,0) * Level.CurrentWorldScale)
+		PositionPassed.emit(NewPos)
+		stairCell = mapData.GetCell(Helper.PlayerPositionToMap(NewPos))
+		
+	get_tree().call_group("Enviroments", "ElevationChanged", true)
+	
+	return NewPos
+
+func HandleStairDownCellTraversal(pos : Vector3i, dir : Vector3i, cell : CellData, mapData : MapData) -> Vector3i:
+	var NewPos = pos
+	PositionPassed.emit(NewPos)
+	var stairCell = cell
+	
+	while(stairCell.type == CellData.CELLTYPE.DOWN_STAIRS):
+		NewPos += ((dir * Level.CurrentWorldScale) as Vector3i) - ( Vector3i(0,1,0) * Level.CurrentWorldScale)
+		PositionPassed.emit(NewPos)
+		stairCell = mapData.GetCell(Helper.PlayerPositionToMap(NewPos))
+		
+	get_tree().call_group("Enviroments", "ElevationChanged", true)
+	
+	return NewPos
 
 func CheckForMovable() -> void:
 	var dir = Helper.rotate_vector3i(Vector3i(0,0,-1), LookDir.y, Vector3i(0,1,0))

@@ -11,74 +11,108 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wxo0r")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=357823725]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="VBoxContainer" type="GridContainer" parent="." unique_id=173226720]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
 
 [node name="Inf HP" type="Button" parent="VBoxContainer" unique_id=2140979383 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "INF HP"
 
 [node name="Inf Stam" type="Button" parent="VBoxContainer" unique_id=853383565 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "INF STAM"
 
 [node name="NOCLIP" type="Button" parent="VBoxContainer" unique_id=987591356 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "NOCLIP"
 
 [node name="Shake" type="Button" parent="VBoxContainer" unique_id=1061792052 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "SHAKE"
 
 [node name="Respawn Enemies" type="Button" parent="VBoxContainer" unique_id=1099621849 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Respawn Enemies"
 
 [node name="Freecam" type="Button" parent="VBoxContainer" unique_id=1857016518 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Freecam"
 
 [node name="Enemy Action Trigger" type="Button" parent="VBoxContainer" unique_id=68307037 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Enemy Action Trigger"
 
 [node name="WalkOnWater" type="Button" parent="VBoxContainer" unique_id=562986012 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Toggle Walk On Water"
 
 [node name="WalkOnLava" type="Button" parent="VBoxContainer" unique_id=1195882601 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Toggle Walk On Lava"
 
 [node name="WalkOnGaps" type="Button" parent="VBoxContainer" unique_id=1023559874 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Toggle Walk On Gaps"
 
 [node name="RedoCurrentMap" type="Button" parent="VBoxContainer" unique_id=1317463893 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Redo map
 "
 
 [node name="SpawnReward" type="Button" parent="VBoxContainer" unique_id=34459163 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Spawn Reward
 "
 
 [node name="UpgradeHP" type="Button" parent="VBoxContainer" unique_id=1067129896 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Upgrade HP
 "
 
 [node name="UpgradeStamina" type="Button" parent="VBoxContainer" unique_id=938512252 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Upgrade  Stamina
 
 "
 
 [node name="UpgradeMana" type="Button" parent="VBoxContainer" unique_id=1159290899 groups=["DigitalBouncingButton"]]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Upgrade  Mana
 
 "

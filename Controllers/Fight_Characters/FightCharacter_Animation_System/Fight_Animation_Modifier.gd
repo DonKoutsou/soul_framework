@@ -10,17 +10,21 @@ class_name Fight_Animation_Modifier
 		if (!is_inside_tree()):
 			return
 		StateSwitched(value)
+		
 ##Will set the walking animations to play or not.
 @export var Walking : bool = false:
 	set(value):
 		Walking = value
 		ToggleWalking(Walking)
+		
 ##This curve is recalculated based on weapons speed to change the buildup and strike speed of each weapon to be a little different
 @export var WeaponCurve : Curve
 @export var Custom_Time_Scale : float = 1.0
+
 @export_group("Weapon")
 ##Swaps the animations that is played to match the weapon type
 @export var CurrentWeaponType : WeaponType = WeaponType.ONE_HANDED
+
 ##Affects blend speed and animation progression speed of all animations marked as `AffectedByWeapon`
 @export var currentWeaponSpeed: float = 1.0:
 	set(value):
@@ -28,8 +32,10 @@ class_name Fight_Animation_Modifier
 		UpdateWeaponSpeed(value)
 
 @export_group("Recoil")
+
 ##Any offset here will be applied to skeleton and progressivly be reduced back to 0
 @export var Recoil : Vector3 = Vector3.ZERO
+
 ##Recoil is applied using this curve
 @export var RecoilCurve : Curve
 
@@ -40,11 +46,14 @@ class_name Fight_Animation_Modifier
 ##Animation configuration to be used to figure out wich animation to player. Animations can be configured to be played durring specific state switch or as a on complete animation
 @export var anims : Array[AnimationInfo] = []
 @export_tool_button("Check For Broken Bone Maps") var boneMapFix : Callable = FixBoneMaps
+
 @export_tool_button("Rebuild Cache") var buildCache : Callable = BuildCache
+
 ##Contains the progress of each animations
 var animProgress : PackedFloat32Array
 ##Contains the progress each animation had last frame
 var cachedPrevanimProgress : PackedFloat32Array
+
 ##Contains blend values of each animations
 var animBlend : PackedFloat32Array
 

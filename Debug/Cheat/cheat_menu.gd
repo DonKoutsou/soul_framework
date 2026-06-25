@@ -1,8 +1,15 @@
 extends Control
 
+class_name CheatMenu
+
+static var Open : bool = false
+
 
 func _ready() -> void:
 	visible = false
+
+func _exit_tree() -> void:
+	Open = false
 
 func _on_inf_hp_pressed() -> void:
 	var pl = get_tree().get_nodes_in_group("Player")[0] as Player
@@ -16,6 +23,7 @@ func _on_inf_stam_pressed() -> void:
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("Cheat")):
 		visible = !visible
+		Open = visible
 		if (visible):
 			InputManager.ChangeMouse(Input.MOUSE_MODE_VISIBLE)
 		else:
