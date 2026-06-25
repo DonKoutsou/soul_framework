@@ -4,7 +4,6 @@ shader_type spatial;
 #define ALPHA_SCISSOR
 #define COLMASK
 #define NORM
+#define ALPHA_INSTANCE
 
 #include "res://Engine/Shaders/base_mat.gdshaderinc"
-
-

@@ -735,12 +735,12 @@ void fragment() {
 			#elif defined(ALPHA_SCISSOR)
 				float alpha_tex = 1.0;
 				#ifdef ALPHA_INSTANCE
-					if (instance_alpha_mask_switch)
-					{
-						alpha_tex = triplanar_texture(alpha_Mask, uv1_power_normal, uv1_triplanar_pos).r;
-					}
-				#else
+				if (instance_alpha_mask_switch)
+				{
 					alpha_tex = triplanar_texture(alpha_Mask, uv1_power_normal, uv1_triplanar_pos).r;
+				}
+				#else
+				alpha_tex = triplanar_texture(alpha_Mask, uv1_power_normal, uv1_triplanar_pos).r;
 				#endif
 				ALPHA = albedo_tex.a * albedo.a * alpha_tex;
 				ALPHA_SCISSOR_THRESHOLD = 1.0;
@@ -792,12 +792,12 @@ void fragment() {
 			#elif defined(ALPHA_SCISSOR)
 				float alpha_tex = 1.0;
 				#ifdef ALPHA_INSTANCE
-					if (instance_alpha_mask_switch)
-					{
-						alpha_tex = texture(alpha_Mask, base_uv).r;
-					}
+				if (instance_alpha_mask_switch)
+				{
+					alpha_tex = texture(alpha_Mask, base_uv).r;
+				}
 				#else
-					alpha_tex = texture(alpha_Mask, base_uv).a;
+				alpha_tex = texture(alpha_Mask, base_uv).a;
 				#endif
 
 				ALPHA = albedo_tex.a * albedo.a * alpha_tex;
