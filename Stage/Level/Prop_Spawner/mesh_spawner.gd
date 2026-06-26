@@ -96,8 +96,8 @@ func SpawnMeshes(M : Dictionary[Mesh, Array], positionalHide : bool) -> void:
 			RenderingServer.instance_set_base(Instance, mesh.get_rid())
 			RenderingServer.instance_set_scenario(Instance, Sc)
 			RenderingServer.instance_set_transform(Instance, MData.Transform)
-			if (MData.MatOverride != null):
-				RenderingServer.instance_set_surface_override_material(Instance, 0, MData.MatOverride)
+			for surfaceOverride in MData.MatOverride.size():
+				RenderingServer.instance_set_surface_override_material(Instance, surfaceOverride, MData.MatOverride[surfaceOverride])
 			#RenderingServer.instance_geometry_set_visibility_range(Instance, 0, 20, 0, 0,RenderingServer.VISIBILITY_RANGE_FADE_SELF)
 			if (positionalHide):
 				Instances[MData.Transforms] = Instance

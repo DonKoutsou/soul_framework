@@ -61,7 +61,7 @@ func GetDebugData(map : Map, _floorIndex : int) -> Dictionary[String, Variant]:
 	
 		var textData : Dictionary[String, Variant] = {
 			"text" : text,
-			"color" : DebugStringColor
+			"color" : col
 		}
 		
 		DebugData["Texts"][TextDrawPos] = textData

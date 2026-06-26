@@ -33,6 +33,7 @@ class_name Map
 @export_group("Prop Configuration")
 #Array of Transform3D
 @export var Props : Dictionary[Mesh, Array]
+@export var MegaProps : Dictionary[Mesh, Array]
 
 
 var Data : MapData
@@ -440,17 +441,32 @@ var CurrentlyVisibleFloor : int = 0
 ## Stores all mesh instance 3D under the node Extra Props, those will be dynamicly spawned when player is close enough
 func StoreProps() -> void:
 	Props.clear()
+	MegaProps.clear()
+	
 	for g : MeshInstance3D in $ExtraProps.get_children():
 		var MData = MeshData.new()
 		MData.Transform = g.transform
-		if (g.get_surface_override_material(0) != null):
-			MData.MatOverride = g.get_surface_override_material(0)
-		else: if (g.material_override != null):
-			MData.MatOverride = g.material_override
+		for surface in g.mesh.get_surface_count():
+			if (g.get_surface_override_material(surface) != null):
+				MData.MatOverride.append(g.get_surface_override_material(surface))
+
 		if (Props.keys().has(g.mesh)):
 			Props[g.mesh].append(MData)
 		else:
 			Props[g.mesh] = [MData]
+	
+	for g : MeshInstance3D in $MegaProps.get_children():
+		var MData = MeshData.new()
+		MData.Transform = g.transform
+		
+		for surface in g.mesh.get_surface_count():
+			if (g.get_surface_override_material(surface) != null):
+				MData.MatOverride.append(g.get_surface_override_material(surface))
+
+		if (MegaProps.keys().has(g.mesh)):
+			MegaProps[g.mesh].append(MData)
+		else:
+			MegaProps[g.mesh] = [MData]
 
 var _Editor_CurrentWorld : Level
 var _Editor_Cam_Zoom : float = 1

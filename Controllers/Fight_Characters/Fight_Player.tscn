@@ -136,7 +136,7 @@ bone = 8
 origin_offset = Vector3(-0.2, -0.1, 0)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="GeneralSkeleton" unique_id=1077415663]
-transform = Transform3D(-0.94398093, -0.29025272, 0.15701415, 0.29585132, -0.95514524, 0.0130211245, 0.14619176, 0.05874448, 0.9875108, -0.2547268, 0.5156195, 0.006251273)
+transform = Transform3D(-0.9426679, -0.28961495, 0.16583273, 0.29582486, -0.95514685, 0.013506169, 0.15448287, 0.061789215, 0.98606163, -0.25458226, 0.5156002, 0.008575337)
 bone_name = "WeaponPlacement.R"
 bone_idx = 29
 
@@ -194,7 +194,7 @@ bone_idx = 30
 
 [node name="PlayerCamera" type="Camera3D" parent="GeneralSkeleton/BoneAttachment3D2" unique_id=1285667092]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 1.7347235e-18, -5.684342e-14, 0, 1.0000004, 1.8189894e-12, 5.684342e-14, 0, 1, -5.119773e-08, 0.017998755, 0.049736828)
+transform = Transform3D(1, 3.469447e-18, -1.7053026e-13, -1.7347235e-18, 1.0000004, 1.8189894e-12, 1.7053026e-13, 0, 1, -6.9826704e-09, 0.017999887, -0.007034406)
 attributes = ExtResource("45_hmpig")
 doppler_tracking = 1
 current = true

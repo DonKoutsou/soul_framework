@@ -15,7 +15,7 @@ func _on_child_entered_tree(node: Node) -> void:
 	if (node is MoveNotificator):
 		node.Moved.connect(ChildMoved)
 	else:
-		node.set_script(load("res://Scripts/MoveNotificator.gd"))
+		node.set_script(load("res://Engine/Stage/Level/Prop_Spawner/MoveNotificator.gd"))
 		node.Moved.connect(ChildMoved)
 	Updated.emit()
 
