@@ -120,7 +120,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 			cellDat.Custom_Data["House"] = T
 		# Recruit 1
 		20:
-			pass
+			tempLayerData.SpawnCeiling = false
 			#cellDat.AddData("Recruit", load("res://Resources/Characters/Alice.tres").duplicate(true))
 			#Data.Recruits[Pos] = load("res://Resources/Characters/Alice.tres").duplicate(true)
 		# Recruit 2

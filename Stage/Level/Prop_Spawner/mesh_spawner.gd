@@ -5,7 +5,8 @@ class_name MeshSpawner
 
 @export var ViewDistanceSquared : float = 20
 
-var Instances : Dictionary[RID, Transform3D]
+var Instances : Dictionary[Transform3D, RID]
+var staticInstances : Dictionary[Transform3D, RID]
 var PlayerPosition : Vector3
 var PlayerRotation : Vector3
 
@@ -16,13 +17,19 @@ var spawnedInstanced : Dictionary[Vector3i, Array]
 
 func ClearMeshes() -> void:
 	for g in Instances:
-		RenderingServer.free_rid(g)
+		RenderingServer.free_rid(Instances[g])
+	for g in staticInstances:
+		RenderingServer.free_rid(staticInstances[g])
 	Instances.clear()
+	staticInstances.clear()
 
 func _exit_tree() -> void:
 	for g in Instances:
-		RenderingServer.free_rid(g)
-	
+		RenderingServer.free_rid(Instances[g])
+	for g in staticInstances:
+		RenderingServer.free_rid(staticInstances[g])
+	Instances.clear()
+	staticInstances.clear()
 
 func PlayerPositionChanged(NewPos : Vector3, Rot : Vector3) -> void:
 	PlayerPosition = NewPos
@@ -81,7 +88,7 @@ func get_points_in_square(center: Vector3i, distance: int) -> Array[Vector3i]:
 
 	return points
 
-func SpawnMeshes(M : Dictionary[Mesh, Array]) -> void:
+func SpawnMeshes(M : Dictionary[Mesh, Array], positionalHide : bool) -> void:
 	var Sc = get_world_3d().scenario
 	for mesh in M:
 		for MData : MeshData in M[mesh]:
@@ -92,22 +99,39 @@ func SpawnMeshes(M : Dictionary[Mesh, Array]) -> void:
 			if (MData.MatOverride != null):
 				RenderingServer.instance_set_surface_override_material(Instance, 0, MData.MatOverride)
 			#RenderingServer.instance_geometry_set_visibility_range(Instance, 0, 20, 0, 0,RenderingServer.VISIBILITY_RANGE_FADE_SELF)
-			Instances[Instance] = MData.Transform
+			if (positionalHide):
+				Instances[MData.Transforms] = Instance
+			else:
+				staticInstances[MData.Transform] = Instance
 
 func RemoveMesh(Loc : Transform3D) -> void:
-	var Instance = Instances.find_key(Loc)
+	var Instance : RID
+	if (Instances.has(Loc)):
+		Instance = Instances[Loc]
+	else: if (staticInstances.has(Loc)):
+		Instance = staticInstances[Loc]
+	else:
+		return
+		
 	RenderingServer.free_rid(Instance)
-	Instances.erase(Instance)
+	Instances.erase(Loc)
 
 func ToggleMeshVisibility(Loc : Transform3D, T : bool) -> void:
-	var Instance = Instances.find_key(Loc)
+	var Instance : RID
+	if (Instances.has(Loc)):
+		Instance = Instances[Loc]
+	else: if (staticInstances.has(Loc)):
+		Instance = staticInstances[Loc]
+	else:
+		return
+
 	RenderingServer.instance_set_visible(Instance, T)
 # SetInstanceCustomData(Loc : Transform3D, Data : Color) -> void:
 	#RenderingServer.multimesh_instance_set_custom_data() 
 
 func Check() -> void:
-	for Instance in Instances:
-		var InstancePosition = Instances[Instance]
+	for InstancePosition in Instances:
+
 		#var Dot = PlayerRotation.dot(InstancePosition.origin.direction_to(PlayerPosition))
 		#var WantedDot = cos(deg_to_rad(50))
 		#call_deferred("ToggleMeshVisibility", InstancePosition, InstancePosition.origin.distance_squared_to(PlayerPosition) < ViewDistanceSquared and Dot < WantedDot)

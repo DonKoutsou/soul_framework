@@ -57,6 +57,7 @@ enum LocationName{
 	Cave_Forest_Path,
 	Jail_Entrance,
 	Canyon,
+	Artifex
 }
 
 enum TrapType {

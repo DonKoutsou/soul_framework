@@ -26,6 +26,7 @@ class_name Level
 @export var StepSound : AudioManager.Sound = AudioManager.Sound.STEP
 @export var WalkSound : AudioManager.Sound = AudioManager.Sound.WALK
 @export var LoadDistance : int = 3
+@export var EnableBackgroundFollowing : bool = true
 
 static var CurrentWorldScale : Vector3i = Vector3i(1,1,1)
 static var CurrentWallCollider : Mesh
@@ -59,8 +60,10 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	call_deferred("StoreMultiMeshes")
-	call_deferred("SetBG")
-	BackgroundMesh.visible = !Engine.is_editor_hint()
+	if (EnableBackgroundFollowing):
+		call_deferred("SetBG")
+		
+	BackgroundMesh.visible = !Engine.is_editor_hint() and EnableBackgroundFollowing
 
 	MonsterMan.MonsterMetPlayer.connect(MonsterMetPlayer)
 	MonsterMan.SetLoadDist(LoadDistance)
@@ -107,7 +110,7 @@ func configure_map(M : Map) ->void:
 	add_child(MData)
 	CurrentWorldScale = MData.WorldScale
 	
-	PropMeshSpawner.SpawnMeshes(M.Props)
+	PropMeshSpawner.SpawnMeshes(M.Props, true)
 	AudioMan.Data = MData
 
 func PlayerPositionChanged(Pos : Vector3, Rot : Vector3) -> void:
@@ -118,14 +121,16 @@ func PlayerPositionChanged(Pos : Vector3, Rot : Vector3) -> void:
 	QueuedUpdate = true
 	if (Engine.is_editor_hint()):
 		Positions = GetMapData().get_points_in_square(Helper.PlayerPositionToMap(Pos), LoadDistance)
-		BackgroundMesh.position = Pos * Vector3(1,0,1)
+		if (EnableBackgroundFollowing):
+			BackgroundMesh.position = Pos * Vector3(1,0,1)
 		TrapMan.PlPositionChanged(GetMapData(), Positions)
 		return
 	
 	Positions = GetMapData().get_points_in_square(Helper.PlayerPositionToMap(Pos), LoadDistance)
 	
-	var tw = create_tween()
-	tw.tween_property(BackgroundMesh, "position", Pos - Vector3(0, 1, 0), 0.6)
+	if (EnableBackgroundFollowing):
+		var tw = create_tween()
+		tw.tween_property(BackgroundMesh, "position", Pos - Vector3(0, 1, 0), 0.6)
 	
 	TrapMan.PlPositionChanged(GetMapData(), Positions)
 	MonsterMan.PlPositionChanged(Pos)
@@ -138,7 +143,7 @@ func RedoMap(SpawnMonsters : bool = true) -> void:
 	TrapMan.PurgeTraps()
 	
 	PropMeshSpawner.ClearMeshes()
-	PropMeshSpawner.SpawnMeshes(MData.Props)
+	PropMeshSpawner.SpawnMeshes(MData.Props, true)
 	
 	for g : LevelMultimesh in MultiMeshes.values():
 		g.Clear()
@@ -337,7 +342,8 @@ func BreakWall(Pos : Vector3i, crackedWall : WallData, lookingPos : Vector3i, lo
 func SpawnPlayer(Pl : BasePlayerManequin) -> void:
 	add_child(Pl)
 	#Pl.call_deferred("Teleport", SpawnPoint)
-	BackgroundMesh.position = SpawnPoint
+	if (EnableBackgroundFollowing):
+		BackgroundMesh.position = SpawnPoint
 	Pl.Teleport(SpawnPoint)
 	Pl.SetLookDir(GetMapData().SpawnRot)
 	

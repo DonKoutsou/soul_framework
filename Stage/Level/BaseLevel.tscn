@@ -155,6 +155,7 @@ FloorBreakParticles = ExtResource("9_x1mwr")
 ParticlePack = ExtResource("7_24ms2")
 DialogueTriggerScene = ExtResource("13_tijfw")
 LoadDistance = 4
+EnableBackgroundFollowing = null
 
 [node name="MonsterManager" parent="." unique_id=722211184 instance=ExtResource("13_b7lgf")]
 
@@ -415,6 +416,7 @@ bus = &"SFX"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=958300129]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+visible = false
 material_override = ExtResource("93_im3oe")
 mesh = ExtResource("92_yg26m")
 
