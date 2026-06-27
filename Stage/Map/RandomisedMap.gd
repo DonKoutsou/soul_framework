@@ -6,8 +6,10 @@ class_name RandomisedMap
 @export var mapSize : Vector2i = Vector2i(40, 40)
 @export var constrainPropagation : int = 1
 @export var active : bool = true
+@export var collapseSeed : int = -1
 @export_range(0, 1.0, 0.05) var GenerationCooldown : float = 0.2
 @export_tool_button("Generate Map") var RegenerateAction = CollapseMap
+@export_tool_button("Clear Map") var clear = CleanMap
 
 const NEIGHBOR_DIRECTIONS : Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var cellData : Dictionary[Vector2i, collapseCellData]
@@ -48,7 +50,9 @@ func _process(delta: float) -> void:
 		var fl = GetFloor(0)
 		var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 		var tileAtlas : TileSetAtlasSource = layer.tile_set.get_source(10)
-		collapseCell(possible.pick_random(), tileAtlas)
+		var randomIndex = r.randi_range(0, possible.size() - 1)
+		
+		collapseCell(possible[randomIndex], tileAtlas)
 	
 	queue_redraw()
 		
@@ -67,6 +71,8 @@ func CollapseMap() -> void:
 	CleanMap()
 	weights.clear()
 	r = RandomNumberGenerator.new()
+	if (collapseSeed != -1):
+		r.seed = collapseSeed
 	
 	var fl = GetFloor(0)
 	var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
