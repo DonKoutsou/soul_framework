@@ -101,47 +101,9 @@ FloorNumber = 2
 
 [node name="MAZE" parent="Floor_2" index="0" unique_id=817992180]
 tile_map_data = PackedByteArray("AAD7//3/CgAEAAAAAFD6//7/CgACAAAAAGD6//z/CgACAAAAADD5//z/CgACAAAAAFD5//7/CgACAAAAAAD5//3/CgABAAAAAAD6//3/CgAAAAAAAAA=")
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="DOORS" parent="Floor_2" index="1" unique_id=584279988]
-DebugStringColor = Color(1, 1, 1, 1)
 
 [node name="MAP_INFO" parent="Floor_2" index="2" unique_id=1043461689]
 tile_map_data = PackedByteArray("AAD7//3/AAAZAAAAAAACAPn/AAAZAAAAAFA=")
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MAP_INFO2" parent="Floor_2" index="3" unique_id=179013606]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="EXITS" parent="Floor_2" index="4" unique_id=1074619576]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="ITEMS" parent="Floor_2" index="5" unique_id=288722588]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="CHARACTERS" parent="Floor_2" index="6" unique_id=1640039887]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MONSTERS" parent="Floor_2" index="7" unique_id=173128641]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="LEVERS" parent="Floor_2" index="8" unique_id=521985993]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="LOCKS" parent="Floor_2" index="9" unique_id=580903904]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="PLATES" parent="Floor_2" index="10" unique_id=2070613937]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MOVABLES" parent="Floor_2" index="11" unique_id=909357748]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="PROJECTILE_SWITCH" parent="Floor_2" index="12" unique_id=628202626]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="TEXTS" parent="Floor_2" index="13" unique_id=830701216]
-DebugStringColor = Color(1, 1, 1, 1)
 
 [node name="ExtraProps" parent="." index="4" unique_id=1450707516]
 visible = false
