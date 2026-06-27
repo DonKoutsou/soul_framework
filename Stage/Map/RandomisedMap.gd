@@ -4,26 +4,59 @@ extends Map
 class_name RandomisedMap
 
 @export var mapSize : Vector2i = Vector2i(40, 40)
+@export var constrainPropagation : int = 1
+@export var active : bool = true
+@export_range(0, 1.0, 0.05) var GenerationCooldown : float = 0.2
 @export_tool_button("Generate Map") var RegenerateAction = CollapseMap
 
+const NEIGHBOR_DIRECTIONS : Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var cellData : Dictionary[Vector2i, collapseCellData]
-var nextToCollapse : Vector2i = Vector2i(99999,99999)
+
+var r : RandomNumberGenerator
+var weights : PackedFloat32Array
+#var nextToCollapse : Vector2i = Vector2i(99999,99999)
 
 var i : float = 0.2
 
 func _process(delta: float) -> void:
+	if (!active):
+		return
+		
 	i -= delta
 	
 	if (i > 0):
 		return
 	
-	i = 0.2
+	i = GenerationCooldown
 	
-	if (nextToCollapse != Vector2i(99999,99999)):
+	
+	var possible : Array[Vector2i]
+	
+	if (cellData.size() > 0):
+		var currentEntropy = 9999
+		for g in cellData:
+			var cell = cellData[g]
+			if cell.GetEntropy() < currentEntropy and !cell.collapsed:
+				possible.clear()
+				currentEntropy = cell.GetEntropy()
+				#nextToCollapse = g
+				possible.append(g)
+			else: if cell.GetEntropy() == currentEntropy and !cell.collapsed:
+				possible.append(g)
+				
+	if (possible.size() > 0):
 		var fl = GetFloor(0)
 		var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 		var tileAtlas : TileSetAtlasSource = layer.tile_set.get_source(10)
-		collapseCell(nextToCollapse, tileAtlas)
+		collapseCell(possible.pick_random(), tileAtlas)
+	
+	queue_redraw()
+		
+func _draw() -> void:
+	var fl = GetFloor(0)
+	var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+	for g in cellData:
+		draw_string(ThemeDB.fallback_font, layer.map_to_local(g), var_to_str(cellData[g].possibleTiles.size()), HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
 
 func CleanMap() -> void:
 	for fl in Floors:
@@ -32,12 +65,19 @@ func CleanMap() -> void:
 
 func CollapseMap() -> void:
 	CleanMap()
+	weights.clear()
+	r = RandomNumberGenerator.new()
 	
 	var fl = GetFloor(0)
 	var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 
-	#var tileAtlas : TileSetAtlasSource = layer.tile_set.get_source(10)
-
+	var tileAtlas : TileSetAtlasSource = layer.tile_set.get_source(10)
+	
+	for tileIndex : int in layer.tile_set.get_source(10).get_tiles_count():
+		var dat : TileData = tileAtlas.get_tile_data(Vector2i(tileIndex, 0), 0)
+		var weight = dat.get_custom_data("CollapseWeight")
+		weights.append(weight)
+		
 	cellData = {}
 	
 	var rotations : Array[int] = [0, 90, 180, -90]
@@ -48,62 +88,96 @@ func CollapseMap() -> void:
 			var positionCellData = collapseCellData.new()
 			
 			for tileIndex : int in layer.tile_set.get_source(10).get_tiles_count():
+				
 				for rot in rotations:
 					
 					var tileData = collapseTileData.new()
 					tileData.tileIndex = tileIndex
 					tileData.tileRotation = rot
 					
+					if (x == 0):
+						if (!TestDirection(tileData, Vector2(-1,0), tileAtlas)):
+							continue
+					if (x == mapSize.x - 1):
+						if (!TestDirection(tileData, Vector2(1,0), tileAtlas)):
+							continue
+					if (y == 0):
+						if (!TestDirection(tileData, Vector2(0, -1), tileAtlas)):
+							continue
+					if (y == mapSize.y - 1):
+						if (!TestDirection(tileData, Vector2(0, 1), tileAtlas)):
+							continue
+					
 					positionCellData.possibleTiles.append(tileData)
 					
 			cellData[pos] = positionCellData
 	
-	var randomFirstCellPosition = cellData.keys().pick_random()
-	
-	nextToCollapse = randomFirstCellPosition
+	#var randomFirstCellPosition = cellData.keys().pick_random()
+	#collapseCell(randomFirstCellPosition, tileAtlas)
+	#nextToCollapse = randomFirstCellPosition
 	#while (nextToCollapse != Vector2i(99999,99999)):
 		#nextToCollapse = collapseCell(nextToCollapse, cellData, layer)
 	
-	
 func collapseCell(cellPos : Vector2i, atlas : TileSetAtlasSource) -> void:
 	var cell = cellData[cellPos]
-	cellData.erase(cellPos)
-	var pickedTile = cell.possibleTiles.pick_random()
+	
+	if (!cell.collapsed):
+		CellCollapsed(cellPos)
+
+	PropagateContrains(cell, cellPos, atlas, constrainPropagation)
+
+
+func CellCollapsed(cellPos : Vector2i) -> void:
+	var cell = cellData[cellPos]
+	
+	var availableWeights : PackedFloat32Array
+	
+	for tile : collapseTileData in cell.possibleTiles :
+		availableWeights.append(weights[tile.tileIndex])
+
+	var picked = r.rand_weighted(availableWeights)
+	
+	var pickedTile = cell.possibleTiles[picked]
 	
 	cell.possibleTiles.clear()
 	cell.possibleTiles.append(pickedTile)
 	cell.collapsed = true
+
+	var fl = GetFloor(0)
+	var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+	layer.set_cell(cellPos, 10, Vector2i(pickedTile.tileIndex, 0), GetTileAltFromRotation(pickedTile.tileRotation))
+
+func PropagateContrains(cell : collapseCellData, pos : Vector2i, atlas : TileSetAtlasSource, propagation : int) -> void:
+	var prop = propagation - 1
 	
-	var lowestEntropyNeighbor : Vector2i = Vector2i(99999,99999)
-	var lowestEntropy : int = 99999
-	
-	var neighborDirections : Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
-	
-	for neightborDir in neighborDirections:
-		var neighborPos = cellPos + neightborDir
+	for neightborDir in NEIGHBOR_DIRECTIONS:
+		var neighborPos = pos + neightborDir
 		if (cellData.has(neighborPos)):
 			var neighborCell : collapseCellData = cellData[neighborPos]
 			
-			if (neighborCell.GetEntropy() == 1 or neighborCell.collapsed):
+			if (neighborCell.collapsed):
 				continue
 			
 			var allowedTiles : Array[collapseTileData]
 				
 			for neightborTile in neighborCell.possibleTiles:
-				if (TilesMatch(pickedTile, neightborTile, neightborDir, atlas)):
-					allowedTiles.append(neightborTile)
+				for tile : collapseTileData in cell.possibleTiles:
+					if (!allowedTiles.has(neightborTile) and TilesMatch(tile, neightborTile, neightborDir, atlas)):
+						allowedTiles.append(neightborTile)
 			
-			neighborCell.possibleTiles.clear()
+			#neighborCell.possibleTiles.clear()
 			neighborCell.possibleTiles = allowedTiles
 			
-			if (lowestEntropy > neighborCell.GetEntropy() and neighborCell.GetEntropy() > 0):
-				lowestEntropy = neighborCell.GetEntropy()
-				lowestEntropyNeighbor = neighborPos
-	
-	nextToCollapse = lowestEntropyNeighbor
-	var fl = GetFloor(0)
-	var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
-	layer.set_cell(cellPos, 10, Vector2i(pickedTile.tileIndex, 0), GetTileAltFromRotation(pickedTile.tileRotation))
+			if (allowedTiles.size() == 1):
+				CellCollapsed(neighborPos)
+
+	if (prop > 0):
+		for neightborDir in NEIGHBOR_DIRECTIONS:
+			var neighborPos = pos + neightborDir
+			if (cellData.has(neighborPos)):
+				var neighborCell : collapseCellData = cellData[neighborPos]
+				
+				PropagateContrains(neighborCell, neighborPos, atlas, prop)
 
 func GetTileAltFromRotation(rot : int) -> int:
 	var tile_alternate : int = 0
@@ -117,6 +191,15 @@ func GetTileAltFromRotation(rot : int) -> int:
 			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V
 			
 	return tile_alternate
+
+func TestDirection(data : collapseTileData, dir : Vector2, atlas : TileSetAtlasSource) -> bool:
+	var dat : TileData = atlas.get_tile_data(Vector2i(data.tileIndex, 0), 0)
+	for wall : Vector2 in dat.get_custom_data("Walls"):
+		var wallDir = wall.rotated(deg_to_rad(data.tileRotation)).round()
+		if (dir.is_equal_approx(wallDir)): ##we found wall the matches direction
+			return true
+			
+	return false
 
 ##Used to declare the blocking direction of each of the MAZE tiles
 func TilesMatch (originData : collapseTileData, destinationData : collapseTileData, dir : Vector2, atlas : TileSetAtlasSource) -> bool:
