@@ -364,9 +364,11 @@ func generate_maze(spawnMons : bool) -> void:
 			
 			#Find the opposite direction
 			var oppositedirection = Vector3.LEFT.rotated(Vector3(0,1,0),BackWallCandidate.WallTransform.basis.orthonormalized().get_euler().y)
-			if (!Data.cells.has(Pos + Vector3i(oppositedirection))):
+			
+			if (!Data.cells.has(Pos - Vector3i(oppositedirection))):
 				continue
-			var oppositeCell: CellData = Data.cells[Pos + Vector3i(oppositedirection)]
+				
+			var oppositeCell: CellData = Data.cells[Pos - Vector3i(oppositedirection)]
 			
 			if (oppositeCell.Custom_Data.has("Lever")):
 				continue
@@ -374,7 +376,7 @@ func generate_maze(spawnMons : bool) -> void:
 			if (!oppositeCell.HasData("Walls")):
 				continue
 
-			var oppositeTransform = BackWallCandidate.WallTransform.origin + (oppositedirection * Vector3(WorldScale))
+			var oppositeTransform = BackWallCandidate.WallTransform.origin - (oppositedirection * Vector3(WorldScale))
 			var OppositeWallData : WallData
 			
 			for g in oppositeCell.Custom_Data["Walls"]:

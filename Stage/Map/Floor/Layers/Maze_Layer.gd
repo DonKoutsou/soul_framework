@@ -150,6 +150,20 @@ func separate_into_rooms() -> Array:
 
 	return rooms
 
+func separate_into_islands() -> Array:
+	var rooms := []
+	var visited := {}
+	
+	var usedCells = get_used_cells()
+
+	for coord in usedCells:
+		if coord in visited:
+			continue
+		var room = flood_fill2(coord, usedCells, visited)
+		rooms.append(room)
+
+	return rooms
+
 func SeparateIntoCorridors() -> Array:
 	var Corridors := []
 	var visited := {}
@@ -191,6 +205,33 @@ func flood_fill(start: Vector2i, tile_coords: Array, visited: Dictionary) -> Arr
 	
 	return room
 
+func flood_fill2(start: Vector2i, tile_coords: Array, visited: Dictionary) -> Array:
+	var room : Array = []
+	var stack := [start]
+
+	while stack.size() > 0:
+		var current = stack.pop_back()
+
+		if current in visited:
+			continue
+
+		visited[current] = true
+		room.append(current)
+
+		# Get neighboring tiles (4-directional)
+		var neighbors : Array[Vector2i] = [
+			Vector2i.LEFT,
+			Vector2i.RIGHT,
+			Vector2i.UP,
+			Vector2i.DOWN
+		]
+
+		for neighbor in neighbors:
+			if current + neighbor in tile_coords and neighbor + current not in visited and !CantReach(current, neighbor, true) and !CantReach(current + neighbor, neighbor * -1, true):
+				stack.push_back(neighbor + current)
+	
+	return room
+
 func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visited: Dictionary) -> Array:
 	var room : Array = []
 	var stack := [start]
@@ -221,7 +262,7 @@ func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visite
 	return room
 
 ##Used to declare the blocking direction of each of the MAZE tiles
-func CantReach(tilecoords : Vector2, dir : Vector2) -> bool:
+func CantReach(tilecoords : Vector2, dir : Vector2, passDoors : bool = false) -> bool:
 	var dat : TileData = get_cell_tile_data(tilecoords)
 	var tilerotation = GetTileRotationRadians(tilecoords)
 	
@@ -233,10 +274,11 @@ func CantReach(tilecoords : Vector2, dir : Vector2) -> bool:
 			resault = true
 			break
 	
-	for wall : Vector2 in dat.get_custom_data("DoorWalls"):
-		var wallDir = wall.rotated(tilerotation)
-		if (dir.is_equal_approx(wallDir)):
-			resault = true
-			break
+	if (!passDoors):
+		for wall : Vector2 in dat.get_custom_data("DoorWalls"):
+			var wallDir = wall.rotated(tilerotation)
+			if (dir.is_equal_approx(wallDir)):
+				resault = true
+				break
 	
 	return resault
