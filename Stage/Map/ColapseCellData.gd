@@ -6,5 +6,19 @@ class_name collapseCellData
 var collapsed : bool = false
 var possibleTiles : Array[collapseTileData]
 
-func GetEntropy() -> int:
-	return possibleTiles.size()
+func GetEntropy(atlasData : Dictionary) -> float:
+	if possibleTiles.is_empty():
+		return 0.0  # Contradiction
+
+	var total_weight := 0.0
+	var weight_log_weight := 0.0
+
+	for tile in possibleTiles:
+		var w: float = atlasData[tile.tileIndex]["CollapseWeight"]
+		total_weight += w
+		weight_log_weight += w * log(w)
+
+	if total_weight == 0.0:
+		return 0.0
+
+	return log(total_weight) - (weight_log_weight / total_weight)

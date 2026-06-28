@@ -2,6 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://1t2k6hks64ou" path="res://Engine/Stage/Map/MapPieces/MapPieces.png" id="1_4pova"]
 
+[sub_resource type="TileMapPattern" id="TileMapPattern_vyjuj"]
+tile_data = PackedInt32Array(0, 131082, 1342177280, 65536, 65546, 0, 131072, 65546, 0, 196608, 65546, 0, 262144, 131082, 0, 1, 65546, 1342177280, 65537, 10, 0, 131073, 10, 0, 196609, 10, 0, 262145, 65546, 1610612736, 2, 65546, 1342177280, 65538, 10, 0, 131074, 10, 0, 196610, 10, 0, 262146, 65546, 1610612736, 3, 65546, 1342177280, 65539, 10, 0, 131075, 10, 0, 196611, 10, 0, 262147, 327690, 1610612736, 4, 65546, 1342177280, 65540, 10, 0, 131076, 10, 0, 196612, 10, 0, 262148, 65546, 1610612736, 5, 65546, 1342177280, 65541, 10, 0, 131077, 10, 0, 196613, 10, 0, 262149, 65546, 1610612736, 6, 65546, 1342177280, 65542, 10, 0, 131078, 10, 0, 196614, 10, 0, 262150, 65546, 1610612736, 7, 131082, 805306368, 65543, 65546, 805306368, 131079, 65546, 805306368, 196615, 65546, 805306368, 262151, 131082, 1610612736)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dmb8w"]
 resource_name = "Floor"
 texture = ExtResource("1_4pova")
@@ -90,3 +93,4 @@ custom_data_layer_2/name = "CollapseWeight"
 custom_data_layer_2/type = 3
 sources/10 = SubResource("TileSetAtlasSource_dmb8w")
 tile_proxies/coords_level = [[0, Vector2i(0, 0)], [10, Vector2i(0, 0)], [1, Vector2i(0, 0)], [10, Vector2i(1, 0)], [2, Vector2i(0, 0)], [10, Vector2i(2, 0)], [3, Vector2i(0, 0)], [10, Vector2i(0, 1)], [4, Vector2i(0, 0)], [10, Vector2i(1, 1)], [5, Vector2i(0, 0)], [10, Vector2i(2, 1)], [6, Vector2i(0, 0)], [10, Vector2i(0, 2)], [7, Vector2i(0, 0)], [10, Vector2i(1, 2)], [8, Vector2i(0, 0)], [10, Vector2i(2, 2)]]
+pattern_0 = SubResource("TileMapPattern_vyjuj")

@@ -4,7 +4,7 @@ extends Map
 class_name RandomisedMap
 
 @export var mapSize : Vector2i = Vector2i(40, 40)
-@export var constrainPropagation : int = 1
+@export var usePatterns : bool = true
 @export var active : bool = true
 @export var collapseSeed : int = -1
 @export_range(0, 1.0, 0.05) var GenerationCooldown : float = 0.2
@@ -40,12 +40,15 @@ func _process(delta: float) -> void:
 		var currentEntropy = 9999
 		for g in cellData:
 			var cell = cellData[g]
-			if cell.GetEntropy() < currentEntropy and !cell.collapsed:
+			if (cell.collapsed):
+				continue
+			var cellEntropy = cell.GetEntropy(atlasData)
+			if cellEntropy < currentEntropy:
 				possible.clear()
-				currentEntropy = cell.GetEntropy()
+				currentEntropy = cellEntropy
 				#nextToCollapse = g
 				possible.append(g)
-			else: if cell.GetEntropy() == currentEntropy and !cell.collapsed:
+			else: if cellEntropy == currentEntropy:
 				possible.append(g)
 				
 	if (possible.size() > 0):
@@ -76,7 +79,24 @@ func CollapseMap() -> void:
 		
 	var fl = GetFloor(0)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
-
+	
+	if (usePatterns):
+		var paterns : Array[TileMapPattern]
+		
+		for pat in layer.tile_set.get_patterns_count():
+			paterns.append(layer.tile_set.get_pattern(pat))
+		
+		#check for spots to fit any of the patterns
+		while (paterns.size() > 0):
+			var index = r.randi_range(0, paterns.size() - 1)
+			var randomPatern : TileMapPattern = paterns[index]
+			paterns.remove_at(index)
+			var randomPosition = Vector2i(r.randi_range(0, mapSize.x - 1), r.randi_range(0, mapSize.y - 1))
+			
+			if (can_place_pattern(layer, randomPatern, randomPosition)):
+				layer.set_pattern(randomPosition, randomPatern)
+		
+		layer.update_internals()
 	
 	var tileAtlas : TileSetAtlasSource = layer.tile_set.get_source(10)
 	
@@ -132,7 +152,7 @@ func CollapseMap() -> void:
 					tileData.tileIndex = tileIndex
 					tileData.tileRotation = rot
 					
-				
+					
 					if (x == 0):
 						if (!TestDirection(tileData, Vector2(-1,0))):
 							continue
@@ -150,13 +170,35 @@ func CollapseMap() -> void:
 					
 			cellData[pos] = positionCellData
 	
+	for cell in Usedcells:
+		var dat = cellData[cell]
+		PropagateContrains(dat, cell)
+
+func can_place_pattern(tilemap: TileMapLayer,pattern: TileMapPattern, patternPosition: Vector2i) -> bool:
+	
+	for pattern_cell in pattern.get_used_cells():
+		var map_cell = patternPosition + pattern_cell
+
+		# Check map bounds
+		if map_cell.x < 0 \
+		or map_cell.y < 0 \
+		or map_cell.x >= mapSize.x \
+		or map_cell.y >= mapSize.y:
+			return false
+
+		# Check if something is already placed
+		if tilemap.get_cell_source_id(map_cell) != -1:
+			return false
+
+	return true
+
 func collapseCell(cellPos : Vector2i) -> void:
 	var cell = cellData[cellPos]
 	
 	if (!cell.collapsed):
 		CellCollapsed(cellPos)
 
-	PropagateContrains(cell, cellPos, constrainPropagation)
+	PropagateContrains(cell, cellPos)
 
 
 func CellCollapsed(cellPos : Vector2i) -> void:
@@ -177,12 +219,12 @@ func CellCollapsed(cellPos : Vector2i) -> void:
 
 	if(pickedTile.tileIndex == -1):
 		return
+		
 	var fl = GetFloor(0)
 	var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	layer.set_cell(cellPos, 10, Vector2i(pickedTile.tileIndex, 0), GetTileAltFromRotation(pickedTile.tileRotation))
 
-func PropagateContrains(cell : collapseCellData, pos : Vector2i, propagation : int) -> void:
-	var prop = propagation - 1
+func PropagateContrains(cell : collapseCellData, pos : Vector2i) -> void:
 	
 	for neightborDir in NEIGHBOR_DIRECTIONS:
 		var neighborPos = pos + neightborDir
@@ -199,19 +241,16 @@ func PropagateContrains(cell : collapseCellData, pos : Vector2i, propagation : i
 					if (!allowedTiles.has(neightborTile) and TilesMatch(tile, neightborTile, neightborDir)):
 						allowedTiles.append(neightborTile)
 			
+			var changed = neighborCell.possibleTiles.size() != allowedTiles.size()
 			#neighborCell.possibleTiles.clear()
 			neighborCell.possibleTiles = allowedTiles
 			
 			if (allowedTiles.size() == 1):
 				CellCollapsed(neighborPos)
+			
+			if (changed):
+				PropagateContrains(neighborCell, neighborPos)
 
-	if (prop > 0):
-		for neightborDir in NEIGHBOR_DIRECTIONS:
-			var neighborPos = pos + neightborDir
-			if (cellData.has(neighborPos)):
-				var neighborCell : collapseCellData = cellData[neighborPos]
-				
-				PropagateContrains(neighborCell, neighborPos, prop)
 
 func GetTileAltFromRotation(rot : int) -> int:
 	var tile_alternate : int = 0
@@ -228,7 +267,7 @@ func GetTileAltFromRotation(rot : int) -> int:
 
 func TestDirection(data : collapseTileData, dir : Vector2) -> bool:
 	if (data.tileIndex == -1):
-		return false
+		return true
 		
 	var dat : Dictionary = atlasData[data.tileIndex]
 		
