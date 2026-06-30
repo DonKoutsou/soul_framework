@@ -10,7 +10,7 @@ class_name RandomisedMap
 @export var collapseSeed : int = -1
 @export var collapseAll : bool = false
 @export var allowedPatterns : PackedInt32Array
-@export_range(0, 1.0, 0.05) var GenerationCooldown : float = 0.2
+@export var drawAStar : bool = false
 @export_tool_button("Generate Map") var RegenerateAction = CollapseMap
 @export_tool_button("Clear Map") var clear = CleanMap
 
@@ -28,138 +28,125 @@ var aStar : AStar2D
 
 var r : RandomNumberGenerator
 
-var i : float = 0.2
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if (!active):
 		return
-		
-	i -= delta
-	
-	if (i > 0):
+
+	var possible : Array[Vector2i] = GetPossibleCollapses()
+	if (possible.size() == 0):
 		return
-	
-	i = GenerationCooldown
-	
-	
-	var possible : Array[Vector2i]
-	
+		
 	var fl = GetFloor(0)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
-	#print(layer.get_used_cells())
-	#var exits = layer.find_exits()
-	#print(exits)
 	
-	if (cellData.size() > 0):
-
-		var currentEntropy = 99999999
-		for g in cellData:
-			if (collapseAll):
-				if (currentExits.size() > 0 and !currentExits.has(g)):
-					continue
-			else: if (!currentExits.has(g)):
-				continue
-			var cell = cellData[g]
-			if (cell.collapsed):
-				continue
-			var cellEntropy = cell.GetEntropy(atlasData)
-
-			if cellEntropy < currentEntropy:
-				possible.clear()
-				currentEntropy = cellEntropy
-				#nextToCollapse = g
-				possible.append(g)
-			else: if cellEntropy == currentEntropy:
-				possible.append(g)
-	
+	#var usecbefore = Time.get_ticks_usec()
 	var msbefore = Time.get_ticks_msec()
-	while (Time.get_ticks_msec() - msbefore < 8):
-		if (possible.size() > 0):
-			#var msBeforCell = Time.get_ticks_msec()
-			
-			var randomIndex = r.randi_range(0, possible.size() - 1)
-			var cellPos = possible[randomIndex]
-
-			CellCollapsed(cellPos)
-			
-			currentExits.erase(cellPos)
-			
-			
-			var newExits = layer.GetNeighboringExits(cellPos)
-			
-			#find room colsapsed cell belongs to
-			var neighbors : Array[Vector2i] = [
-				Vector2i.LEFT,
-				Vector2i.RIGHT,
-				Vector2i.UP,
-				Vector2i.DOWN
-			]
-			
-			var ownerRooms : Array
-			
-			#find the owner room of this cell
-			for g : Array in rooms:
-				for neighbor in neighbors:
-					if (g.has(cellPos + neighbor) and !layer.CantReach(cellPos, neighbor, true)):
-						ownerRooms.append(g)
-						break
-			
-			var originalRooms = rooms.duplicate()
-
-			#if multiple owners exist we need to merge them since the cell bridges them.
-			if (ownerRooms.size() > 1):
-				var combined : Array
-				for g in ownerRooms:
-					combined.append_array(g)
-					rooms.erase(g)
-				rooms.append(combined)
-				combined.append(cellPos)
-				print("Combined rooms")
-			else:
-				ownerRooms[0].append(cellPos)
-			
-			#if multiple rooms exist we need to check if they have exits, if not we take back this collapse
-			var cancel : bool = false
-			
-			for room in rooms:
-				if (RoomHasExit(room, newExits)):
-					continue
-					
-				var cell = cellData[cellPos]
-				RefillTile(cellPos, cell)
-				UpdateConstrains(cell, cellPos)
-				layer.erase_cell(cellPos)
-				for g in rooms:
-					g.erase(cellPos)
-				print("Cell aborted")
-				layer.update_internals()
-				queue_redraw()
-				cancel = true
-				rooms = originalRooms
-				currentExits.append(cellPos)
+	while (Time.get_ticks_msec() - msbefore < 12):
+		if (possible.size() == 0):
+			possible = GetPossibleCollapses()
+			if (possible.size() == 0):
 				break
-						
-			if (!cancel):
-				possible.remove_at(randomIndex)
+		#var msBeforCell = Time.get_ticks_msec()
+		
+		var randomIndex = r.randi_range(0, possible.size() - 1)
+		var cellPos = possible[randomIndex]
+
+		CellCollapsed(cellPos)
+		
+		currentExits.erase(cellPos)
+
+		var newExits = layer.GetNeighboringExits(cellPos)
+		
+		var ownerRooms : Array
+		
+		#find the owner room of this cell
+		for g : Array in rooms:
+			for neighbor in NEIGHBOR_DIRECTIONS:
+				if (g.has(cellPos + neighbor) and !layer.CantReach(cellPos, neighbor, true)):
+					ownerRooms.append(g)
+					break
+		
+		var originalRooms = rooms.duplicate()
+
+		#if multiple owners exist we need to merge them since the cell bridges them.
+		if (ownerRooms.size() > 1):
+			var combined : Array
+			for g in ownerRooms:
+				combined.append_array(g)
+				rooms.erase(g)
+			rooms.append(combined)
+			combined.append(cellPos)
+			print("Combined rooms")
+		else:
+			ownerRooms[0].append(cellPos)
+		
+		#if multiple rooms exist we need to check if they have exits, if not we take back this collapse
+		var cancel : bool = false
+		
+		for room in rooms:
+			if (RoomHasExit(room, newExits)):
+				continue
 				
-				
-				var collapsedCellID = aStar.get_closest_point(cellPos)
-			
-				for g in newExits:
-					if (currentExits.has(g)):
-						var exitPointID = aStar.get_closest_point(g)
-						aStar.connect_points(collapsedCellID, exitPointID)
-					else:
-						var exitPointID = aStar.get_point_count()
-						aStar.add_point(exitPointID ,g)
-						aStar.connect_points(collapsedCellID, exitPointID)
-						
-						currentExits.append(g)
+			var cell = cellData[cellPos]
+			RefillTile(cellPos, cell)
+			UpdateConstrains(cell, cellPos)
+			layer.erase_cell(cellPos)
+			for g in rooms:
+				g.erase(cellPos)
+			print("Cell aborted")
+			layer.update_internals()
+			queue_redraw()
+			cancel = true
+			rooms = originalRooms
+			currentExits.append(cellPos)
+			break
 					
-				PropagateContrains(cellPos)
-				#print("Cell took {0}ms".format([Time.get_ticks_msec() - msBeforCell]))
+		if (!cancel):
+			possible.remove_at(randomIndex)
+			var collapsedCellID = aStar.get_closest_point(cellPos)
+		
+			for g in newExits:
+				if (currentExits.has(g)):
+					var exitPointID = aStar.get_closest_point(g)
+					aStar.connect_points(collapsedCellID, exitPointID)
+				else:
+					var exitPointID = aStar.get_point_count()
+					aStar.add_point(exitPointID ,g)
+					aStar.connect_points(collapsedCellID, exitPointID)
+					
+					currentExits.append(g)
+				
+			PropagateContrains(cellPos)
+			#print("Cell took {0}ms".format([Time.get_ticks_msec() - msBeforCell]))
+			
+	#var usecAfter = Time.get_ticks_usec()
+	#print(usecAfter - usecbefore)
 	layer.update_internals()
 	queue_redraw()
+
+func GetPossibleCollapses() -> Array[Vector2i]:
+	var possible : Array[Vector2i]
+	var currentEntropy = INF
+	for g in cellData:
+		if (collapseAll):
+			if (currentExits.size() > 0 and !currentExits.has(g)):
+				continue
+		else: if (!currentExits.has(g)):
+			continue
+		var cell = cellData[g]
+		if (cell.collapsed):
+			continue
+		var cellEntropy = cell.GetEntropy(atlasData)
+
+		if cellEntropy < currentEntropy:
+			possible.clear()
+			currentEntropy = cellEntropy
+			#nextToCollapse = g
+			possible.append(g)
+		else: if cellEntropy == currentEntropy:
+			possible.append(g)
+	return possible
 
 func RoomHasExit(room : Array, newExits : Array[Vector2i]) -> bool:
 	for g in currentExits:
@@ -211,14 +198,14 @@ func _draw() -> void:
 		
 		draw_string(ThemeDB.fallback_font, layer.map_to_local(g) - stringSize, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
 	
-	
-	#var used = layer.get_used_cells()
-	#
-	#for g in used:
-		#var pointId = aStar.get_closest_point(g)
-		#var connections = aStar.get_point_connections(pointId)
-		#for connection in connections:
-			#draw_line(layer.map_to_local(g), layer.map_to_local(aStar.get_point_position(connection)), Color(1,0,0, 0.3))
+	if (drawAStar):
+		var used = layer.get_used_cells()
+		
+		for g in used:
+			var pointId = aStar.get_closest_point(g)
+			var connections = aStar.get_point_connections(pointId)
+			for connection in connections:
+				draw_line(layer.map_to_local(g), layer.map_to_local(aStar.get_point_position(connection)), Color(1,0,0, 0.3))
 		
 
 #---------------------------------------------------
