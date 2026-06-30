@@ -8,6 +8,9 @@ tile_data = PackedInt32Array(0, 131082, 1342177280, 65536, 65546, 0, 131072, 655
 [sub_resource type="TileMapPattern" id="TileMapPattern_r1xfb"]
 tile_data = PackedInt32Array(0, 524298, 0, 65536, 65546, 0, 131072, 65546, 0, 196608, 131082, 0, 1, 131082, 805306368, 65537, 65546, 805306368, 131073, 65546, 805306368, 196609, 131082, 1610612736)
 
+[sub_resource type="TileMapPattern" id="TileMapPattern_pocvw"]
+tile_data = PackedInt32Array(0, 131082, 1342177280, 65536, 65546, 0, 131072, 131082, 0, 1, 65546, 1342177280, 65537, 10, 0, 131073, 65546, 1610612736, 2, 131082, 805306368, 65538, 10, 0, 131074, 131082, 1610612736)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dmb8w"]
 resource_name = "Floor"
 texture = ExtResource("1_4pova")
@@ -28,6 +31,7 @@ separation = Vector2i(1, 1)
 4:0/0/custom_data_2 = 1.0
 5:0/0 = 0
 5:0/0/custom_data_1 = PackedVector2Array(-1, 0)
+5:0/0/custom_data_2 = 0.1
 6:0/0 = 0
 6:0/0/custom_data_0 = PackedVector2Array(0, 1)
 6:0/0/custom_data_1 = PackedVector2Array(-1, 0)
@@ -97,3 +101,4 @@ sources/10 = SubResource("TileSetAtlasSource_dmb8w")
 tile_proxies/coords_level = [[0, Vector2i(0, 0)], [10, Vector2i(0, 0)], [1, Vector2i(0, 0)], [10, Vector2i(1, 0)], [2, Vector2i(0, 0)], [10, Vector2i(2, 0)], [3, Vector2i(0, 0)], [10, Vector2i(0, 1)], [4, Vector2i(0, 0)], [10, Vector2i(1, 1)], [5, Vector2i(0, 0)], [10, Vector2i(2, 1)], [6, Vector2i(0, 0)], [10, Vector2i(0, 2)], [7, Vector2i(0, 0)], [10, Vector2i(1, 2)], [8, Vector2i(0, 0)], [10, Vector2i(2, 2)]]
 pattern_0 = SubResource("TileMapPattern_vyjuj")
 pattern_1 = SubResource("TileMapPattern_r1xfb")
+pattern_2 = SubResource("TileMapPattern_pocvw")

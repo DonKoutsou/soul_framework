@@ -8,10 +8,11 @@ class_name RandomisedMap
 @export var active : bool = true
 @export var solveStrays : bool = true
 @export var collapseSeed : int = -1
+@export var collapseAll : bool = false
+@export var allowedPatterns : PackedInt32Array
 @export_range(0, 1.0, 0.05) var GenerationCooldown : float = 0.2
 @export_tool_button("Generate Map") var RegenerateAction = CollapseMap
 @export_tool_button("Clear Map") var clear = CleanMap
-
 
 const NEIGHBOR_DIRECTIONS : Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 const rotations : Array[float] = [0, PI/2, PI, -PI/2]
@@ -20,6 +21,8 @@ var originalTiles : Array[Vector2i]
 var cellData : Dictionary[Vector2i, collapseCellData]
 var tileData : Array[collapseTileData]
 var atlasData : Dictionary[int, Dictionary]
+
+var possibleCollapse : Array[Vector2i]
 
 var r : RandomNumberGenerator
 
@@ -39,10 +42,20 @@ func _process(delta: float) -> void:
 	
 	var possible : Array[Vector2i]
 	
+	var fl = GetFloor(0)
+	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+	var exits = layer.find_exits(layer.get_used_cells())
+	#print(exits)
+	
 	if (cellData.size() > 0):
 
 		var currentEntropy = 99999999
 		for g in cellData:
+			if (collapseAll):
+				if (exits.size() > 0 and !exits.has(g)):
+					continue
+			else: if (!exits.has(g)):
+				continue
 			var cell = cellData[g]
 			if (cell.collapsed):
 				continue
@@ -63,61 +76,77 @@ func _process(delta: float) -> void:
 
 		CellCollapsed(cellPos)
 		
-		#if (solveStrays):
+		if (solveStrays):
 			#var fl = GetFloor(0)
 			#var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
-			#var rooms = layer.separate_into_islands()
-			#
-			#if (rooms.size() > 1):
-				#var cell = cellData[cellPos]
-				#cell.collapsed = false
-				#RefillTile(cellPos, cell)
-				#return
-		
+			var rooms = layer.separate_into_islands()
+
+			if (rooms.size() > 1):
+				#print(rooms)
+				var cell = cellData[cellPos]
+				possibleCollapse.append(cellPos)
+				RefillTile(cellPos, cell)
+				UpdateConstrains(cell, cellPos)
+				layer.erase_cell(cellPos)
+				layer.update_internals()
+				queue_redraw()
+				return
+			else:
+				var exit = layer.find_exit(rooms[0])
+				if (exit == Vector2i(9999,9999)):
+					var cell = cellData[cellPos]
+					possibleCollapse.append(cellPos)
+					RefillTile(cellPos, cell)
+					UpdateConstrains(cell, cellPos)
+					layer.erase_cell(cellPos)
+					layer.update_internals()
+					queue_redraw()
+					return
+
 		PropagateContrains(cellPos)
 		queue_redraw()
 		
-	else: if (solveStrays):
-		var fl = GetFloor(0)
-		var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
-		var rooms = layer.separate_into_islands()
-		if (rooms.size() > 1):
-			atlasData[-1]["CollapseWeight"] = 1
-			
-			var smallerRoom : Array
-			var smallerRoomSize = 99999
-			for room in rooms:
-				if (room.size() < smallerRoomSize):
-					smallerRoomSize = room.size()
-					smallerRoom = room
-
-			for tile in smallerRoom:
-				if (!originalTiles.has(tile)):
-					var cell : collapseCellData = cellData[tile]
-					RefillTile(tile, cell)
+	#else: if (solveStrays):
+		#var fl = GetFloor(0)
+		#var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+		#var rooms = layer.separate_into_islands()
+		#if (rooms.size() > 1):
+			#atlasData[-1]["CollapseWeight"] = 1
+			#
+			#var smallerRoom : Array
+			#var smallerRoomSize = 99999
+			#for room in rooms:
+				#if (room.size() < smallerRoomSize):
+					#smallerRoomSize = room.size()
+					#smallerRoom = room
+#
+			#for tile in smallerRoom:
+				#if (!originalTiles.has(tile)):
+					#var cell : collapseCellData = cellData[tile]
+					#RefillTile(tile, cell)
+					##UpdateConstrains(cell, tile)
+				#for neightborDir in NEIGHBOR_DIRECTIONS:
+					#var neighborPos = tile + neightborDir
+					#if (originalTiles.has(neighborPos) or smallerRoom.has(neighborPos)):
+						#continue
+					#if (cellData.has(neighborPos)):
+						#var neighborCell : collapseCellData = cellData[neighborPos]
+						#RefillTile(neighborPos, neighborCell)
+						##UpdateConstrains(neighborCell, neighborPos)
+				#
+			#for tile in smallerRoom:
+				#if (!originalTiles.has(tile)):
+					#var cell : collapseCellData = cellData[tile]
 					#UpdateConstrains(cell, tile)
-				for neightborDir in NEIGHBOR_DIRECTIONS:
-					var neighborPos = tile + neightborDir
-					if (originalTiles.has(neighborPos) or smallerRoom.has(neighborPos)):
-						continue
-					if (cellData.has(neighborPos)):
-						var neighborCell : collapseCellData = cellData[neighborPos]
-						RefillTile(neighborPos, neighborCell)
+				#for neightborDir in NEIGHBOR_DIRECTIONS:
+					#var neighborPos = tile + neightborDir
+					#if (originalTiles.has(neighborPos) or smallerRoom.has(neighborPos)):
+						#continue
+					#if (cellData.has(neighborPos)):
+						#var neighborCell : collapseCellData = cellData[neighborPos]
 						#UpdateConstrains(neighborCell, neighborPos)
-				
-			for tile in smallerRoom:
-				if (!originalTiles.has(tile)):
-					var cell : collapseCellData = cellData[tile]
-					UpdateConstrains(cell, tile)
-				for neightborDir in NEIGHBOR_DIRECTIONS:
-					var neighborPos = tile + neightborDir
-					if (originalTiles.has(neighborPos) or smallerRoom.has(neighborPos)):
-						continue
-					if (cellData.has(neighborPos)):
-						var neighborCell : collapseCellData = cellData[neighborPos]
-						UpdateConstrains(neighborCell, neighborPos)
 		
-		queue_redraw()
+		#queue_redraw()
 
 func RefillTile(tilePos : Vector2i, cell : collapseCellData) -> void:
 	cell.possibleTiles.clear()
@@ -175,7 +204,8 @@ func CollapseMap() -> void:
 		var paterns : Array[TileMapPattern]
 		
 		for pat in layer.tile_set.get_patterns_count():
-			paterns.append(layer.tile_set.get_pattern(pat))
+			if (allowedPatterns.has(pat)):
+				paterns.append(layer.tile_set.get_pattern(pat))
 		
 		#check for spots to fit any of the patterns
 		while (paterns.size() > 0):
@@ -205,10 +235,10 @@ func CollapseMap() -> void:
 		dat.tileRotation = layer.GetTileRotationRadians(cell)
 		
 		positionCellData.possibleTiles.append(dat)
-		#positionCellData.collapsed = true
+		positionCellData.collapsed = true
 		
 		cellData[cell] = positionCellData
-	
+
 	for x in mapSize.x:
 		for y in mapSize.y:
 			var pos = Vector2i(x, y)
@@ -225,19 +255,27 @@ func CollapseMap() -> void:
 	for cell in Usedcells:
 		PropagateContrains(cell)
 	
+	possibleCollapse.clear()
+	
+	var rooms = layer.separate_into_islands()
+	for g in rooms:
+		var exit = layer.find_exit(g)
+		if (!possibleCollapse.has(exit)):
+			possibleCollapse.append(exit)
+			
 	queue_redraw()
 
 #-----------------------------------------------
 func UpdateAtlasData(layer : MazeFloorLayer) -> void:
 	atlasData.clear()
 	
-	var emptyData : Dictionary = {
-		"Walls" : NEIGHBOR_DIRECTIONS,
-		"DoorWalls" : [],
-		"CollapseWeight" : 10
-	}
-
-	atlasData[-1] = emptyData
+	#var emptyData : Dictionary = {
+		#"Walls" : NEIGHBOR_DIRECTIONS,
+		#"DoorWalls" : [],
+		#"CollapseWeight" : 10
+	#}
+#
+	#atlasData[-1] = emptyData
 	
 	var tileAtlas : TileSetAtlasSource = layer.tile_set.get_source(10)
 	for tileIndex : int in layer.tile_set.get_source(10).get_tiles_count():
@@ -286,7 +324,7 @@ func can_place_pattern(tilemap: TileMapLayer,pattern: TileMapPattern, patternPos
 #-----------------------------------------------
 func CellCollapsed(cellPos : Vector2i) -> void:
 	var cell = cellData[cellPos]
-	
+	possibleCollapse.erase(cellPos)
 	var availableWeights : PackedFloat32Array
 	
 	for tile : collapseTileData in cell.possibleTiles :
@@ -306,11 +344,29 @@ func CellCollapsed(cellPos : Vector2i) -> void:
 	var fl = GetFloor(0)
 	var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	layer.set_cell(cellPos, 10, Vector2i(pickedTile.tileIndex, 0), GetTileAltFromRotation(pickedTile.tileRotation))
+	
+	
+			
+	
 
 #----------------------------------------------
 ##Propagates constrains of provided cell, keeps going until no more changes are possible
 func PropagateContrains(pos : Vector2i) -> void:
 	var cell = cellData[pos]
+	
+	if (collapseAll):
+		for neighbor in NEIGHBOR_DIRECTIONS:
+			var neighborPos = pos + neighbor
+			if (!cellData.has(neighborPos)):
+				continue
+			var neightborCell = cellData[neighborPos]
+			if (!neightborCell.collapsed and !possibleCollapse.has(neighborPos)):
+				possibleCollapse.append(neighborPos)
+	else:
+		for neighbor in NEIGHBOR_DIRECTIONS:
+			var neighborPos = pos + neighbor
+			if (!possibleCollapse.has(neighborPos)):
+				possibleCollapse.append(neighborPos)
 	
 	for neightborDir in NEIGHBOR_DIRECTIONS:
 		var neighborPos = pos + neightborDir

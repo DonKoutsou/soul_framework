@@ -150,12 +150,75 @@ func separate_into_rooms() -> Array:
 
 	return rooms
 
+func find_exit(usedCells : Array) -> Vector2i:
+
+	var visited = {}
+	var exit : Vector2i = Vector2i(9999,9999)
+	var stack := [usedCells.pick_random()]
+
+	while stack.size() > 0:
+		var current = stack.pop_back()
+
+		if current in visited:
+			continue
+
+		visited[current] = true
+
+		# Get neighboring tiles (4-directional)
+		var neighbors : Array[Vector2i] = [
+			Vector2i.LEFT,
+			Vector2i.RIGHT,
+			Vector2i.UP,
+			Vector2i.DOWN
+		]
+
+		for neighbor in neighbors:
+			if (current + neighbor in usedCells):
+				if neighbor + current not in visited and !CantReach(current, neighbor) and !CantReach(current + neighbor, neighbor * -1):
+					stack.push_back(neighbor + current)
+			else:
+				if neighbor + current not in visited and !CantReach(current, neighbor, true):
+					exit = neighbor + current
+	
+	return exit
+
+func find_exits(usedCells : Array) -> Array[Vector2i]:
+
+	var visited = {}
+	var exits : Array[Vector2i]
+	var stack := [usedCells.pick_random()]
+
+	while stack.size() > 0:
+		var current = stack.pop_back()
+
+		if current in visited:
+			continue
+
+		visited[current] = true
+
+		# Get neighboring tiles (4-directional)
+		var neighbors : Array[Vector2i] = [
+			Vector2i.LEFT,
+			Vector2i.RIGHT,
+			Vector2i.UP,
+			Vector2i.DOWN
+		]
+
+		for neighbor in neighbors:
+			if (current + neighbor in usedCells):
+				if neighbor + current not in visited and !CantReach(current, neighbor) and !CantReach(current + neighbor, neighbor * -1):
+					stack.push_back(neighbor + current)
+			else:
+				if neighbor + current not in visited and !CantReach(current, neighbor, true):
+					exits.append(neighbor + current)
+	
+	return exits
+
 func separate_into_islands() -> Array:
 	var rooms := []
 	var visited := {}
 	
 	var usedCells = get_used_cells()
-
 	for coord in usedCells:
 		if coord in visited:
 			continue
