@@ -518,6 +518,9 @@ func _physics_process(delta: float) -> void:
 	if (_Editor_CurrentWorld == null):
 		return
 	
+	if (EditorInterface.get_editor_viewport_2d() == null):
+		return
+		
 	_Editor_Cam_Zoom = EditorInterface.get_editor_viewport_2d().get_final_transform().x.x
 	#print(_Editor_Cam_Zoom)
 	

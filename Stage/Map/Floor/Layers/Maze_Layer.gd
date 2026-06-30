@@ -150,11 +150,45 @@ func separate_into_rooms() -> Array:
 
 	return rooms
 
+func IsExit(cell : Vector2i) -> bool:
+	var usedCells = get_used_cells()
+	
+	var neighbors : Array[Vector2i] = [
+			Vector2i.LEFT,
+			Vector2i.RIGHT,
+			Vector2i.UP,
+			Vector2i.DOWN
+		]
+
+	for neighbor in neighbors:
+		if (cell + neighbor not in usedCells):
+			if !CantReach(cell, neighbor, true):
+				return true
+	
+	return false
+
+func GetNeighboringExits(cell : Vector2i) -> Array[Vector2i]:
+	var usedCells = get_used_cells()
+	var exits : Array[Vector2i]
+	var neighbors : Array[Vector2i] = [
+			Vector2i.LEFT,
+			Vector2i.RIGHT,
+			Vector2i.UP,
+			Vector2i.DOWN
+		]
+
+	for neighbor in neighbors:
+		if (cell + neighbor not in usedCells):
+			if !CantReach(cell, neighbor, true):
+				exits.append(neighbor + cell)
+	
+	return exits
+
 func find_exit(usedCells : Array) -> Vector2i:
 
 	var visited = {}
 	var exit : Vector2i = Vector2i(9999,9999)
-	var stack := [usedCells.pick_random()]
+	var stack := [usedCells[0]]
 
 	while stack.size() > 0:
 		var current = stack.pop_back()
@@ -174,7 +208,7 @@ func find_exit(usedCells : Array) -> Vector2i:
 
 		for neighbor in neighbors:
 			if (current + neighbor in usedCells):
-				if neighbor + current not in visited and !CantReach(current, neighbor) and !CantReach(current + neighbor, neighbor * -1):
+				if neighbor + current not in visited and !CantReach(current, neighbor, true) and !CantReach(current + neighbor, neighbor * -1, true):
 					stack.push_back(neighbor + current)
 			else:
 				if neighbor + current not in visited and !CantReach(current, neighbor, true):
@@ -182,41 +216,92 @@ func find_exit(usedCells : Array) -> Vector2i:
 	
 	return exit
 
-func find_exits(usedCells : Array) -> Array[Vector2i]:
-
-	var visited = {}
+func find_exits() -> Array[Vector2i]:
+	var visited = []
 	var exits : Array[Vector2i]
-	var stack := [usedCells.pick_random()]
-
-	while stack.size() > 0:
-		var current = stack.pop_back()
-
-		if current in visited:
+	var usedCells = get_used_cells()
+	
+	for coord in usedCells:
+		if coord in visited:
 			continue
+		var stack := [coord]
+		
+		while stack.size() > 0:
+			var current = stack.pop_back()
 
-		visited[current] = true
+			if current in visited:
+				continue
 
-		# Get neighboring tiles (4-directional)
-		var neighbors : Array[Vector2i] = [
-			Vector2i.LEFT,
-			Vector2i.RIGHT,
-			Vector2i.UP,
-			Vector2i.DOWN
-		]
+			visited.append(current)
 
-		for neighbor in neighbors:
-			if (current + neighbor in usedCells):
-				if neighbor + current not in visited and !CantReach(current, neighbor) and !CantReach(current + neighbor, neighbor * -1):
-					stack.push_back(neighbor + current)
-			else:
-				if neighbor + current not in visited and !CantReach(current, neighbor, true):
-					exits.append(neighbor + current)
+			# Get neighboring tiles (4-directional)
+			var neighbors : Array[Vector2i] = [
+				Vector2i.LEFT,
+				Vector2i.RIGHT,
+				Vector2i.UP,
+				Vector2i.DOWN
+			]
+
+			for neighbor in neighbors:
+				if (current + neighbor in usedCells):
+					if neighbor + current not in visited and !CantReach(current, neighbor, true) and !CantReach(current + neighbor, neighbor * -1, true):
+						stack.push_back(neighbor + current)
+				else:
+					if neighbor + current not in visited and !CantReach(current, neighbor, true):
+						exits.append(neighbor + current)
 	
 	return exits
 
+func GetAStar() -> AStar2D:
+	var aStar = AStar2D.new()
+	var pointId : Array[Vector2i]
+	
+	var visited := []
+	var usedCells = get_used_cells()
+	for coord in usedCells:
+		if coord in visited:
+			continue
+		
+		var stack := [coord]
+		
+		pointId.append(coord)
+		aStar.add_point(pointId.find(coord), coord, 1)
+
+		while stack.size() > 0:
+			var current = stack.pop_back()
+
+			if current in visited:
+				continue
+
+			visited.append(current)
+			# Get neighboring tiles (4-directional)
+			var neighbors : Array[Vector2i] = [
+				Vector2i.LEFT,
+				Vector2i.RIGHT,
+				Vector2i.UP,
+				Vector2i.DOWN
+			]
+
+			for neighbor in neighbors:
+				if (current + neighbor in usedCells):
+					if neighbor + current not in visited and !CantReach(current, neighbor, true) and !CantReach(current + neighbor, neighbor * -1, true):
+						if (!pointId.has(neighbor + current)):
+							pointId.append(neighbor + current)
+						aStar.add_point(pointId.find(neighbor + current), neighbor + current, 1)
+						aStar.connect_points(pointId.find(current), pointId.find(neighbor + current))
+						stack.push_back(neighbor + current)
+				else:
+					if neighbor + current not in visited and !CantReach(current, neighbor, true):
+						if (!pointId.has(neighbor + current)):
+							pointId.append(neighbor + current)
+						aStar.add_point(pointId.find(neighbor + current), neighbor + current, 1)
+						aStar.connect_points(pointId.find(current), pointId.find(neighbor + current))
+
+	return aStar
+
 func separate_into_islands() -> Array:
 	var rooms := []
-	var visited := {}
+	var visited := []
 	
 	var usedCells = get_used_cells()
 	for coord in usedCells:
@@ -268,7 +353,7 @@ func flood_fill(start: Vector2i, tile_coords: Array, visited: Dictionary) -> Arr
 	
 	return room
 
-func flood_fill2(start: Vector2i, tile_coords: Array, visited: Dictionary) -> Array:
+func flood_fill2(start: Vector2i, tile_coords: Array, visited: Array) -> Array:
 	var room : Array = []
 	var stack := [start]
 
@@ -278,7 +363,7 @@ func flood_fill2(start: Vector2i, tile_coords: Array, visited: Dictionary) -> Ar
 		if current in visited:
 			continue
 
-		visited[current] = true
+		visited.append(current)
 		room.append(current)
 
 		# Get neighboring tiles (4-directional)
@@ -290,8 +375,9 @@ func flood_fill2(start: Vector2i, tile_coords: Array, visited: Dictionary) -> Ar
 		]
 
 		for neighbor in neighbors:
-			if current + neighbor in tile_coords and neighbor + current not in visited and !CantReach(current, neighbor, true) and !CantReach(current + neighbor, neighbor * -1, true):
-				stack.push_back(neighbor + current)
+			var neighborPos = current + neighbor
+			if neighborPos in tile_coords and neighborPos not in visited and !CantReach(current, neighbor, true):
+				stack.push_back(neighborPos)
 	
 	return room
 
