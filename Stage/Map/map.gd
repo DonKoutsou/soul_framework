@@ -58,7 +58,8 @@ enum LocationName{
 	Cave_Forest_Path,
 	Jail_Entrance,
 	Canyon,
-	Artifex
+	Artifex,
+	Chalice
 }
 
 enum TrapType {
@@ -227,7 +228,7 @@ func generate_maze(spawnMons : bool) -> void:
 	for Floor in Floors:
 		#Data.Mazes[FloorIndex] = {}
 		var FloorIndex = Floor.FloorNumber
-		for y in range(-50, 50):
+		for y in range(-100, 100):
 			var row : Dictionary[int, int] = {}
 			
 			for x in range(-50, 50):

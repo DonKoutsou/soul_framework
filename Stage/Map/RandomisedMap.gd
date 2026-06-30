@@ -6,11 +6,12 @@ class_name RandomisedMap
 @export var mapSize : Vector2i = Vector2i(40, 40)
 @export var usePatterns : bool = true
 @export var active : bool = true
-
 @export var collapseSeed : int = -1
 @export var collapseAll : bool = false
 @export var allowedPatterns : PackedInt32Array
 @export var drawAStar : bool = false
+@export var floorsToGenerate : PackedInt32Array = []
+
 @export_tool_button("Generate Map") var RegenerateAction = CollapseMap
 @export_tool_button("Clear Map") var clear = CleanMap
 
@@ -23,26 +24,63 @@ var cellData : Dictionary[Vector2i, collapseCellData]
 var tileData : Array[collapseTileData]
 var atlasData : Dictionary[int, Dictionary]
 
+var generatedFloors : PackedInt32Array = []
+var currentFloor : int = 0
+
 var rooms : Array
 var aStar : AStar2D
 
 var r : RandomNumberGenerator
 
+var finised : bool = false
+
+
+func generate_maze(spawnMons : bool) -> void:
+	
+	if (finised):
+		super(spawnMons)
+	else:
+		if (Engine.is_editor_hint()):
+			return
+		CollapseMap()
 
 func _process(_delta: float) -> void:
-	if (!active):
+	if (!active or finised):
 		return
+	if (Engine.is_editor_hint()):
+		collapseNext()
+	
+func collapseNext() -> void:
 
 	var possible : Array[Vector2i] = GetPossibleCollapses()
 	if (possible.size() == 0):
+		#generatedFloors.append(currentFloor)
+		#if (generatedFloors.size() != floorsToGenerate.size()):
+			#currentFloor += 1
+			#return
+		var f = GetFloor(currentFloor)
+		var mapInfoLayer = f.GetLayer(FloorLayer.LayerType.MAP_INFO)
+		var mazeLayer = f.GetLayer(FloorLayer.LayerType.MAZE)
+		var monsterLayer = f.GetLayer(FloorLayer.LayerType.MONSTERS)
+		var used = mazeLayer.get_used_cells()
+		var spawnIndex = r.randi_range(0, used.size() - 1)
+		mapInfoLayer.set_cell(used[spawnIndex], 0, Vector2i(14,0))
+		
+		for g in (mapSize.x * mapSize.y) / 100:
+			var monIndex = r.randi_range(0, used.size() - 1)
+			monsterLayer.set_cell(used[monIndex], 0, Vector2i(0,0))
+		
+		finised = true
+		generate_maze(true)
 		return
 		
-	var fl = GetFloor(0)
+	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	
 	#var usecbefore = Time.get_ticks_usec()
 	var msbefore = Time.get_ticks_msec()
-	while (Time.get_ticks_msec() - msbefore < 12):
+	#while (Time.get_ticks_msec() - msbefore < 12):
+	for i in 5:
 		if (possible.size() == 0):
 			possible = GetPossibleCollapses()
 			if (possible.size() == 0):
@@ -78,8 +116,10 @@ func _process(_delta: float) -> void:
 			rooms.append(combined)
 			combined.append(cellPos)
 			print("Combined rooms")
-		else:
+		else: if (ownerRooms.size() > 0):
 			ownerRooms[0].append(cellPos)
+		else:
+			continue
 		
 		#if multiple rooms exist we need to check if they have exits, if not we take back this collapse
 		var cancel : bool = false
@@ -87,18 +127,18 @@ func _process(_delta: float) -> void:
 		for room in rooms:
 			if (RoomHasExit(room, newExits)):
 				continue
-				
 			var cell = cellData[cellPos]
 			RefillTile(cellPos, cell)
 			UpdateConstrains(cell, cellPos)
 			layer.erase_cell(cellPos)
-			for g in rooms:
-				g.erase(cellPos)
 			print("Cell aborted")
-			layer.update_internals()
-			queue_redraw()
+			#layer.update_internals()
+			if (Engine.is_editor_hint()):
+				queue_redraw()
 			cancel = true
 			rooms = originalRooms
+			for g in rooms:
+				g.erase(cellPos)
 			currentExits.append(cellPos)
 			break
 					
@@ -122,8 +162,9 @@ func _process(_delta: float) -> void:
 			
 	#var usecAfter = Time.get_ticks_usec()
 	#print(usecAfter - usecbefore)
-	layer.update_internals()
-	queue_redraw()
+	#layer.update_internals()
+	if (Engine.is_editor_hint()):
+		queue_redraw()
 
 func GetPossibleCollapses() -> Array[Vector2i]:
 	var possible : Array[Vector2i]
@@ -184,7 +225,7 @@ func RefillTile(tilePos : Vector2i, cell : collapseCellData) -> void:
 #----------------------------------------------------
 #debug
 func _draw() -> void:
-	var fl = GetFloor(0)
+	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	for g in cellData:
 		var cell = cellData[g]
@@ -217,17 +258,19 @@ func CleanMap() -> void:
 #----------------------------------------------------
 #Starts the generation of the map
 func CollapseMap() -> void:
-	
-	#weights.clear()
-	
+	finised = false
 	r = RandomNumberGenerator.new()
 	if (collapseSeed != -1):
 		r.seed = collapseSeed
-		
-	var fl = GetFloor(0)
+	
+	generatedFloors.clear()
+	currentFloor = floorsToGenerate[0]
+	
+	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	
 	if (usePatterns):
+
 		var paterns : Array[TileMapPattern]
 		
 		for pat in layer.tile_set.get_patterns_count():
@@ -251,11 +294,12 @@ func CollapseMap() -> void:
 			if (foudPlace):
 				layer.set_pattern(randomPosition, randomPatern)
 		
-		layer.update_internals()
-
-	UpdateAtlasData(layer)
+	#layer.update_internals()
+	
+	UpdateAtlasData()
 	
 	cellData = {}
+	
 	
 	var Usedcells = layer.get_used_cells()
 	originalTiles.clear()
@@ -293,7 +337,14 @@ func CollapseMap() -> void:
 	currentExits = layer.find_exits()
 	rooms = layer.separate_into_islands()
 	
-	queue_redraw()
+	
+	
+	
+	if (Engine.is_editor_hint()):
+		queue_redraw()
+	else:
+		while(!finised):
+			collapseNext()
 
 func rotate_pattern(pattern: TileMapPattern, turns: int) -> TileMapPattern:
 	turns = posmod(turns, 4)
@@ -312,7 +363,7 @@ func rotate_pattern(pattern: TileMapPattern, turns: int) -> TileMapPattern:
 	var w = max_pos.x - min_pos.x + 1
 	var h = max_pos.y - min_pos.y + 1
 	
-	var fl = GetFloor(0)
+	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	
 	for cell in cells:
@@ -356,9 +407,11 @@ func rotate_pattern(pattern: TileMapPattern, turns: int) -> TileMapPattern:
 	return result
 
 #-----------------------------------------------
-func UpdateAtlasData(layer : MazeFloorLayer) -> void:
+func UpdateAtlasData() -> void:
 	atlasData.clear()
-	
+
+	var fl = GetFloor(currentFloor)
+	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	#var emptyData : Dictionary = {
 		#"Walls" : NEIGHBOR_DIRECTIONS,
 		#"DoorWalls" : [],
@@ -433,13 +486,10 @@ func CellCollapsed(cellPos : Vector2i) -> void:
 	if(pickedTile.tileIndex == -1):
 		return
 		
-	var fl = GetFloor(0)
+	var fl = GetFloor(currentFloor)
 	var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	layer.set_cell(cellPos, 10, Vector2i(pickedTile.tileIndex, 0), GetTileAltFromRotation(pickedTile.tileRotation))
-	
-	
-			
-	
+
 
 #----------------------------------------------
 ##Propagates constrains of provided cell, keeps going until no more changes are possible

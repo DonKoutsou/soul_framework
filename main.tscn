@@ -12,7 +12,7 @@ environment = ExtResource("4_0uymt")
 [node name="Main" type="Node" unique_id=97227879]
 process_mode = 3
 script = ExtResource("1_jjgbg")
-StartingLevel = 8
+StartingLevel = 16
 StageScene = "uid://c4k4pjxrbh0os"
 StartingMenuScene = "uid://i78xcdi566ur"
 ParticleScene = "uid://6f15eci71acs"
