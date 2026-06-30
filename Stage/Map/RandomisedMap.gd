@@ -71,93 +71,109 @@ func _process(delta: float) -> void:
 				possible.append(g)
 			else: if cellEntropy == currentEntropy:
 				possible.append(g)
-
 	
-	if (possible.size() > 0):
-		var randomIndex = r.randi_range(0, possible.size() - 1)
-		var cellPos = possible[randomIndex]
-
-		CellCollapsed(cellPos)
-		
-		var newExits = layer.GetNeighboringExits(cellPos)
-		
-		#find room colsapsed cell belongs to
-		var neighbors : Array[Vector2i] = [
-			Vector2i.LEFT,
-			Vector2i.RIGHT,
-			Vector2i.UP,
-			Vector2i.DOWN
-		]
-		
-		var ownerRooms : Array
-		
-		
-		for g : Array in rooms:
-			for neighbor in neighbors:
-				if (g.has(cellPos + neighbor)):
-					ownerRooms.append(g)
-					break
-		
-		if (ownerRooms.size() > 1):
-			#commbineRooms
-			var combined : Array
-			for g in ownerRooms:
-				combined.append_array(g)
-				rooms.erase(g)
-			rooms.append(combined)
-		else:
-			ownerRooms[0].append(cellPos)
-		#var msBefore = Time.get_ticks_msec()
-		#rooms = layer.separate_into_islands()
-		#var msAfter = Time.get_ticks_msec()
-		#print("Island Separation took {0}".format([msAfter - msBefore]))
-		
-		if (rooms.size() > 1):
-			for room in rooms:
-				
-				var exit = Vector2i(9999,9999)
-				for g in currentExits:
-					for neighbor in neighbors:
-						if (room.has(g + neighbor)):
-							exit = g
-							break
-				for g in newExits:
-					for neighbor in neighbors:
-						if (room.has(g + neighbor)):
-							if (room.has(g)):
-								exit = g
-								break
-						
-				if (exit == Vector2i(9999,9999)):
-					
-					var cell = cellData[cellPos]
-					RefillTile(cellPos, cell)
-					UpdateConstrains(cell, cellPos)
-					layer.erase_cell(cellPos)
-					layer.update_internals()
-					queue_redraw()
-					rooms.erase(cellPos)
-					return
-
-		
-		currentExits.erase(cellPos)
-		var collapsedCellID = aStar.get_closest_point(cellPos)
-	
-		for g in newExits:
-			if (currentExits.has(g)):
-				var exitPointID = aStar.get_closest_point(g)
-				aStar.connect_points(collapsedCellID, exitPointID)
-			else:
-				var exitPointID = aStar.get_point_count()
-				aStar.add_point(exitPointID ,g)
-				aStar.connect_points(collapsedCellID, exitPointID)
-				
-				currentExits.append(g)
+	var msbefore = Time.get_ticks_msec()
+	while (Time.get_ticks_msec() - msbefore < 8):
+		if (possible.size() > 0):
+			#var msBeforCell = Time.get_ticks_msec()
 			
-		PropagateContrains(cellPos)
-		queue_redraw()
+			var randomIndex = r.randi_range(0, possible.size() - 1)
+			var cellPos = possible[randomIndex]
 
+			CellCollapsed(cellPos)
+			
+			currentExits.erase(cellPos)
+			
+			
+			var newExits = layer.GetNeighboringExits(cellPos)
+			
+			#find room colsapsed cell belongs to
+			var neighbors : Array[Vector2i] = [
+				Vector2i.LEFT,
+				Vector2i.RIGHT,
+				Vector2i.UP,
+				Vector2i.DOWN
+			]
+			
+			var ownerRooms : Array
+			
+			#find the owner room of this cell
+			for g : Array in rooms:
+				for neighbor in neighbors:
+					if (g.has(cellPos + neighbor) and !layer.CantReach(cellPos, neighbor, true)):
+						ownerRooms.append(g)
+						break
+			
+			var originalRooms = rooms.duplicate()
 
+			#if multiple owners exist we need to merge them since the cell bridges them.
+			if (ownerRooms.size() > 1):
+				var combined : Array
+				for g in ownerRooms:
+					combined.append_array(g)
+					rooms.erase(g)
+				rooms.append(combined)
+				combined.append(cellPos)
+				print("Combined rooms")
+			else:
+				ownerRooms[0].append(cellPos)
+			
+			#if multiple rooms exist we need to check if they have exits, if not we take back this collapse
+			var cancel : bool = false
+			
+			for room in rooms:
+				if (RoomHasExit(room, newExits)):
+					continue
+					
+				var cell = cellData[cellPos]
+				RefillTile(cellPos, cell)
+				UpdateConstrains(cell, cellPos)
+				layer.erase_cell(cellPos)
+				for g in rooms:
+					g.erase(cellPos)
+				print("Cell aborted")
+				layer.update_internals()
+				queue_redraw()
+				cancel = true
+				rooms = originalRooms
+				currentExits.append(cellPos)
+				break
+						
+			if (!cancel):
+				possible.remove_at(randomIndex)
+				
+				
+				var collapsedCellID = aStar.get_closest_point(cellPos)
+			
+				for g in newExits:
+					if (currentExits.has(g)):
+						var exitPointID = aStar.get_closest_point(g)
+						aStar.connect_points(collapsedCellID, exitPointID)
+					else:
+						var exitPointID = aStar.get_point_count()
+						aStar.add_point(exitPointID ,g)
+						aStar.connect_points(collapsedCellID, exitPointID)
+						
+						currentExits.append(g)
+					
+				PropagateContrains(cellPos)
+				#print("Cell took {0}ms".format([Time.get_ticks_msec() - msBeforCell]))
+	layer.update_internals()
+	queue_redraw()
+
+func RoomHasExit(room : Array, newExits : Array[Vector2i]) -> bool:
+	for g in currentExits:
+		for neighbor in NEIGHBOR_DIRECTIONS:
+			if (room.has(g + neighbor)):
+				return true
+				
+	for g in newExits:
+		for neighbor in NEIGHBOR_DIRECTIONS:
+			if (room.has(g + neighbor)):
+				return true
+				
+	return false
+#------------------------------------------------
 func RefillTile(tilePos : Vector2i, cell : collapseCellData) -> void:
 	cell.possibleTiles.clear()
 	cell.collapsed = false
@@ -196,13 +212,13 @@ func _draw() -> void:
 		draw_string(ThemeDB.fallback_font, layer.map_to_local(g) - stringSize, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
 	
 	
-	var used = layer.get_used_cells()
-	
-	for g in used:
-		var pointId = aStar.get_closest_point(g)
-		var connections = aStar.get_point_connections(pointId)
-		for connection in connections:
-			draw_line(layer.map_to_local(g), layer.map_to_local(aStar.get_point_position(connection)), Color(1,0,0, 0.3))
+	#var used = layer.get_used_cells()
+	#
+	#for g in used:
+		#var pointId = aStar.get_closest_point(g)
+		#var connections = aStar.get_point_connections(pointId)
+		#for connection in connections:
+			#draw_line(layer.map_to_local(g), layer.map_to_local(aStar.get_point_position(connection)), Color(1,0,0, 0.3))
 		
 
 #---------------------------------------------------
@@ -234,11 +250,18 @@ func CollapseMap() -> void:
 		#check for spots to fit any of the patterns
 		while (paterns.size() > 0):
 			var index = r.randi_range(0, paterns.size() - 1)
-			var randomPatern : TileMapPattern = paterns[index]
+			var randomPatern : TileMapPattern = rotate_pattern(paterns[index], r.randi_range(0, 3))
 			paterns.remove_at(index)
 			var randomPosition = Vector2i(r.randi_range(1, mapSize.x - 2 - randomPatern.get_size().x), r.randi_range(1, mapSize.y - 2 - randomPatern.get_size().y))
-			
-			if (can_place_pattern(layer, randomPatern, randomPosition)):
+
+			var maxTries : int = 5
+			var foudPlace = can_place_pattern(layer, randomPatern, randomPosition)
+			while (!foudPlace and maxTries > 0):
+				randomPosition = Vector2i(r.randi_range(1, mapSize.x - 2 - randomPatern.get_size().x), r.randi_range(1, mapSize.y - 2 - randomPatern.get_size().y))
+				foudPlace = can_place_pattern(layer, randomPatern, randomPosition)
+				maxTries -= 1
+				
+			if (foudPlace):
 				layer.set_pattern(randomPosition, randomPatern)
 		
 		layer.update_internals()
@@ -284,6 +307,66 @@ func CollapseMap() -> void:
 	rooms = layer.separate_into_islands()
 	
 	queue_redraw()
+
+func rotate_pattern(pattern: TileMapPattern, turns: int) -> TileMapPattern:
+	turns = posmod(turns, 4)
+
+	var result := TileMapPattern.new()
+	var cells := pattern.get_used_cells()
+
+	# bounds
+	var min_pos := cells[0]
+	var max_pos := cells[0]
+
+	for c in cells:
+		min_pos = min_pos.min(c)
+		max_pos = max_pos.max(c)
+
+	var w = max_pos.x - min_pos.x + 1
+	var h = max_pos.y - min_pos.y + 1
+	
+	var fl = GetFloor(0)
+	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+	
+	for cell in cells:
+		var local = cell - min_pos
+		var new_pos: Vector2i
+
+		# rotate position
+		match turns:
+			0:
+				new_pos = local
+			1:
+				new_pos = Vector2i(h - 1 - local.y, local.x)
+			2:
+				new_pos = Vector2i(w - 1 - local.x, h - 1 - local.y)
+			3:
+				new_pos = Vector2i(local.y, w - 1 - local.x)
+
+		# copy tile data
+		var source_id = pattern.get_cell_source_id(cell)
+		var atlas = pattern.get_cell_atlas_coords(cell)
+		var altTile = pattern.get_cell_alternative_tile(cell)
+		
+		
+		# get current rotation
+		var rot_radians = layer.GetRotationFromAltTile(altTile)
+
+		# apply room rotation
+		rot_radians += turns * (PI * 0.5)
+		
+		rot_radians = wrapf(rot_radians, -PI/2, PI + PI/2)
+		# convert rotation -> alternative tile (YOU provide this)
+		var alternative = GetTileAltFromRotation(rot_radians)
+
+		result.set_cell(
+			new_pos,
+			source_id,
+			atlas,
+			alternative
+		)
+
+	return result
 
 #-----------------------------------------------
 func UpdateAtlasData(layer : MazeFloorLayer) -> void:
@@ -338,6 +421,9 @@ func can_place_pattern(tilemap: TileMapLayer,pattern: TileMapPattern, patternPos
 		# Check if something is already placed
 		if tilemap.get_cell_source_id(map_cell) != -1:
 			return false
+		for neighbor in NEIGHBOR_DIRECTIONS:
+			if tilemap.get_cell_source_id(map_cell + neighbor) != -1:
+				return false
 
 	return true
 
