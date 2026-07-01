@@ -19,7 +19,7 @@ func UpdateColliderSize() -> void:
 
 
 func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
-	var cell = Data.cells[pos]
+	var cell = Data.GetCell(pos)
 	
 	if (!cell.HasData("BlockingDeco")):
 		return

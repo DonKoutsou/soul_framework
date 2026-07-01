@@ -137,7 +137,7 @@ height = 0.3
 radial_segments = 4
 rings = 2
 
-[node name="DungeonLevel22" type="Node3D" unique_id=127161226 node_paths=PackedStringArray("MonsterMan", "TrapMan", "AudioMan", "AmbientAudio", "PropMeshSpawner", "BackgroundMesh", "ProjectileSwitchArea")]
+[node name="DungeonLevel23" type="Node3D" unique_id=127161226 node_paths=PackedStringArray("MonsterMan", "TrapMan", "AudioMan", "AmbientAudio", "PropMeshSpawner", "BackgroundMesh", "ProjectileSwitchArea")]
 script = ExtResource("1_8kag3")
 MonsterMan = NodePath("MonsterManager")
 TrapMan = NodePath("TrapManager")

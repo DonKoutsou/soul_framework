@@ -7,7 +7,6 @@ class_name DecorationMultimesh
 @export var AllowOnCeiling : bool = false
 
 func ProcessPosition(Data : MapData, pos : Vector3i, r : RandomNumberGenerator = null) -> void:
-
 	var cell = Data.cells[pos]
 	var ammSpawned : int = 0
 	if (cell.Custom_Data.has("Decorations")):

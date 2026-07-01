@@ -91,7 +91,6 @@ func AddSpawn(mesh : RID, pos : Vector3i, loc : Transform3D, index : int, collis
 	if (matOverride.get_id() != 0):
 		RenderingServer.instance_geometry_set_material_override(Instance, matOverride)
 
-
 func Update(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
 	Sc = get_world_3d().scenario
 	RemoveOldSpawns(positions)
@@ -109,7 +108,6 @@ func AwaitAndStart(Data : MapData, positions : Array[Vector3i], r : RandomNumber
 	if (threadTaskID >= 0):
 		WorkerThreadPool.wait_for_task_completion(threadTaskID)
 	threadTaskID = WorkerThreadPool.add_task(Process.bind(Data, positions, r))
-
 
 func Process(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
 	for mapPos : Vector3i in positions:

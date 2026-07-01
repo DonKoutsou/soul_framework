@@ -3,38 +3,63 @@ extends Map
 
 class_name RandomisedMap
 
-@export var mapSize : Vector2i = Vector2i(40, 40)
-@export var usePatterns : bool = true
+
 @export var active : bool = true
+
+##The generated map will not surpass this value
+@export var mapSize : Vector2i = Vector2i(40, 40)
+
+##Enables the generation to use patterns stored inside the maze tileset
+@export var usePatterns : bool = true
+
+##Seed used for the generation
 @export var collapseSeed : int = -1
-@export var collapseAll : bool = false
-@export var allowedPatterns : PackedInt32Array
+
+##Used for debug
 @export var drawAStar : bool = false
+
+##Only floors set up here will be generated
 @export var floorsToGenerate : PackedInt32Array = []
 
+##Kicks of the generation of the map
 @export_tool_button("Generate Map") var RegenerateAction = CollapseMap
+
+##Clears tilemaps of any configured tile
 @export_tool_button("Clear Map") var clear = CleanMap
 
+
 const NEIGHBOR_DIRECTIONS : Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
-const rotations : Array[float] = [0, PI/2, PI, -PI/2]
+const ROTATIONS : Array[float] = [0, PI/2, PI, -PI/2]
 
+##Current exits, generation uses this to choose next cell to collapse
 var currentExits : Array[Vector2i]
-var originalTiles : Array[Vector2i]
-var cellData : Dictionary[Vector2i, collapseCellData]
-var tileData : Array[collapseTileData]
-var atlasData : Dictionary[int, Dictionary]
 
+##Cells already placed before generation starts or cells spawned by patterns are storred here to avoid changing them
+var originalTiles : Array[Vector2i]
+
+##
+var cellData : Dictionary[Vector2i, collapseCellData]
+
+#
+var tileData : Array[collapseTileData]
+var atlasData : Dictionary[int, TileData]
+
+##Keeping track of floors that have already been generated
 var generatedFloors : PackedInt32Array = []
+
+##Currently generating floor
 var currentFloor : int = 0
+
 
 var rooms : Array
 var aStar : AStar2D
 
 var r : RandomNumberGenerator
 
+
 var finised : bool = false
 
-
+#---------------------------------------------
 func generate_maze(spawnMons : bool) -> void:
 	
 	if (finised):
@@ -44,15 +69,19 @@ func generate_maze(spawnMons : bool) -> void:
 			return
 		CollapseMap()
 
+#---------------------------------------------
 func _process(_delta: float) -> void:
 	if (!active or finised):
 		return
 	if (Engine.is_editor_hint()):
 		collapseNext()
-	
-func collapseNext() -> void:
 
+#---------------------------------------------
+func collapseNext() -> void:
+	
+	#Get possible cells that we could collapse
 	var possible : Array[Vector2i] = GetPossibleCollapses()
+	
 	if (possible.size() == 0):
 		#generatedFloors.append(currentFloor)
 		#if (generatedFloors.size() != floorsToGenerate.size()):
@@ -78,7 +107,7 @@ func collapseNext() -> void:
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	
 	#var usecbefore = Time.get_ticks_usec()
-	var msbefore = Time.get_ticks_msec()
+	#var msbefore = Time.get_ticks_msec()
 	#while (Time.get_ticks_msec() - msbefore < 12):
 	for i in 5:
 		if (possible.size() == 0):
@@ -166,15 +195,16 @@ func collapseNext() -> void:
 	if (Engine.is_editor_hint()):
 		queue_redraw()
 
+#---------------------------------------------
+##Returns cells with the lowest entropy
 func GetPossibleCollapses() -> Array[Vector2i]:
 	var possible : Array[Vector2i]
 	var currentEntropy = INF
 	for g in cellData:
-		if (collapseAll):
-			if (currentExits.size() > 0 and !currentExits.has(g)):
-				continue
-		else: if (!currentExits.has(g)):
+
+		if (currentExits.size() > 0 and !currentExits.has(g)):
 			continue
+
 		var cell = cellData[g]
 		if (cell.collapsed):
 			continue
@@ -189,35 +219,39 @@ func GetPossibleCollapses() -> Array[Vector2i]:
 			possible.append(g)
 	return possible
 
-func RoomHasExit(room : Array, newExits : Array[Vector2i]) -> bool:
+#---------------------------------------------
+##Checks if the this room is in contact with any of the exits
+func RoomHasExit(room : Array, Exits : Array[Vector2i]) -> bool:
 	for g in currentExits:
 		for neighbor in NEIGHBOR_DIRECTIONS:
 			if (room.has(g + neighbor)):
 				return true
 				
-	for g in newExits:
+	for g in Exits:
 		for neighbor in NEIGHBOR_DIRECTIONS:
 			if (room.has(g + neighbor)):
 				return true
 				
 	return false
 #------------------------------------------------
+##Resets state of cell
 func RefillTile(tilePos : Vector2i, cell : collapseCellData) -> void:
 	cell.possibleTiles.clear()
 	cell.collapsed = false
 	for tile in tileData:
+		
+		#If we are on map edge check to make sure we have wall facing edge
 		if (tilePos.x == 0):
-			if (!TestDirection(tile, Vector2(-1,0))):
+			if (!HasWallInDirection(tile, Vector2(-1,0))):
 				continue
 		else: if (tilePos.x == mapSize.x - 1):
-			if (!TestDirection(tile, Vector2(1,0))):
+			if (!HasWallInDirection(tile, Vector2(1,0))):
 				continue
-				
 		if (tilePos.y == 0):
-			if (!TestDirection(tile, Vector2(0, -1))):
+			if (!HasWallInDirection(tile, Vector2(0, -1))):
 				continue
 		else: if (tilePos.y == mapSize.y - 1):
-			if (!TestDirection(tile, Vector2(0, 1))):
+			if (!HasWallInDirection(tile, Vector2(0, 1))):
 				continue
 		
 		cell.possibleTiles.append(tile)
@@ -250,21 +284,25 @@ func _draw() -> void:
 		
 
 #---------------------------------------------------
+##Clears all tilemap layers in map
 func CleanMap() -> void:
 	for fl in Floors:
 		for layer : TileMapLayer in fl.get_children():
 			layer.clear()
 
 #----------------------------------------------------
-#Starts the generation of the map
+##Starts the generation of the map
 func CollapseMap() -> void:
 	finised = false
-	r = RandomNumberGenerator.new()
-	if (collapseSeed != -1):
-		r.seed = collapseSeed
-	
 	generatedFloors.clear()
 	currentFloor = floorsToGenerate[0]
+	cellData = {}
+	UpdateAtlasData()
+	
+	r = RandomNumberGenerator.new()
+	#-1 is default seed value
+	if (collapseSeed != -1):
+		r.seed = collapseSeed
 	
 	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
@@ -274,8 +312,7 @@ func CollapseMap() -> void:
 		var paterns : Array[TileMapPattern]
 		
 		for pat in layer.tile_set.get_patterns_count():
-			if (allowedPatterns.has(pat)):
-				paterns.append(layer.tile_set.get_pattern(pat))
+			paterns.append(layer.tile_set.get_pattern(pat))
 		
 		#check for spots to fit any of the patterns
 		while (paterns.size() > 0):
@@ -293,14 +330,8 @@ func CollapseMap() -> void:
 				
 			if (foudPlace):
 				layer.set_pattern(randomPosition, randomPatern)
-		
-	#layer.update_internals()
 	
-	UpdateAtlasData()
-	
-	cellData = {}
-	
-	
+	#store any existing cells in map
 	var Usedcells = layer.get_used_cells()
 	originalTiles.clear()
 	for cell in Usedcells:
@@ -316,7 +347,8 @@ func CollapseMap() -> void:
 		positionCellData.collapsed = true
 		
 		cellData[cell] = positionCellData
-
+	
+	#Initialise all tiles
 	for x in mapSize.x:
 		for y in mapSize.y:
 			var pos = Vector2i(x, y)
@@ -330,6 +362,7 @@ func CollapseMap() -> void:
 					
 			cellData[pos] = positionCellData
 	
+	#Propagate any existing contrains
 	for cell in Usedcells:
 		PropagateContrains(cell)
 	
@@ -337,15 +370,15 @@ func CollapseMap() -> void:
 	currentExits = layer.find_exits()
 	rooms = layer.separate_into_islands()
 	
-	
-	
-	
 	if (Engine.is_editor_hint()):
 		queue_redraw()
 	else:
 		while(!finised):
 			collapseNext()
 
+
+#---------------------------------------------------------------
+##Returns a rotated duplicate of the provided pattern
 func rotate_pattern(pattern: TileMapPattern, turns: int) -> TileMapPattern:
 	turns = posmod(turns, 4)
 
@@ -407,6 +440,7 @@ func rotate_pattern(pattern: TileMapPattern, turns: int) -> TileMapPattern:
 	return result
 
 #-----------------------------------------------
+##Collect all data from tileset and store them in atlasData
 func UpdateAtlasData() -> void:
 	atlasData.clear()
 
@@ -423,12 +457,11 @@ func UpdateAtlasData() -> void:
 	var tileAtlas : TileSetAtlasSource = layer.tile_set.get_source(10)
 	for tileIndex : int in layer.tile_set.get_source(10).get_tiles_count():
 		var dat : TileData = tileAtlas.get_tile_data(Vector2i(tileIndex, 0), 0)
-		var dataDict = TileDataToDict(dat)
-		atlasData[tileIndex] = dataDict
+		atlasData[tileIndex] = dat
 	
 	tileData.clear()
 	for tileIndex : int in atlasData:
-		for rot in rotations:
+		for rot in ROTATIONS:
 			var dat = collapseTileData.new()
 			dat.tileIndex = tileIndex
 			dat.tileRotation = rot
@@ -436,6 +469,7 @@ func UpdateAtlasData() -> void:
 			tileData.append(dat)
 
 #-----------------------------------------------
+##Converts tileData to a dictionary
 func TileDataToDict(dat : TileData) -> Dictionary:
 	var dataDict : Dictionary = {
 			"Walls" : dat.get_custom_data("Walls"),
@@ -468,12 +502,13 @@ func can_place_pattern(tilemap: TileMapLayer,pattern: TileMapPattern, patternPos
 	return true
 
 #-----------------------------------------------
+##Called when a cell collapses meaning its possibilities have reached 1
 func CellCollapsed(cellPos : Vector2i) -> void:
 	var cell = cellData[cellPos]
 	var availableWeights : PackedFloat32Array
 	
 	for tile : collapseTileData in cell.possibleTiles :
-		availableWeights.append(atlasData[tile.tileIndex]["CollapseWeight"])
+		availableWeights.append(atlasData[tile.tileIndex].get_custom_data("CollapseWeight"))
 
 	var picked = r.rand_weighted(availableWeights)
 	
@@ -551,32 +586,35 @@ func GetTileAltFromRotation(rot : float) -> int:
 			
 	return tile_alternate
 
-func TestDirection(data : collapseTileData, dir : Vector2) -> bool:
+#------------------------------------------------------------------
+##Checks is tile has wall in specified direction
+func HasWallInDirection(data : collapseTileData, dir : Vector2) -> bool:
 	if (data.tileIndex == -1):
 		return true
 		
-	var dat : Dictionary = atlasData[data.tileIndex]
+	var dat : TileData = atlasData[data.tileIndex]
 		
-	for wall : Vector2 in dat["Walls"]:
+	for wall : Vector2 in dat.get_custom_data("Walls"):
 		var wallDir = wall.rotated(data.tileRotation).round()
 		if (dir.is_equal_approx(wallDir)): ##we found wall the matches direction
 			return true
 			
 	return false
 
+#-------------------------------------------------------------
 ##Used to declare the blocking direction of each of the MAZE tiles
 func TilesMatch (originData : collapseTileData, destinationData : collapseTileData, dir : Vector2) -> bool:
 	var oppositeDir = -dir
 
-	var dat : Dictionary = atlasData[originData.tileIndex]
-	var dat2 : Dictionary = atlasData[destinationData.tileIndex]
+	var dat : TileData = atlasData[originData.tileIndex]
+	var dat2 : TileData = atlasData[destinationData.tileIndex]
 
-	for wall : Vector2 in dat["Walls"]:
+	for wall : Vector2 in dat.get_custom_data("Walls"):
 		var wallDir = wall.rotated(originData.tileRotation).round()
 		if (dir.is_equal_approx(wallDir)): ##we found wall the matches direction
 			
 			#check if other tile has wall in opposite Dir
-			for oppositewall : Vector2 in dat2["Walls"]:
+			for oppositewall : Vector2 in dat2.get_custom_data("Walls"):
 				var oppositeWallDir = oppositewall.rotated(destinationData.tileRotation).round()
 				if (oppositeDir.is_equal_approx(oppositeWallDir)):
 					return true
@@ -585,12 +623,12 @@ func TilesMatch (originData : collapseTileData, destinationData : collapseTileDa
 			return false
 
 	#do same for door walls
-	for wall : Vector2 in dat["DoorWalls"]:
+	for wall : Vector2 in dat.get_custom_data("DoorWalls"):
 		var wallDir = wall.rotated(originData.tileRotation).round()
 		if (dir.is_equal_approx(wallDir)): ##we found wall the matches direction
 			
 			#check if other tile has wall in opposite Dir
-			for oppositewall : Vector2 in dat2["DoorWalls"]:
+			for oppositewall : Vector2 in dat2.get_custom_data("DoorWalls"):
 				var oppositeWallDir = oppositewall.rotated(destinationData.tileRotation).round()
 				if (oppositeDir.is_equal_approx(oppositeWallDir)):
 					return true
@@ -599,12 +637,12 @@ func TilesMatch (originData : collapseTileData, destinationData : collapseTileDa
 			return false
 
 	#if no walls were found to match direction then it means we check the destination tile to make sure it has no walls either
-	for oppositewall : Vector2 in dat2["Walls"]:
+	for oppositewall : Vector2 in dat2.get_custom_data("Walls"):
 		var oppositeWallDir = oppositewall.rotated(destinationData.tileRotation).round()
 		if (oppositeDir.is_equal_approx(oppositeWallDir)):
 			return false
 			
-	for oppositewall : Vector2 in dat2["DoorWalls"]:
+	for oppositewall : Vector2 in dat2.get_custom_data("DoorWalls"):
 		var oppositeWallDir = oppositewall.rotated(destinationData.tileRotation).round()
 		if (oppositeDir.is_equal_approx(oppositeWallDir)):
 			return false
