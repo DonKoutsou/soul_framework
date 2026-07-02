@@ -4,18 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://crk6pkb7e5rwc" path="res://Engine/Assets/Trail/texture.tres" id="2_ao643"]
 [ext_resource type="Texture2D" uid="uid://ct31fhxvcragr" path="res://Engine/Assets/Trail/curve.tres" id="3_ccmm4"]
 
-[sub_resource type="Curve" id="Curve_gxv5j"]
-bake_resolution = 16
-_data = [Vector2(0, 0), 0.0, 2.5696464, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_ao643"]
-curve = SubResource("Curve_gxv5j")
-
 [resource]
 render_priority = 0
 shader = ExtResource("1_gxv5j")
 shader_parameter/color_ramp = ExtResource("2_ao643")
 shader_parameter/curve = ExtResource("3_ccmm4")
-shader_parameter/profileCurce = SubResource("CurveTexture_ao643")
 shader_parameter/alpha_scale = 0.800000038

@@ -538,7 +538,7 @@ func HandleWalk(event: InputEvent) -> void:
 			LockedDoorMet.emit(DorLoc)
 			
 		else: if (Collider is Interactable):
-			HandleInteractable(Collider, PlayerPos, NewPosition)
+			NewPosition = HandleInteractable(Collider, PlayerPos, NewPosition)
 
 		else:
 			HitWall.emit(PlayerPos, LookDir.y)

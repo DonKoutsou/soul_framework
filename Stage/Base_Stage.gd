@@ -358,12 +358,13 @@ func RecruitTeleport(mapCharacter : MapCharacter, NewLocation : Map.LocationName
 	var loc = StoredWorlds[NewLocation]
 	
 	var cell = loc.GetCell(Pos) 
-	cell.AddData("Recruit", mapCharacter)
+	cell.AddData("Recruit", mapCharacter.Char)
+	
 	
 	var CurrentLoc = Helper.PlayerPositionToMap(mapCharacter.position)
-	var currentCell = loc.GetCell(CurrentLoc)
+	var currentCell = CurrentWorld.GetMapData().GetCell(CurrentLoc)
 	currentCell.Custom_Data.erase("Recruit")
-
+	
 
 #func FoundMerchant() -> void:
 	#Manequin.ReturnCam()

@@ -9,4 +9,4 @@ shader_parameter/ColorAmm = 32.0
 shader_parameter/levels = 32
 shader_parameter/dither_texture = ExtResource("2_hdf8t")
 shader_parameter/DitherRes = Vector2(320, 240)
-shader_parameter/threshold = 1.0
+shader_parameter/threshold = 0.4430000210425

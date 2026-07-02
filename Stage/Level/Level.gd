@@ -370,7 +370,7 @@ func UpdateMapCharacters() -> void:
 			Rec.ConfigureCharacter(cell.Custom_Data["Recruit"])
 			
 			Characters[mapPos] = Rec
-			Rec.position = Vector3(realPos) + Vector3(0, 0.1 ,0)
+			Rec.position = Vector3(realPos)
 			
 			call_deferred("add_child", Rec)
 
