@@ -9,7 +9,7 @@
 radius = 0.01
 height = 0.02
 radial_segments = 4
-rings = 2
+rings = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" unique_id=2027374756]
 mesh = SubResource("SphereMesh_4hipe")

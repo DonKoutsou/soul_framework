@@ -13,144 +13,23 @@ Floors = [NodePath("Floor_-1"), NodePath("Floor_0"), NodePath("Floor_1")]
 show_behind_parent = true
 FloorNumber = -1
 
-[node name="MAZE" parent="Floor_-1" index="0" unique_id=817992180]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="DOORS" parent="Floor_-1" index="1" unique_id=584279988]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MAP_INFO" parent="Floor_-1" index="2" unique_id=1043461689]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MAP_INFO2" parent="Floor_-1" index="3" unique_id=179013606]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="EXITS" parent="Floor_-1" index="4" unique_id=1074619576]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="ITEMS" parent="Floor_-1" index="5" unique_id=288722588]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="CHARACTERS" parent="Floor_-1" index="6" unique_id=1640039887]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MONSTERS" parent="Floor_-1" index="7" unique_id=173128641]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="LEVERS" parent="Floor_-1" index="8" unique_id=521985993]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="LOCKS" parent="Floor_-1" index="9" unique_id=580903904]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="PLATES" parent="Floor_-1" index="10" unique_id=2070613937]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MOVABLES" parent="Floor_-1" index="11" unique_id=909357748]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="PROJECTILE_SWITCH" parent="Floor_-1" index="12" unique_id=628202626]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="TEXTS" parent="Floor_-1" index="13" unique_id=830701216]
-DebugStringColor = Color(1, 1, 1, 1)
-
 [node name="Floor_0" parent="." unique_id=1743688447 instance=ExtResource("37_oapox")]
 show_behind_parent = true
-
-[node name="MAZE" parent="Floor_0" index="0" unique_id=817992180]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="DOORS" parent="Floor_0" index="1" unique_id=584279988]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MAP_INFO" parent="Floor_0" index="2" unique_id=1043461689]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MAP_INFO2" parent="Floor_0" index="3" unique_id=179013606]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="EXITS" parent="Floor_0" index="4" unique_id=1074619576]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="ITEMS" parent="Floor_0" index="5" unique_id=288722588]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="CHARACTERS" parent="Floor_0" index="6" unique_id=1640039887]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MONSTERS" parent="Floor_0" index="7" unique_id=173128641]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="LEVERS" parent="Floor_0" index="8" unique_id=521985993]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="LOCKS" parent="Floor_0" index="9" unique_id=580903904]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="PLATES" parent="Floor_0" index="10" unique_id=2070613937]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MOVABLES" parent="Floor_0" index="11" unique_id=909357748]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="PROJECTILE_SWITCH" parent="Floor_0" index="12" unique_id=628202626]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="TEXTS" parent="Floor_0" index="13" unique_id=830701216]
-DebugStringColor = Color(1, 1, 1, 1)
 
 [node name="Floor_1" parent="." unique_id=906513081 instance=ExtResource("37_oapox")]
 show_behind_parent = true
 FloorNumber = 1
 
-[node name="MAZE" parent="Floor_1" index="0" unique_id=817992180]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="DOORS" parent="Floor_1" index="1" unique_id=584279988]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MAP_INFO" parent="Floor_1" index="2" unique_id=1043461689]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MAP_INFO2" parent="Floor_1" index="3" unique_id=179013606]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="EXITS" parent="Floor_1" index="4" unique_id=1074619576]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="ITEMS" parent="Floor_1" index="5" unique_id=288722588]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="CHARACTERS" parent="Floor_1" index="6" unique_id=1640039887]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MONSTERS" parent="Floor_1" index="7" unique_id=173128641]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="LEVERS" parent="Floor_1" index="8" unique_id=521985993]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="LOCKS" parent="Floor_1" index="9" unique_id=580903904]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="PLATES" parent="Floor_1" index="10" unique_id=2070613937]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="MOVABLES" parent="Floor_1" index="11" unique_id=909357748]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="PROJECTILE_SWITCH" parent="Floor_1" index="12" unique_id=628202626]
-DebugStringColor = Color(1, 1, 1, 1)
-
-[node name="TEXTS" parent="Floor_1" index="13" unique_id=830701216]
-DebugStringColor = Color(1, 1, 1, 1)
-
 [node name="ExtraProps" type="Node3D" parent="." unique_id=1450707516]
+script = ExtResource("3_kekn7")
+
+[node name="MegaProps" type="Node3D" parent="." unique_id=1661051537]
 script = ExtResource("3_kekn7")
 
 [connection signal="child_entered_tree" from="ExtraProps" to="ExtraProps" method="_on_child_entered_tree"]
 [connection signal="child_exiting_tree" from="ExtraProps" to="ExtraProps" method="_on_child_exiting_tree"]
+[connection signal="child_entered_tree" from="MegaProps" to="MegaProps" method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="MegaProps" to="MegaProps" method="_on_child_exiting_tree"]
 
 [editable path="Floor_-1"]
 [editable path="Floor_0"]

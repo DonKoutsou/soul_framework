@@ -18,6 +18,7 @@ enum CELLTYPE{
 	DUG_DUGGABLE,
 	ENDPOINT,
 	EXIT,
+	DOOR,
 }
 
 @export var type : CELLTYPE

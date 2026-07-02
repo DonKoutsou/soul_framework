@@ -59,7 +59,8 @@ enum LocationName{
 	Jail_Entrance,
 	Canyon,
 	Artifex,
-	Chalice
+	Chalice,
+	Artifex_Exterior,
 }
 
 enum TrapType {
@@ -249,6 +250,7 @@ func generate_maze(spawnMons : bool) -> void:
 					if (Door_Index > LevelTransitionCatalogue.size() - 1):
 						push_error("Level transition hasn't been configured")
 					else:
+						cellDat.type = CellData.CELLTYPE.DOOR
 						Data.Doors[Pos] = LevelTransitionCatalogue[Door_Index]
 				if (Exit_Index != -1):
 					if (Exit_Index > LevelTransitionCatalogue.size() - 1):

@@ -27,7 +27,7 @@ class_name Level
 @export var WalkSound : AudioManager.Sound = AudioManager.Sound.WALK
 @export var LoadDistance : int = 3
 @export var EnableBackgroundFollowing : bool = true
-
+@export var Light : DirectionalLight3D
 static var CurrentWorldScale : Vector3i = Vector3i(1,1,1)
 static var CurrentWallCollider : Mesh
 static var EnemyOccupiedSlots : PackedVector3Array

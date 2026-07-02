@@ -608,6 +608,7 @@ func LevelTransition(NewWorld : Level, SavedData : MapData = null, TransitionTim
 	
 func LevelTransitionFinished() -> void:
 	Manequin.CanMove = true
+	Fight.GetPlayer().ToggleWalk(false)
 	if (is_instance_valid(TransitionTween)):
 		TransitionTween.kill()
 	TransitionTween = get_tree().create_tween()

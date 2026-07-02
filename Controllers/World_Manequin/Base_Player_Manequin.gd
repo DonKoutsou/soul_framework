@@ -67,13 +67,14 @@ var JumpTween : Tween
 #Used for doing step sounds every 0.5 seconds
 var StepCoolDown : float = 0.4
 
-
+#--------------------------------------------------------------------------------------
 func _ready() -> void:
 	Instance = self
 	CamOriginalPosition = Cam.transform
 	InputManager.ChangeMouse(Input.MOUSE_MODE_CAPTURED)
 	#$MeshInstance3D.scale = Vector3(1,1,1) * Level.CurrentWorldScale
 
+#--------------------------------------------------------------------------------------
 func ProcessInput(event: InputEvent) -> void:
 		
 	if (CanMove):
@@ -97,7 +98,7 @@ func ProcessInput(event: InputEvent) -> void:
 				PlayerFighter.ReturnHand()
 			CheckForMovable()
 
-
+#--------------------------------------------------------------------------------------
 func FightToggled(t : bool) -> void:
 	if (t):
 		ReturnCam()
@@ -105,6 +106,7 @@ func FightToggled(t : bool) -> void:
 	else:
 		CanMove = true
 
+#--------------------------------------------------------------------------------------
 func Update(delta: float) -> void:
 	
 	if (CanMove):
@@ -115,14 +117,12 @@ func Update(delta: float) -> void:
 		StepCoolDown -= delta
 		if (StepCoolDown <= 0):
 			StepCoolDown = 0.4
-	#Cam.Update(delta)
 			
-
-
+#--------------------------------------------------------------------------------------
 func Damage(Origin : Map.TrapType, Amm : int) -> void:
 	Damaged.emit(Origin, Amm)
 
-
+#--------------------------------------------------------------------------------------
 func Teleport(Pos : Vector3) -> void:
 	LastPosition = position
 	var OriginalPos = PlayerPos
@@ -130,8 +130,6 @@ func Teleport(Pos : Vector3) -> void:
 	ActualPos = Pos
 	if (is_instance_valid(MoveTween)):
 		MoveTween.kill()
-	#MoveTween = create_tween()
-	#MoveTween.tween_method(TweenCam.bind(CamPivot.global_position, PlayerPos), 0.0, 1.0, 0.1)
 	
 	position = PlayerPos
 	PositionChanged.emit(OriginalPos, PlayerPos, LookDir.y, false)
@@ -139,7 +137,7 @@ func Teleport(Pos : Vector3) -> void:
 	Teleported.emit(PlayerPos.y)
 	CheckForMovable()
 	
-
+#--------------------------------------------------------------------------------------
 func ProcessTweens(delta : float) -> void:
 	if (is_instance_valid(MoveTween) and MoveTween.is_valid()):
 		MoveTween.custom_step(delta)
@@ -154,7 +152,7 @@ func ProcessTweens(delta : float) -> void:
 	if (is_instance_valid(JumpTween) and JumpTween.is_valid()):
 		JumpTween.custom_step(delta)
 
-
+#--------------------------------------------------------------------------------------
 func OverrideCamPos(NewPos : Transform3D) -> void:
 	if (is_instance_valid(camtw)):
 		camtw.kill()
@@ -166,7 +164,7 @@ func OverrideCamPos(NewPos : Transform3D) -> void:
 	Cam.PositionOverriden = true
 	#Cam.global_transform = NewPos
 
-
+#--------------------------------------------------------------------------------------
 func LookAtPoint(Point : Vector3) -> void:
 	AimPoint.look_at(Point, Vector3.UP, false)
 	var Rot : Vector3 = Vector3(0,AimPoint.global_rotation.y,0)
@@ -190,6 +188,7 @@ func LookAtPoint(Point : Vector3) -> void:
 	OrientationChanged.emit(PlayerPos, LookDir.y)
 	#AudioManager.Instance.PlaySound(AudioManager.Sound.STEP, -10, 0.2, 0.8)
  
+#--------------------------------------------------------------------------------------
 func ReturnCam(t : float = 1) -> void:
 	
 	if (is_instance_valid(camtw)):
@@ -204,7 +203,9 @@ func ReturnCam(t : float = 1) -> void:
 	camtw.tween_property(Cam,"RotationToFocusOn", Vector3(-0.1,0,0), t)
 	camtw.pause()
 	camtw.finished.connect(Cam.set.bind("PositionOverriden" ,false))
-	
+
+
+#--------------------------------------------------------------------------------------
 var Turning : bool = false
 var AccumulatedTime : float = 0.0
 const CAM_MAX = Vector2(PI * 0.25, PI * 0.25)
@@ -243,8 +244,6 @@ func HandleRotation(event: InputEvent) -> void:
 		HoldingPosition = Vector3i.ZERO
 		PlayerFighter.ReturnHand()
 	
-	
-	
 	if (is_instance_valid(FlowTween)):
 		FlowTween.kill()
 	
@@ -277,6 +276,7 @@ func HandleRotation(event: InputEvent) -> void:
 	
 	CheckForMovable()
 
+#--------------------------------------------------------------------------------------
 func HandleDeltaRotation(_delta : float) -> void:
 	var x = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
 	var y = Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
@@ -287,6 +287,7 @@ func HandleDeltaRotation(_delta : float) -> void:
 		CameraOffset.x -= d.y / 200
 		Cam.RotationToFocusOn = Vector3(clamp(Cam.RotationToFocusOn.x + CameraOffset.x, -CAM_MAX.x, PI), clamp(Cam.RotationToFocusOn.y + CameraOffset.y, -CAM_MAX.y, CAM_MAX.y), Cam.RotationToFocusOn.z + CameraOffset.z)
 
+#--------------------------------------------------------------------------------------
 func GetJoyDir(axis : JoyAxis, value : float):
 	match(axis):
 		JoyAxis.JOY_AXIS_RIGHT_X:
@@ -298,6 +299,7 @@ func GetJoyDir(axis : JoyAxis, value : float):
 		JoyAxis.JOY_AXIS_LEFT_Y:
 			return Vector2(0, value)
 
+#--------------------------------------------------------------------------------------
 func ResetFlow(ResetTo : Vector3) -> void:
 	if (is_instance_valid(FlowTween)):
 		FlowTween.kill()
@@ -308,17 +310,20 @@ func ResetFlow(ResetTo : Vector3) -> void:
 	FlowTween.tween_property(CamRotPivot, "rotation", ResetTo, 0.5)
 	FlowTween.pause()
 
+#--------------------------------------------------------------------------------------
 func GetLookDir() -> Vector3:
 	return CamRotPivot.rotation
 
+#--------------------------------------------------------------------------------------
 func GetLookTransform() -> Transform3D:
 	return CamRotPivot.global_transform.rotated_local(Vector3(0,1,0), -PI/2)
 
-
+#--------------------------------------------------------------------------------------
 func SetLookDir(rot : float) -> void:
 	CamRotPivot.rotation.y = rot
 	LookDir.y = rot
 
+#--------------------------------------------------------------------------------------
 func ReturnToLastPosition() -> void:
 	if (is_instance_valid(MoveTween)):
 		MoveTween.kill()
@@ -337,6 +342,7 @@ func ReturnToLastPosition() -> void:
 	#AudioManager.Instance.PlaySound(Stage.CurrentWorld.StepSound, 0, 0.2)
 	Walkback = false
 
+#--------------------------------------------------------------------------------------
 func WalkVertical() -> void:
 	if (is_instance_valid(MoveTween)):
 		MoveTween.kill()
@@ -406,10 +412,12 @@ func WalkVertical() -> void:
 	
 	Walkback = false
 
+#--------------------------------------------------------------------------------------
 func RegisterPlayerCharacter(plchar : Character) -> void:
 	Fell.connect(plchar.DamageFlat.bind(10))
 	Damaged.connect(plchar.EV_EnviromentalDamage)
 
+#--------------------------------------------------------------------------------------
 func VerticalMovementStopped() -> void:
 	if (WalkDown):
 		VerticalMovementEnded.emit()
@@ -427,6 +435,7 @@ func VerticalMovementStopped() -> void:
 	StairsUp = false
 	FallDown = false
 
+#--------------------------------------------------------------------------------------
 func GetWalkMagniture(event : InputEvent) -> Vector3i:
 	var dir = Vector3i.ZERO
 
@@ -452,12 +461,13 @@ func GetWalkMagniture(event : InputEvent) -> Vector3i:
 	return dir
 	
 
-
+#--------------------------------------------------------------------------------------
 func CantMoveFurther(dir : Vector3i) -> bool:
 	Cast.target_position = ((-dir * 2) * Level.CurrentWorldScale)
 	Cast.force_raycast_update()
 	return Cast.is_colliding()
 
+#--------------------------------------------------------------------------------------
 func CanCrossGap(dir : Vector3i) -> bool:
 	Cast.target_position = ((-dir * 2) * Level.CurrentWorldScale)
 	Cast.set_collision_mask_value(7, false)
@@ -482,37 +492,32 @@ func HandleWalk(event: InputEvent) -> void:
 		if (MoveTween.is_valid()):
 			if (MoveTween.get_total_elapsed_time() < TraversalTime * 0.6):
 				return
-			#AccumulatedWalkTime -= MoveTween.get_total_elapsed_time()
 			Ease = Tween.EASE_OUT
-		#else:
-			#AccumulatedWalkTime = 0
-		MoveTween.kill()
 	
 	var flow = Vector3(randf_range(-0.01, 0.01), dir.y, dir.z * 0.05)
-	#dir = dir.rotated(Vector3(0,1,0), LookDir.y)
 	dir = Helper.rotate_vector3i(dir, LookDir.y, Vector3i(0,1,0))
 	
 	var mapData : MapData = Stage.CurrentWorld.GetMapData()
 	var NewPosition = PlayerPos + ((dir * Level.CurrentWorldScale) as Vector3i)
 	var PlMapPos = Helper.PlayerPositionToMap(NewPosition)
 	
-	
 	Cast.target_position = dir * Level.CurrentWorldScale
 	Cast.force_raycast_update()
 	if (Cast.is_colliding() and !NoClip):
+		
 		var Collider = Cast.get_collider() as Area3D
+		#Water
 		if (Collider.get_collision_mask_value(5)):
 			if (!CanWalkOnWater):
 				MessageBox.RegisterEvent("Can't go there right now", false)
-				#HitWall.emit(PlayerPos, LookDir.y)
 				NewPosition = PlayerPos
+		#Lava
 		else: if (Collider.get_collision_mask_value(6)):
 			if (!CanWalkOnLava):
 				MessageBox.RegisterEvent("Can't go there right now", false)
-				#HitWall.emit(PlayerPos, LookDir.y)
 				NewPosition = PlayerPos
+		#Gap
 		else: if (Collider.get_collision_mask_value(7)):
-			
 			if (!CanWalkOverGaps):
 				MessageBox.RegisterEvent("Can't jump this gap right now", false)
 				HitGap.emit(PlayerPos, LookDir.y)
@@ -521,24 +526,19 @@ func HandleWalk(event: InputEvent) -> void:
 				MessageBox.RegisterEvent("Can't jump while holding an obstacle", false)
 				NewPosition = PlayerPos
 			else:
-				#var GapDirection : Vector3i = Vector3(PlayerPos).direction_to(Vector3(NewPosition))
 				if (!CanCrossGap(-dir)):
 					NewPosition = PlayerPos
 				else:
 					NewPosition = NewPosition + ((dir * Level.CurrentWorldScale) as Vector3i)
 					Jump()
+					
 		else : if (Collider.get_collision_layer_value(2)):
-			#var shape_id = Cast.get_collider_shape() # The shape index in the collider.
-			#var owner_id = Collider.shape_find_owner(shape_id) # The owner ID in the collider.
-			#var shape = Collider.shape_owner_get_owner(owner_id) as CollisionShape3D
 			NewPosition = PlayerPos
 			var DorLoc = Helper.PlayerPositionToMap(NewPosition)
 			LockedDoorMet.emit(DorLoc)
+			
 		else: if (Collider is Interactable):
-			if (Collider is MapCharacter):
-				var mapCharacterPos = PlMapPos + (dir * Level.CurrentWorldScale)
-				NPC_MET.emit(Collider, mapCharacterPos)
-				NewPosition = PlayerPos
+			HandleInteractable(Collider, PlayerPos, NewPosition)
 
 		else:
 			HitWall.emit(PlayerPos, LookDir.y)
@@ -559,6 +559,7 @@ func HandleWalk(event: InputEvent) -> void:
 	if (cell.HasData("SoftBreakable")):
 		NewPosition = PlayerPos
 		MessageBox.RegisterEvent("Way is blocked", false)
+		
 	if (cell.type == CellData.CELLTYPE.DOWN_STAIRS):
 		NewPosition = HandleStairDownCellTraversal(NewPosition, dir, cell, mapData)
 
@@ -567,6 +568,7 @@ func HandleWalk(event: InputEvent) -> void:
 	
 	PlMapPos = Helper.PlayerPositionToMap(NewPosition)
 	cell = mapData.cells[PlMapPos]
+	
 	WalkDown = cell.type == CellData.CELLTYPE.DOWN_LADDER
 	WalkUp = cell.type == CellData.CELLTYPE.UP_LADDER
 	FallDown = cell.type == CellData.CELLTYPE.FALL
@@ -575,48 +577,48 @@ func HandleWalk(event: InputEvent) -> void:
 	
 	if (newCell.Custom_Data.has("Movable")):
 		var PushDirection : Vector3i = Vector3(NewPosition).direction_to(Vector3(PlayerPos))
-		#var Collider = Stage.CurrentWorld.MovableCollision.get_child(MovableIndex) as CollisionShape3D
-		#Collider.disabled = true
 		if (CantMoveFurther(PushDirection) or HoldingPosition == Vector3i.ZERO):
-			#Manequin.Walkback = true
 			MessageBox.RegisterEvent("Way is blocked", false)
 			NewPosition = PlayerPos
-		#Collider.disabled = false
-	#if (Stage.CurrentWorld.GetMapData().ChestSpawns.has(Vector3i(NewPosition.x, NewPosition.y -1, NewPosition.z) / Level.CurrentWorldScale)):
-		#NewPosition = PlayerPos
 	
-
 	
 	var OriginalPos = PlayerPos
 	if (NewPosition != PlayerPos):
 		PlayerFighter.ToggleWalk(true)
-	#PlayerPos += (dir * Level.CurrentWorldScale) as Vector3i
 	
+	if (is_instance_valid(MoveTween)):
+		MoveTween.kill()
+		
 	PlayerPos = NewPosition
+	var CameraLastPosition = CamPivot.global_position
+	
 	MoveTween = create_tween()
 	MoveTween.set_ease(Ease)
 	MoveTween.set_trans(Tween.TRANS_SINE)
-	var CameraLastPosition = CamPivot.global_position
-	#AccumulatedWalkTime += 0.7
 	MoveTween.tween_method(TweenCam.bind(CameraLastPosition, PlayerPos), 0.0, 1.0, TraversalTime)
 	MoveTween.finished.connect(FinishedWalk)
 	MoveTween.pause()
-	#MoveTween.tween_property(CamPivot, "global_position", PlayerPos, 0.3)
+	
 	LastPosition = position
 	position = PlayerPos
 	CamPivot.global_position = CameraLastPosition
 	Walking = true
-	#if (dir != Vector3i.ZERO):
-		#MessageBox.RegisterEvent("Moved {0}".format([Helper.AngleToDirection(Vector2(dir.x, -dir.z).rotated(-PI/2).angle())]))
-	
-	print("Player position changed to {0}".format([PlayerPos]))
 	
 	PositionChanged.emit(OriginalPos, PlayerPos, LookDir.y, true)
 	PlayerFighter.Rotated(flow)
 	
 	CheckForMovable()
-	#AudioManager.Instance.PlaySound(Stage.CurrentWorld.StepSound, -2, 0.1)
 
+#--------------------------------------------------------------------------------------
+func HandleInteractable(Collider : Interactable, CurrentPosition : Vector3i, TargetPosition : Vector3i) -> Vector3i:
+	var newPosition = TargetPosition
+	if (Collider is MapCharacter):
+		var mapCharacterPos = Helper.PlayerPositionToMap(TargetPosition)
+		NPC_MET.emit(Collider, mapCharacterPos)
+		newPosition = CurrentPosition
+	return newPosition
+
+#--------------------------------------------------------------------------------------
 func HandleStairUpCellTraversal(pos : Vector3i, dir : Vector3i, cell : CellData, mapData : MapData) -> Vector3i:
 	var NewPos = pos
 	PositionPassed.emit(NewPos)
@@ -631,6 +633,7 @@ func HandleStairUpCellTraversal(pos : Vector3i, dir : Vector3i, cell : CellData,
 	
 	return NewPos
 
+#--------------------------------------------------------------------------------------
 func HandleStairDownCellTraversal(pos : Vector3i, dir : Vector3i, cell : CellData, mapData : MapData) -> Vector3i:
 	var NewPos = pos
 	PositionPassed.emit(NewPos)
@@ -645,6 +648,8 @@ func HandleStairDownCellTraversal(pos : Vector3i, dir : Vector3i, cell : CellDat
 	
 	return NewPos
 
+#-----------------------------------------------------
+##Checks if movable exists in front of player
 func CheckForMovable() -> void:
 	var dir = Helper.rotate_vector3i(Vector3i(0,0,-1), LookDir.y, Vector3i(0,1,0))
 	var LookPosition = Vector3i(PlayerPos + (dir * Level.CurrentWorldScale))
@@ -660,9 +665,11 @@ func CheckForMovable() -> void:
 		MovableFound.emit(true)
 	else:
 		MovableFound.emit(false)
-		
+
+#--------------------------------------------------------------------------------------
 func FinishedWalk() -> void:
 	Walking = false
+	PlayerFighter.ToggleWalk(false)
 	if (!Input.is_action_pressed("Hold")):
 		if (HoldingPosition != Vector3i.ZERO):
 			MovableLifted.emit(false)
@@ -672,12 +679,12 @@ func FinishedWalk() -> void:
 		call_deferred("ReturnToLastPosition")
 	else: if (WalkDown or WalkUp or FallDown):
 		call_deferred("WalkVertical")
-	PlayerFighter.ToggleWalk(false)
-	
 
+#--------------------------------------------------------------------------------------
 func TweenCam(Alpha : float, OriginalPosition : Vector3, FinalPos : Vector3) -> void:
 	CamPivot.global_position = OriginalPosition.lerp(FinalPos, Alpha)
 
+#--------------------------------------------------------------------------------------
 func Jump() -> void:
 	JumpTween = create_tween()
 	JumpTween.set_ease(Tween.EASE_IN)
@@ -690,7 +697,7 @@ func Jump() -> void:
 	JumpTween.set_trans(Tween.TRANS_BOUNCE)
 	JumpTween.tween_property(CamRotPivot, "position", Vector3(0,1,0), 1.25)
 	
-
+#--------------------------------------------------------------------------------------
 func Duck(Direction : FightCharacter.AtackSide) -> void:
 	#Assign the correct transform and state based on direction
 	var t : Transform3D
@@ -708,6 +715,7 @@ func Duck(Direction : FightCharacter.AtackSide) -> void:
 	DuckTween.tween_property(DuckPivot, "transform", t, 0.5)
 	DuckTween.pause()
 
+#--------------------------------------------------------------------------------------
 func UnDuck() -> void:
 	if (is_instance_valid(DuckTween)):
 		DuckTween.kill()
@@ -718,6 +726,7 @@ func UnDuck() -> void:
 	DuckTween.tween_property(DuckPivot, "transform", t, 0.25)
 	DuckTween.pause()
 
+#--------------------------------------------------------------------------------------
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if (area is DialogueTrigger):
 		DialogueMet.emit(area.position, area.Dialogues)

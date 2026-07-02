@@ -125,7 +125,9 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 			#Data.Recruits[Pos] = load("res://Resources/Characters/Alice.tres").duplicate(true)
 		# Recruit 2
 		21:
-			pass
+			tempLayerData.SpawnCeiling = false
+			tempLayerData.SpawnFloor = false
+			tempLayerData.SpawnDeco = false
 			#cellDat.AddData("Recruit", load("res://Resources/Characters/Oliver.tres").duplicate(true))
 			#Data.Recruits[Pos] = load("res://Resources/Characters/Oliver.tres").duplicate(true)
 		#Lava

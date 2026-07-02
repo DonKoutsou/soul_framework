@@ -84,11 +84,12 @@
 [ext_resource type="ArrayMesh" uid="uid://cyxlxh2f22osj" path="res://Engine/Assets/Map_Geometry/ProjectileSwitch.res" id="83_252yv"]
 [ext_resource type="ArrayMesh" uid="uid://cddcsq8cv2a6q" path="res://Engine/Assets/Map_Geometry/PreassurePlate.res" id="83_yg26m"]
 [ext_resource type="PackedScene" uid="uid://brfw7arelgq7l" path="res://Engine/Particles/DragParts.tscn" id="84_iss4s"]
+[ext_resource type="Environment" uid="uid://d2enr6co805w7" path="res://Engine/Enviroments/MainEnviroment.tres" id="88_252yv"]
 [ext_resource type="Script" uid="uid://bcr5vv2m647em" path="res://Engine/Stage/Level/LevelMultimesh/LevelMultiLayerMultimesh.gd" id="91_1f8mx"]
 [ext_resource type="ArrayMesh" uid="uid://citgqs1idf274" path="res://Engine/Assets/Map_Geometry/BG.res" id="92_yg26m"]
 [ext_resource type="Material" uid="uid://cs5qavhmjdtgy" path="res://Engine/Shaders/Materials/BackgroundMat.tres" id="93_im3oe"]
 
-[sub_resource type="Resource" id="Resource_24ms2"]
+[sub_resource type="Resource" id="Resource_252yv"]
 resource_local_to_scene = true
 script = ExtResource("15_keskx")
 TrapType = 1
@@ -99,7 +100,7 @@ CustomData = {
 }
 metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
 
-[sub_resource type="Resource" id="Resource_252yv"]
+[sub_resource type="Resource" id="Resource_sjhj7"]
 resource_local_to_scene = true
 script = ExtResource("15_keskx")
 Cooldown = 3.0
@@ -108,7 +109,7 @@ CustomData = {
 }
 metadata/_custom_type_script = "uid://dd35hcw6d7m6y"
 
-[sub_resource type="Resource" id="Resource_sjhj7"]
+[sub_resource type="Resource" id="Resource_fg3x2"]
 resource_local_to_scene = true
 script = ExtResource("15_keskx")
 TrapType = 2
@@ -137,7 +138,7 @@ height = 0.3
 radial_segments = 4
 rings = 2
 
-[node name="DungeonLevel23" type="Node3D" unique_id=127161226 node_paths=PackedStringArray("MonsterMan", "TrapMan", "AudioMan", "AmbientAudio", "PropMeshSpawner", "BackgroundMesh", "ProjectileSwitchArea")]
+[node name="DungeonLevel23" type="Node3D" unique_id=127161226 node_paths=PackedStringArray("MonsterMan", "TrapMan", "AudioMan", "AmbientAudio", "PropMeshSpawner", "BackgroundMesh", "ProjectileSwitchArea", "Light")]
 script = ExtResource("1_8kag3")
 MonsterMan = NodePath("MonsterManager")
 TrapMan = NodePath("TrapManager")
@@ -155,6 +156,7 @@ FloorBreakParticles = ExtResource("9_x1mwr")
 ParticlePack = ExtResource("7_24ms2")
 DialogueTriggerScene = ExtResource("13_tijfw")
 LoadDistance = 4
+Light = NodePath("DirectionalLight3D")
 
 [node name="MonsterManager" parent="." unique_id=722211184 instance=ExtResource("13_b7lgf")]
 
@@ -162,7 +164,7 @@ LoadDistance = 4
 script = ExtResource("15_jnjmb")
 
 [node name="TrapManager" parent="." unique_id=287800843 instance=ExtResource("14_b7w5u")]
-TrapSetting = Array[ExtResource("15_keskx")]([SubResource("Resource_24ms2"), SubResource("Resource_252yv"), SubResource("Resource_sjhj7"), SubResource("Resource_d87ld")])
+TrapSetting = Array[ExtResource("15_keskx")]([SubResource("Resource_252yv"), SubResource("Resource_sjhj7"), SubResource("Resource_fg3x2"), SubResource("Resource_d87ld")])
 TrapScenes = Dictionary[int, PackedScene]({
 0: ExtResource("10_il8c7"),
 1: ExtResource("11_gp8xr"),
@@ -422,5 +424,8 @@ mesh = ExtResource("92_yg26m")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1875046444]
 transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 0, 0)
 light_energy = 1.81
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1660791407]
+environment = ExtResource("88_252yv")
 
 [connection signal="area_shape_entered" from="ProjectileSwitch/ProjectileSwitchCollision" to="." method="_on_projectile_switch_collision_area_shape_entered"]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c1pmcdhb3qun8"]
 
 [ext_resource type="Shader" uid="uid://gj5m20yfmcwh" path="res://Engine/Assets/Trail/trail.gdshader" id="1_fwbjn"]
-[ext_resource type="Shader" uid="uid://xxpmaxlq0fqa" path="res://Engine/Assets/Trail/trail_draw_pass.gdshader" id="2_ueb7k"]
+[ext_resource type="Material" uid="uid://b2vw0qfkjx1qi" path="res://Engine/Shaders/Trail.tres" id="2_ueb7k"]
 [ext_resource type="Texture2D" uid="uid://ct31fhxvcragr" path="res://Engine/Assets/Trail/curve.tres" id="3_ueb7k"]
 [ext_resource type="Texture2D" uid="uid://crk6pkb7e5rwc" path="res://Engine/Assets/Trail/texture.tres" id="3_w1lsm"]
 [ext_resource type="Script" uid="uid://c33co4lob3w45" path="res://Engine/Assets/Trail/GPUTrail3D.gd" id="4_u1e2n"]
@@ -9,15 +9,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hmf0s"]
 shader = ExtResource("1_fwbjn")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j4tua"]
-render_priority = 0
-shader = ExtResource("2_ueb7k")
-shader_parameter/color_ramp = ExtResource("3_w1lsm")
-shader_parameter/curve = ExtResource("3_ueb7k")
-shader_parameter/alpha_scale = 0.800000038
-
 [sub_resource type="QuadMesh" id="QuadMesh_t7umm"]
-material = SubResource("ShaderMaterial_j4tua")
+material = ExtResource("2_ueb7k")
 
 [node name="GPUTrail3D" type="GPUParticles3D" unique_id=124510421 groups=["Particles"]]
 instance_shader_parameters/instanceCol = Color(1, 1, 1, 1)

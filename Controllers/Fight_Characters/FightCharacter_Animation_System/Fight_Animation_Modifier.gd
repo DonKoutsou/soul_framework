@@ -486,9 +486,8 @@ func SetAnimationActive(animationIndex : int, t : bool):
 		#var anim = anims[animationIndex]
 		#print("{0} set to active".format([anim.AnimName]))
 		animActive |= (1 << animationIndex)
-		
-		#animBlend[animationIndex] = 0
-		#animProgress[animationIndex] = 0
+		if (!anim.Loop):
+			animProgress[animationIndex] = 0
 		SetAnimationBlendDirection(animationIndex, true)
 	else:
 		#var anim = anims[animationIndex]

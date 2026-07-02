@@ -23,6 +23,9 @@ func GetCell(pos : Vector3i) -> CellData:
 		return cells[pos]
 	return null
 
+func HasCell(pos : Vector3i) -> bool:
+	return cells.has(pos)
+
 func get_points_in_square(center: Vector3i, distance: int) -> Array[Vector3i]:
 	var points : Array[Vector3i]
 	if (cells.has(center)):
