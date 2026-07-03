@@ -53,7 +53,7 @@ var currentFloor : int = 0
 
 var rooms : Array
 
-var aStar : AStar2D
+var aStar : MapGeneratorAstar = MapGeneratorAstar.new()
 
 var r : RandomNumberGenerator
 
@@ -132,6 +132,8 @@ func collapseNext() -> void:
 			l.set_cell(randomCell, 10, Vector2i(pickedTile.tileIndex, 0), GetTileAltFromRotation(pickedTile.tileRotation))
 			
 			InitLayer(l)
+			
+			aStar.Connect(Vector2iTo3(randomCell, currentFloor - 1), Vector2iTo3(randomCell, currentFloor))
 			return
 		else:
 			var spawnFloorIndex = floorsToGenerate[r.randi_range(0, floorsToGenerate.size() - 1)]
@@ -227,16 +229,17 @@ func collapseNext() -> void:
 					
 		if (!cancel):
 			possible.remove_at(randomIndex)
-			var collapsedCellID = aStar.get_closest_point(TwoDcellPos)
+			var collapsedCellID = aStar.Astar.get_closest_point(cellPos)
 		
 			for g in newExits:
-				if (currentExits.has(Vector2iTo3(g, currentFloor))):
-					var exitPointID = aStar.get_closest_point(g)
-					aStar.connect_points(collapsedCellID, exitPointID)
+				var TriDExis = Vector2iTo3(g, currentFloor)
+				if (currentExits.has(TriDExis)):
+					var exitPointID = aStar.Astar.get_closest_point(TriDExis)
+					aStar.Astar.connect_points(collapsedCellID, exitPointID)
 				else:
-					var exitPointID = aStar.get_point_count()
-					aStar.add_point(exitPointID ,g)
-					aStar.connect_points(collapsedCellID, exitPointID)
+					var exitPointID = aStar.Astar.get_point_count()
+					aStar.Astar.add_point(exitPointID , TriDExis)
+					aStar.Astar.connect_points(collapsedCellID, exitPointID)
 					
 					currentExits.append(Vector2iTo3(g, currentFloor))
 				
@@ -331,10 +334,10 @@ func _draw() -> void:
 		var used = layer.get_used_cells()
 		
 		for g in used:
-			var pointId = aStar.get_closest_point(g)
-			var connections = aStar.get_point_connections(pointId)
+			var pointId = aStar.Astar.get_closest_point(Vector2iTo3(g, currentFloor))
+			var connections = aStar.Astar.get_point_connections(pointId)
 			for connection in connections:
-				draw_line(layer.map_to_local(g), layer.map_to_local(aStar.get_point_position(connection)), Color(1,0,0, 0.3))
+				draw_line(layer.map_to_local(g), layer.map_to_local(Vector3ITo2(aStar.Astar.get_point_position(connection))), Color(1,0,0, 0.3))
 		
 
 #---------------------------------------------------
@@ -350,7 +353,7 @@ func CollapseMap() -> void:
 	finised = false
 	generatedFloors.clear()
 	originalTiles.clear()
-	
+	aStar.Clear()
 	currentFloor = floorsToGenerate[0]
 	cellData = {}
 	UpdateAtlasData()
@@ -425,7 +428,7 @@ func InitLayer(layer : MazeFloorLayer) -> void:
 	for cell in Usedcells:
 		PropagateContrains(cell)
 	
-	aStar = layer.GetAStar()
+	aStar.Add(layer.GetAStar(currentFloor))
 	var exits = layer.find_exits()
 	currentExits.clear()
 	

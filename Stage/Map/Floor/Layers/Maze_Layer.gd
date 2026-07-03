@@ -252,8 +252,11 @@ func find_exits() -> Array[Vector2i]:
 	
 	return exits
 
-func GetAStar() -> AStar2D:
-	var aStar = AStar2D.new()
+func Vector2iTo3(vector : Vector2i, fl : int) -> Vector3i:
+	return Vector3i(vector.x, fl, vector.y)
+
+func GetAStar(floorIndex : int) -> AStar3D:
+	var aStar = AStar3D.new()
 	var pointId : Array[Vector2i]
 	
 	var visited := []
@@ -265,7 +268,7 @@ func GetAStar() -> AStar2D:
 		var stack := [coord]
 		
 		pointId.append(coord)
-		aStar.add_point(pointId.find(coord), coord, 1)
+		aStar.add_point(pointId.find(coord), Vector2iTo3(coord, floorIndex), 1)
 
 		while stack.size() > 0:
 			var current = stack.pop_back()
@@ -287,14 +290,14 @@ func GetAStar() -> AStar2D:
 					if neighbor + current not in visited and !CantReach(current, neighbor, true) and !CantReach(current + neighbor, neighbor * -1, true):
 						if (!pointId.has(neighbor + current)):
 							pointId.append(neighbor + current)
-						aStar.add_point(pointId.find(neighbor + current), neighbor + current, 1)
+						aStar.add_point(pointId.find(neighbor + current), Vector2iTo3(neighbor + current, floorIndex), 1)
 						aStar.connect_points(pointId.find(current), pointId.find(neighbor + current))
 						stack.push_back(neighbor + current)
 				else:
 					if neighbor + current not in visited and !CantReach(current, neighbor, true):
 						if (!pointId.has(neighbor + current)):
 							pointId.append(neighbor + current)
-						aStar.add_point(pointId.find(neighbor + current), neighbor + current, 1)
+						aStar.add_point(pointId.find(neighbor + current), Vector2iTo3(neighbor + current, floorIndex), 1)
 						aStar.connect_points(pointId.find(current), pointId.find(neighbor + current))
 
 	return aStar
