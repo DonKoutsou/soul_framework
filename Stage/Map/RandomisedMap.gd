@@ -27,6 +27,8 @@ class_name RandomisedMap
 ##Clears tilemaps of any configured tile
 @export_tool_button("Clear Map") var clear = CleanMap
 
+@export var generationSpeed : float = 0.1
+
 
 const NEIGHBOR_DIRECTIONS : Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 const ROTATIONS : Array[float] = [0, PI/2, PI, -PI/2]
@@ -75,12 +77,16 @@ func generate_maze(spawnMons : bool) -> void:
 		if (Engine.is_editor_hint()):
 			return
 		CollapseMap()
-
 #---------------------------------------------
-func _process(_delta: float) -> void:
+var i : float = 0.1
+func _process(delta: float) -> void:
 	if (!active or finised):
 		return
 	if (Engine.is_editor_hint()):
+		i -= delta
+		if (i > 0):
+			return
+		i = generationSpeed
 		collapseNext()
 
 #---------------------------------------------
@@ -102,7 +108,8 @@ func collapseNext() -> void:
 			var l : MazeFloorLayer = f.GetLayer(FloorLayer.LayerType.MAZE)
 			var InfoLayer = f.GetLayer(FloorLayer.LayerType.MAP_INFO)
 			
-			var randomCell = lastLayer.get_used_cells().pick_random()
+			var used = lastLayer.get_used_cells()
+			var randomCell = used[r.randi_range(0, used.size() - 1)]
 			
 			lastInfoLayer.set_cell(randomCell, 0, Vector2i(17, 0))
 			InfoLayer.set_cell(randomCell, 0, Vector2i(18, 0))
@@ -113,17 +120,23 @@ func collapseNext() -> void:
 				#If we are on map edge check to make sure we have wall facing edge
 				if (randomCell.x == 0):
 					if (!HasWallInDirection(tile, Vector2(-1,0))):
+						availableWeights.append(0)
 						continue
 				else: if (randomCell.x == mapSize.x - 1):
 					if (!HasWallInDirection(tile, Vector2(1,0))):
+						availableWeights.append(0)
 						continue
+						
 				if (randomCell.y == 0):
 					if (!HasWallInDirection(tile, Vector2(0, -1))):
+						availableWeights.append(0)
 						continue
 				else: if (randomCell.y == mapSize.y - 1):
 					if (!HasWallInDirection(tile, Vector2(0, 1))):
+						availableWeights.append(0)
 						continue
-				availableWeights.append(atlasData[tile.tileIndex].get_custom_data("CollapseWeight"))
+						
+				availableWeights.append(atlasData[tile.tileIndex].probability)
 
 			var picked = r.rand_weighted(availableWeights)
 			
@@ -178,9 +191,9 @@ func collapseNext() -> void:
 		CellCollapsed(TwoDcellPos)
 		
 		currentExits.erase(cellPos)
-
+		#print("adding {0}".format([TwoDcellPos]))
 		var newExits = layer.GetNeighboringExits(TwoDcellPos)
-		
+		#print("newExits = {0}".format([newExits.size()]))
 		var ownerRooms : Array
 		
 		#find the owner room of this cell
@@ -189,9 +202,11 @@ func collapseNext() -> void:
 				if (g.has(TwoDcellPos + neighbor) and !layer.CantReach(TwoDcellPos, neighbor, true)):
 					ownerRooms.append(g)
 					break
+		#print("OwnerRooms = {0}".format([ownerRooms.size()]))
 		
 		var originalRooms = rooms.duplicate()
-
+		
+		var cancel : bool = false
 		#if multiple owners exist we need to merge them since the cell bridges them.
 		if (ownerRooms.size() > 1):
 			var combined : Array
@@ -204,13 +219,15 @@ func collapseNext() -> void:
 		else: if (ownerRooms.size() > 0):
 			ownerRooms[0].append(TwoDcellPos)
 		else:
-			continue
+			cancel = true
 		
 		#if multiple rooms exist we need to check if they have exits, if not we take back this collapse
-		var cancel : bool = false
+		
 		
 		for room in rooms:
-			if (RoomHasExit(room, newExits)):
+			#print("checking room {0}".format([var_to_str(room)]))
+			if (RoomHasExit(room, newExits, layer)):
+				#print("room passed")
 				continue
 			var cell = cellData[cellPos]
 			RefillTile(TwoDcellPos, cell)
@@ -278,15 +295,23 @@ func GetPossibleCollapses() -> Array[Vector3i]:
 
 #---------------------------------------------
 ##Checks if the this room is in contact with any of the exits
-func RoomHasExit(room : Array, Exits : Array[Vector2i]) -> bool:
+func RoomHasExit(room : Array, Exits : Array[Vector2i], layer : MazeFloorLayer) -> bool:
 	for g in currentExits:
+		var TwoDPos = Vector3ITo2(g)
 		for neighbor in NEIGHBOR_DIRECTIONS:
-			if (room.has(Vector3ITo2(g) + neighbor)):
+			if (room.has(TwoDPos + neighbor)):
+				if (layer.CantReach(TwoDPos + neighbor, neighbor * -1, true)):
+					continue
+				#print("found exit {0}".format([Vector3ITo2(g)]))
 				return true
 				
 	for g in Exits:
 		for neighbor in NEIGHBOR_DIRECTIONS:
+			
 			if (room.has(g + neighbor)):
+				if (layer.CantReach(g + neighbor, neighbor * -1, true)):
+					continue
+				#print("found exit {0}".format([g]))
 				return true
 				
 	return false
@@ -318,6 +343,12 @@ func RefillTile(tilePos : Vector2i, cell : collapseCellData) -> void:
 func _draw() -> void:
 	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+	
+	var camPos = EditorInterface.get_editor_viewport_3d().get_camera_3d().global_position
+	var camRot = EditorInterface.get_editor_viewport_3d().get_camera_3d().rotation
+	
+	draw_circle(Vector2(camPos.x, camPos.z) * 8, 2, Color(1,0,0))
+	
 	for g in cellData:
 		var cell = cellData[g]
 		if (cell.collapsed):
@@ -386,7 +417,7 @@ func InitLayer(layer : MazeFloorLayer) -> void:
 		var availableWeights : PackedFloat32Array
 		
 		for tile : collapseTileData in tileData:
-			availableWeights.append(atlasData[tile.tileIndex].get_custom_data("CollapseWeight"))
+			availableWeights.append(atlasData[tile.tileIndex].probability)
 
 		var picked = r.rand_weighted(availableWeights)
 		
@@ -558,7 +589,7 @@ func TileDataToDict(dat : TileData) -> Dictionary:
 	var dataDict : Dictionary = {
 			"Walls" : dat.get_custom_data("Walls"),
 			"DoorWalls" : dat.get_custom_data("DoorWalls"),
-			"CollapseWeight" : dat.get_custom_data("CollapseWeight")
+			"CollapseWeight" : dat.probability
 		}
 	return dataDict
 
@@ -592,7 +623,7 @@ func CellCollapsed(cellPos : Vector2i) -> void:
 	var availableWeights : PackedFloat32Array
 	
 	for tile : collapseTileData in cell.possibleTiles:
-		availableWeights.append(atlasData[tile.tileIndex].get_custom_data("CollapseWeight"))
+		availableWeights.append(atlasData[tile.tileIndex].probability)
 
 	var picked = r.rand_weighted(availableWeights)
 	

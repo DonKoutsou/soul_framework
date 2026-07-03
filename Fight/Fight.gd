@@ -236,7 +236,7 @@ func EV_PlayerAtacked(Direction : FightCharacter.AtackSide, power : float) -> vo
 	else:
 		EnviromentalAttack.emit()
 
-func EV_IncommingParried() -> void:
+func EV_IncommingParried(attackWeight : float) -> void:
 	#Manequin.Spark()
 	var FightingMonster = CurrentMosters[0]
 	
@@ -249,7 +249,8 @@ func EV_IncommingParried() -> void:
 	Effect.emit(ItemEffect.EffectTiming.ON_PARRY, Data)
 	
 	FightingMonster.DamageFatigue(GetPlayer().ControllingCharacter.CharacterWeapon.Stamina_Cost / 2)
-	GetEnemy().Recoil(FightCharacter.AtackSide.MIDDLE, false, 100)
+	if (GetEnemy().CurrentCombo.size() == 0):
+		GetEnemy().Recoil(FightCharacter.AtackSide.MIDDLE, false, 100.0)
 	PlayerCamera.start_shake(0.02,0.3, false, true)
 	
 	WorldTimeManager.Instance.FreezeTime(0)
@@ -277,14 +278,14 @@ func EV_IncommingAvoided() -> void:
 	}
 	Effect.emit(ItemEffect.EffectTiming.ON_EVADE, Data)
 
-func EV_OutgoingParried() -> void:
+func EV_OutgoingParried(attackWeight : float) -> void:
 	#FightingMonster.DamageFatigue(10)
 	#Fight.GetPlayer().PunishRecovery(1)
 	#SelectedCharacter.RecoveryPunished.emit()
 	
 	var FightingMonster = CurrentMosters[0]
 	GetPlayer().ControllingCharacter.DamageFatigue(FightingMonster.CharacterWeapon.Stamina_Cost / 2)
-	GetPlayer().Recoil()
+	GetPlayer().Recoil(FightCharacter.AtackSide.MIDDLE, false, 100.0)
 	PlayerCamera.start_shake(0.02,0.3, false, false)
 	#Manequin.Spark()
 	#Fight.FreezeFrame()

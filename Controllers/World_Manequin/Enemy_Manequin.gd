@@ -216,7 +216,7 @@ func UpdateAction(delta : float) -> void:
 	Action(3)
 
 func CanGoToLocation(Loc : Vector3i) -> bool:
-	return !Cast.is_colliding() and !Level.EnemyOccupiedSlots.has(Loc)
+	return !Cast.is_colliding() and !Level.EnemyOccupiedSlots.has(Loc) and Stage.CurrentWorld.GetMapData().HasCell(Loc)
 
 func Action(CustomStep : float = 0.6) -> void:
 	if (CurrentAlarmState == AlarmState.TRIGGERED or SeeingPlayer):

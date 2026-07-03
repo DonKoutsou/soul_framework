@@ -84,7 +84,7 @@ enum AtackSide{
 }
 
 signal AtackCanceled
-signal AtackParried
+signal AtackParried(attackWeight : float)
 signal GuardBroken
 signal AtackAvoided
 signal AtackBlocked(BlockedDamage : int)
@@ -445,10 +445,13 @@ func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Mag
 		#RecoilTween.pause()
 		SkeletonModif.Recoil = GetRecoil(Dir) * max(0.5, Magnitude)
 		
-	if (IsAttacking()):
-		if (ChargePower > Magnitude):
-			return
-
+		if (IsAttacking()):
+			if (ChargePower > Magnitude):
+				return
+	
+	#if (Magnitude < 0.5):
+		#return
+	
 	CancelHits()
 	StopParry(true)
 	
@@ -481,7 +484,8 @@ func Damage(DamageAmm : int, Direction : AtackSide, _ShakeAmm : float, AtackWeig
 		return 1
 		
 	if (Parrying):
-		AtackParried.emit()
+		AtackParried.emit(AtackWeight)
+		#Recoil(Direction, true, AtackWeight)
 		return -1
 		
 	if (Blocking):

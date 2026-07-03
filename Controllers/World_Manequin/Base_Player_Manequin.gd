@@ -569,10 +569,6 @@ func HandleWalk(event: InputEvent) -> void:
 	PlMapPos = Helper.PlayerPositionToMap(NewPosition)
 	cell = mapData.cells[PlMapPos]
 	
-	WalkDown = cell.type == CellData.CELLTYPE.DOWN_LADDER
-	WalkUp = cell.type == CellData.CELLTYPE.UP_LADDER
-	FallDown = cell.type == CellData.CELLTYPE.FALL
-	
 	var newCell = mapData.cells[Helper.PlayerPositionToMap(NewPosition)]
 	
 	if (newCell.Custom_Data.has("Movable")):
@@ -584,6 +580,9 @@ func HandleWalk(event: InputEvent) -> void:
 	
 	var OriginalPos = PlayerPos
 	if (NewPosition != PlayerPos):
+		WalkDown = cell.type == CellData.CELLTYPE.DOWN_LADDER
+		WalkUp = cell.type == CellData.CELLTYPE.UP_LADDER
+		FallDown = cell.type == CellData.CELLTYPE.FALL
 		PlayerFighter.ToggleWalk(true)
 	
 	if (is_instance_valid(MoveTween)):

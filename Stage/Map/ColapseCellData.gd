@@ -14,7 +14,9 @@ func GetEntropy(atlasData : Dictionary[int, TileData]) -> float:
 	var weight_log_weight := 0.0
 
 	for tile in possibleTiles:
-		var w: float = atlasData[tile.tileIndex].get_custom_data("CollapseWeight")
+		if (atlasData[tile.tileIndex].probability == 0):
+			continue
+		var w: float = atlasData[tile.tileIndex].probability
 		total_weight += w
 		weight_log_weight += w * log(w)
 

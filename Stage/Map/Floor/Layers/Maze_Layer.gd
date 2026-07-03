@@ -417,20 +417,14 @@ func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visite
 func CantReach(tilecoords : Vector2, dir : Vector2, passDoors : bool = false) -> bool:
 	var dat : TileData = get_cell_tile_data(tilecoords)
 	var tilerotation = GetTileRotationRadians(tilecoords)
+
+	var finalDir = dir.rotated(-tilerotation).round()
 	
-	var resault : bool = false
-	
-	for wall : Vector2 in dat.get_custom_data("Walls"):
-		var wallDir = wall.rotated(tilerotation)
-		if (dir.is_equal_approx(wallDir)):
-			resault = true
-			break
-	
+	if (dat.get_custom_data("Walls").has(finalDir)):
+		return true
+		
 	if (!passDoors):
-		for wall : Vector2 in dat.get_custom_data("DoorWalls"):
-			var wallDir = wall.rotated(tilerotation)
-			if (dir.is_equal_approx(wallDir)):
-				resault = true
-				break
+		if (dat.get_custom_data("DoorWalls").has(finalDir)):
+			return true
 	
-	return resault
+	return false
