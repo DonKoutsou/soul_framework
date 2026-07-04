@@ -10,14 +10,15 @@ func Proc(delta : float) -> void:
 			g.Proc(delta)
 
 func Update(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
-	call_deferred("Process", Data, positions, r)
+	Process(Data, positions, r)
+	#call_deferred("Process", Data, positions, r)
 
 func Process(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
 	#print("Processing {0} children".format([get_child_count()]))
 	for g : LevelMultimesh in get_children():
 		if (g.Enabled):
 			g.Update(Data, positions, r)
-			await g.Finished
+			#await g.Finished
 	Finished.emit()
 
 func GetLayerType() -> LevelMultimeshTypes:

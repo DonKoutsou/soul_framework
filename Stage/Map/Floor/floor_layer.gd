@@ -54,5 +54,8 @@ enum LayerType{
 		CHARACTERS
 	}
 
+func GetLayers() -> Array[BaseFloorLayer]:
+	return Layers.values()
+
 func GetLayer(Type : LayerType) -> BaseFloorLayer:
 	return Layers[Type]

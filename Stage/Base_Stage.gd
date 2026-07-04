@@ -215,7 +215,8 @@ func _exit_tree() -> void:
 func switch_levels(NewLevel : Level, SavedData : MapData = null) -> void:
 	
 	#Add a loading screen
-	Helper.Instance.FakeLoading(true, true)
+	Helper.Instance.FakeLoading(true, true, "Loading level")
+	Helper.Instance.SetLoadingProgress(0)
 	set_process(false)
 	set_process_input(false)
 	
@@ -234,12 +235,13 @@ func switch_levels(NewLevel : Level, SavedData : MapData = null) -> void:
 	
 	#Spawn the map that the saved data belongs too and restore the data to it
 	var MapScene = load(SavedData.MapDir) as PackedScene
-	var RestoredMap = MapScene.instantiate()
+	var RestoredMap : Map = MapScene.instantiate()
 	NewLevel.configure_map(RestoredMap)
-
 	
-	NewLevel.MData.Data = SavedData
-
+	RestoredMap.LoadingUpdate.connect(UpdateLoadingProgress)
+	RestoredMap.LoadMapData(SavedData)
+	if (!RestoredMap.loaded):
+		await RestoredMap.LoadingFinised
 	#If we are comming from another level 
 	#we find the connecting doors and set them as spawnpoint
 	if (LastLevelName != -1):
@@ -277,10 +279,14 @@ func switch_levels(NewLevel : Level, SavedData : MapData = null) -> void:
 	#Start setting up the geometry and collisions
 	NewLevel.StartBuildingThread()
 	NewLevel.GenerationFinished.connect(GenerationFinished)
-	
+
+func UpdateLoadingProgress(newProgress : float) -> void:
+	Helper.Instance.UpdateLoadingProgress(newProgress)
+
 func GenerationFinished() -> void:
 	CurrentWorld.GenerationFinished.disconnect(GenerationFinished)
 	#Turn of the loading screen
+	Helper.Instance.UpdateLoadingProgress(100.0)
 	Helper.Instance.FakeLoading(false)
 	
 	#Spawn player controller
@@ -1232,6 +1238,7 @@ func ConsumedByDarkness() -> void:
 	playerCharacter.HealMana(9999)
 	Dead = false
 
+var MapAmm : int
 var MapsToCompute : int
 signal MapComputateFinished
 
@@ -1250,7 +1257,7 @@ func NewGame() -> void:
 
 	var NewWorld : Level = load(StoredData.level).instantiate()
 	
-	switch_levels(NewWorld, StoredData)
+	await switch_levels(NewWorld, StoredData)
 	
 	await NewWorld.GenerationFinished
 	TransitioningLevel = true
@@ -1259,25 +1266,30 @@ func NewGame() -> void:
 
 func PrecomputeMaps() -> void:
 	Helper.Instance.FakeLoading(true, true, "Generating Worlds")
+	Helper.Instance.SetLoadingProgress(0)
 	for dir in MapStoreDirs:
 		var Maps = ResourceLoader.list_directory(dir)
 		#MapsToCompute = Maps.size()
 		for file: String in Maps:
 			if (file.contains("/")):
 				continue
+			MapAmm += 1
 			MapsToCompute += 1
 			var resource := load(dir + file) as PackedScene
 			var M = resource.instantiate() as Map
 			add_child(M)
 			M.StartGenerationThread()
 			M.GenerationFinished.connect(MapComputationFinished.bind(M))
-		Helper.Instance.FakeLoading(false, true, "Generating Worlds")
+		
 
 func MapComputationFinished(M : Map) -> void:
 	StoredWorlds[M.LevelName] =  M.Data
 	M.queue_free()
 	MapsToCompute -= 1
+	Helper.Instance.UpdateLoadingProgress(100 - (float(MapsToCompute) / float(MapAmm) * 100.0))
 	if (MapsToCompute == 0):
+		Helper.Instance.FakeLoading(false, true, "Generating Worlds")
 		MapComputateFinished.emit()
+		
 
 #----------------------------------------------------------------

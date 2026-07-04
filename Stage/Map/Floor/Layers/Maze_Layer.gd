@@ -413,7 +413,7 @@ func flood_fill_ranged(start: Vector2i, tile_coords: Array, dist : float, visite
 	
 	return room
 
-##Used to declare the blocking direction of each of the MAZE tiles
+###Used to declare the blocking direction of each of the MAZE tiles
 func CantReach(tilecoords : Vector2, dir : Vector2, passDoors : bool = false) -> bool:
 	var dat : TileData = get_cell_tile_data(tilecoords)
 	var tilerotation = GetTileRotationRadians(tilecoords)

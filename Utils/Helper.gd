@@ -61,18 +61,29 @@ static func GetNameOfStat(stat : CharacterStat.STATS) -> String:
 			Name = "Mana"
 	return Name
 
+#----------------------------------------------------
 static func are_transforms_opposite(transform_a: Transform3D, transform_b: Transform3D) -> bool:
 	var forward_a = -transform_a.basis.z.normalized()
 	var forward_b = -transform_b.basis.z.normalized()
 	var dot = forward_a.dot(forward_b)
 	return dot < -0.99
 
+#----------------------------------------------------
 static func are_directions_opposite(Dir1 : float, Dir2 : float) -> bool:
 	var forward_a = Vector2.LEFT.rotated(Dir1)
 	var forward_b = Vector2.LEFT.rotated(Dir2)
 	var dot = forward_a.dot(forward_b)
 	return dot < -0.99
 
+#----------------------------------------------------
+static func Vector2iTo3(vector : Vector2i, fl : int) -> Vector3i:
+	return Vector3i(vector.x, fl, vector.y)
+
+#----------------------------------------------------
+static func Vector3ITo2(vector : Vector3i) -> Vector2i:
+	return Vector2i(vector.x, vector.z)
+
+#----------------------------------------------------
 static func rotate_vector2_by_vector(v: Vector2, rot: Vector2) -> Vector2:
 	if (v == Vector2.ZERO):
 		return rot
@@ -81,6 +92,7 @@ static func rotate_vector2_by_vector(v: Vector2, rot: Vector2) -> Vector2:
 		v.x * rot.y + v.y * rot.x
 	)
 
+#----------------------------------------------------
 # axis: "x", "y", or "z"
 static func rotate_vector3i(vec: Vector3i, angle_radians: float, axis: Vector3i) -> Vector3i:
 	var x = vec.x
@@ -194,6 +206,18 @@ func FakeLoading(t : bool, ShowBlack : bool = false, CustomText : String = " Loa
 	BlackLoadingRect.visible = ShowBlack
 	LoadingUI.get_node("VBoxContainer/HBoxContainer/Label").text = CustomText
 	FakeLoadingHappening = t
+
+func SetLoadingProgress(newProg : float) -> void:
+	LoadingProgress.value = newProg
+	if (loadTw != null):
+		loadTw.kill()
+
+func UpdateLoadingProgress(newProg : float) -> void:
+	if (newProg != LoadingProgress.value):
+		if (loadTw != null):
+			loadTw.kill()
+		loadTw = create_tween()
+		loadTw.tween_property(LoadingProgress, "value", newProg, 0.5)
 
 var DotAmmount : int = 0
 var d = 0.2

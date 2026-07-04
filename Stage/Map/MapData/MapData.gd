@@ -17,6 +17,8 @@ class_name MapData
 @export var RandomState : int
 
 @export var DecorationProbability : int = 100
+@export var MetaData : Dictionary[String, Variant]
+
 
 func GetCell(pos : Vector3i) -> CellData:
 	if (cells.has(pos)):

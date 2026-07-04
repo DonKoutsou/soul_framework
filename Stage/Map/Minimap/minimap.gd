@@ -92,6 +92,7 @@ func OnPositionSeen(Pos : Vector3i) -> void:
 	var cell : CellData = Mp.Data.GetCell(Pos)
 	
 	var CurrentFloorLayer = Mp.GetFloor(Floor).GetLayer(FloorLayer.LayerType.MAZE)
+	
 	var AtlasCoords = CurrentFloorLayer.get_cell_atlas_coords(mappos)
 	if (AtlasCoords.x == -1):
 		return

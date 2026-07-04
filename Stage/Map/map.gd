@@ -197,11 +197,14 @@ func GetVisible(Pos : Vector3i) -> Array:
 	var room = mazeLayer.flood_fill_ranged(Vector2i(Pos.x, Pos.z), Suroundings, 2, {})
 	return room
 
+signal LoadingFinised
+signal LoadingUpdate
+var loaded : bool = false
 
 func LoadMapData(MData : MapData) -> void:
 	Data = MData
-
-
+	LoadingFinised.emit()
+	loaded = true
 
 func StartGenerationThread(SpawnMonsterOverride : bool = SpawnMonsters) -> void:
 	generationThreadTaskID = WorkerThreadPool.add_task(generate_maze.bind(SpawnMonsterOverride))
@@ -426,8 +429,20 @@ func generate_maze(spawnMons : bool) -> void:
 	Data.SaveRandomState(r.get_state())
 	call_deferred("ThreadedGenerationFinished")
 
+#----------------------- Helper methods -----------------------------#
 
-
+#-----------------------------------------------
+func GetTileAltFromRotation(rot : float) -> int:
+	var tile_alternate : int = 0
+	match rot:
+		PI/2:
+			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H
+		PI:
+			tile_alternate = TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V
+		-PI/2:
+			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V
+			
+	return tile_alternate
 
 
 #----------------------- EDITOR -----------------------------#
