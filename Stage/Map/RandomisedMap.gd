@@ -108,6 +108,48 @@ func _process(delta: float) -> void:
 		collapseNext()
 
 #---------------------------------------------
+func AddFinishingTouches() -> void:
+	var spawnFloorIndex = floorsToGenerate[r.randi_range(0, floorsToGenerate.size() - 1)]
+	var spawnFloor = GetFloor(spawnFloorIndex)
+	var spawnmapInfoLayer = spawnFloor.GetLayer(FloorLayer.LayerType.MAP_INFO)
+	var spawnmazeLayer = spawnFloor.GetLayer(FloorLayer.LayerType.MAZE)
+	var spawnFloorUsed = spawnmazeLayer.get_used_cells()
+	spawnFloorUsed.sort()
+	
+	var spawnIndex = r.randi_range(0, spawnFloorUsed.size() - 1)
+	spawnmapInfoLayer.set_cell(spawnFloorUsed[spawnIndex], 0, Vector2i(14,0))
+	
+	var possibleDoors : Array[Vector3i]
+	
+	#find possible doors
+	while possibleDoors.size() < 20:
+		var fl = generatedFloors[r.randi_range(0, generatedFloors.size() - 1)]
+		var randomPos = Vector3i(r.randi_range(0, mapSize.x -1), fl, r.randi_range(0, mapSize.y - 1))
+		var randomCell : collapseCellData = cellData[randomPos]
+		var randomTile = randomCell.possibleTiles[0]
+		var dat : TileData = atlasData[randomTile.tileIndex]
+		var doorAmm = dat.get_custom_data("DoorWalls").size()
+		if (doorAmm > 0):
+			possibleDoors.append(randomPos)
+			#find opposite door
+			var randomDoor = dat.get_custom_data("DoorWalls")[r.randi_range(0, doorAmm - 1)].rotated(randomTile.tileRotation)
+			possibleDoors.append(randomPos + Vector3i(randomDoor.x, 0, randomDoor.y))
+	
+	for g in possibleDoors:
+		var f = GetFloor(g.y)
+		var InfoLayer = f.GetLayer(FloorLayer.LayerType.MAP_INFO)
+		InfoLayer.set_cell(Helper.Vector3ITo2(g), 0, Vector2i(26,0))
+	
+	for fl in floorsToGenerate:
+		var f = GetFloor(fl)
+		var mazeLayer = f.GetLayer(FloorLayer.LayerType.MAZE)
+		var monsterLayer = f.GetLayer(FloorLayer.LayerType.MONSTERS)
+		var used = mazeLayer.get_used_cells()
+		used.sort()
+		for g in (mapSize.x * mapSize.y) / 100:
+			var monIndex = r.randi_range(0, used.size() - 1)
+			monsterLayer.set_cell(used[monIndex], 0, Vector2i(0,0))
+
 func collapseNext() -> void:
 	
 	#Get possible cells that we could collapse
@@ -174,43 +216,20 @@ func collapseNext() -> void:
 			return
 			
 		else:
-			var spawnFloorIndex = floorsToGenerate[r.randi_range(0, floorsToGenerate.size() - 1)]
-			var spawnFloor = GetFloor(spawnFloorIndex)
-			var spawnmapInfoLayer = spawnFloor.GetLayer(FloorLayer.LayerType.MAP_INFO)
-			var spawnmazeLayer = spawnFloor.GetLayer(FloorLayer.LayerType.MAZE)
-			var spawnFloorUsed = spawnmazeLayer.get_used_cells()
-			spawnFloorUsed.sort()
-			
-			var spawnIndex = r.randi_range(0, spawnFloorUsed.size() - 1)
-			spawnmapInfoLayer.set_cell(spawnFloorUsed[spawnIndex], 0, Vector2i(14,0))
-			
-			for fl in floorsToGenerate:
-				var f = GetFloor(fl)
-				var mazeLayer = f.GetLayer(FloorLayer.LayerType.MAZE)
-				var monsterLayer = f.GetLayer(FloorLayer.LayerType.MONSTERS)
-				var used = mazeLayer.get_used_cells()
-				used.sort()
-				for g in (mapSize.x * mapSize.y) / 100:
-					var monIndex = r.randi_range(0, used.size() - 1)
-					monsterLayer.set_cell(used[monIndex], 0, Vector2i(0,0))
+			AddFinishingTouches()
 			
 			finised = true
 			call_deferred("loadFinished")
-
 			return
 
 	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
-	
-	#var usecbefore = Time.get_ticks_usec()
-	#var msbefore = Time.get_ticks_msec()
-	#while (Time.get_ticks_msec() - msbefore < 12):
-	for v in 5:
+
+	for v in 10:
 		if (possible.size() == 0):
 			possible = GetPossibleCollapses()
 			if (possible.size() == 0):
 				break
-		#var msBeforCell = Time.get_ticks_msec()
 		
 		var randomIndex = r.randi_range(0, possible.size() - 1)
 		var cellPos = possible[randomIndex]
@@ -219,9 +238,7 @@ func collapseNext() -> void:
 		CellCollapsed(TwoDcellPos)
 		
 		currentExits.erase(cellPos)
-		#print("adding {0}".format([TwoDcellPos]))
 		var newExits = layer.GetNeighboringExits(TwoDcellPos)
-		#print("newExits = {0}".format([newExits.size()]))
 		var ownerRooms : Array
 		
 		#find the owner room of this cell
@@ -230,8 +247,7 @@ func collapseNext() -> void:
 				if (g.has(TwoDcellPos + neighbor) and !layer.CantReach(TwoDcellPos, neighbor, true)):
 					ownerRooms.append(g)
 					break
-		#print("OwnerRooms = {0}".format([ownerRooms.size()]))
-		
+
 		var originalRooms = rooms.duplicate()
 		
 		var cancel : bool = false
@@ -249,31 +265,31 @@ func collapseNext() -> void:
 		else:
 			cancel = true
 		
-		#if multiple rooms exist we need to check if they have exits, if not we take back this collapse
-		
-		
-		for room in rooms:
-			#print("checking room {0}".format([var_to_str(room)]))
-			if (RoomHasExit(room, newExits, layer)):
-				#print("room passed")
-				continue
-			var cell = cellData[cellPos]
-			RefillTile(TwoDcellPos, cell)
-			UpdateConstrains(cell, TwoDcellPos)
-			layer.erase_cell(TwoDcellPos)
-			print("Cell aborted")
-			#layer.update_internals()
-			if (Engine.is_editor_hint()):
-				queue_redraw()
-			cancel = true
-			rooms = originalRooms
-			for g in rooms:
-				g.erase(TwoDcellPos)
-			currentExits.append(cellPos)
-			break
+		if (cancel):
+			#if multiple rooms exist we need to check if they have exits, if not we take back this collapse
+			for room in rooms:
+				if (RoomHasExit(room, newExits, layer)):
+					continue
+				
+				layer.erase_cell(TwoDcellPos)
+				
+				#reset constrains
+				var cell = cellData[cellPos]
+				RefillTile(TwoDcellPos, cell)
+				UpdateConstrains(cell, TwoDcellPos)
+
+				#reset rooms to state before collapse
+				rooms = originalRooms
+				for g in rooms:
+					g.erase(TwoDcellPos)
+				currentExits.append(cellPos)
+				
+				print("Cell aborted")
+				break
 					
-		if (!cancel):
+		else:
 			possible.remove_at(randomIndex)
+			#update Astar
 			var collapsedCellID = aStar.Astar.get_closest_point(cellPos)
 		
 			for g in newExits:
@@ -289,11 +305,7 @@ func collapseNext() -> void:
 					currentExits.append(Helper.Vector2iTo3(g, currentFloor))
 				
 			PropagateContrains(TwoDcellPos)
-			#print("Cell took {0}ms".format([Time.get_ticks_msec() - msBeforCell]))
-			
-	#var usecAfter = Time.get_ticks_usec()
-	#print(usecAfter - usecbefore)
-	#layer.update_internals()
+
 	if (Engine.is_editor_hint()):
 		queue_redraw()
 
@@ -569,7 +581,6 @@ func rotate_pattern(pattern: TileMapPattern, turns: int) -> TileMapPattern:
 		var atlas = pattern.get_cell_atlas_coords(cell)
 		var altTile = pattern.get_cell_alternative_tile(cell)
 		
-		
 		# get current rotation
 		var rot_radians = layer.GetRotationFromAltTile(altTile)
 
@@ -714,6 +725,7 @@ func UpdateConstrains(cell : collapseCellData, pos : Vector2i) -> void:
 	for neightborDir in NEIGHBOR_DIRECTIONS:
 		var neighborPos = pos + neightborDir
 		var TriDneighborPos = Helper.Vector2iTo3(neighborPos, currentFloor)
+		
 		if (cellData.has(TriDneighborPos)):
 			var neighborCell : collapseCellData = cellData[TriDneighborPos]
 				
@@ -734,13 +746,10 @@ func HasWallInDirection(data : collapseTileData, dir : Vector2) -> bool:
 		return true
 		
 	var dat : TileData = atlasData[data.tileIndex]
-		
-	for wall : Vector2 in dat.get_custom_data("Walls"):
-		var wallDir = wall.rotated(data.tileRotation).round()
-		if (dir.is_equal_approx(wallDir)): ##we found wall the matches direction
-			return true
-			
-	return false
+	
+	var finalDir = dir.rotated(-data.tileRotation).round()
+	
+	return dat.get_custom_data("Walls").has(finalDir)
 
 #-------------------------------------------------------------
 ##Used to declare the blocking direction of each of the MAZE tiles
@@ -750,45 +759,26 @@ func TilesMatch (originData : collapseTileData, destinationData : collapseTileDa
 	var dat : TileData = atlasData[originData.tileIndex]
 	var dat2 : TileData = atlasData[destinationData.tileIndex]
 	
-	#if (dat.get_custom_data("Walls").has(oppositeDir)):
-	for wall : Vector2 in dat.get_custom_data("Walls"):
-		var wallDir = wall.rotated(originData.tileRotation).round()
-		
-		if (dir.is_equal_approx(wallDir)): ##we found wall the matches direction
-
-			#check if other tile has wall in opposite Dir
-			for oppositewall : Vector2 in dat2.get_custom_data("Walls"):
-				var oppositeWallDir = oppositewall.rotated(destinationData.tileRotation).round()
-				if (oppositeDir.is_equal_approx(oppositeWallDir)):
-					return true
-			
-			#if we didn't return it means we didn't find wall so they don't match
-			return false
-
+	var finalDir = dir.rotated(-originData.tileRotation).round()
+	var finalOppositeDir = oppositeDir.rotated(-destinationData.tileRotation).round()
+	
+	if (dat.get_custom_data("Walls").has(finalDir)):
+		if (dat2.get_custom_data("Walls").has(finalOppositeDir)):
+			return true
+		#if we didn't return it means we didn't find wall so they don't match
+		return false
+	
 	#do same for door walls
-	for wall : Vector2 in dat.get_custom_data("DoorWalls"):
-		var wallDir = wall.rotated(originData.tileRotation).round()
-		if (dir.is_equal_approx(wallDir)): ##we found wall the matches direction
-			
-			#check if other tile has wall in opposite Dir
-			for oppositewall : Vector2 in dat2.get_custom_data("DoorWalls"):
-				var oppositeWallDir = oppositewall.rotated(destinationData.tileRotation).round()
-				if (oppositeDir.is_equal_approx(oppositeWallDir)):
-					return true
-			
-			#if we didn't return it means we didn't find wall so they don't match
-			return false
-
+	if (dat.get_custom_data("DoorWalls").has(finalDir)):
+		if (dat2.get_custom_data("DoorWalls").has(finalOppositeDir)):
+			return true
+		return false
+	
 	#if no walls were found to match direction then it means we check the destination tile to make sure it has no walls either
-	for oppositewall : Vector2 in dat2.get_custom_data("Walls"):
-		var oppositeWallDir = oppositewall.rotated(destinationData.tileRotation).round()
-		if (oppositeDir.is_equal_approx(oppositeWallDir)):
-			return false
-			
-	for oppositewall : Vector2 in dat2.get_custom_data("DoorWalls"):
-		var oppositeWallDir = oppositewall.rotated(destinationData.tileRotation).round()
-		if (oppositeDir.is_equal_approx(oppositeWallDir)):
-			return false
-
+	if (dat2.get_custom_data("Walls").has(finalOppositeDir)):
+		return false
+	
+	if (dat2.get_custom_data("DoorWalls").has(finalOppositeDir)):
+		return false
 	
 	return true
