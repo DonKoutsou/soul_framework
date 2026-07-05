@@ -176,12 +176,49 @@ func GetNeighboringExits(cell : Vector2i) -> Array[Vector2i]:
 			Vector2i.UP,
 			Vector2i.DOWN
 		]
-
+	
 	for neighbor in neighbors:
 		if (cell + neighbor not in usedCells):
 			if !CantReach(cell, neighbor, true):
 				exits.append(neighbor + cell)
 	
+	return exits
+
+#------------------------------------------------------------------
+##Returns exits that only the specified tile is in contact with
+func GetSelfOwnedNeighboringExits(cell : Vector2i) -> Array[Vector2i]:
+	var usedCells = get_used_cells()
+	var exits : Array[Vector2i]
+	var neighbors : Array[Vector2i] = [
+			Vector2i.LEFT,
+			Vector2i.RIGHT,
+			Vector2i.UP,
+			Vector2i.DOWN
+		]
+	
+	for neighbor in neighbors:
+		var potentialExit = cell + neighbor
+		if (potentialExit not in usedCells):
+			#if we can reach that exit
+			if !CantReach(cell, neighbor, true):
+				#check neighbors of exit
+				var exitOwned = false
+				for neighbor2 in neighbors:
+					#if any of the neighbors of the exit is used and is not the original cell
+					#it means exit is shared so we skip it
+					var potentialExitOwner = potentialExit + neighbor2
+					
+					if (potentialExitOwner not in usedCells):
+						continue
+						
+					if (potentialExitOwner == cell or CantReach(potentialExitOwner, -neighbor2, true)):
+						continue
+						
+					exitOwned = true
+						
+				if (!exitOwned):
+					exits.append(potentialExit)
+
 	return exits
 
 func find_exit(usedCells : Array) -> Vector2i:
@@ -329,6 +366,16 @@ func SeparateIntoCorridors() -> Array:
 
 	return Corridors
 
+func floor_fill_empty(start: Vector2i, tile_coords: Array, room : Array[Vector2i]) -> void:
+	if (room.size() > 10):
+		return
+	for g in RandomisedMap.NEIGHBOR_DIRECTIONS:
+		var neighbor = start + g
+		if (!tile_coords.has(neighbor) and !room.has(neighbor)):
+			room.append(neighbor)
+			floor_fill_empty(neighbor, tile_coords, room)
+
+
 func flood_fill(start: Vector2i, tile_coords: Array, visited: Dictionary) -> Array:
 	var room : Array = []
 	var stack := [start]
@@ -419,6 +466,9 @@ func CantReach(tilecoords : Vector2, dir : Vector2, passDoors : bool = false) ->
 	var tilerotation = GetTileRotationRadians(tilecoords)
 
 	var finalDir = dir.rotated(-tilerotation).round()
+	
+	if (dat == null):
+		print_stack()
 	
 	if (dat.get_custom_data("Walls").has(finalDir)):
 		return true

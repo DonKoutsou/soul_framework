@@ -6,6 +6,14 @@ class_name collapseCellData
 var collapsed : bool = false
 var possibleTiles : Array[collapseTileData]
 
+var prevState : Array[collapseTileData]
+
+func StoreState() -> void:
+	prevState = possibleTiles.duplicate()
+	
+func RevertState() -> void:
+	possibleTiles = prevState.duplicate()
+
 func GetEntropy(atlasData : Dictionary[int, TileData]) -> float:
 	if possibleTiles.is_empty():
 		return 0.0  # Contradiction
