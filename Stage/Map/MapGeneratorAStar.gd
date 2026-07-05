@@ -17,7 +17,6 @@ func Connect(pos1 : Vector3i, pos2 : Vector3i) -> void:
 
 func Add(data : AStar3D) -> void:
 	var PreviousIndexAmm = Astar.get_point_count()
-	
 	for pointIndex in data.get_point_count():
 		var pointPos = data.get_point_position(pointIndex)
 		var pointID = PreviousIndexAmm + pointIndex

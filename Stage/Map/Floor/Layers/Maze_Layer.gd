@@ -292,50 +292,71 @@ func find_exits() -> Array[Vector2i]:
 func Vector2iTo3(vector : Vector2i, fl : int) -> Vector3i:
 	return Vector3i(vector.x, fl, vector.y)
 
-func GetAStar(floorIndex : int) -> AStar3D:
+func GetAStar(floorIndex : int, mapSize : Vector2i) -> AStar3D:
 	var aStar = AStar3D.new()
 	var pointId : Array[Vector2i]
 	
 	var visited := []
 	var usedCells = get_used_cells()
-	for coord in usedCells:
-		if coord in visited:
-			continue
-		
-		var stack := [coord]
-		
-		pointId.append(coord)
-		aStar.add_point(pointId.find(coord), Vector2iTo3(coord, floorIndex), 1)
-
-		while stack.size() > 0:
-			var current = stack.pop_back()
-
-			if current in visited:
+	for x in mapSize.x:
+		for y in mapSize.y:
+			var coord = Vector2i(x, y)
+	#for coord in usedCells:
+			if coord in visited:
 				continue
+			
+			var stack := [coord]
+			
+			if (!pointId.has(coord)):
+				pointId.append(coord)
+			aStar.add_point(pointId.find(coord), Vector2iTo3(coord, floorIndex), 1)
 
-			visited.append(current)
-			# Get neighboring tiles (4-directional)
-			var neighbors : Array[Vector2i] = [
-				Vector2i.LEFT,
-				Vector2i.RIGHT,
-				Vector2i.UP,
-				Vector2i.DOWN
-			]
+			while stack.size() > 0:
+				var current = stack.pop_back()
 
-			for neighbor in neighbors:
-				if (current + neighbor in usedCells):
-					if neighbor + current not in visited and !CantReach(current, neighbor, true) and !CantReach(current + neighbor, neighbor * -1, true):
-						if (!pointId.has(neighbor + current)):
-							pointId.append(neighbor + current)
-						aStar.add_point(pointId.find(neighbor + current), Vector2iTo3(neighbor + current, floorIndex), 1)
-						aStar.connect_points(pointId.find(current), pointId.find(neighbor + current))
-						stack.push_back(neighbor + current)
-				else:
-					if neighbor + current not in visited and !CantReach(current, neighbor, true):
-						if (!pointId.has(neighbor + current)):
-							pointId.append(neighbor + current)
-						aStar.add_point(pointId.find(neighbor + current), Vector2iTo3(neighbor + current, floorIndex), 1)
-						aStar.connect_points(pointId.find(current), pointId.find(neighbor + current))
+				if current in visited:
+					continue
+				
+				visited.append(current)
+				# Get neighboring tiles (4-directional)
+				var neighbors : Array[Vector2i] = [
+					Vector2i.LEFT,
+					Vector2i.RIGHT,
+					Vector2i.UP,
+					Vector2i.DOWN
+				]
+				
+				for neighbor in neighbors:
+					var neighborPos = current + neighbor
+					
+					if (neighborPos.x < 0 or neighborPos.x > mapSize.x -1 or neighborPos.y < 0 or neighborPos.y > mapSize.y - 1):
+						continue
+					
+					if neighborPos in visited:
+						continue
+					
+					if (!pointId.has(neighborPos)):
+						pointId.append(neighborPos)
+					
+					if (current in usedCells):
+						if (neighborPos in usedCells):
+							if !CantReach(current, neighbor, true):
+								aStar.add_point(pointId.find(neighborPos), Vector2iTo3(neighborPos, floorIndex), 1)
+								aStar.connect_points(pointId.find(current), pointId.find(neighborPos))
+								stack.push_back(neighborPos)
+						else:
+							if !CantReach(current, neighbor, true):
+								aStar.add_point(pointId.find(neighborPos), Vector2iTo3(neighborPos, floorIndex), 1)
+								aStar.connect_points(pointId.find(current), pointId.find(neighborPos))
+					else:
+						if (neighborPos in usedCells):
+							if !CantReach(neighborPos, -neighbor, true):
+								aStar.add_point(pointId.find(neighborPos), Vector2iTo3(neighborPos, floorIndex), 1)
+								aStar.connect_points(pointId.find(current), pointId.find(neighborPos))
+								stack.push_back(neighborPos)
+						else:
+							aStar.add_point(pointId.find(neighborPos), Vector2iTo3(neighborPos, floorIndex), 1)
+							aStar.connect_points(pointId.find(current), pointId.find(neighborPos))
 
 	return aStar
 
@@ -366,14 +387,16 @@ func SeparateIntoCorridors() -> Array:
 
 	return Corridors
 
-func floor_fill_empty(start: Vector2i, tile_coords: Array, room : Array[Vector2i]) -> void:
-	if (room.size() > 10):
-		return
+func floor_fill_empty(start: Vector2i, tile_coords: Array, room : Array[Vector2i], mapSize : Vector2i) -> void:
 	for g in RandomisedMap.NEIGHBOR_DIRECTIONS:
 		var neighbor = start + g
+		
+		if (neighbor.x < 0 or neighbor.x > mapSize.x -1 or neighbor.y < 0 or neighbor.y > mapSize.y - 1):
+			continue
+			
 		if (!tile_coords.has(neighbor) and !room.has(neighbor)):
 			room.append(neighbor)
-			floor_fill_empty(neighbor, tile_coords, room)
+			floor_fill_empty(neighbor, tile_coords, room, mapSize)
 
 
 func flood_fill(start: Vector2i, tile_coords: Array, visited: Dictionary) -> Array:

@@ -29,6 +29,8 @@ class_name RandomisedMap
 ##Clears tilemaps of any configured tile
 @export_tool_button("Clear Map") var clear = CleanMap
 
+@export_tool_button("Run Once") var run = collapseNext
+
 @export var generationSpeed : float = 0.1
 
 
@@ -138,12 +140,12 @@ func collapseNext() -> void:
 	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	
-	
 	for g in cellData:
 		var cell = cellData[g]
 		cell.StoreState()
 	collapse_history.clear()
 	originalRooms = rooms.duplicate()
+	
 	for v in 10:
 		#Get possible cells that we could collapse
 		var possible : Array[Vector3i] = GetPossibleCollapses()
@@ -188,42 +190,47 @@ func collapseNext() -> void:
 				abortReason = CELL_ABORT_REASON.NO_OWNER_FOUND
 		
 		
-		if (rooms.size() > 1):
-			var used = layer.get_used_cells()
+		if (abortReason == CELL_ABORT_REASON.NONE and rooms.size() > 1):
 			
 			#if multiple rooms exist we need to check if they have exits, if not we take back this collapse
+			#print("room ammount = {0}".format([var_to_str(rooms.size())]))
+			
 			for room in rooms:
+				
 				var exits : Array[Vector2i] = []
+				#if room has exit we need to check if this exit communicates with another room
+				
 				if (RoomHasExit(room, layer, exits)):
-					var hasRoomThatCommunicates : bool = false
+					var haseAccessToAllRooms = true
 					
-					for g in exits:
-						var emptyRoom : Array[Vector2i] = []
-						layer.floor_fill_empty(g, used, emptyRoom)
-						if (emptyRoom.size() >= 10):
-							hasRoomThatCommunicates = true
+					for roomToCheck in rooms:
+						if (roomToCheck == room):
+							continue
+						var start = Helper.Vector2iTo3(room[0], currentFloor)
+						var startID = aStar.Astar.get_closest_point(start)
+						var destination = Helper.Vector2iTo3(roomToCheck[0], currentFloor)
+						var distinationID = aStar.Astar.get_closest_point(destination)
+						
+						var path = aStar.Astar.get_point_path(startID, distinationID)
+						if (path.size() == 0):
+							print("cant go from {0} to {1}".format([start, destination]))
+							haseAccessToAllRooms = false
 							break
 						
-						#check if any of the empties in in contact with any of the current exits
-						for empty in emptyRoom:
-							var triDEmpty = Helper.Vector2iTo3(empty, currentFloor)
-							#if the empty is not one of this rooms exits
-							if (exits.has(empty)):
-								continue
-								
-							#and exists in the current exits array it means that this room can still connect with others
-							else: if (currentExits.has(triDEmpty)):
-								hasRoomThatCommunicates = true
-								break
-						
-					if (!hasRoomThatCommunicates):
-						abortReason = CELL_ABORT_REASON.ROOM_GOT_SECLUDED
+						var lastPoint = path[path.size() - 1]
+						if (Vector3i(lastPoint) != destination):
+							print("cant go from {0} to {1}".format([start, destination]))
+							haseAccessToAllRooms = false
+							break
+					
+					if (!haseAccessToAllRooms):
+						abortReason = CELL_ABORT_REASON.ROOM_HAS_NO_EXITS
 						break
-							
 					continue
 					
 				abortReason = CELL_ABORT_REASON.ROOM_HAS_NO_EXITS
-					
+				break
+			
 		if (abortReason != CELL_ABORT_REASON.NONE):
 			#print("broken room {0}".format([var_to_str(room)]))
 			rooms = originalRooms
@@ -236,7 +243,7 @@ func collapseNext() -> void:
 				cellData[g].RevertState()
 
 			print("CELL ABORTED | REASON ---> {0}".format([CELL_ABORT_REASON.keys()[abortReason]]))
-			
+			queue_redraw()
 			return
 			
 
@@ -324,18 +331,6 @@ func _draw() -> void:
 	
 	draw_circle(Vector2(camPos.x, camPos.z) * 8, 2, Color(1,0,0))
 	
-	for g in cellData:
-		var cell = cellData[g]
-		if (cell.collapsed):
-			continue
-
-		var text = var_to_str(cellData[g].possibleTiles.size())
-		
-		var stringSize = ThemeDB.fallback_font.get_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2) / 4.0
-		stringSize.y *= -1
-		
-		draw_string(ThemeDB.fallback_font, layer.map_to_local(Helper.Vector3ITo2(g)) - stringSize, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
-	
 	var cols : Array[Color] = [Color(1,0,0), Color(0,1,0), Color(0,0,1)]
 	for roomIndex in rooms.size():
 		var col = cols[wrap(roomIndex, 0, 3)]
@@ -346,11 +341,22 @@ func _draw() -> void:
 		var twoD = Helper.Vector3ITo2(g)
 		draw_circle(layer.map_to_local(twoD), 1, Color(0.387, 0.002, 0.876, 1.0))
 	
+	for g in cellData:
+		var cell = cellData[g]
+		if (cell.collapsed):
+			continue
+
+		var text = var_to_str(cellData[g].possibleTiles.size())
+		
+		var stringSize = ThemeDB.fallback_font.get_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2) / 3.0
+		#stringSize.y *= -1
+		
+		draw_string(ThemeDB.fallback_font, layer.map_to_local(Helper.Vector3ITo2(g)) - stringSize, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
+
 	if (drawAStar):
-		var used = layer.get_used_cells()
-		for g in used:
-			var pointId = aStar.Astar.get_closest_point(Helper.Vector2iTo3(g, currentFloor))
+		for pointId in aStar.Astar.get_point_count():
 			var connections = aStar.Astar.get_point_connections(pointId)
+			var g = Helper.Vector3ITo2(aStar.Astar.get_point_position(pointId))
 			for connection in connections:
 				draw_line(layer.map_to_local(g), layer.map_to_local(Helper.Vector3ITo2(aStar.Astar.get_point_position(connection))), Color(1,0,0, 0.3))
 		
@@ -527,7 +533,7 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 	for cell in Usedcells:
 		PropagateContrains(cell, collapsed)
 	
-	aStar.Add(layer.GetAStar(currentFloor))
+	aStar.Add(layer.GetAStar(currentFloor, mapSize))
 	var exits = layer.find_exits()
 	currentExits.clear()
 	
@@ -716,26 +722,48 @@ func CellCollapsed(cellPos : Vector2i) -> void:
 	currentExits.erase(TriDPos)
 	
 	var newExits = layer.GetNeighboringExits(cellPos)
-	
 	#Update Astar
 	var collapsedCellID = aStar.Astar.get_closest_point(TriDPos)
-	
+	if (Vector3(TriDPos) != aStar.Astar.get_point_position(collapsedCellID)):
+		print("issue, was looking for point in position {0} and got point in position {1}".format([var_to_str(TriDPos), var_to_str(aStar.Astar.get_point_position(collapsedCellID))]))
+		
+		
+	var used = layer.get_used_cells()
 	#for each of our new exits
+	for dir in NEIGHBOR_DIRECTIONS:
+		var neightborPos = cellPos + dir
+		if (newExits.has(neightborPos)):
+			continue
+		
+		if (used.has(neightborPos)):
+			if (!layer.CantReach(cellPos, dir, true)):
+				continue
+			
+		
+		var exitPointID = aStar.Astar.get_closest_point(Helper.Vector2iTo3(neightborPos, currentFloor))
+		aStar.Astar.disconnect_points(collapsedCellID, exitPointID)
+		
 	for exit in newExits:
 		var TriDExis = Helper.Vector2iTo3(exit, currentFloor)
 		#if it already is an exit we just connect our collapsed cell to it
-		if (currentExits.has(TriDExis)):
-			var exitPointID = aStar.Astar.get_closest_point(TriDExis)
-			aStar.Astar.connect_points(collapsedCellID, exitPointID)
-		else:
-			var exitPointID = aStar.Astar.get_point_count()
-			#while aStar.Astar.get_point_ids().has(exitPointID):
-				#exitPointID += 1
-			aStar.Astar.add_point(exitPointID , TriDExis)
-			aStar.Astar.connect_points(collapsedCellID, exitPointID)
+		var exitPointID = aStar.Astar.get_closest_point(TriDExis)
+		aStar.Astar.connect_points(collapsedCellID, exitPointID)
+
+		if (Vector3(TriDExis) != aStar.Astar.get_point_position(exitPointID)):
+				print("issue, was looking for point in position {0} and got point in position {1}".format([var_to_str(TriDExis), var_to_str(aStar.Astar.get_point_position(exitPointID))]))
+
+		if (!currentExits.has(TriDExis)):
 			currentExits.append(TriDExis)
 	
 	collapse_history.append(TriDPos)
+
+func GetCellNeighbors(cell : Vector2i) -> Array[Vector2i]:
+	var neighbors : Array[Vector2i] = []
+	
+	for g in NEIGHBOR_DIRECTIONS:
+		neighbors.append(cell + g)
+	
+	return neighbors
 
 func RevertCollapses() -> void:
 	for collapseIndex in range(collapse_history.size() -1, -1, -1):
@@ -756,10 +784,6 @@ func Revert(collapse : Vector3i) ->void:
 	
 	var layer : MazeFloorLayer = GetFloor(currentFloor).GetLayer(FloorLayer.LayerType.MAZE)
 	
-	if (!layer.get_used_cells().has(TwoDcellPos)):
-		print("Sus {0}".format([TwoDcellPos]))
-		print("{0}".format([var_to_str(collapse_history)]))
-	
 	var exits = layer.GetSelfOwnedNeighboringExits(TwoDcellPos)
 	
 	#we itterate in reverse to remove them from Astar in the opposite direction they were added, helps with PointIDs not getting mixed
@@ -768,18 +792,39 @@ func Revert(collapse : Vector3i) ->void:
 		var triD = Helper.Vector2iTo3(exit, currentFloor)
 		if (currentExits.has(triD)):
 			currentExits.erase(triD)
-			var exitID = aStar.Astar.get_closest_point(triD)
-			#print("removing point {0}".format([exitID]))
-			aStar.Astar.remove_point(exitID)
 
-	currentExits.append(collapse)
+	var collapeID = aStar.Astar.get_closest_point(collapse)
 	
-	#if (collapseIndex > 0):
-		#aStar.Astar.remove_point(pointID)
+	layer.erase_cell(TwoDcellPos)
+	
+	var used = layer.get_used_cells()
+
+	for dir in NEIGHBOR_DIRECTIONS:
+		
+		var neightborPos = TwoDcellPos + dir
+		
+		if (neightborPos.x < 0 or neightborPos.x > mapSize.x -1 or neightborPos.y < 0 or neightborPos.y > mapSize.y - 1):
+			continue
+		
+		if (used.has(TwoDcellPos)):
+			if (layer.CantReach(TwoDcellPos, dir, true)):
+				continue
+				
+		else: if (used.has(neightborPos)):
+				if (layer.CantReach(neightborPos, -dir, true)):
+					continue
+					
+		var exitPointID = aStar.Astar.get_closest_point(Helper.Vector2iTo3(neightborPos, currentFloor))
+		
+		aStar.Astar.connect_points(collapeID, exitPointID)
+
+	
+	currentExits.append(collapse)
+
 
 	var cell = cellData[collapse]
 	
-	layer.erase_cell(TwoDcellPos)
+	
 	RefillTile(TwoDcellPos ,cell)
 	
 	for g in rooms:

@@ -12,7 +12,7 @@ func StoreState() -> void:
 	prevState = possibleTiles.duplicate()
 	
 func RevertState() -> void:
-	possibleTiles = prevState.duplicate()
+	possibleTiles = prevState
 
 func GetEntropy(atlasData : Dictionary[int, TileData]) -> float:
 	if possibleTiles.is_empty():
