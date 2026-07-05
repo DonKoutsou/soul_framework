@@ -123,22 +123,37 @@ func _process(delta: float) -> void:
 
 #-------------------------------------------------------------
 func collapseNext() -> void:
-
+	var fl = GetFloor(currentFloor)
+	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+	
 	if (currentExits.size() == 0):
 		
 		generatedFloors.append(currentFloor)
+		
+		var used = layer.get_used_cells()
+		used.sort()
+		
+		for g in aStar.Astar.get_point_count():
+			var pointPos =  aStar.Astar.get_point_position(g)
+			if (pointPos.y != currentFloor):
+				continue
+				
+			var twoDPos = Helper.Vector3ITo2(pointPos)
+			if (!used.has(twoDPos)):
+				aStar.Astar.set_point_disabled(g)
+
 		if (generatedFloors.size() < floorsToGenerate.size()):
 			_progress_floor()
-			return
 		else:
 			_add_finishing_touches()
-			
 			finised = true
 			call_deferred("loadFinished")
-			return
+			
+		if (Engine.is_editor_hint()):
+			queue_redraw()
+		return
 
-	var fl = GetFloor(currentFloor)
-	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+	
 	
 	for g in cellData:
 		var cell = cellData[g]
@@ -331,15 +346,16 @@ func _draw() -> void:
 	
 	draw_circle(Vector2(camPos.x, camPos.z) * 8, 2, Color(1,0,0))
 	
-	var cols : Array[Color] = [Color(1,0,0), Color(0,1,0), Color(0,0,1)]
+	var cols : Array[Color] = [Color(1,0,0), Color(0,1,0), Color(0,0,1), Color(0.85, 0.444, 0.0, 1.0), Color(0.736, 1.0, 0.406, 1.0)]
 	for roomIndex in rooms.size():
-		var col = cols[wrap(roomIndex, 0, 3)]
+		var col = cols[wrap(roomIndex, 0, cols.size())]
 		for tile in rooms[roomIndex]:
-			draw_circle(layer.map_to_local(tile), 0.5, col)
+			
+			draw_circle(layer.map_to_local(tile) + Vector2(0, currentFloor * 320), 2, col)
 	
 	for g in currentExits:
 		var twoD = Helper.Vector3ITo2(g)
-		draw_circle(layer.map_to_local(twoD), 1, Color(0.387, 0.002, 0.876, 1.0))
+		draw_circle(layer.map_to_local(twoD) + Vector2(0, g.y * 320), 4, Color(0.387, 0.002, 0.876, 1.0))
 	
 	for g in cellData:
 		var cell = cellData[g]
@@ -351,14 +367,23 @@ func _draw() -> void:
 		var stringSize = ThemeDB.fallback_font.get_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2) / 3.0
 		#stringSize.y *= -1
 		
-		draw_string(ThemeDB.fallback_font, layer.map_to_local(Helper.Vector3ITo2(g)) - stringSize, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
+		draw_string(ThemeDB.fallback_font, layer.map_to_local(Helper.Vector3ITo2(g)) + Vector2(0, g.y * 320) - stringSize, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
 
 	if (drawAStar):
 		for pointId in aStar.Astar.get_point_count():
+			if (aStar.Astar.is_point_disabled(pointId)):
+				continue
 			var connections = aStar.Astar.get_point_connections(pointId)
-			var g = Helper.Vector3ITo2(aStar.Astar.get_point_position(pointId))
+			var pont = aStar.Astar.get_point_position(pointId)
+			var g = Helper.Vector3ITo2(pont)
+			var gGlobal = layer.map_to_local(g) + Vector2(0, pont.y * 320)
 			for connection in connections:
-				draw_line(layer.map_to_local(g), layer.map_to_local(Helper.Vector3ITo2(aStar.Astar.get_point_position(connection))), Color(1,0,0, 0.3))
+				var pointPos = aStar.Astar.get_point_position(connection)
+				var twoDPos = Helper.Vector3ITo2(pointPos)
+				var localPos = layer.map_to_local(twoDPos)
+				var globalPos = localPos + Vector2(0, pointPos.y * 320)
+				
+				draw_line(gGlobal, globalPos, cols[wrap(pointPos.y, 0, cols.size())])
 		
 
 #---------------------------------------------------
@@ -415,6 +440,7 @@ func _add_finishing_touches() -> void:
 	
 	var possibleDoors : Array[Vector3i]
 	var possibleLockedDoors : Array[Vector3i]
+		
 	
 	#find possible doors
 	while possibleDoors.size() < 20:
@@ -452,15 +478,16 @@ func _progress_floor() -> void:
 	var lastLayer : MazeFloorLayer = lastFloor.GetLayer(FloorLayer.LayerType.MAZE)
 	var lastInfoLayer = lastFloor.GetLayer(FloorLayer.LayerType.MAP_INFO)
 	
+	var used = lastLayer.get_used_cells()
+	used.sort()
+			
 	currentFloor += 1
 	call_deferred("LoadingProgressed", float(generatedFloors.size()) / floorsToGenerate.size())
 	
 	var f = GetFloor(currentFloor)
 	var l : MazeFloorLayer = f.GetLayer(FloorLayer.LayerType.MAZE)
 	var InfoLayer = f.GetLayer(FloorLayer.LayerType.MAP_INFO)
-	
-	var used = lastLayer.get_used_cells()
-	used.sort()
+
 	
 	var randomCell = used[r.randi_range(0, used.size() - 1)]
 	
@@ -477,6 +504,7 @@ func _progress_floor() -> void:
 	_init_layer(l)
 	#Connect the 2 floors
 	aStar.Connect(Helper.Vector2iTo3(randomCell, currentFloor - 1), Helper.Vector2iTo3(randomCell, currentFloor))
+	
 
 #---------------------------------------------------
 #Initialise the provided layer
