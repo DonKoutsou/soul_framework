@@ -449,6 +449,7 @@ func _add_finishing_touches() -> void:
 	#find possible doors
 	while possibleDoors.size() < 20:
 		var fl = generatedFloors[r.randi_range(0, generatedFloors.size() - 1)]
+		
 		var randomPos = Vector3i(r.randi_range(0, mapSize.x -1), fl, r.randi_range(0, mapSize.y - 1))
 		if (!cellData.has(randomPos)):
 			continue
@@ -459,10 +460,16 @@ func _add_finishing_touches() -> void:
 		var dat : TileData = atlasData[randomTile.tileIndex]
 		var doorAmm = dat.get_custom_data("DoorWalls").size()
 		if (doorAmm > 0):
-			possibleDoors.append(randomPos)
+			var InfoLayer : TileMapLayer = fl.GetLayer(FloorLayer.LayerType.MAP_INFO)
+			var infoUsed = InfoLayer.get_used_cells()
+			
 			#find opposite door
 			var randomDoor = dat.get_custom_data("DoorWalls")[r.randi_range(0, doorAmm - 1)].rotated(randomTile.tileRotation)
-			possibleDoors.append(randomPos + Vector3i(randomDoor.x, 0, randomDoor.y))
+			var oppositeDoor = randomPos + Vector3i(randomDoor.x, 0, randomDoor.y)
+			
+			if (!infoUsed.has(Helper.Vector3ITo2(randomDoor)) and !infoUsed.has(Helper.Vector3ITo2(oppositeDoor))):
+				possibleDoors.append(randomPos)
+				possibleDoors.append(oppositeDoor)
 
 	for g in possibleDoors:
 		var f = GetFloor(g.y)
