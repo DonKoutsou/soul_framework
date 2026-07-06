@@ -75,6 +75,12 @@ static func are_directions_opposite(Dir1 : float, Dir2 : float) -> bool:
 	var dot = forward_a.dot(forward_b)
 	return dot < -0.99
 
+
+static func Vector2To3(vector : Vector2, fl : float) -> Vector3:
+	return Vector3(vector.x, fl, vector.y)
+
+static func Vector3To2(vector : Vector3) -> Vector2:
+	return Vector2(vector.x, vector.z)
 #----------------------------------------------------
 static func Vector2iTo3(vector : Vector2i, fl : int) -> Vector3i:
 	return Vector3i(vector.x, fl, vector.y)

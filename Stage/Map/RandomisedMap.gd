@@ -735,10 +735,10 @@ func _place_patterns(layer : TileMapLayer) -> void:
 		
 		var originalPatern : TileMapPattern = pickedPattern.GetPattern()
 		var originalUsed = originalPatern.get_used_cells()
-		originalUsed.sort()
+		#originalUsed.sort()
 		var randomPatern : TileMapPattern = rotate_pattern(originalPatern, rot)
 		var randomPaternUsed = randomPatern.get_used_cells()
-		randomPaternUsed.sort()
+		#randomPaternUsed.sort()
 		#paterns.remove_at(index)
 		var randomPosition = Vector2i(r.randi_range(1 + patternPadding, mapSize.x - 1 - patternPadding - randomPatern.get_size().x), r.randi_range(1 + patternPadding, mapSize.y - 1 - patternPadding - randomPatern.get_size().y))
 		
@@ -758,13 +758,14 @@ func _place_patterns(layer : TileMapLayer) -> void:
 				for data : MeshData in props[prop]:
 					var mesh : MeshInstance3D = MeshInstance3D.new()
 					mesh.mesh = prop
-					var oldPaternPlacementIndex = originalUsed.find(Helper.Vector3ITo2(data.Transform.origin))
-					var newOrigin = Helper.Vector2iTo3(randomPaternUsed[oldPaternPlacementIndex], currentFloor)
-					var trans = Transform3D(Basis(), newOrigin)
-					trans = trans.translated_local(Helper.Vector2iTo3(randomPosition, currentFloor) * WorldScale)
+					var rotatedPoint = rotate_point(Helper.Vector3To2(data.Transform.origin / Vector3(WorldScale)), Vector2(0,0), originalPatern.get_size().x, originalPatern.get_size().y, rot)
+					#var oldPaternPlacementIndex = originalUsed.find()
+					var newOrigin = Helper.Vector2To3(rotatedPoint * Helper.Vector3To2(WorldScale), data.Transform.origin.y)
+					#newOrigin += Vector3(Helper.Vector2iTo3(randomPosition, currentFloor) * WorldScale)
+					var trans = Transform3D(Basis(), newOrigin).translated_local(Vector3(Helper.Vector2iTo3(randomPosition, currentFloor) * WorldScale))
 					mesh.transform = trans
 					$ExtraProps.add_child(mesh)
-			print(Props)
+			#sprint(Props)
 		else:
 			pickedPattern.queue_free()
 			paterns.remove_at(index)
@@ -828,6 +829,23 @@ func rotate_pattern(pattern: TileMapPattern, turns: int) -> TileMapPattern:
 		)
 
 	return result
+
+func rotate_point(point: Vector2, min_pos: Vector2, width: int, height: int, turns: int) -> Vector2:
+	turns = posmod(turns, 4)
+
+	var local = point - min_pos
+
+	match turns:
+		0:
+			return local
+		1:
+			return Vector2(height - 1 - local.y, local.x)
+		2:
+			return Vector2(width - 1 - local.x, height - 1 - local.y)
+		3:
+			return Vector2(local.y, width - 1 - local.x)
+
+	return local
 
 #-----------------------------------------------
 ##Collect all data from tileset and store them in atlasData
