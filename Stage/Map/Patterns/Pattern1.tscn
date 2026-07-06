@@ -1,0 +1,26 @@
+[gd_scene format=4 uid="uid://cu3acyt3xm8tp"]
+
+[ext_resource type="PackedScene" uid="uid://dg8hgap2gsibt" path="res://Engine/Stage/Map/Patterns/Base_Pattern.tscn" id="1_2n1ee"]
+[ext_resource type="ArrayMesh" uid="uid://dw8oo5xdersfx" path="res://Engine/Assets/Map_Geometry/Box.res" id="2_tgy81"]
+[ext_resource type="Script" uid="uid://dhe6lh071xnw2" path="res://Engine/Stage/Level/Prop_Spawner/MeshData.gd" id="3_a6dw7"]
+[ext_resource type="Script" uid="uid://bt0s6sb2dylnt" path="res://Engine/Stage/Level/Prop_Spawner/MoveNotificator.gd" id="3_h4py6"]
+
+[sub_resource type="Resource" id="Resource_h4py6"]
+script = ExtResource("3_a6dw7")
+Transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.388961, 0.6261161, 4.264816)
+
+[node name="MapGenerator2" unique_id=1573063644 node_paths=PackedStringArray("Floors") instance=ExtResource("1_2n1ee")]
+Floors = [NodePath("Floor_0")]
+Props = Dictionary[Mesh, Array]({
+ExtResource("2_tgy81"): [SubResource("Resource_h4py6")]
+})
+
+[node name="MAZE" parent="Floor_0" parent_id_path=PackedInt32Array(1743688447) index="0" unique_id=817992180]
+tile_map_data = PackedByteArray("AAAAAAAACgACAAAAAFAMAAAACgACAAAAADAMAAIACgACAAAAAGAAAAIACgACAAAAAAAAAAEACgABAAAAAAACAAAACgABAAAAAFADAAAACgABAAAAAFAEAAAACgABAAAAAFAFAAAACgABAAAAAFAGAAAACgABAAAAAFAHAAAACgABAAAAAFAIAAAACgABAAAAAFAJAAAACgABAAAAAFAKAAAACgABAAAAAFALAAAACgABAAAAAFABAAAACgABAAAAAFALAAIACgABAAAAAGAKAAIACgABAAAAAGAJAAIACgABAAAAAGAIAAIACgABAAAAAGAHAAIACgABAAAAAGAGAAIACgABAAAAAGAFAAIACgABAAAAAGAEAAIACgABAAAAAGADAAIACgAFAAAAAGACAAIACgABAAAAAGABAAIACgABAAAAAGAMAAEACgABAAAAADALAAEACgAAAAAAAAAKAAEACgAAAAAAAAAJAAEACgAAAAAAAAAIAAEACgAAAAAAAAAHAAEACgAAAAAAAAAGAAEACgAAAAAAAAAFAAEACgAAAAAAAAAEAAEACgAAAAAAAAADAAEACgAAAAAAAAACAAEACgAAAAAAAAABAAEACgAAAAAAAAA=")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ExtraProps" parent_id_path=PackedInt32Array(1450707516) index="0" unique_id=1175628570]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.388961, 0.6261161, 4.264816)
+mesh = ExtResource("2_tgy81")
+script = ExtResource("3_h4py6")
+
+[editable path="Floor_0"]

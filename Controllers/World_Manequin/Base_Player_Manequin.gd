@@ -223,7 +223,7 @@ func HandleRotation(event: InputEvent) -> void:
 	
 		return
 	if (event is InputEventMouseMotion ):
-		var d = event.relative
+		var d = event.screen_relative
 		var CameraOffset : Vector3 = Vector3.ZERO
 		CameraOffset.y -= d.x / 200
 		CameraOffset.x -= d.y / 200

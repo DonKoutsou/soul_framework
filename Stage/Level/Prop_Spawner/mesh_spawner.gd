@@ -57,6 +57,7 @@ func PosChanged(NewPos : Vector3, data : MapData) -> void:
 				
 				#RenderingServer.vertex_colo()
 				StoreInstance(g, Instance)
+				
 
 func StoreInstance(pos : Vector3i, key : RID) -> void:
 	if (spawnedInstanced.keys().has(pos)):

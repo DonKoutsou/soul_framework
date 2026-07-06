@@ -20,6 +20,9 @@ class_name RandomisedMap
 ##Seed used for the generation
 @export var collapseSeed : int = -1
 
+##Ammount of collapses that happen in one frame
+@export var collapseAmmountPerFrame : int = 10
+
 ##Used for debug
 @export var drawAStar : bool = false
 
@@ -36,6 +39,7 @@ class_name RandomisedMap
 
 @export var generationSpeed : float = 0.1
 
+@export_file("*.tscn") var Patterns : Array[String]
 
 const NEIGHBOR_DIRECTIONS : Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 const ROTATIONS : Array[float] = [0, PI/2, PI, -PI/2]
@@ -68,6 +72,7 @@ var r : RandomNumberGenerator
 
 var finised : bool = false
 
+var PlacedRooms : Array[PackedVector3Array]
 var originalRooms
 var collapse_history : Array[Vector3i]
 
@@ -134,7 +139,7 @@ func collapseNext() -> void:
 		generatedFloors.append(currentFloor)
 		
 		var used = layer.get_used_cells()
-		used.sort()
+		#used.sort()
 		
 		
 		for g in aStar.Astar.get_point_count():
@@ -145,7 +150,7 @@ func collapseNext() -> void:
 			var twoDPos = Helper.Vector3ITo2(pointPos)
 			if (!used.has(twoDPos)):
 				aStar.Astar.set_point_disabled(g)
-
+		
 		if (generatedFloors.size() < floorsToGenerate.size()):
 			_progress_floor()
 		else:
@@ -156,16 +161,17 @@ func collapseNext() -> void:
 		if (Engine.is_editor_hint()):
 			queue_redraw()
 		return
-
-	
 	
 	for g in cellData:
+		if (g.y != currentFloor):
+			continue
 		var cell = cellData[g]
 		cell.StoreState()
+		
 	collapse_history.clear()
 	originalRooms = rooms.duplicate()
 	
-	for v in 10:
+	for v in collapseAmmountPerFrame:
 		#Get possible cells that we could collapse
 		var possible : Array[Vector3i] = GetPossibleCollapses()
 		
@@ -257,6 +263,8 @@ func collapseNext() -> void:
 			collapse_history.clear()
 			
 			for g in cellData:
+				if (g.y != currentFloor):
+					continue
 				cellData[g].RevertState()
 
 			#print("CELL ABORTED | REASON ---> {0}".format([CELL_ABORT_REASON.keys()[abortReason]]))
@@ -361,8 +369,8 @@ func _draw() -> void:
 	
 	for g in cellData:
 		var cell = cellData[g]
-		if (cell.collapsed):
-			continue
+		#if (cell.collapsed):
+			#continue
 
 		var text = var_to_str(cellData[g].possibleTiles.size())
 		
@@ -393,6 +401,8 @@ func _draw() -> void:
 #---------------------------------------------------
 ##Clears all tilemap layers in map
 func CleanMap() -> void:
+	for g in $ExtraProps.get_children():
+		g.queue_free()
 	for fl in Floors:
 		for layer : TileMapLayer in fl.GetLayers():
 			layer.clear()
@@ -404,7 +414,11 @@ func CollapseMap() -> void:
 	generatedFloors.clear()
 	originalTiles.clear()
 	aStar.Clear()
+	PlacedRooms.clear()
 	currentFloor = floorsToGenerate[0]
+	Props.clear()
+	MegaProps.clear()
+	
 	cellData = {}
 	
 	_update_atlas_data()
@@ -440,18 +454,66 @@ func _add_finishing_touches() -> void:
 	spawnFloorUsed.sort()
 	
 	var spawnIndex = r.randi_range(0, spawnFloorUsed.size() - 1)
-	spawnmapInfoLayer.set_cell(spawnFloorUsed[spawnIndex], 0, Vector2i(14,0))
+	var spawnPos = spawnFloorUsed[spawnIndex]
+	var triDSpawnPos = Helper.Vector2iTo3(spawnPos, spawnFloorIndex)
+	spawnmapInfoLayer.set_cell(spawnPos, 0, Vector2i(14,0))
 	
 	var possibleDoors : Array[Vector3i]
 	var possibleLockedDoors : Array[Vector3i]
+	
+	var RoomToLock : Array[PackedVector3Array]
+	
+	while RoomToLock.size() < 3 and PlacedRooms.size() > 0:
+		var randIndex = r.randi_range(0, PlacedRooms.size() - 1)
+		var randomRoom = PlacedRooms.pop_at(randIndex)
 		
+		if (randomRoom.has(triDSpawnPos)):
+			continue
+			
+		
+		var doors : PackedVector3Array = []
+		var doorDirs : PackedVector2Array = []
+		for cellPos : Vector3i in randomRoom:
+			var cell : collapseCellData = cellData[cellPos]
+			var tile : collapseTileData = cell.possibleTiles[0]
+			var dat : TileData = atlasData[tile.tileIndex]
+			if (dat.get_custom_data("DoorWalls").size() == 1):
+				doors.append(cellPos)
+				doorDirs.append(dat.get_custom_data("DoorWalls")[0].rotated(tile.tileRotation))
+		if (doors.size() == 1):
+			var doorPos = doors[0]
+			var doorDir = doorDirs[0]
+			
+			var oppositeDoor = Vector3i(doorPos) + Vector3i(doorDir.x, 0, doorDir.y)
+			var oppositeCell : collapseCellData = cellData[oppositeDoor]
+			var oppositeTile = oppositeCell.possibleTiles[0]
+			var oppositeDat : TileData = atlasData[oppositeTile.tileIndex]
+			
+			if (oppositeDat.get_custom_data("DoorWalls").size() > 1):
+				continue
+
+			possibleLockedDoors.append(doorPos)
+			possibleLockedDoors.append(oppositeDoor)
+			
+			var fl = GetFloor(doorPos.y)
+			var itemLayer = fl.GetLayer(FloorLayer.LayerType.ITEMS)
+			
+			var randomTileIndex = r.randi_range(0, randomRoom.size() - 1)
+			var randomTile = Helper.Vector3ITo2(randomRoom[randomTileIndex])
+			itemLayer.set_cell(randomTile, 0, Vector2i(0,0))
+		
+		RoomToLock.append(randomRoom)
+		#for cellLoc in RoomToLock:
+			#var cell = cellData.
+	
+	
 	
 	#find possible doors
 	while possibleDoors.size() < 20:
-		var fl = generatedFloors[r.randi_range(0, generatedFloors.size() - 1)]
+		var floorIndex = generatedFloors[r.randi_range(0, generatedFloors.size() - 1)]
 		
-		var randomPos = Vector3i(r.randi_range(0, mapSize.x -1), fl, r.randi_range(0, mapSize.y - 1))
-		if (!cellData.has(randomPos)):
+		var randomPos = Vector3i(r.randi_range(0, mapSize.x -1), floorIndex, r.randi_range(0, mapSize.y - 1))
+		if (!cellData.has(randomPos) or possibleLockedDoors.has(randomPos)):
 			continue
 		var randomCell : collapseCellData = cellData[randomPos]
 		if (randomCell.possibleTiles.size() == 0):
@@ -459,15 +521,23 @@ func _add_finishing_touches() -> void:
 		var randomTile = randomCell.possibleTiles[0]
 		var dat : TileData = atlasData[randomTile.tileIndex]
 		var doorAmm = dat.get_custom_data("DoorWalls").size()
-		if (doorAmm > 0):
+		
+		if (doorAmm == 1):
+			var fl = GetFloor(floorIndex)
 			var InfoLayer : TileMapLayer = fl.GetLayer(FloorLayer.LayerType.MAP_INFO)
 			var infoUsed = InfoLayer.get_used_cells()
 			
 			#find opposite door
 			var randomDoor = dat.get_custom_data("DoorWalls")[r.randi_range(0, doorAmm - 1)].rotated(randomTile.tileRotation)
 			var oppositeDoor = randomPos + Vector3i(randomDoor.x, 0, randomDoor.y)
+			var oppositeCell : collapseCellData = cellData[oppositeDoor]
+			var oppositeTile = oppositeCell.possibleTiles[0]
+			var oppositeDat : TileData = atlasData[oppositeTile.tileIndex]
 			
-			if (!infoUsed.has(Helper.Vector3ITo2(randomDoor)) and !infoUsed.has(Helper.Vector3ITo2(oppositeDoor))):
+			if (oppositeDat.get_custom_data("DoorWalls").size() > 1):
+				continue
+			
+			if (!infoUsed.has(Helper.Vector3ITo2(randomPos)) and !infoUsed.has(Helper.Vector3ITo2(oppositeDoor))):
 				possibleDoors.append(randomPos)
 				possibleDoors.append(oppositeDoor)
 
@@ -475,6 +545,11 @@ func _add_finishing_touches() -> void:
 		var f = GetFloor(g.y)
 		var InfoLayer = f.GetLayer(FloorLayer.LayerType.MAP_INFO)
 		InfoLayer.set_cell(Helper.Vector3ITo2(g), 0, Vector2i(26,0))
+	
+	for g in possibleLockedDoors:
+		var f = GetFloor(g.y)
+		var InfoLayer = f.GetLayer(FloorLayer.LayerType.LOCKS)
+		InfoLayer.set_cell(Helper.Vector3ITo2(g), 0, Vector2i(0,0))
 
 	for fl in floorsToGenerate:
 		var f = GetFloor(fl)
@@ -559,14 +634,24 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 	
 	var star = layer.GetAStar(currentFloor, mapSize)
 	
+	
 	rooms = layer.separate_into_islands()
 	
+	for room in rooms:
+		var TriDRoom : PackedVector3Array = []
+		for tileIndex in room.size():
+			var triD = Helper.Vector2iTo3(room[tileIndex], currentFloor)
+			TriDRoom.append(triD)
+		
+		PlacedRooms.append(TriDRoom)
+
 	var exits = layer.find_exits()
 	currentExits.clear()
 	
 	for g in exits:
 		var ex = Helper.Vector2iTo3(g, currentFloor)
-		currentExits.append(ex)
+		if (!currentExits.has(ex)):
+			currentExits.append(ex)
 	
 	if (guidePaths and Usedcells.size() > 1):
 		#get a path from each exit to another
@@ -599,7 +684,10 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 				cellData[TriDpos] = positionCellData
 		
 		for TriDpos in cellData:
+			if (TriDpos.y != currentFloor):
+				continue
 			var cell = cellData[TriDpos]
+			
 			UpdateConstrains(cell, Helper.Vector3ITo2(TriDpos))
 	
 	else:
@@ -630,15 +718,27 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 #-----------------------------------------------------
 ##Places parrents to the provided layer
 func _place_patterns(layer : TileMapLayer) -> void:
-	var paterns : Array[TileMapPattern]
-		
-	for pat in layer.tile_set.get_patterns_count():
-		paterns.append(layer.tile_set.get_pattern(pat))
+	var paterns : Array[Map_Pattern]
+
+	for pat in Patterns:
+		var patternFile : PackedScene = load(pat)
+		var loadedPattern : Map_Pattern = patternFile.instantiate()
+		add_child(loadedPattern)
+		paterns.append(loadedPattern)
+		#loadedPattern.queue_free()
 	
 	#check for spots to fit any of the patterns
 	while (paterns.size() > 0):
 		var index = r.randi_range(0, paterns.size() - 1)
-		var randomPatern : TileMapPattern = rotate_pattern(paterns[index], r.randi_range(0, 3))
+		var pickedPattern : Map_Pattern = paterns[index]
+		var rot = r.randi_range(0, 3)
+		
+		var originalPatern : TileMapPattern = pickedPattern.GetPattern()
+		var originalUsed = originalPatern.get_used_cells()
+		originalUsed.sort()
+		var randomPatern : TileMapPattern = rotate_pattern(originalPatern, rot)
+		var randomPaternUsed = randomPatern.get_used_cells()
+		randomPaternUsed.sort()
 		#paterns.remove_at(index)
 		var randomPosition = Vector2i(r.randi_range(1 + patternPadding, mapSize.x - 1 - patternPadding - randomPatern.get_size().x), r.randi_range(1 + patternPadding, mapSize.y - 1 - patternPadding - randomPatern.get_size().y))
 		
@@ -651,7 +751,22 @@ func _place_patterns(layer : TileMapLayer) -> void:
 		
 		if (foudPlace):
 			layer.set_pattern(randomPosition, randomPatern)
+			
+			var props = pickedPattern.GetProps()
+			#print(props)
+			for prop in props:
+				for data : MeshData in props[prop]:
+					var mesh : MeshInstance3D = MeshInstance3D.new()
+					mesh.mesh = prop
+					var oldPaternPlacementIndex = originalUsed.find(Helper.Vector3ITo2(data.Transform.origin))
+					var newOrigin = Helper.Vector2iTo3(randomPaternUsed[oldPaternPlacementIndex], currentFloor)
+					var trans = Transform3D(Basis(), newOrigin)
+					trans = trans.translated_local(Helper.Vector2iTo3(randomPosition, currentFloor) * WorldScale)
+					mesh.transform = trans
+					$ExtraProps.add_child(mesh)
+			print(Props)
 		else:
+			pickedPattern.queue_free()
 			paterns.remove_at(index)
 
 #---------------------------------------------------------------
@@ -855,6 +970,8 @@ func RevertCollapses() -> void:
 	for collapseIndex in range(collapse_history.size() -1, -1, -1):
 		
 		var collapse = collapse_history[collapseIndex]
+		if (collapse.y != currentFloor):
+			continue
 		
 		Revert(collapse)
 			

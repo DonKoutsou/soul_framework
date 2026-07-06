@@ -105,9 +105,6 @@ tile_map_data = PackedByteArray("AAD7//3/CgAEAAAAAFD6//7/CgACAAAAAGD6//z/CgACAAA
 [node name="MAP_INFO" parent="Floor_2" index="2" unique_id=1043461689]
 tile_map_data = PackedByteArray("AAD7//3/AAAZAAAAAAACAPn/AAAZAAAAAFA=")
 
-[node name="ExtraProps" parent="." index="4" unique_id=1450707516]
-visible = false
-
 [connection signal="Updated" from="ExtraProps" to="." method="_on_extra_props_updated"]
 
 [editable path="Floor_-1"]

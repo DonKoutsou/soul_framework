@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dg8hgap2gsibt"]
+
+[ext_resource type="Script" uid="uid://cbi8d7vnj3hcc" path="res://Engine/Stage/Map/Map_Pattern.gd" id="1_tijim"]
+[ext_resource type="PackedScene" uid="uid://sbji8vmb6epv" path="res://Engine/Stage/Map/Floor/FloorLayer.tscn" id="2_2ekj0"]
+[ext_resource type="Script" uid="uid://bmlq4msx1a0jq" path="res://Engine/Stage/Level/Prop_Spawner/extra_props.gd" id="3_x6j50"]
+
+[node name="MapGenerator2" type="Node2D" unique_id=1573063644 node_paths=PackedStringArray("Floors")]
+script = ExtResource("1_tijim")
+levelScene = "uid://c3v1lq4fsttds"
+Floors = [NodePath(""), NodePath("Floor_0"), NodePath("")]
+
+[node name="Floor_0" parent="." unique_id=1743688447 instance=ExtResource("2_2ekj0")]
+show_behind_parent = true
+
+[node name="ExtraProps" type="Node3D" parent="." unique_id=1450707516]
+script = ExtResource("3_x6j50")
+
+[node name="MegaProps" type="Node3D" parent="." unique_id=1661051537]
+script = ExtResource("3_x6j50")
+
+[connection signal="child_entered_tree" from="ExtraProps" to="ExtraProps" method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="ExtraProps" to="ExtraProps" method="_on_child_exiting_tree"]
+[connection signal="child_entered_tree" from="MegaProps" to="MegaProps" method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="MegaProps" to="MegaProps" method="_on_child_exiting_tree"]
+
+[editable path="Floor_0"]
