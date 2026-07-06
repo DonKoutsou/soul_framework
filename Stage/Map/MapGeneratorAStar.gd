@@ -21,6 +21,8 @@ func Add(data : AStar3D) -> void:
 		var pointPos = data.get_point_position(pointIndex)
 		var pointID = PreviousIndexAmm + pointIndex
 		Astar.add_point(pointID, pointPos, 1)
+		if (data.is_point_disabled(pointIndex)):
+			Astar.set_point_disabled(pointID)
 	
 	for pointIndex in data.get_point_count():
 		var pointID = PreviousIndexAmm + pointIndex

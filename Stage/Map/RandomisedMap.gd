@@ -12,6 +12,9 @@ class_name RandomisedMap
 ##Enables the generation to use patterns stored inside the maze tileset
 @export var usePatterns : bool = true
 
+##
+@export var guidePaths : bool = true
+
 @export var patternPadding : int = 4
 
 ##Seed used for the generation
@@ -133,6 +136,7 @@ func collapseNext() -> void:
 		var used = layer.get_used_cells()
 		used.sort()
 		
+		
 		for g in aStar.Astar.get_point_count():
 			var pointPos =  aStar.Astar.get_point_position(g)
 			if (pointPos.y != currentFloor):
@@ -198,7 +202,7 @@ func collapseNext() -> void:
 					rooms.erase(g)
 				rooms.append(combined)
 				combined.append(col)
-				print("Combined rooms")
+				#print("Combined rooms")
 			else: if (ownerRooms.size() > 0):
 				ownerRooms[0].append(col)
 			else:
@@ -228,13 +232,11 @@ func collapseNext() -> void:
 						
 						var path = aStar.Astar.get_point_path(startID, distinationID)
 						if (path.size() == 0):
-							print("cant go from {0} to {1}".format([start, destination]))
 							haseAccessToAllRooms = false
 							break
 						
 						var lastPoint = path[path.size() - 1]
 						if (Vector3i(lastPoint) != destination):
-							print("cant go from {0} to {1}".format([start, destination]))
 							haseAccessToAllRooms = false
 							break
 					
@@ -257,9 +259,9 @@ func collapseNext() -> void:
 			for g in cellData:
 				cellData[g].RevertState()
 
-			print("CELL ABORTED | REASON ---> {0}".format([CELL_ABORT_REASON.keys()[abortReason]]))
-			queue_redraw()
-			return
+			#print("CELL ABORTED | REASON ---> {0}".format([CELL_ABORT_REASON.keys()[abortReason]]))
+
+			break
 			
 
 	if (Engine.is_editor_hint()):
@@ -378,6 +380,8 @@ func _draw() -> void:
 			var g = Helper.Vector3ITo2(pont)
 			var gGlobal = layer.map_to_local(g) + Vector2(0, pont.y * 320)
 			for connection in connections:
+				if (aStar.Astar.is_point_disabled(connection)):
+					continue
 				var pointPos = aStar.Astar.get_point_position(connection)
 				var twoDPos = Helper.Vector3ITo2(pointPos)
 				var localPos = layer.map_to_local(twoDPos)
@@ -446,7 +450,11 @@ func _add_finishing_touches() -> void:
 	while possibleDoors.size() < 20:
 		var fl = generatedFloors[r.randi_range(0, generatedFloors.size() - 1)]
 		var randomPos = Vector3i(r.randi_range(0, mapSize.x -1), fl, r.randi_range(0, mapSize.y - 1))
+		if (!cellData.has(randomPos)):
+			continue
 		var randomCell : collapseCellData = cellData[randomPos]
+		if (randomCell.possibleTiles.size() == 0):
+			continue
 		var randomTile = randomCell.possibleTiles[0]
 		var dat : TileData = atlasData[randomTile.tileIndex]
 		var doorAmm = dat.get_custom_data("DoorWalls").size()
@@ -488,7 +496,6 @@ func _progress_floor() -> void:
 	var l : MazeFloorLayer = f.GetLayer(FloorLayer.LayerType.MAZE)
 	var InfoLayer = f.GetLayer(FloorLayer.LayerType.MAP_INFO)
 
-	
 	var randomCell = used[r.randi_range(0, used.size() - 1)]
 	
 	lastInfoLayer.set_cell(randomCell, 0, Vector2i(17, 0))
@@ -509,6 +516,7 @@ func _progress_floor() -> void:
 #---------------------------------------------------
 #Initialise the provided layer
 func _init_layer(layer : MazeFloorLayer) -> void:
+	
 	if (usePatterns):
 		_place_patterns(layer)
 	#store any existing cells in map
@@ -542,35 +550,75 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 		
 		cellData[Helper.Vector2iTo3(cell, currentFloor)] = positionCellData
 	
-	#Initialise all tiles
-	for x in mapSize.x:
-		for y in mapSize.y:
-			var pos = Vector2i(x, y)
-			var TriDpos = Helper.Vector2iTo3(pos, currentFloor)
-			
-			if (cellData.has(TriDpos)):
-				continue
-			
-			var positionCellData = collapseCellData.new()
-			
-			RefillTile(pos, positionCellData)
-			cellData[TriDpos] = positionCellData
+	var star = layer.GetAStar(currentFloor, mapSize)
 	
-	#Propagate any existing contrains
-	var collapsed : Array[Vector2i]
-	for cell in Usedcells:
-		PropagateContrains(cell, collapsed)
+	rooms = layer.separate_into_islands()
 	
-	aStar.Add(layer.GetAStar(currentFloor, mapSize))
 	var exits = layer.find_exits()
 	currentExits.clear()
 	
 	for g in exits:
 		var ex = Helper.Vector2iTo3(g, currentFloor)
 		currentExits.append(ex)
-		
-	rooms = layer.separate_into_islands()
 	
+	if (guidePaths and Usedcells.size() > 1):
+		#get a path from each exit to another
+		var paths : PackedVector3Array = []
+		
+		for exit in currentExits:
+			for exit2 in currentExits:
+				var point1 = star.get_closest_point(exit)
+				var point2 = star.get_closest_point(exit2)
+				var path = star.get_point_path(point1, point2)
+				paths.append_array(path)
+		
+		for point in star.get_point_count():
+			var pointPos = star.get_point_position(point)
+			if (!paths.has(pointPos) and !Usedcells.has(Helper.Vector3ITo2(pointPos))):
+				star.set_point_disabled(point)
+	
+		#Initialise all tiles
+		for x in mapSize.x:
+			for y in mapSize.y:
+				var pos = Vector2i(x, y)
+				var TriDpos = Helper.Vector2iTo3(pos, currentFloor)
+				
+				if (cellData.has(TriDpos) or Vector3(TriDpos) not in paths):
+					continue
+				
+				var positionCellData = collapseCellData.new()
+				
+				RefillTile(pos, positionCellData)
+				cellData[TriDpos] = positionCellData
+		
+		for TriDpos in cellData:
+			var cell = cellData[TriDpos]
+			UpdateConstrains(cell, Helper.Vector3ITo2(TriDpos))
+	
+	else:
+		#Initialise all tiles
+		for x in mapSize.x:
+			for y in mapSize.y:
+				var pos = Vector2i(x, y)
+				var TriDpos = Helper.Vector2iTo3(pos, currentFloor)
+				
+				if (cellData.has(TriDpos)):
+					continue
+				
+				var positionCellData = collapseCellData.new()
+				
+				RefillTile(pos, positionCellData)
+				cellData[TriDpos] = positionCellData
+	
+	#Propagate any existing contrains
+	var collapsed : Array[Vector2i]
+	for cell in Usedcells:
+		PropagateContrains(cell, collapsed)
+	
+	
+	aStar.Add(star)
+	
+
 
 #-----------------------------------------------------
 ##Places parrents to the provided layer
@@ -773,14 +821,17 @@ func CellCollapsed(cellPos : Vector2i) -> void:
 		
 	for exit in newExits:
 		var TriDExis = Helper.Vector2iTo3(exit, currentFloor)
+		
 		#if it already is an exit we just connect our collapsed cell to it
 		var exitPointID = aStar.Astar.get_closest_point(TriDExis)
 		aStar.Astar.connect_points(collapsedCellID, exitPointID)
 
 		if (Vector3(TriDExis) != aStar.Astar.get_point_position(exitPointID)):
 				print("issue, was looking for point in position {0} and got point in position {1}".format([var_to_str(TriDExis), var_to_str(aStar.Astar.get_point_position(exitPointID))]))
-
-		if (!currentExits.has(TriDExis)):
+		
+		var exitCell = cellData[TriDExis]
+		
+		if (!exitCell.collapsed and !currentExits.has(TriDExis)):
 			currentExits.append(TriDExis)
 	
 	collapse_history.append(TriDPos)
@@ -842,8 +893,8 @@ func Revert(collapse : Vector3i) ->void:
 				if (layer.CantReach(neightborPos, -dir, true)):
 					continue
 					
-		var exitPointID = aStar.Astar.get_closest_point(Helper.Vector2iTo3(neightborPos, currentFloor))
-		
+		var exitPointID = aStar.Astar.get_closest_point(Helper.Vector2iTo3(neightborPos, currentFloor), true)
+
 		aStar.Astar.connect_points(collapeID, exitPointID)
 
 	
@@ -935,6 +986,14 @@ func UpdateConstrains(cell : collapseCellData, pos : Vector2i) -> void:
 						allowedTiles.append(tile)
 						break
 
+			cell.possibleTiles = allowedTiles
+		else:
+			var allowedTiles : Array[collapseTileData]
+			for tile : collapseTileData in cell.possibleTiles:
+				if (!HasWallInDirection(tile, neightborDir)):
+					continue
+				allowedTiles.append(tile)
+					
 			cell.possibleTiles = allowedTiles
 
 #------------------------------------------------------------------

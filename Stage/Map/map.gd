@@ -502,11 +502,11 @@ func RedoMap() -> void:
 		_Editor_CurrentWorld.RedoMap(false)
 	queue_redraw()
 	
-##----------------------------------------------------------------
-#func _notification(what: int) -> void:
-	#if (what == NOTIFICATION_EDITOR_POST_SAVE):
-		#print("Redoing map")
-		#RedoMap()
+#----------------------------------------------------------------
+func _notification(what: int) -> void:
+	if (what == NOTIFICATION_EDITOR_POST_SAVE):
+		print("Redoing map")
+		RedoMap()
 
 #----------------------------------------------------------------
 func RespawnMap() -> void:
