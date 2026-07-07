@@ -583,11 +583,25 @@ func _add_finishing_touches() -> void:
 		var f = GetFloor(fl)
 		var mazeLayer = f.GetLayer(FloorLayer.LayerType.MAZE)
 		var monsterLayer = f.GetLayer(FloorLayer.LayerType.MONSTERS)
+		var itemLayer = f.GetLayer(FloorLayer.LayerType.ITEMS)
+		var mapInfoLayer = f.GetLayer(FloorLayer.LayerType.MAP_INFO)
+		var mapInfo2Layer = f.GetLayer(FloorLayer.LayerType.MAP_INFO2)
+		
+		var restricted : Array[Vector2i] = []
+		restricted.append_array(itemLayer.get_used_cells())
+		restricted.append_array(mapInfoLayer.get_used_cells())
+		restricted.append_array(mapInfo2Layer.get_used_cells())
+		
 		var used = mazeLayer.get_used_cells()
+		used = used.filter(IsIncluded.bind(restricted))
 		used.sort()
+		
 		for g in (mapSize.x * mapSize.y) / 100:
 			var monIndex = r.randi_range(0, used.size() - 1)
 			monsterLayer.set_cell(used[monIndex], 0, Vector2i(0,0))
+
+func IsIncluded(element : Vector2i, array : Array[Vector2i]) -> bool:
+	return !array.has(element)
 
 #-------------------------------------------------------------
 ##Progresses the generation to the next floor
@@ -626,9 +640,8 @@ func _progress_floor() -> void:
 #---------------------------------------------------
 #Initialise the provided layer
 func _init_layer(layer : MazeFloorLayer) -> void:
-	
 	if (usePatterns):
-		_place_patterns(layer)
+		_place_patterns(currentFloor)
 	#store any existing cells in map
 	var Usedcells = layer.get_used_cells()
 	Usedcells.sort()
@@ -745,7 +758,10 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 
 #-----------------------------------------------------
 ##Places parrents to the provided layer
-func _place_patterns(layer : TileMapLayer) -> void:
+func _place_patterns(floorIndex : int) -> void:
+	var fl = GetFloor(floorIndex)
+	var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+	
 	var paterns : Array[Map_Pattern]
 
 	for pat in Patterns:
@@ -777,6 +793,28 @@ func _place_patterns(layer : TileMapLayer) -> void:
 		
 		if (foudPlace):
 			layer.set_pattern(randomPosition, randomPatern)
+			
+			var mapInfoLayer = fl.GetLayer(FloorLayer.LayerType.MAP_INFO)
+			var mapInfoPattern : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.MAP_INFO), rot, originalPatern.get_size())
+			mapInfoLayer.set_pattern(randomPosition, mapInfoPattern)
+			
+			var mapInfoLayer2 = fl.GetLayer(FloorLayer.LayerType.MAP_INFO2)
+			var mapInfoPattern2 : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.MAP_INFO2), rot, originalPatern.get_size())
+			mapInfoLayer2.set_pattern(randomPosition, mapInfoPattern2)
+			
+			var monsterLayer = fl.GetLayer(FloorLayer.LayerType.MONSTERS)
+			var monsterPattern : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.MONSTERS), rot, originalPatern.get_size())
+			#OffsetPatterAtlas(monsterPattern, MonsterCatalogue.size())
+			monsterLayer.set_pattern(randomPosition, monsterPattern)
+			#MonsterCatalogue.append_array(pickedPattern.MonsterCatalogue)
+			
+			var itemLayer = fl.GetLayer(FloorLayer.LayerType.ITEMS)
+			#OffsetPatterAtlas(itemPattern, ItemCaralogue.size())
+			var itemPattern : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.ITEMS), rot, originalPatern.get_size())
+			itemLayer.set_pattern(randomPosition, itemPattern)
+			#MonsterCatalogue.append_array(pickedPattern.MonsterCatalogue)
+			
+			
 			var radiantRot = rot * (PI / 2)
 			var props = pickedPattern.GetProps()
 			for prop in props:
@@ -801,16 +839,26 @@ func _place_patterns(layer : TileMapLayer) -> void:
 			pickedPattern.queue_free()
 			paterns.remove_at(index)
 
+func OffsetPatterAtlas(pattern: TileMapPattern, offsetAmm : int) -> void:
+	for used in pattern.get_used_cells():
+		var atlas = pattern.get_cell_atlas_coords(used) + Vector2i(offsetAmm, 0)
+		var source = pattern.get_cell_source_id(used)
+		var altTile = pattern.get_cell_alternative_tile(used)
+		pattern.set_cell(used, source, atlas, altTile)
+		
+
 #---------------------------------------------------------------
 ##Returns a rotated duplicate of the provided pattern
-func rotate_pattern(pattern: TileMapPattern, turns: int) -> TileMapPattern:
+func rotate_pattern(pattern: TileMapPattern, turns: int, sizeOverride : Vector2i = Vector2i.MAX) -> TileMapPattern:
 	turns = posmod(turns, 4)
 
 	var result := TileMapPattern.new()
 	var cells := pattern.get_used_cells()
 	# bounds
-	var min_pos := cells[0]
-	var max_pos := cells[0]
+	var min_pos := Vector2i(0,0)
+	var max_pos := pattern.get_size()
+	if (sizeOverride != Vector2i.MAX):
+		max_pos = sizeOverride
 
 	for c in cells:
 		min_pos = min_pos.min(c)

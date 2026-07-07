@@ -7,7 +7,8 @@
 [node name="MapGenerator2" type="Node2D" unique_id=1573063644 node_paths=PackedStringArray("Floors")]
 script = ExtResource("1_tijim")
 levelScene = "uid://c3v1lq4fsttds"
-Floors = [NodePath(""), NodePath("Floor_0"), NodePath("")]
+Floors = [null, NodePath("Floor_0"), null]
+ItemCaralogue = Array[String](["uid://btpko76rq38uv", "uid://7eusou4hbr2u", "uid://dqoem4ou0c4dx", "uid://rgn55a6jv0yi", "uid://dhsdcpbwtm7m1", "uid://c0c77r244tq4a"])
 
 [node name="Floor_0" parent="." unique_id=1743688447 instance=ExtResource("2_2ekj0")]
 show_behind_parent = true
