@@ -70,19 +70,59 @@ Transform = Transform3D(-3.7954106e-08, 0.6318933, -0.7750554, 0.49605912, 0.672
 
 [sub_resource type="Resource" id="Resource_fmqot"]
 script = ExtResource("6_0y3hq")
-Transform = Transform3D(0.24783923, -0.13141933, 0.95984626, 0.885778, 0.43202505, -0.16956267, -0.39239383, 0.89223504, 0.22348113, 20.388962, -1.373884, 18.264816)
+Transform = Transform3D(1.035424e-08, -0.6318933, 0.7750554, 0.49605912, 0.6729719, 0.5486658, -0.86828876, 0.3844733, 0.31345642, 34.264816, 2.626116, 23.453457)
 
 [sub_resource type="Resource" id="Resource_vw6qj"]
 script = ExtResource("6_0y3hq")
-Transform = Transform3D(-0.24783926, 0.1314194, -0.95984626, 0.885778, 0.43202505, -0.16956267, 0.3923938, -0.89223504, -0.22348122, 43.61104, -1.373884, 25.735184)
+Transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 31.611038, 2.626116, 5.735184)
 
 [sub_resource type="Resource" id="Resource_at8rl"]
 script = ExtResource("6_0y3hq")
-Transform = Transform3D(-0.24783926, 0.1314194, -0.95984626, 0.885778, 0.43202505, -0.16956267, 0.3923938, -0.89223504, -0.22348122, 45.61104, 0.6261161, 11.735184)
+Transform = Transform3D(-3.7954106e-08, 0.6318933, -0.7750554, 0.49605912, 0.6729719, 0.5486658, 0.86828876, -0.38447326, -0.31345645, 55.735184, 2.626116, 24.546543)
 
 [sub_resource type="Resource" id="Resource_e8wys"]
 script = ExtResource("6_0y3hq")
+Transform = Transform3D(-3.7954106e-08, 0.6318933, -0.7750554, 0.49605912, 0.6729719, 0.5486658, 0.86828876, -0.38447326, -0.31345645, 11.735184, 2.626116, 26.546543)
+
+[sub_resource type="Resource" id="Resource_onkwr"]
+script = ExtResource("6_0y3hq")
+Transform = Transform3D(1.035424e-08, -0.6318933, 0.7750554, 0.49605912, 0.6729719, 0.5486658, -0.86828876, 0.3844733, 0.31345642, 8.264816, 2.626116, 19.453457)
+
+[sub_resource type="Resource" id="Resource_i4n8p"]
+script = ExtResource("6_0y3hq")
+Transform = Transform3D(1.035424e-08, -0.6318933, 0.7750554, 0.49605912, 0.6729719, 0.5486658, -0.86828876, 0.3844733, 0.31345642, 14.264816, 2.626116, 9.453456)
+
+[sub_resource type="Resource" id="Resource_va1aa"]
+script = ExtResource("6_0y3hq")
+Transform = Transform3D(1.035424e-08, -0.6318933, 0.7750554, 0.49605912, 0.6729719, 0.5486658, -0.86828876, 0.3844733, 0.31345642, 74.26482, 2.626116, 19.453457)
+
+[sub_resource type="Resource" id="Resource_gh502"]
+script = ExtResource("6_0y3hq")
+Transform = Transform3D(0.24783923, -0.13141933, 0.95984626, 0.885778, 0.43202505, -0.16956267, -0.39239383, 0.89223504, 0.22348113, 20.388962, -1.373884, 18.264816)
+
+[sub_resource type="Resource" id="Resource_ao4rm"]
+script = ExtResource("6_0y3hq")
+Transform = Transform3D(-0.24783926, 0.1314194, -0.95984626, 0.885778, 0.43202505, -0.16956267, 0.3923938, -0.89223504, -0.22348122, 43.61104, -1.373884, 25.735184)
+
+[sub_resource type="Resource" id="Resource_ncvib"]
+script = ExtResource("6_0y3hq")
+Transform = Transform3D(-0.24783926, 0.1314194, -0.95984626, 0.885778, 0.43202505, -0.16956267, 0.3923938, -0.89223504, -0.22348122, 45.61104, 0.6261161, 11.735184)
+
+[sub_resource type="Resource" id="Resource_5eoyq"]
+script = ExtResource("6_0y3hq")
 Transform = Transform3D(0.39239383, -0.89223504, -0.22348118, 0.885778, 0.43202505, -0.16956267, 0.24783924, -0.13141938, 0.95984626, 15.735184, 0.6261161, 10.388961)
+
+[sub_resource type="Resource" id="Resource_8woh8"]
+script = ExtResource("6_0y3hq")
+Transform = Transform3D(0.24783923, -0.13141933, 0.95984626, 0.885778, 0.43202505, -0.16956267, -0.39239383, 0.89223504, 0.22348113, 42.38896, 2.626116, 34.264816)
+
+[sub_resource type="Resource" id="Resource_prh0l"]
+script = ExtResource("6_0y3hq")
+Transform = Transform3D(-0.24783926, 0.1314194, -0.95984626, 0.885778, 0.43202505, -0.16956267, 0.3923938, -0.89223504, -0.22348122, 63.61104, 2.626116, 9.735184)
+
+[sub_resource type="Resource" id="Resource_hqxig"]
+script = ExtResource("6_0y3hq")
+Transform = Transform3D(0.39239383, -0.89223504, -0.22348118, 0.885778, 0.43202505, -0.16956267, 0.24783924, -0.13141938, 0.95984626, 19.735184, 2.626116, 16.388962)
 
 [node name="MapGenerator2" unique_id=1573063644 instance=ExtResource("1_ty68k")]
 script = ExtResource("2_bmva5")
@@ -102,8 +142,8 @@ LockCatalogue = Array[ExtResource("3_dr4b6")]([ExtResource("4_gxy1d")])
 ItemCaralogue = Array[String](["uid://btpko76rq38uv", "uid://7eusou4hbr2u", "uid://dqoem4ou0c4dx", "uid://rgn55a6jv0yi", "uid://dhsdcpbwtm7m1", "uid://c0c77r244tq4a"])
 MonsterCatalogue = Array[String](["uid://q5ci3vkqvnyf"])
 Props = Dictionary[Mesh, Array]({
-ExtResource("5_d0s1d"): [SubResource("Resource_0y3hq"), SubResource("Resource_bx1cj"), SubResource("Resource_hs5ms"), SubResource("Resource_kv1xu"), SubResource("Resource_rjasv"), SubResource("Resource_wpwej"), SubResource("Resource_l08pc"), SubResource("Resource_g61wj"), SubResource("Resource_g68ol"), SubResource("Resource_11466"), SubResource("Resource_qldyc"), SubResource("Resource_st84y"), SubResource("Resource_fxwq0"), SubResource("Resource_fvhsi"), SubResource("Resource_t0qld")],
-ExtResource("7_0y3hq"): [SubResource("Resource_fmqot"), SubResource("Resource_vw6qj"), SubResource("Resource_at8rl"), SubResource("Resource_e8wys")]
+ExtResource("5_d0s1d"): [SubResource("Resource_0y3hq"), SubResource("Resource_bx1cj"), SubResource("Resource_hs5ms"), SubResource("Resource_kv1xu"), SubResource("Resource_rjasv"), SubResource("Resource_wpwej"), SubResource("Resource_l08pc"), SubResource("Resource_g61wj"), SubResource("Resource_g68ol"), SubResource("Resource_11466"), SubResource("Resource_qldyc"), SubResource("Resource_st84y"), SubResource("Resource_fxwq0"), SubResource("Resource_fvhsi"), SubResource("Resource_t0qld"), SubResource("Resource_fmqot"), SubResource("Resource_vw6qj"), SubResource("Resource_at8rl"), SubResource("Resource_e8wys"), SubResource("Resource_onkwr"), SubResource("Resource_i4n8p"), SubResource("Resource_va1aa")],
+ExtResource("7_0y3hq"): [SubResource("Resource_gh502"), SubResource("Resource_ao4rm"), SubResource("Resource_ncvib"), SubResource("Resource_5eoyq"), SubResource("Resource_8woh8"), SubResource("Resource_prh0l"), SubResource("Resource_hqxig")]
 })
 
 [node name="Floor_-1" parent="." index="0" unique_id=383593742]

@@ -432,6 +432,9 @@ func CollapseMap() -> void:
 		r.randomize()
 		print("[[MAP GENERATION STARTED]] with new random seed :{0}".format([r.seed]))
 	
+	if (usePatterns):
+		_place_patterns()
+	
 	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	
@@ -640,8 +643,7 @@ func _progress_floor() -> void:
 #---------------------------------------------------
 #Initialise the provided layer
 func _init_layer(layer : MazeFloorLayer) -> void:
-	if (usePatterns):
-		_place_patterns(currentFloor)
+	
 	#store any existing cells in map
 	var Usedcells = layer.get_used_cells()
 	Usedcells.sort()
@@ -758,86 +760,96 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 
 #-----------------------------------------------------
 ##Places parrents to the provided layer
-func _place_patterns(floorIndex : int) -> void:
-	var fl = GetFloor(floorIndex)
-	var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
-	
+func _place_patterns() -> void:
 	var paterns : Array[Map_Pattern]
+	
 
 	for pat in Patterns:
 		var patternFile : PackedScene = load(pat)
 		var loadedPattern : Map_Pattern = patternFile.instantiate()
-		add_child(loadedPattern)
-		loadedPattern.StoreProps()
-		paterns.append(loadedPattern)
-		#loadedPattern.queue_free()
+		var patternExtents = loadedPattern.GetFloorExtents()
+		var minFloor = patternExtents.x
+		var maxFloor = patternExtents.y
+		var floorRange = abs(maxFloor - minFloor)
+		if (floorRange <= GetFloorAmm()):
+			add_child(loadedPattern)
+			loadedPattern.StoreProps()
+			paterns.append(loadedPattern)
+		else:
+			loadedPattern.queue_free()
+	
+	
 	
 	#check for spots to fit any of the patterns
 	while (paterns.size() > 0):
 		var index = r.randi_range(0, paterns.size() - 1)
 		var pickedPattern : Map_Pattern = paterns[index]
-		var rot = r.randi_range(0, 3)
+		for patternFloorIndex in pickedPattern.GetFloorIndexes():
+			var fl = GetFloor(floorIndex + patternFloorIndex)
+			var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+			
+			var rot = r.randi_range(0, 3)
 
-		var originalPatern : TileMapPattern = pickedPattern.GetPattern()
-		var randomPatern : TileMapPattern = rotate_pattern(originalPatern, rot)
+			var originalPatern : TileMapPattern = pickedPattern.GetPattern(FloorLayer.LayerType.MAZE, patternFloorIndex)
+			var randomPatern : TileMapPattern = rotate_pattern(originalPatern, rot)
 
-		var randomPosition = Vector2i(r.randi_range(1 + patternPadding, mapSize.x - 1 - patternPadding - randomPatern.get_size().x), r.randi_range(1 + patternPadding, mapSize.y - 1 - patternPadding - randomPatern.get_size().y))
-		
-		var maxTries : int = 5
-		var foudPlace = can_place_pattern(layer, randomPatern, randomPosition)
-		while (!foudPlace and maxTries > 0):
-			randomPosition = Vector2i(r.randi_range(1 + patternPadding, mapSize.x - 1 - patternPadding - randomPatern.get_size().x), r.randi_range(1 + patternPadding, mapSize.y - 1 - patternPadding - randomPatern.get_size().y))
-			foudPlace = can_place_pattern(layer, randomPatern, randomPosition)
-			maxTries -= 1
+			var randomPosition = Vector2i(r.randi_range(1 + patternPadding, mapSize.x - 1 - patternPadding - randomPatern.get_size().x), r.randi_range(1 + patternPadding, mapSize.y - 1 - patternPadding - randomPatern.get_size().y))
 			
-		
-		if (foudPlace):
-			layer.set_pattern(randomPosition, randomPatern)
+			var maxTries : int = 5
+			var foudPlace = can_place_pattern(layer, randomPatern, randomPosition)
+			while (!foudPlace and maxTries > 0):
+				randomPosition = Vector2i(r.randi_range(1 + patternPadding, mapSize.x - 1 - patternPadding - randomPatern.get_size().x), r.randi_range(1 + patternPadding, mapSize.y - 1 - patternPadding - randomPatern.get_size().y))
+				foudPlace = can_place_pattern(layer, randomPatern, randomPosition)
+				maxTries -= 1
+				
 			
-			var mapInfoLayer = fl.GetLayer(FloorLayer.LayerType.MAP_INFO)
-			var mapInfoPattern : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.MAP_INFO), rot, originalPatern.get_size())
-			mapInfoLayer.set_pattern(randomPosition, mapInfoPattern)
-			
-			var mapInfoLayer2 = fl.GetLayer(FloorLayer.LayerType.MAP_INFO2)
-			var mapInfoPattern2 : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.MAP_INFO2), rot, originalPatern.get_size())
-			mapInfoLayer2.set_pattern(randomPosition, mapInfoPattern2)
-			
-			var monsterLayer = fl.GetLayer(FloorLayer.LayerType.MONSTERS)
-			var monsterPattern : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.MONSTERS), rot, originalPatern.get_size())
-			#OffsetPatterAtlas(monsterPattern, MonsterCatalogue.size())
-			monsterLayer.set_pattern(randomPosition, monsterPattern)
-			#MonsterCatalogue.append_array(pickedPattern.MonsterCatalogue)
-			
-			var itemLayer = fl.GetLayer(FloorLayer.LayerType.ITEMS)
-			#OffsetPatterAtlas(itemPattern, ItemCaralogue.size())
-			var itemPattern : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.ITEMS), rot, originalPatern.get_size())
-			itemLayer.set_pattern(randomPosition, itemPattern)
-			#MonsterCatalogue.append_array(pickedPattern.MonsterCatalogue)
-			
-			
-			var radiantRot = rot * (PI / 2)
-			var props = pickedPattern.GetProps()
-			for prop in props:
-				for data : MeshData in props[prop]:
-					var mesh : MeshInstance3D = MeshInstance3D.new()
-					mesh.mesh = prop
-					var rotatedPoint = rotate_point(Helper.Vector3To2(data.Transform.origin / Vector3(WorldScale)), Vector2(0,0), originalPatern.get_size().x, originalPatern.get_size().y, rot)
-					
-					var newOrigin = Helper.Vector2To3(rotatedPoint * Helper.Vector3To2(WorldScale), data.Transform.origin.y)
-					var trans = Transform3D(Basis(), newOrigin).translated_local(Vector3(Helper.Vector2iTo3(randomPosition, currentFloor) * WorldScale))
-					trans.basis = Basis(Vector3(0, 1, 0), -radiantRot) * data.Transform.basis
-					
-					#trans = trans.rotated_local(Vector3(0,1,0) ,data.Transform.basis.get_euler().y - radiantRot) 
-					#trans = trans.rotated_local(Vector3(1,0,0) ,data.Transform.basis.get_euler().x) 
-					#trans = trans.rotated_local(Vector3(0,0,1) ,data.Transform.basis.get_euler().z)
-					
+			if (foudPlace):
+				layer.set_pattern(randomPosition, randomPatern)
+				
+				var mapInfoLayer = fl.GetLayer(FloorLayer.LayerType.MAP_INFO)
+				var mapInfoPattern : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.MAP_INFO, patternFloorIndex), rot, originalPatern.get_size())
+				mapInfoLayer.set_pattern(randomPosition, mapInfoPattern)
+				
+				var mapInfoLayer2 = fl.GetLayer(FloorLayer.LayerType.MAP_INFO2)
+				var mapInfoPattern2 : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.MAP_INFO2, patternFloorIndex), rot, originalPatern.get_size())
+				mapInfoLayer2.set_pattern(randomPosition, mapInfoPattern2)
+				
+				var monsterLayer = fl.GetLayer(FloorLayer.LayerType.MONSTERS)
+				var monsterPattern : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.MONSTERS, patternFloorIndex), rot, originalPatern.get_size())
+				#OffsetPatterAtlas(monsterPattern, MonsterCatalogue.size())
+				monsterLayer.set_pattern(randomPosition, monsterPattern)
+				#MonsterCatalogue.append_array(pickedPattern.MonsterCatalogue)
+				
+				var itemLayer = fl.GetLayer(FloorLayer.LayerType.ITEMS)
+				#OffsetPatterAtlas(itemPattern, ItemCaralogue.size())
+				var itemPattern : TileMapPattern = rotate_pattern(pickedPattern.GetPattern(FloorLayer.LayerType.ITEMS, patternFloorIndex), rot, originalPatern.get_size())
+				itemLayer.set_pattern(randomPosition, itemPattern)
+				#MonsterCatalogue.append_array(pickedPattern.MonsterCatalogue)
+				
+				
+				var radiantRot = rot * (PI / 2)
+				var props = pickedPattern.GetProps()
+				for prop in props:
+					for data : MeshData in props[prop]:
+						var mesh : MeshInstance3D = MeshInstance3D.new()
+						mesh.mesh = prop
+						var rotatedPoint = rotate_point(Helper.Vector3To2(data.Transform.origin / Vector3(WorldScale)), Vector2(0,0), originalPatern.get_size().x, originalPatern.get_size().y, rot)
+						
+						var newOrigin = Helper.Vector2To3(rotatedPoint * Helper.Vector3To2(WorldScale), data.Transform.origin.y)
+						var trans = Transform3D(Basis(), newOrigin).translated_local(Vector3(Helper.Vector2iTo3(randomPosition, currentFloor) * WorldScale))
+						trans.basis = Basis(Vector3(0, 1, 0), -radiantRot) * data.Transform.basis
+						
+						#trans = trans.rotated_local(Vector3(0,1,0) ,data.Transform.basis.get_euler().y - radiantRot) 
+						#trans = trans.rotated_local(Vector3(1,0,0) ,data.Transform.basis.get_euler().x) 
+						#trans = trans.rotated_local(Vector3(0,0,1) ,data.Transform.basis.get_euler().z)
+						
 
-					mesh.transform = trans
-					$ExtraProps.add_child(mesh)
+						mesh.transform = trans
+						$ExtraProps.add_child(mesh)
 
-		else:
-			pickedPattern.queue_free()
-			paterns.remove_at(index)
+			else:
+				pickedPattern.queue_free()
+				paterns.remove_at(index)
 
 func OffsetPatterAtlas(pattern: TileMapPattern, offsetAmm : int) -> void:
 	for used in pattern.get_used_cells():
@@ -966,6 +978,20 @@ func TileDataToDict(dat : TileData) -> Dictionary:
 		}
 	return dataDict
 
+
+func can_place_map_pattern(mapPattern : Map_Pattern, patternPosition: Vector3i) -> bool:
+	var canPlace : bool = true
+	for floorIndex : int in mapPattern:
+		var fl = GetFloor(patternPosition.y + floorIndex)
+		var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+		
+		var pattern : TileMapPattern = mapPattern.GetPattern(FloorLayer.LayerType.MAZE, floorIndex)
+		if (!can_place_pattern(layer, pattern, Helper.Vector3ITo2(patternPosition))):
+			canPlace = false
+			break
+	
+	
+	return canPlace
 #-----------------------------------------------
 ##Checks if pattern can be placed in position provided
 func can_place_pattern(tilemap: TileMapLayer,pattern: TileMapPattern, patternPosition: Vector2i) -> bool:

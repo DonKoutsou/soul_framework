@@ -70,6 +70,15 @@ enum TrapType {
 	FIREPIT_TRAP
 }
 
+func GetFloorAmm() -> int:
+	return Floors.size()
+
+func HasFLoor(FloorIndex : int) -> bool:
+	for g : FloorLayer in Floors:
+		if (g.FloorNumber == FloorIndex):
+			return true
+	return false
+
 func GetFloor(FloorIndex : int) -> FloorLayer:
 	for g : FloorLayer in Floors:
 		if (g.FloorNumber == FloorIndex):
