@@ -143,7 +143,6 @@ func RedoMap(SpawnMonsters : bool = true) -> void:
 	TrapMan.PurgeTraps()
 	
 	PropMeshSpawner.ClearMeshes()
-	print(MData.Props)
 	PropMeshSpawner.SpawnMeshes(MData.Props, true)
 	
 	for g : LevelMultimesh in MultiMeshes.values():

@@ -456,16 +456,20 @@ func _add_finishing_touches() -> void:
 	var spawnIndex = r.randi_range(0, spawnFloorUsed.size() - 1)
 	var spawnPos = spawnFloorUsed[spawnIndex]
 	var triDSpawnPos = Helper.Vector2iTo3(spawnPos, spawnFloorIndex)
+	
+	var spawnPointID = aStar.Astar.get_closest_point(triDSpawnPos)
+	
 	spawnmapInfoLayer.set_cell(spawnPos, 0, Vector2i(14,0))
 	
 	var possibleDoors : Array[Vector3i]
 	var possibleLockedDoors : Array[Vector3i]
 	
 	var RoomToLock : Array[PackedVector3Array]
+	var availableRoomsToLock = PlacedRooms.duplicate()
 	
-	while RoomToLock.size() < 3 and PlacedRooms.size() > 0:
-		var randIndex = r.randi_range(0, PlacedRooms.size() - 1)
-		var randomRoom = PlacedRooms.pop_at(randIndex)
+	while RoomToLock.size() < 3 and availableRoomsToLock.size() > 0:
+		var randIndex = r.randi_range(0, availableRoomsToLock.size() - 1)
+		var randomRoom = availableRoomsToLock.pop_at(randIndex)
 		
 		if (randomRoom.has(triDSpawnPos)):
 			continue
@@ -480,6 +484,7 @@ func _add_finishing_touches() -> void:
 			if (dat.get_custom_data("DoorWalls").size() == 1):
 				doors.append(cellPos)
 				doorDirs.append(dat.get_custom_data("DoorWalls")[0].rotated(tile.tileRotation))
+				
 		if (doors.size() == 1):
 			var doorPos = doors[0]
 			var doorDir = doorDirs[0]
@@ -495,6 +500,10 @@ func _add_finishing_touches() -> void:
 			possibleLockedDoors.append(doorPos)
 			possibleLockedDoors.append(oppositeDoor)
 			
+			var point1 = aStar.Astar.get_closest_point(doorPos)
+			var point2 = aStar.Astar.get_closest_point(oppositeDoor)
+			aStar.Astar.disconnect_points(point1, point2)
+			
 			var fl = GetFloor(doorPos.y)
 			var itemLayer = fl.GetLayer(FloorLayer.LayerType.ITEMS)
 			
@@ -502,11 +511,30 @@ func _add_finishing_touches() -> void:
 			var randomTile = Helper.Vector3ITo2(randomRoom[randomTileIndex])
 			itemLayer.set_cell(randomTile, 0, Vector2i(0,0))
 		
-		RoomToLock.append(randomRoom)
+			RoomToLock.append(randomRoom)
 		#for cellLoc in RoomToLock:
 			#var cell = cellData.
 	
-	
+	var PlacedKeys : int = 0
+	var availableRoomsToPutKey = PlacedRooms.duplicate()
+	#find place to add keys
+	while PlacedKeys < RoomToLock.size() and availableRoomsToPutKey.size() > 0:
+		var randIndex = r.randi_range(0, availableRoomsToPutKey.size() - 1)
+		var randomRoom = availableRoomsToPutKey.pop_at(randIndex)
+		
+		var randomTileIndex = r.randi_range(0, randomRoom.size() - 1)
+		var randomPos : Vector3 = randomRoom[randomTileIndex]
+		
+		var randomTileID = aStar.Astar.get_closest_point(randomPos)
+		
+		var path = aStar.Astar.get_id_path(spawnPointID ,randomTileID)
+		if (path.has(randomTileID)):
+			var randomTile = Helper.Vector3ITo2(randomPos)
+			
+			var fl = GetFloor(randomPos.y)
+			var itemLayer = fl.GetLayer(FloorLayer.LayerType.ITEMS)
+			itemLayer.set_cell(randomTile, 0, Vector2i(1,0))
+			PlacedKeys += 1
 	
 	#find possible doors
 	while possibleDoors.size() < 20:
