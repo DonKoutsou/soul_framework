@@ -724,6 +724,7 @@ func _place_patterns(layer : TileMapLayer) -> void:
 		var patternFile : PackedScene = load(pat)
 		var loadedPattern : Map_Pattern = patternFile.instantiate()
 		add_child(loadedPattern)
+		loadedPattern.StoreProps()
 		paterns.append(loadedPattern)
 		#loadedPattern.queue_free()
 	
@@ -732,14 +733,10 @@ func _place_patterns(layer : TileMapLayer) -> void:
 		var index = r.randi_range(0, paterns.size() - 1)
 		var pickedPattern : Map_Pattern = paterns[index]
 		var rot = r.randi_range(0, 3)
-		
+
 		var originalPatern : TileMapPattern = pickedPattern.GetPattern()
-		var originalUsed = originalPatern.get_used_cells()
-		#originalUsed.sort()
 		var randomPatern : TileMapPattern = rotate_pattern(originalPatern, rot)
-		var randomPaternUsed = randomPatern.get_used_cells()
-		#randomPaternUsed.sort()
-		#paterns.remove_at(index)
+
 		var randomPosition = Vector2i(r.randi_range(1 + patternPadding, mapSize.x - 1 - patternPadding - randomPatern.get_size().x), r.randi_range(1 + patternPadding, mapSize.y - 1 - patternPadding - randomPatern.get_size().y))
 		
 		var maxTries : int = 5
@@ -748,24 +745,30 @@ func _place_patterns(layer : TileMapLayer) -> void:
 			randomPosition = Vector2i(r.randi_range(1 + patternPadding, mapSize.x - 1 - patternPadding - randomPatern.get_size().x), r.randi_range(1 + patternPadding, mapSize.y - 1 - patternPadding - randomPatern.get_size().y))
 			foudPlace = can_place_pattern(layer, randomPatern, randomPosition)
 			maxTries -= 1
+			
 		
 		if (foudPlace):
 			layer.set_pattern(randomPosition, randomPatern)
-			
+			var radiantRot = rot * (PI / 2)
 			var props = pickedPattern.GetProps()
-			#print(props)
 			for prop in props:
 				for data : MeshData in props[prop]:
 					var mesh : MeshInstance3D = MeshInstance3D.new()
 					mesh.mesh = prop
 					var rotatedPoint = rotate_point(Helper.Vector3To2(data.Transform.origin / Vector3(WorldScale)), Vector2(0,0), originalPatern.get_size().x, originalPatern.get_size().y, rot)
-					#var oldPaternPlacementIndex = originalUsed.find()
+					
 					var newOrigin = Helper.Vector2To3(rotatedPoint * Helper.Vector3To2(WorldScale), data.Transform.origin.y)
-					#newOrigin += Vector3(Helper.Vector2iTo3(randomPosition, currentFloor) * WorldScale)
 					var trans = Transform3D(Basis(), newOrigin).translated_local(Vector3(Helper.Vector2iTo3(randomPosition, currentFloor) * WorldScale))
+					trans.basis = Basis(Vector3(0, 1, 0), -radiantRot) * data.Transform.basis
+					
+					#trans = trans.rotated_local(Vector3(0,1,0) ,data.Transform.basis.get_euler().y - radiantRot) 
+					#trans = trans.rotated_local(Vector3(1,0,0) ,data.Transform.basis.get_euler().x) 
+					#trans = trans.rotated_local(Vector3(0,0,1) ,data.Transform.basis.get_euler().z)
+					
+
 					mesh.transform = trans
 					$ExtraProps.add_child(mesh)
-			#sprint(Props)
+
 		else:
 			pickedPattern.queue_free()
 			paterns.remove_at(index)
@@ -792,20 +795,8 @@ func rotate_pattern(pattern: TileMapPattern, turns: int) -> TileMapPattern:
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	
 	for cell in cells:
-		var local = cell - min_pos
-		var new_pos: Vector2i
 
-		# rotate position
-		match turns:
-			0:
-				new_pos = local
-			1:
-				new_pos = Vector2i(h - 1 - local.y, local.x)
-			2:
-				new_pos = Vector2i(w - 1 - local.x, h - 1 - local.y)
-			3:
-				new_pos = Vector2i(local.y, w - 1 - local.x)
-
+		var new_pos: Vector2i = rotate_point(cell, min_pos, w, h, turns)
 		# copy tile data
 		var source_id = pattern.get_cell_source_id(cell)
 		var atlas = pattern.get_cell_atlas_coords(cell)
@@ -831,22 +822,35 @@ func rotate_pattern(pattern: TileMapPattern, turns: int) -> TileMapPattern:
 	return result
 
 func rotate_point(point: Vector2, min_pos: Vector2, width: int, height: int, turns: int) -> Vector2:
-	turns = posmod(turns, 4)
 
 	var local = point - min_pos
-
-	match turns:
-		0:
-			return local
-		1:
-			return Vector2(height - 1 - local.y, local.x)
-		2:
-			return Vector2(width - 1 - local.x, height - 1 - local.y)
-		3:
-			return Vector2(local.y, width - 1 - local.x)
+	
+	if (turns == 0):
+		return local
+	elif(turns == 1):
+		return Vector2(height - 1 - local.y, local.x)
+	elif(turns == 2):
+		return Vector2(width - 1 - local.x, height - 1 - local.y)
+	elif(turns == 3):
+		return Vector2(local.y, width - 1 - local.x)
 
 	return local
 
+
+func rotate_transform(
+	t: Transform2D,
+	min_pos: Vector2i,
+	w: int,
+	h: int,
+	turns: int
+) -> Transform2D:
+	var pos = Vector2i(round(t.origin.x), round(t.origin.y))
+	var rotated_pos = rotate_point(pos, min_pos, w, h, turns)
+
+	t.origin = rotated_pos
+	t = t.rotated(turns * PI * 0.5)
+
+	return t
 #-----------------------------------------------
 ##Collect all data from tileset and store them in atlasData
 func _update_atlas_data() -> void:

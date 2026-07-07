@@ -5,22 +5,28 @@
 [ext_resource type="Script" uid="uid://dhe6lh071xnw2" path="res://Engine/Stage/Level/Prop_Spawner/MeshData.gd" id="3_gfm5s"]
 [ext_resource type="Script" uid="uid://bt0s6sb2dylnt" path="res://Engine/Stage/Level/Prop_Spawner/MoveNotificator.gd" id="4_gfyqq"]
 
-[sub_resource type="Resource" id="Resource_h4py6"]
+[sub_resource type="Resource" id="Resource_tj1bn"]
 script = ExtResource("3_gfm5s")
-Transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.388961, 0.6261161, 4.264816)
+Transform = Transform3D(0.86828876, -0.3844733, -0.31345642, 0.49605912, 0.6729719, 0.5486658, 0, -0.6318933, 0.7750554, 2.546544, 0.6261161, 4.264816)
 
 [node name="MapGenerator2" unique_id=1573063644 node_paths=PackedStringArray("Floors") instance=ExtResource("1_tj1bn")]
 Floors = [NodePath("Floor_0")]
 Props = Dictionary[Mesh, Array]({
-ExtResource("2_rofo6"): [SubResource("Resource_h4py6")]
+ExtResource("2_rofo6"): [SubResource("Resource_tj1bn")]
 })
 
 [node name="MAZE" parent="Floor_0" parent_id_path=PackedInt32Array(1743688447) index="0" unique_id=817992180]
 tile_map_data = PackedByteArray("AAAAAAAACgACAAAAAFAAAAIACgACAAAAAAAAAAEACgABAAAAAAACAAAACgACAAAAADABAAAACgABAAAAAFACAAIACgACAAAAAGABAAIACgAFAAAAAGACAAEACgABAAAAADABAAEACgAAAAAAAAA=")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ExtraProps" parent_id_path=PackedInt32Array(1450707516) index="0" unique_id=1175628570]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.388961, 0.6261161, 4.264816)
+[node name="ExtraProps" parent="." index="1" unique_id=1450707516]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ExtraProps" index="0" unique_id=1175628570]
+transform = Transform3D(0.86828876, -0.3844733, -0.31345642, 0.49605912, 0.6729719, 0.5486658, 0, -0.6318933, 0.7750554, 2.546544, 0.6261161, 4.264816)
 mesh = ExtResource("2_rofo6")
 script = ExtResource("4_gfyqq")
+
+[node name="MegaProps" parent="." index="2" unique_id=1661051537]
+visible = false
 
 [editable path="Floor_0"]
