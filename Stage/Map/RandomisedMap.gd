@@ -84,6 +84,11 @@ enum CELL_ABORT_REASON{
 	ROOM_GOT_SECLUDED,
 }
 
+func _ready() -> void:
+	super()
+	if (Engine.is_editor_hint()):
+		finised = true
+
 #----------------------------------------------------
 var workerID = -1
 func LoadMapData(MData : MapData) -> void:
@@ -363,17 +368,12 @@ func _draw() -> void:
 	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	
-	var camPos = EditorInterface.get_editor_viewport_3d().get_camera_3d().global_position
-	#var camRot = EditorInterface.get_editor_viewport_3d().get_camera_3d().rotation
-	
-	draw_circle(Vector2(camPos.x, camPos.z) * 8, 2, Color(1,0,0))
-	
 	var cols : Array[Color] = [Color(1,0,0), Color(0,1,0), Color(0,0,1), Color(0.85, 0.444, 0.0, 1.0), Color(0.736, 1.0, 0.406, 1.0)]
 	for roomIndex in rooms.size():
 		var col = cols[wrap(roomIndex, 0, cols.size())]
 		for tile in rooms[roomIndex]:
-			
-			draw_circle(layer.map_to_local(tile) + Vector2(0, currentFloor * 320), 2, col)
+			var pos = layer.map_to_local(tile) + Vector2(0, currentFloor * 320)
+			draw_circle(pos, 2, col)
 	
 	for g in currentExits:
 		var twoD = Helper.Vector3ITo2(g)
@@ -409,7 +409,7 @@ func _draw() -> void:
 				
 				draw_line(gGlobal, globalPos, cols[wrap(pointPos.y, 0, cols.size())])
 		
-
+	super()
 #---------------------------------------------------
 ##Clears all tilemap layers in map
 func CleanMap() -> void:

@@ -83,6 +83,8 @@ func StoreMultiMeshes() -> void:
 			MultiLayerMultiMeshes[g.GetLayerType()] = g
 
 func GetMapData() -> MapData:
+	if (MData == null):
+		return null
 	return MData.Data
 
 func Update(delta: float) -> void:
