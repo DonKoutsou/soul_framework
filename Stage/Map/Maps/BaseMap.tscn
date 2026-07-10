@@ -12,6 +12,7 @@ PropParent = NodePath("ExtraProps")
 MegaPropParent = NodePath("MegaProps")
 
 [node name="Floor_-1" parent="." unique_id=383593742 instance=ExtResource("37_oapox")]
+visible = false
 show_behind_parent = true
 FloorNumber = -1
 
@@ -19,14 +20,20 @@ FloorNumber = -1
 show_behind_parent = true
 
 [node name="Floor_1" parent="." unique_id=906513081 instance=ExtResource("37_oapox")]
+visible = false
 show_behind_parent = true
 FloorNumber = 1
 
 [node name="ExtraProps" type="Node3D" parent="." unique_id=1450707516]
+visible = false
 script = ExtResource("3_kekn7")
 
 [node name="MegaProps" type="Node3D" parent="." unique_id=1661051537]
+visible = false
 script = ExtResource("3_kekn7")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1971623263]
+visible = false
 
 [connection signal="child_entered_tree" from="ExtraProps" to="ExtraProps" method="_on_child_entered_tree"]
 [connection signal="child_exiting_tree" from="ExtraProps" to="ExtraProps" method="_on_child_exiting_tree"]

@@ -1,4 +1,4 @@
-extends RefCounted
+extends Node2D
 
 class_name MapGeneratorAstar
 
@@ -29,3 +29,28 @@ func Add(data : AStar3D) -> void:
 		for connection in data.get_point_connections(pointIndex):
 			Astar.connect_points(pointID, PreviousIndexAmm + connection)
 	
+
+
+
+func _draw() -> void:
+	const cols : Array[Color] = [Color(1,0,0), Color(0,1,0), Color(0,0,1), Color(0.85, 0.444, 0.0, 1.0), Color(0.736, 1.0, 0.406, 1.0)]
+	
+	var par : Map = get_parent()
+	var fl = par.GetFloor(0)
+	var layer = fl.GetLayer(FloorLayer.LayerType.MAZE)
+	for pointId in Astar.get_point_count():
+		if (Astar.is_point_disabled(pointId)):
+			continue
+		var connections = Astar.get_point_connections(pointId)
+		var pont = Astar.get_point_position(pointId)
+		var g = Helper.Vector3ITo2(pont)
+		var gGlobal = layer.map_to_local(g) + Vector2(0, pont.y * 320)
+		for connection in connections:
+			if (Astar.is_point_disabled(connection)):
+				continue
+			var pointPos = Astar.get_point_position(connection)
+			var twoDPos = Helper.Vector3ITo2(pointPos)
+			var localPos = layer.map_to_local(twoDPos)
+			var globalPos = localPos + Vector2(0, pointPos.y * 320)
+			
+			draw_line(gGlobal, globalPos, cols[wrap(pointPos.y, 0, cols.size())])

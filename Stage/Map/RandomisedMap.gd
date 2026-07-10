@@ -66,13 +66,14 @@ var currentFloor : int = 0
 
 var rooms : Array
 
-var aStar : MapGeneratorAstar = MapGeneratorAstar.new()
+var aStar : MapGeneratorAstar
 
 var r : RandomNumberGenerator
 
 var finised : bool = false
 
 var PlacedRooms : Array[PackedVector3Array]
+var PlacedRoomsWithNoExit : Array
 var originalRooms
 var collapse_history : Array[Vector3i]
 var mandatoryCollapses : Array[Vector2i]
@@ -88,6 +89,9 @@ func _ready() -> void:
 	super()
 	if (Engine.is_editor_hint()):
 		finised = true
+	
+	aStar = MapGeneratorAstar.new()
+	add_child(aStar)
 
 #----------------------------------------------------
 var workerID = -1
@@ -247,16 +251,19 @@ func GetAbortReason(collapsed : Array[Vector2i]) -> CELL_ABORT_REASON:
 				rooms.erase(g)
 			rooms.append(combined)
 			combined.append(col)
-			#print("Combined rooms")
+			print("Combined rooms")
 		else: if (ownerRooms.size() > 0):
 			ownerRooms[0].append(col)
 		else:
 			abortReason = CELL_ABORT_REASON.NO_OWNER_FOUND
 	
-	if (abortReason == CELL_ABORT_REASON.NONE and rooms.size() > 1):
+	if (abortReason == CELL_ABORT_REASON.NONE and rooms.size() > 1 + PlacedRoomsWithNoExit.size()):
 		
 		#if multiple rooms exist we need to check if they have exits, if not we take back this collapse
 		for room in rooms:
+			
+			if (PlacedRoomsWithNoExit.has(room)):
+				continue
 			
 			var exits : Array[Vector2i] = []
 			#if room has exit we need to check if this exit communicates with another room
@@ -265,6 +272,8 @@ func GetAbortReason(collapsed : Array[Vector2i]) -> CELL_ABORT_REASON:
 				var haseAccessToAllRooms = true
 				
 				for roomToCheck in rooms:
+					if (PlacedRoomsWithNoExit.has(roomToCheck)):
+						continue
 					if (roomToCheck == room):
 						continue
 					var start = Helper.Vector2iTo3(room[0], currentFloor)
@@ -286,9 +295,9 @@ func GetAbortReason(collapsed : Array[Vector2i]) -> CELL_ABORT_REASON:
 					abortReason = CELL_ABORT_REASON.ROOM_HAS_NO_EXITS
 					break
 				continue
-				
-			abortReason = CELL_ABORT_REASON.ROOM_HAS_NO_EXITS
-			break
+			else:
+				abortReason = CELL_ABORT_REASON.ROOM_HAS_NO_EXITS
+				break
 			
 	return abortReason
 	
@@ -392,22 +401,7 @@ func _draw() -> void:
 		draw_string(ThemeDB.fallback_font, layer.map_to_local(Helper.Vector3ITo2(g)) + Vector2(0, g.y * 320) - stringSize, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 2)
 
 	if (drawAStar):
-		for pointId in aStar.Astar.get_point_count():
-			if (aStar.Astar.is_point_disabled(pointId)):
-				continue
-			var connections = aStar.Astar.get_point_connections(pointId)
-			var pont = aStar.Astar.get_point_position(pointId)
-			var g = Helper.Vector3ITo2(pont)
-			var gGlobal = layer.map_to_local(g) + Vector2(0, pont.y * 320)
-			for connection in connections:
-				if (aStar.Astar.is_point_disabled(connection)):
-					continue
-				var pointPos = aStar.Astar.get_point_position(connection)
-				var twoDPos = Helper.Vector3ITo2(pointPos)
-				var localPos = layer.map_to_local(twoDPos)
-				var globalPos = localPos + Vector2(0, pointPos.y * 320)
-				
-				draw_line(gGlobal, globalPos, cols[wrap(pointPos.y, 0, cols.size())])
+		aStar.queue_redraw()
 		
 	super()
 #---------------------------------------------------
@@ -427,6 +421,7 @@ func CollapseMap() -> void:
 	originalTiles.clear()
 	aStar.Clear()
 	PlacedRooms.clear()
+	PlacedRoomsWithNoExit.clear()
 	currentFloor = floorsToGenerate[0]
 	Props.clear()
 	MegaProps.clear()
@@ -614,6 +609,13 @@ func _add_finishing_touches() -> void:
 		for g in (mapSize.x * mapSize.y) / 100:
 			var monIndex = r.randi_range(0, used.size() - 1)
 			monsterLayer.set_cell(used[monIndex], 0, Vector2i(0,0))
+		
+		var usedInfo = mapInfoLayer.get_used_cells()
+		#add floor connections
+		for cell : Vector2i in usedInfo:
+			var atlas = mapInfoLayer.get_cell_atlas_coords(cell)
+			if (atlas.x == 17):
+				aStar.Connect(Helper.Vector2iTo3(cell, fl), Helper.Vector2iTo3(cell, fl + 1))
 
 func IsIncluded(element : Vector2i, array : Array[Vector2i]) -> bool:
 	return !array.has(element)
@@ -661,7 +663,7 @@ func _progress_floor() -> void:
 	
 		
 	#Connect the 2 floors
-	aStar.Connect(Helper.Vector2iTo3(randomCell, currentFloor - 1), Helper.Vector2iTo3(randomCell, currentFloor))
+	
 	
 
 #---------------------------------------------------
@@ -701,10 +703,11 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 	
 	var star = layer.GetAStar(currentFloor, mapSize)
 	
-	
+	PlacedRoomsWithNoExit.clear()
 	rooms = layer.separate_into_islands()
 	
 	for room in rooms:
+		
 		var TriDRoom : PackedVector3Array = []
 		for tileIndex in room.size():
 			var triD = Helper.Vector2iTo3(room[tileIndex], currentFloor)
@@ -719,6 +722,10 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 		var ex = Helper.Vector2iTo3(g, currentFloor)
 		if (!currentExits.has(ex)):
 			currentExits.append(ex)
+	
+	for room in rooms:
+		if (!RoomHasExit(room, layer, [])):
+			PlacedRoomsWithNoExit.append(room)
 	
 	if (guidePaths and Usedcells.size() > 1):
 		#get a path from each exit to another

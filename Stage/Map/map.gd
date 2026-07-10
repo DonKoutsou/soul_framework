@@ -41,6 +41,8 @@ class_name Map
 var Data : MapData
 var AccumulatedHours : int
 
+var editorDebugCamera : MapEditorDebugCam
+
 var generationThreadTaskID : int = -1
 signal GenerationFinished
 
@@ -97,6 +99,11 @@ var editorCamPos : Vector3i
 
 func _ready() -> void:
 	if (Engine.is_editor_hint()):
+		editorDebugCamera = MapEditorDebugCam.new()
+		editorDebugCamera.mapParent = self
+		
+		add_child(editorDebugCamera)
+		
 		return
 	else:
 		set_physics_process(false)
@@ -505,7 +512,8 @@ func RedoMap() -> void:
 	
 #----------------------------------------------------------------
 func _notification(what: int) -> void:
-	queue_redraw()
+	if (Engine.is_editor_hint() and editorDebugCamera != null):
+		editorDebugCamera.queue_redraw()
 	if (what == NOTIFICATION_EDITOR_POST_SAVE):
 		print("Redoing map")
 		RedoMap()
@@ -621,21 +629,7 @@ func _draw() -> void:
 	if (!Engine.is_editor_hint()):
 		return
 		
-	var camPos = EditorInterface.get_editor_viewport_3d().get_camera_3d().global_position
-	var camFloorIndex = floor(camPos.y / WorldScale.y)
-	var camFloor = GetFloor(camFloorIndex)
-	var camY = 0
-	if (camFloor !=null):
-		camY = camFloor.position.y
 	
-	var multiPlier = Vector2(16, 16) / Vector2(WorldScale.x, WorldScale.z)
-	#Add 1 to move it to center of tile
-	var TwDCamPos = (Vector2(camPos.x + 1, camPos.z + 1) * multiPlier) + Vector2(0, camY)
-	
-	draw_circle(TwDCamPos, 2, Color(1,0,0))
-	
-	var camRot = -EditorInterface.get_editor_viewport_3d().get_camera_3d().rotation.y - (PI * 0.5)
-	draw_arc(TwDCamPos, 10, (-PI * 0.2) + camRot,(PI * 0.2) + camRot, 5, Color(1,0,0), 5)
 	
 	##Storing of debug lines
 	var DebugLines : PackedVector2Array
