@@ -8,6 +8,7 @@ class_name SettingsSave
 @export var VSync : bool
 @export var ShowMinimap : bool
 @export var DOF : bool
+@export var CameraSpeed : float
 @export var Brightness : float
 @export var Contrast : float
 @export var HeadBob : bool = true

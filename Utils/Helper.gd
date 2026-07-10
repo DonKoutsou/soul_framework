@@ -99,6 +99,98 @@ static func rotate_vector2_by_vector(v: Vector2, rot: Vector2) -> Vector2:
 	)
 
 #----------------------------------------------------
+static func GetRotationFromAltTile(alt_tile : int) -> float:
+	var rot : float = 0
+
+	# Test for the engine's built-in transform flags
+	var flip_h = alt_tile & TileSetAtlasSource.TRANSFORM_FLIP_H > 0
+	var flip_v = alt_tile & TileSetAtlasSource.TRANSFORM_FLIP_V > 0
+	var transpose = alt_tile & TileSetAtlasSource.TRANSFORM_TRANSPOSE > 0
+
+	match [flip_v, flip_h, transpose]:
+		[false, false, false]: rot = 0.0   # No rotation
+		[true, true, false]: rot = PI   # 180 degrees
+		[true, false, true]: rot = -PI / 2  # 90 degrees clockwise
+		[false, true, true]: rot = PI / 2   # 270 degrees clockwise (or -90)
+		
+	return rot
+	
+#---------------------------------------------------------------
+##Returns a rotated duplicate of the provided pattern
+static func rotate_pattern(pattern: TileMapPattern, turns: int, sizeOverride : Vector2i = Vector2i.MAX) -> TileMapPattern:
+	turns = posmod(turns, 4)
+
+	var result := TileMapPattern.new()
+	var cells := pattern.get_used_cells()
+	# bounds
+	var min_pos := Vector2i(0,0)
+	var max_pos := pattern.get_size()
+	if (sizeOverride != Vector2i.MAX):
+		max_pos = sizeOverride
+
+	for c in cells:
+		min_pos = min_pos.min(c)
+		max_pos = max_pos.max(c)
+
+	var w = max_pos.x - min_pos.x + 1
+	var h = max_pos.y - min_pos.y + 1
+
+	for cell in cells:
+
+		var new_pos: Vector2i = rotate_point(cell, min_pos, w, h, turns)
+		# copy tile data
+		var source_id = pattern.get_cell_source_id(cell)
+		var atlas = pattern.get_cell_atlas_coords(cell)
+		var altTile = pattern.get_cell_alternative_tile(cell)
+		
+		# get current rotation
+		var rot_radians = Helper.GetRotationFromAltTile(altTile)
+
+		# apply room rotation
+		rot_radians += turns * (PI * 0.5)
+		
+		rot_radians = wrapf(rot_radians, -PI/2, PI + PI/2)
+		# convert rotation -> alternative tile (YOU provide this)
+		var alternative = GetTileAltFromRotation(rot_radians)
+
+		result.set_cell(
+			new_pos,
+			source_id,
+			atlas,
+			alternative
+		)
+
+	return result
+
+#-----------------------------------------------
+static func GetTileAltFromRotation(rot : float) -> int:
+	var tile_alternate : int = 0
+	match rot:
+		PI/2:
+			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H
+		PI:
+			tile_alternate = TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V
+		-PI/2:
+			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V
+			
+	return tile_alternate
+
+static func rotate_point(point: Vector2, min_pos: Vector2, width: int, height: int, turns: int) -> Vector2:
+
+	var local = point - min_pos
+	
+	if (turns == 0):
+		return local
+	elif(turns == 1):
+		return Vector2(height - 1 - local.y, local.x)
+	elif(turns == 2):
+		return Vector2(width - 1 - local.x, height - 1 - local.y)
+	elif(turns == 3):
+		return Vector2(local.y, width - 1 - local.x)
+
+	return local
+
+#----------------------------------------------------
 # axis: "x", "y", or "z"
 static func rotate_vector3i(vec: Vector3i, angle_radians: float, axis: Vector3i) -> Vector3i:
 	var x = vec.x

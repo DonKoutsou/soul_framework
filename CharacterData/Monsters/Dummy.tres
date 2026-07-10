@@ -23,6 +23,7 @@ metadata/_custom_type_script = "uid://bel483m12cmq1"
 [sub_resource type="Resource" id="Resource_csbjq"]
 script = ExtResource("3_6cntw")
 StatName = 3
+StatValue = 3
 metadata/_custom_type_script = "uid://bel483m12cmq1"
 
 [resource]

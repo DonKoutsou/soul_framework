@@ -11,6 +11,7 @@ script = ExtResource("3_a6dw7")
 Transform = Transform3D(0.24783923, -0.13141933, 0.95984626, 0.885778, 0.43202505, -0.16956267, -0.39239383, 0.89223504, 0.22348113, 6.388961, 0.6261161, 4.264816)
 
 [node name="MapGenerator2" unique_id=1573063644 node_paths=PackedStringArray("Floors") instance=ExtResource("1_2n1ee")]
+MaxPlacements = 1
 Floors = [NodePath("Floor_-1"), NodePath("Floor_0")]
 Props = Dictionary[Mesh, Array]({
 ExtResource("4_a6dw7"): [SubResource("Resource_a6dw7")]

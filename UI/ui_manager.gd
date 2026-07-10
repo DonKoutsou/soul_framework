@@ -83,10 +83,7 @@ func SaveGameRequest() -> void:
 	SaveGame.emit()
 
 func ToggleSettings() -> void:
-	if (SettingsM != null):
-		SettingsM.SaveSettings()
-		SettingsM.queue_free()
-	else:
+	if (SettingsM == null):
 		SettingsM = SettingsMenuScene.instantiate()
 		add_child(SettingsM)
 		SettingsM.Close.connect(ToggleSettings)

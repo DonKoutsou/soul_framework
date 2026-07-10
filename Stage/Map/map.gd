@@ -16,6 +16,8 @@ class_name Map
 
 @export_group("Nodes")
 @export var Floors : Array[FloorLayer]
+@export var PropParent : Node
+@export var MegaPropParent : Node
 
 @export_group("Catalogues")
 @export var LevelTransitionCatalogue : Array[LocationName]
@@ -444,22 +446,6 @@ func generate_maze(spawnMons : bool) -> void:
 	Data.SaveRandomState(r.get_state())
 	call_deferred("ThreadedGenerationFinished")
 
-#----------------------- Helper methods -----------------------------#
-
-#-----------------------------------------------
-func GetTileAltFromRotation(rot : float) -> int:
-	var tile_alternate : int = 0
-	match rot:
-		PI/2:
-			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H
-		PI:
-			tile_alternate = TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V
-		-PI/2:
-			tile_alternate = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V
-			
-	return tile_alternate
-
-
 #----------------------- EDITOR -----------------------------#
 #This area is used when the map is used in editor to generate the geometry for visualisation purposes.
 #Once save is pressed the map is regenerated to reflect changes done to the tile map
@@ -478,7 +464,7 @@ func StoreProps() -> void:
 	Props.clear()
 	MegaProps.clear()
 	
-	for g : MeshInstance3D in $ExtraProps.get_children():
+	for g : MeshInstance3D in PropParent.get_children():
 		var MData = MeshData.new()
 		MData.Transform = g.transform
 		for surface in g.mesh.get_surface_count():
@@ -490,7 +476,7 @@ func StoreProps() -> void:
 		else:
 			Props[g.mesh] = [MData]
 	
-	for g : MeshInstance3D in $MegaProps.get_children():
+	for g : MeshInstance3D in MegaPropParent.get_children():
 		var MData = MeshData.new()
 		MData.Transform = g.transform
 		

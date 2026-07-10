@@ -10,9 +10,12 @@ var patterns : Dictionary[int, Dictionary]
 
 var maxSpot : Vector2i = Vector2i.ZERO
 
-func _ready() -> void:
-	super()
-	
+func StoreLayers() -> void:
+	for floorIndex : int in GetFloorIndexes():
+		var fl = GetFloor(floorIndex)
+		fl._store_layers()
+
+func StorePatterns() -> void:
 	for floorIndex : int in GetFloorIndexes():
 		var mazePattern = _contruct_pattern(FloorLayer.LayerType.MAZE, floorIndex)
 		var monsterPattern = _contruct_pattern(FloorLayer.LayerType.MONSTERS, floorIndex)

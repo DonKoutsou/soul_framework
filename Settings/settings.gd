@@ -11,6 +11,7 @@ class_name Settings
 @export var MinimapBox : CheckBox
 @export var DOFBOX : CheckBox
 @export var HeadBobBox : CheckBox
+@export var CameraSpeed : HSlider
 
 #static var Env = preload("res://Enviroments/MasterEnviroment.tres")
 static var CameraAttribures = [load("res://Engine/Enviroments/CameraSettings/FightPlayerCameraAttribures.tres"), load("res://Engine/Enviroments/CameraSettings/PlayerManequinCameraAttribures.tres"), load("res://Engine/Enviroments/CameraSettings/StartingWorldCameraAtributes.tres")]
@@ -18,6 +19,7 @@ static var CameraAttribures = [load("res://Engine/Enviroments/CameraSettings/Fig
 signal Close
 
 func _ready() -> void:
+	InputManager.Instance.PausePressed.connect(Remove)
 	UISoundMan.Instance.Refresh()
 	#BrighnessSlider.set_value_no_signal(Env.adjustment_brightness)
 	#ContrastSlider.set_value_no_signal(Env.adjustment_contrast)
@@ -28,6 +30,7 @@ func _ready() -> void:
 	MinimapBox.set_pressed_no_signal(Minimap.ShowMinimap)
 	DOFBOX.set_pressed_no_signal(CameraAttribures[0].dof_blur_amount > 0)
 	HeadBobBox.set_pressed_no_signal(Player.HeadBob)
+	CameraSpeed.set_value_no_signal(BasePlayerManequin.CameraSpeed)
 
 func _on_brighness_slider_value_changed(_value: float) -> void:
 	pass
@@ -62,7 +65,12 @@ func _on_minimap_box_toggled(toggled_on: bool) -> void:
 	Minimap.Instance.ToggleMinimap(Minimap.Instance.MapBig)
 
 
+func Remove() -> void:
+	SaveSettings()
+	queue_free()
+
 func _on_button_pressed() -> void:
+	Remove()
 	Close.emit()
 
 
@@ -77,6 +85,7 @@ func SaveSettings() -> void:
 	SettingsSaveFile.VSync = DisplayServer.window_get_vsync_mode() == 1
 	SettingsSaveFile.ShowMinimap = Minimap.ShowMinimap
 	SettingsSaveFile.DOF = CameraAttribures[0].dof_blur_amount > 0
+	SettingsSaveFile.CameraSpeed = BasePlayerManequin.CameraSpeed
 	#SettingsSaveFile.Brightness = Env.adjustment_brightness
 	#SettingsSaveFile.Contrast = Env.adjustment_contrast
 	SettingsSaveFile.HeadBob = Player.HeadBob
@@ -106,6 +115,8 @@ static func LoadSettings() -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(sav.MasterSoundVolume))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(sav.MusicVolume))
 	
+	BasePlayerManequin.CameraSpeed = sav.CameraSpeed
+	
 	for g in CameraAttribures:
 		if (sav.DOF):
 			g.dof_blur_amount = 0.1
@@ -130,3 +141,7 @@ func _on_head_bob_box_toggled(toggled_on: bool) -> void:
 		return
 		
 	Stage.Isntance.Fight.ToggleHeadBob(toggled_on)
+
+
+func _on_camera_speed_value_changed(value: float) -> void:
+	BasePlayerManequin.CameraSpeed = value

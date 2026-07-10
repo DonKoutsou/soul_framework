@@ -11,6 +11,7 @@ signal SettingsPressed
 @export var menuWorldScene : PackedScene
 @export var Credits : Control
 @export var Menu : Control
+@export var SettingsMenu : PackedScene
 
 var StartingMenuW : StartingMenuWorld
 
@@ -85,4 +86,5 @@ func PlayIntro() -> void:
 
 
 func _on_settings_pressed() -> void:
-	SettingsPressed.emit()
+	var s = SettingsMenu.instantiate()
+	add_child(s)

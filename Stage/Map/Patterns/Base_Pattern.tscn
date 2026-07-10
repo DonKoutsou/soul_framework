@@ -4,10 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://sbji8vmb6epv" path="res://Engine/Stage/Map/Floor/FloorLayer.tscn" id="2_2ekj0"]
 [ext_resource type="Script" uid="uid://bmlq4msx1a0jq" path="res://Engine/Stage/Level/Prop_Spawner/extra_props.gd" id="3_x6j50"]
 
-[node name="MapGenerator2" type="Node2D" unique_id=1573063644 node_paths=PackedStringArray("Floors")]
+[node name="MapGenerator2" type="Node2D" unique_id=1573063644 node_paths=PackedStringArray("Floors", "PropParent", "MegaPropParent")]
 script = ExtResource("1_tijim")
 levelScene = "uid://c3v1lq4fsttds"
 Floors = [null, NodePath("Floor_0"), null]
+PropParent = NodePath("ExtraProps")
+MegaPropParent = NodePath("MegaProps")
 ItemCaralogue = Array[String](["uid://btpko76rq38uv", "uid://7eusou4hbr2u", "uid://dqoem4ou0c4dx", "uid://rgn55a6jv0yi", "uid://dhsdcpbwtm7m1", "uid://c0c77r244tq4a"])
 
 [node name="Floor_0" parent="." unique_id=1743688447 instance=ExtResource("2_2ekj0")]

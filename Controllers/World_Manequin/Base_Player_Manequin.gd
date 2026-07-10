@@ -54,6 +54,7 @@ var NoClip : bool
 static var CanWalkOnWater : bool = false
 static var CanWalkOnLava : bool = false
 static var CanWalkOverGaps : bool = false
+static var CameraSpeed : float = 0.5
 
 var HoldingPosition : Vector3i
 
@@ -217,16 +218,18 @@ func HandleRotation(event: InputEvent) -> void:
 
 		var d = GetJoyDir(event.axis, event.axis_value) 
 		var CameraOffset : Vector3 = Vector3.ZERO
-		CameraOffset.y -= d.x / 200
-		CameraOffset.x -= d.y / 200
+		CameraOffset.y -= d.x / 600
+		CameraOffset.x -= d.y / 600
+		CameraOffset *= CameraSpeed
 		Cam.RotationToFocusOn = Vector3(clamp(Cam.RotationToFocusOn.x + CameraOffset.x, -CAM_MAX.x, PI * 0.5), clamp(Cam.RotationToFocusOn.y + CameraOffset.y, -CAM_MAX.y, CAM_MAX.y), Cam.RotationToFocusOn.z + CameraOffset.z)
 	
 		return
 	if (event is InputEventMouseMotion ):
 		var d = event.screen_relative
 		var CameraOffset : Vector3 = Vector3.ZERO
-		CameraOffset.y -= d.x / 200
-		CameraOffset.x -= d.y / 200
+		CameraOffset.y -= d.x / 600
+		CameraOffset.x -= d.y / 600
+		CameraOffset *= CameraSpeed
 		Cam.RotationToFocusOn = Vector3(clamp(Cam.RotationToFocusOn.x + CameraOffset.x, -CAM_MAX.x, PI * 0.5), clamp(Cam.RotationToFocusOn.y + CameraOffset.y, -CAM_MAX.y, CAM_MAX.y), Cam.RotationToFocusOn.z + CameraOffset.z)
 
 	if (event.is_action_pressed("look_left")):

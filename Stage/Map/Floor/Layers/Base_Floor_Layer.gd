@@ -42,21 +42,7 @@ func GetTileRotationRadians(pos : Vector2i) -> float:
 		
 	return rot
 
-func GetRotationFromAltTile(alt_tile : int) -> float:
-	var rot : float = 0
 
-	# Test for the engine's built-in transform flags
-	var flip_h = alt_tile & TileSetAtlasSource.TRANSFORM_FLIP_H > 0
-	var flip_v = alt_tile & TileSetAtlasSource.TRANSFORM_FLIP_V > 0
-	var transpose = alt_tile & TileSetAtlasSource.TRANSFORM_TRANSPOSE > 0
-
-	match [flip_v, flip_h, transpose]:
-		[false, false, false]: rot = 0.0   # No rotation
-		[true, true, false]: rot = PI   # 180 degrees
-		[true, false, true]: rot = -PI / 2  # 90 degrees clockwise
-		[false, true, true]: rot = PI / 2   # 270 degrees clockwise (or -90)
-		
-	return rot
 
 #----------------------------------------------------------------
 func GetTileDirection(pos : Vector2i) -> Vector2:

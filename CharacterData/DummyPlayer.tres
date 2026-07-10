@@ -22,10 +22,17 @@ StatName = 2
 StatValue = 0
 metadata/_custom_type_script = "uid://bel483m12cmq1"
 
+[sub_resource type="Resource" id="Resource_y7lny"]
+script = ExtResource("1_y1a7n")
+StatName = 3
+StatValue = 5
+UpgradeIntervals = 2
+metadata/_custom_type_script = "uid://bel483m12cmq1"
+
 [resource]
 script = ExtResource("3_2a01u")
 CharacterName = "Player"
-CharacterStats = Array[ExtResource("1_y1a7n")]([SubResource("Resource_y1a7n"), SubResource("Resource_cx8c7"), SubResource("Resource_2a01u")])
+CharacterStats = Array[ExtResource("1_y1a7n")]([SubResource("Resource_y1a7n"), SubResource("Resource_cx8c7"), SubResource("Resource_2a01u"), SubResource("Resource_y7lny")])
 Visuals = "uid://wxikph1pgiis"
 CharacterWeapon = ExtResource("2_2a01u")
 metadata/_custom_type_script = "uid://dwqnoamdvs5gm"

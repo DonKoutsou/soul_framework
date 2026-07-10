@@ -124,6 +124,7 @@ func Update(delta: float) -> void:
 			RecoilTween.kill()
 	DuckCoolDown = max(0, DuckCoolDown - delta)
 	ParryCooldDown = max(0, ParryCooldDown - delta)
+	ControllingCharacter.Update(delta)
 	#UpdateSkeletonState()
 	if (IsCharging() or IsCharged()):
 		ChargePower = min(ChargePower + delta, 1)
@@ -451,7 +452,9 @@ func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Mag
 	
 	#if (Magnitude < 0.5):
 		#return
-	
+	if (ControllingCharacter.currentPoise > 0):
+		return
+		
 	CancelHits()
 	StopParry(true)
 	

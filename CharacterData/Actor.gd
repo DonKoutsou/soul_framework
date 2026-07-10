@@ -2,7 +2,6 @@ extends Resource
 
 class_name Actor
 
-
 var SpeedBuff : float
 var DamageBuff : int
 
@@ -19,13 +18,25 @@ signal StatsUpgraded
 
 @export var CurrentHP : int = 0
 @export var CurrentMana : int = 0
+var currentPoise : int = 0
 var Fatigue : float = 0
-var Poise : float = 0
 
 @export var CharacterWeapon : Weapon
 
 signal Exposed
 var Exposure : float = 0
+
+var poiseTimer = 2.0
+
+func Update(delta : float) -> void:
+	if (currentPoise == GetStat(CharacterStat.STATS.MAX_POISE)):
+		return
+	else: if (currentPoise == 0):
+		currentPoise = GetStat(CharacterStat.STATS.MAX_POISE)
+		return
+	poiseTimer -= delta
+	if (poiseTimer <= 0):
+		currentPoise = GetStat(CharacterStat.STATS.MAX_POISE)
 
 func IsStunned() -> bool:
 	return Exposure > 0
@@ -54,7 +65,13 @@ func Damage(finalDamage : int, Instigator : Actor, _Source : String = "") -> voi
 	if (Exposure > 0):
 		DamageToDo *= 2.0
 	CurrentHP = max(0, CurrentHP - DamageToDo)
+	
+	currentPoise = max(0, currentPoise - 1) 
+	poiseTimer = 2.0
+	
+	AudioManager.Instance.PlaySound(AudioManager.Sound.DAMAGE, -5, 0.2)
 	Damaged.emit(DamageToDo, DamageToDo, Instigator)
+	
 	if (CurrentHP <= 0):
 		OnDeath.emit()
 		Fatigue = 0
@@ -66,6 +83,9 @@ func Damage(finalDamage : int, Instigator : Actor, _Source : String = "") -> voi
 
 func DamageFlat(Dmg : int, _Source : String = "") -> void:
 	CurrentHP = max(0, CurrentHP - Dmg)
+	
+	currentPoise = max(0, currentPoise - 1) 
+	poiseTimer = 2.0
 	
 	AudioManager.Instance.PlaySound(AudioManager.Sound.DAMAGE, -5, 0.2)
 	Damaged.emit(Dmg, Dmg, null)
