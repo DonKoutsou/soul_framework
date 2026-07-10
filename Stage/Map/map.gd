@@ -70,6 +70,12 @@ enum TrapType {
 	FIREPIT_TRAP
 }
 
+func GetFloorIndexes() -> Array[int]:
+	var indexes : Array[int] = []
+	for g : FloorLayer in Floors:
+		indexes.append(g.FloorNumber)
+	return indexes
+
 func GetFloorAmm() -> int:
 	return Floors.size()
 
