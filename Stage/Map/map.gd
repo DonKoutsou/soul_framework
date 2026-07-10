@@ -505,6 +505,7 @@ func RedoMap() -> void:
 	
 #----------------------------------------------------------------
 func _notification(what: int) -> void:
+	queue_redraw()
 	if (what == NOTIFICATION_EDITOR_POST_SAVE):
 		print("Redoing map")
 		RedoMap()
@@ -619,11 +620,17 @@ func CheckForFocus(node : Control) -> bool:
 func _draw() -> void:
 	if (!Engine.is_editor_hint()):
 		return
-	
+		
 	var camPos = EditorInterface.get_editor_viewport_3d().get_camera_3d().global_position
+	var camFloorIndex = floor(camPos.y / WorldScale.y)
+	var camFloor = GetFloor(camFloorIndex)
+	var camY = 0
+	if (camFloor !=null):
+		camY = camFloor.position.y
+	
 	var multiPlier = Vector2(16, 16) / Vector2(WorldScale.x, WorldScale.z)
 	#Add 1 to move it to center of tile
-	var TwDCamPos = (Vector2(camPos.x + 1, camPos.z + 1) * multiPlier) + Vector2(0, floor(camPos.y / WorldScale.y) * 320)
+	var TwDCamPos = (Vector2(camPos.x + 1, camPos.z + 1) * multiPlier) + Vector2(0, camY)
 	
 	draw_circle(TwDCamPos, 2, Color(1,0,0))
 	
