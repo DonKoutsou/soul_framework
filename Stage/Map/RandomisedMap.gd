@@ -407,11 +407,12 @@ func _draw() -> void:
 #---------------------------------------------------
 ##Clears all tilemap layers in map
 func CleanMap() -> void:
-	for g in PropParent.get_children():
-		g.queue_free()
 	for fl in Floors:
 		for layer : TileMapLayer in fl.GetLayers():
 			layer.clear()
+	for g in PropParent.get_children():
+		g.queue_free()
+	
 
 #----------------------------------------------------
 ##Starts the generation of the map
