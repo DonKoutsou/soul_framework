@@ -623,19 +623,52 @@ func IsIncluded(element : Vector2i, array : Array[Vector2i]) -> bool:
 #-------------------------------------------------------------
 ##Progresses the generation to the next floor
 func _progress_floor() -> void:
+	#store layers of finished floor
 	var lastFloor = GetFloor(currentFloor)
 	var lastLayer : MazeFloorLayer = lastFloor.GetLayer(FloorLayer.LayerType.MAZE)
 	var lastInfoLayer = lastFloor.GetLayer(FloorLayer.LayerType.MAP_INFO)
 	
 	var used = lastLayer.get_used_cells()
 	used.sort()
-			
+
 	currentFloor += 1
 	call_deferred("LoadingProgressed", float(generatedFloors.size()) / floorsToGenerate.size())
 	
+	#store layers of current floor
 	var f = GetFloor(currentFloor)
 	var l : MazeFloorLayer = f.GetLayer(FloorLayer.LayerType.MAZE)
 	var InfoLayer = f.GetLayer(FloorLayer.LayerType.MAP_INFO)
+	
+	#we need to make sure to not place the stairs connected two already connected rooms
+	
+	#get existing stairs on current floor
+	var stairs : Array[Vector2i]
+	for cell in lastInfoLayer.get_used_cells():
+		var atlas : Vector2i = lastInfoLayer.get_cell_atlas_coords(cell)
+		if (atlas.x == 17):
+			stairs.append(cell)
+	
+	var lastRooms = lastLayer.separate_into_rooms()
+	var currentRooms = l.separate_into_rooms()
+	
+	#find the rooms each stairs are connecting
+	for stair in stairs:
+		var lastRoom : Array
+		for room in lastRooms:
+			if (room.has(stair)):
+				lastRoom = room
+				break
+		var currentRoom : Array
+		for room in currentRooms:
+			if (room.has(stair)):
+				currentRoom = room
+				break
+		if (lastRoom == null or currentRoom == null):
+			continue
+		#once we find the connected rooms, we need to find their intercecting points and remove them from the array that we will pick the ladder from
+		for cell in lastRoom:
+			if (currentRoom.has(cell)):
+				used.erase(cell)
 	
 	var currentUsed = l.get_used_cells()
 	
@@ -644,8 +677,6 @@ func _progress_floor() -> void:
 	lastInfoLayer.set_cell(randomCell, 0, Vector2i(17, 0))
 	
 	InfoLayer.set_cell(randomCell, 0, Vector2i(18, 0))
-	
-	
 	
 	if (!currentUsed.has(randomCell)):
 		var availableWeights : PackedFloat32Array = GetTileWeights(randomCell, true)

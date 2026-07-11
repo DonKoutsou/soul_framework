@@ -558,6 +558,7 @@ func _physics_process(delta: float) -> void:
 		
 		editorCamPos = camPos
 		_Editor_CurrentWorld.PlayerPositionChanged(camPos, Vector3.ZERO)
+		_Editor_CurrentWorld.AudioMan.PlayerLocationChanged(Helper.PlayerPositionToMap(camPos))
 		#print("thing")
 	
 	if (CheckForFocus(EditorInterface.get_script_editor())):
