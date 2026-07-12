@@ -26,7 +26,7 @@ var Fatigue : float = 0
 signal Exposed
 var Exposure : float = 0
 
-var poiseTimer = 2.0
+var poiseTimer = 5.0
 
 func Update(delta : float) -> void:
 	if (currentPoise == GetStat(CharacterStat.STATS.MAX_POISE)):
@@ -60,14 +60,17 @@ func GetStat(StatName : CharacterStat.STATS) -> int:
 func GetStatContainer(_StatName : CharacterStat.STATS) -> CharacterStat:
 	return null
 
+func DamagePoise(amm : int = 1) -> void:
+	currentPoise = max(0, currentPoise - amm) 
+	poiseTimer = 5.0
+
 func Damage(finalDamage : int, Instigator : Actor, _Source : String = "") -> void:
 	var DamageToDo = finalDamage
 	if (Exposure > 0):
 		DamageToDo *= 2.0
 	CurrentHP = max(0, CurrentHP - DamageToDo)
 	
-	currentPoise = max(0, currentPoise - 1) 
-	poiseTimer = 2.0
+	
 	
 	AudioManager.Instance.PlaySound(AudioManager.Sound.DAMAGE, -5, 0.2)
 	Damaged.emit(DamageToDo, DamageToDo, Instigator)
@@ -83,9 +86,7 @@ func Damage(finalDamage : int, Instigator : Actor, _Source : String = "") -> voi
 
 func DamageFlat(Dmg : int, _Source : String = "") -> void:
 	CurrentHP = max(0, CurrentHP - Dmg)
-	
-	currentPoise = max(0, currentPoise - 1) 
-	poiseTimer = 2.0
+
 	
 	AudioManager.Instance.PlaySound(AudioManager.Sound.DAMAGE, -5, 0.2)
 	Damaged.emit(Dmg, Dmg, null)

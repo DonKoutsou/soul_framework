@@ -75,7 +75,7 @@ func _on_texture_rect_gui_input(event: InputEvent) -> void:
 
 func _on_load_pressed() -> void:
 	TutorialManager.ShowTutorial = false
-	$Control.visible = false
+	#$Control.visible = false
 	LoadPressed.emit()
 
 func PlayIntro() -> void:

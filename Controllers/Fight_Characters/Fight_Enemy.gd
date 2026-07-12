@@ -399,7 +399,6 @@ func Update(delta: float) -> void:
 	if (Dead):
 		return
 	super(delta)
-
 	for WeaponScene in WeaponScenes:
 		WeaponScene.ToggleDamageBuff(ControllingCharacter.DamageBuff > 0 )
 		WeaponScene.ToggleSeedBuff(ControllingCharacter.SpeedBuff > 0)

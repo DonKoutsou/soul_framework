@@ -6,7 +6,7 @@
 render_priority = 0
 shader = ExtResource("1_bt75y")
 shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/zoom = 6.0
+shader_parameter/zoom = 5.0
 shader_parameter/color_low = Color(0.192197, 0.19219708, 0.192197, 1)
 shader_parameter/color_mid = Color(0.24501786, 0.24501789, 0.2450178, 1)
 shader_parameter/color_high = Color(0.5042936, 0.50429356, 0.50429356, 1)

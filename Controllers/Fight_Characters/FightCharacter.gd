@@ -436,6 +436,7 @@ func UnDuck(Direction : AtackSide) -> bool:
 	return true
 #----------------------------------------------------
 func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Magnitude : float = 0) -> void:
+	ControllingCharacter.DamagePoise()
 	if (HitConnected):
 		#if (is_instance_valid(RecoilTween) and RecoilTween.is_valid()):
 			#RecoilTween.kill()
@@ -452,6 +453,8 @@ func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Mag
 	
 	#if (Magnitude < 0.5):
 		#return
+	
+		
 	if (ControllingCharacter.currentPoise > 0):
 		return
 		
