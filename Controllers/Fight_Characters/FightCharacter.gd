@@ -415,6 +415,7 @@ func Duck(Direction : AtackSide) -> void:
 	
 	DuckCoolDown = 0.3
 	AudioManager.Instance.PlaySound(AudioManager.Sound.EVADE, -15, 0.1, 1)
+	ControllingCharacter.DamageFatigue(2, "", false)
 	CharacterDucked.emit(Direction)
 #----------------------------------------------------
 func UnDuck(Direction : AtackSide) -> bool:
@@ -496,7 +497,7 @@ func Damage(DamageAmm : int, Direction : AtackSide, _ShakeAmm : float, AtackWeig
 		
 	if (Blocking):
 		AudioManager.Instance.PlaySound(CurrentWeapon.WeaponClashSound, -5, 0.1, 0.6)
-		AtackBlocked.emit(DamageAmm)
+		AtackBlocked.emit(DamageAmm / 2)
 		Recoil(Direction, true, AtackWeight)
 		return 0
 	
@@ -523,7 +524,7 @@ func Kill() -> void:
 func GetRequiredStaminaForHit() -> float:
 	return ControllingCharacter.CharacterWeapon.Stamina_Cost
 func HasStaminaForHit() -> bool:
-	return ControllingCharacter.GetMaxFatigue() - ControllingCharacter.Fatigue > GetRequiredStaminaForHit()
+	return ControllingCharacter.GetMaxFatigue() - ControllingCharacter.Fatigue > 0
  #----------------------------------------------------
 var fadingout : bool = false
 func AnimTreeFinished(anim_name: StringName) -> void:

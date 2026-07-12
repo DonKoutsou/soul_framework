@@ -27,16 +27,22 @@ signal Exposed
 var Exposure : float = 0
 
 var poiseTimer = 5.0
+var fatigueTime = 2.0
 
 func Update(delta : float) -> void:
-	if (currentPoise == GetStat(CharacterStat.STATS.MAX_POISE)):
-		return
-	else: if (currentPoise == 0):
-		currentPoise = GetStat(CharacterStat.STATS.MAX_POISE)
-		return
-	poiseTimer -= delta
-	if (poiseTimer <= 0):
-		currentPoise = GetStat(CharacterStat.STATS.MAX_POISE)
+	if (currentPoise != GetStat(CharacterStat.STATS.MAX_POISE)):
+		if (currentPoise == 0):
+			currentPoise = GetStat(CharacterStat.STATS.MAX_POISE)
+		else:
+			poiseTimer -= delta
+			if (poiseTimer <= 0):
+				currentPoise = GetStat(CharacterStat.STATS.MAX_POISE)
+	
+	if (Fatigue != 0):
+		fatigueTime -= delta
+		if (fatigueTime <= 0):
+			Fatigue = max(0, Fatigue - delta * 8)
+			FatigueHealed.emit(delta)
 
 func IsStunned() -> bool:
 	return Exposure > 0
@@ -71,7 +77,7 @@ func Damage(finalDamage : int, Instigator : Actor, _Source : String = "") -> voi
 	CurrentHP = max(0, CurrentHP - DamageToDo)
 	
 	
-	
+	fatigueTime = 2.0
 	AudioManager.Instance.PlaySound(AudioManager.Sound.DAMAGE, -5, 0.2)
 	Damaged.emit(DamageToDo, DamageToDo, Instigator)
 	
@@ -131,8 +137,7 @@ func HealMana(Amm : float, _Source : String = "") -> void:
 	StatsUpgraded.emit()
 
 func HealFatigue(Amm : float, _Source : String = "") -> void:
-	if (Fatigue == 0):
-		return
+	return
 	var AmmToHeal = min(Fatigue, Amm)
 	Fatigue -= AmmToHeal
 	FatigueHealed.emit(AmmToHeal)
@@ -142,7 +147,7 @@ func DamageFatigue(Amm : float, _Source : String = "", CanCauseStunn : bool = tr
 		return
 	var AmmToHeal = min(GetMaxFatigue() - Fatigue, Amm)
 	Fatigue += AmmToHeal
-	
+	fatigueTime = 2.0
 	
 	if (Fatigue == GetMaxFatigue() and CanCauseStunn):
 		Exposure = 1

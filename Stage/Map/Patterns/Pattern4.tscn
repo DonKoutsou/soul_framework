@@ -1,0 +1,61 @@
+[gd_scene format=4 uid="uid://devevc3cubsh6"]
+
+[ext_resource type="PackedScene" uid="uid://dg8hgap2gsibt" path="res://Engine/Stage/Map/Patterns/Base_Pattern.tscn" id="1_7158w"]
+[ext_resource type="ArrayMesh" uid="uid://dw8oo5xdersfx" path="res://Engine/Assets/Map_Geometry/Box.res" id="2_wpt3e"]
+[ext_resource type="Script" uid="uid://dhe6lh071xnw2" path="res://Engine/Stage/Level/Prop_Spawner/MeshData.gd" id="3_tguek"]
+[ext_resource type="Script" uid="uid://bt0s6sb2dylnt" path="res://Engine/Stage/Level/Prop_Spawner/MoveNotificator.gd" id="4_8acx5"]
+[ext_resource type="PackedScene" uid="uid://sbji8vmb6epv" path="res://Engine/Stage/Map/Floor/FloorLayer.tscn" id="4_wpt3e"]
+
+[sub_resource type="Resource" id="Resource_wpt3e"]
+script = ExtResource("3_tguek")
+Transform = Transform3D(0.83636177, 0, 0.5481779, 0, 1, 0, -0.5481779, 0, 0.83636177, 1.1139452, 0.113391876, 1.0449346)
+
+[sub_resource type="Resource" id="Resource_tguek"]
+script = ExtResource("3_tguek")
+Transform = Transform3D(0.9225024, 0, 0.38599136, 0, 1, 0, -0.38599136, 0, 0.9225024, 4.4695973, 0.113391876, 2.9869785)
+
+[sub_resource type="Resource" id="Resource_8acx5"]
+script = ExtResource("3_tguek")
+Transform = Transform3D(0.9225024, 0, 0.38599136, 0, 1, 0, -0.38599136, 0, 0.9225024, 3.0656714, 0.113391876, 4.557565)
+
+[node name="MapGenerator2" unique_id=1573063644 node_paths=PackedStringArray("Floors") instance=ExtResource("1_7158w")]
+Floors = [NodePath("Floor_-1"), NodePath("Floor_0")]
+Props = Dictionary[Mesh, Array]({
+ExtResource("2_wpt3e"): [SubResource("Resource_wpt3e"), SubResource("Resource_tguek"), SubResource("Resource_8acx5")]
+})
+
+[node name="Floor_-1" parent="." index="0" unique_id=1666837197 instance=ExtResource("4_wpt3e")]
+FloorNumber = -1
+
+[node name="MAZE" parent="Floor_-1" index="0" unique_id=817992180]
+tile_map_data = PackedByteArray("AAAAAAAACgACAAAAAFACAAAACgACAAAAADACAAIACgACAAAAAGAAAAIACgACAAAAAAAAAAEACgABAAAAAAABAAAACgABAAAAAFACAAEACgAFAAAAADABAAIACgABAAAAAGABAAEACgAAAAAAAAA=")
+
+[node name="MAZE" parent="Floor_0" parent_id_path=PackedInt32Array(1743688447) index="0" unique_id=817992180]
+tile_map_data = PackedByteArray("AAAAAAAACgACAAAAAFAAAAIACgACAAAAAAAAAAEACgABAAAAAAACAAAACgACAAAAADABAAAACgAFAAAAAFACAAIACgACAAAAAGABAAIACgAFAAAAAGACAAEACgABAAAAADABAAEACgAAAAAAAAA=")
+
+[node name="MAP_INFO" parent="Floor_0" parent_id_path=PackedInt32Array(1743688447) index="2" unique_id=1043461689]
+tile_map_data = PackedByteArray("AAACAAAAAAABAAAAAAABAAEAAAANAAAAAAA=")
+
+[node name="ExtraProps" parent="." index="2" unique_id=1450707516]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ExtraProps" index="0" unique_id=1175628570]
+transform = Transform3D(0.83636177, 0, 0.5481779, 0, 1, 0, -0.5481779, 0, 0.83636177, 1.1139452, 0.113391876, 1.0449346)
+mesh = ExtResource("2_wpt3e")
+script = ExtResource("4_8acx5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ExtraProps" index="1" unique_id=901909956]
+transform = Transform3D(0.9225024, 0, 0.38599136, 0, 1, 0, -0.38599136, 0, 0.9225024, 4.4695973, 0.113391876, 2.9869785)
+mesh = ExtResource("2_wpt3e")
+script = ExtResource("4_8acx5")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="ExtraProps" index="2" unique_id=207976857]
+transform = Transform3D(0.9225024, 0, 0.38599136, 0, 1, 0, -0.38599136, 0, 0.9225024, 3.0656714, 0.113391876, 4.557565)
+mesh = ExtResource("2_wpt3e")
+script = ExtResource("4_8acx5")
+
+[node name="MegaProps" parent="." index="3" unique_id=1661051537]
+visible = false
+
+[editable path="Floor_-1"]
+[editable path="Floor_0"]

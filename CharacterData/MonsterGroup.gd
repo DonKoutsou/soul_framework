@@ -28,6 +28,21 @@ func RegisterMonster(monster : Monster, r : RandomNumberGenerator, drop : Item =
 	Drop = drop
 	Init(r)
 
+func Update(delta : float) -> void:
+	if (currentPoise != GetStat(CharacterStat.STATS.MAX_POISE)):
+		if (currentPoise == 0):
+			currentPoise = GetStat(CharacterStat.STATS.MAX_POISE)
+		else:
+			poiseTimer -= delta
+			if (poiseTimer <= 0):
+				currentPoise = GetStat(CharacterStat.STATS.MAX_POISE)
+	
+	if (Fatigue != 0):
+		fatigueTime -= delta
+		if (fatigueTime <= 0):
+			Fatigue = max(0, Fatigue - delta * 15)
+			FatigueHealed.emit(delta)
+
 func Respawn(_Amm : int) -> void:
 	Respawned.emit()
 	MaxHeal()

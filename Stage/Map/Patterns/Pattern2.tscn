@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_o64rw"]
 script = ExtResource("3_hpa4c")
-Transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.388961, 0.6261161, 4.264816)
+Transform = Transform3D(0.7845957, 0, 0.62000775, 0, 1, 0, -0.62000775, 0, 0.7845957, 5.030738, 0.1384117, 1.1099648)
 
 [node name="MapGenerator2" unique_id=1573063644 node_paths=PackedStringArray("Floors") instance=ExtResource("1_n761q")]
 Floors = [NodePath("Floor_-1"), NodePath("Floor_0")]
@@ -35,8 +35,11 @@ tile_map_data = PackedByteArray("AAAAAAAACgACAAAAAFAAAAIACgACAAAAAAAAAAEACgABAAA
 [node name="MAP_INFO" parent="Floor_0" index="2" unique_id=1043461689]
 tile_map_data = PackedByteArray("AAAEAAEAAAASAAAAAAA=")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ExtraProps" parent_id_path=PackedInt32Array(1450707516) index="0" unique_id=1175628570]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.388961, 0.6261161, 4.264816)
+[node name="ExtraProps" parent="." index="2" unique_id=1450707516]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ExtraProps" index="0" unique_id=1175628570]
+transform = Transform3D(0.7845957, 0, 0.62000775, 0, 1, 0, -0.62000775, 0, 0.7845957, 5.030738, 0.1384117, 1.1099648)
 mesh = ExtResource("2_o64rw")
 script = ExtResource("4_aqer1")
 

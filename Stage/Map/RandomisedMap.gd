@@ -409,7 +409,7 @@ func _draw() -> void:
 		draw_circle(layer.map_to_local(twoD) + Vector2(0, g.y * 320), 4, Color(0.387, 0.002, 0.876, 1.0))
 	
 	for g in cellData:
-		var cell = cellData[g]
+		#var cell = cellData[g]
 		#if (cell.collapsed):
 			#continue
 
@@ -637,6 +637,10 @@ func _add_finishing_touches() -> void:
 			var atlas = mapInfoLayer.get_cell_atlas_coords(cell)
 			if (atlas.x == 17):
 				aStar.Connect(Helper.Vector2iTo3(cell, fl), Helper.Vector2iTo3(cell, fl + 1))
+			else: if (atlas.x == 9):
+				aStar.Connect(Helper.Vector2iTo3(cell, fl), Helper.Vector2iTo3(cell, fl - 1))
+			else: if (atlas.x == 13):
+				aStar.Connect(Helper.Vector2iTo3(cell, fl), Helper.Vector2iTo3(cell, fl - 1))
 
 func IsIncluded(element : Vector2i, array : Array[Vector2i]) -> bool:
 	return !array.has(element)
@@ -1265,7 +1269,7 @@ func CanPlaceTile(tileIndex : int, rot : float, loc : Vector2i, layer : MazeFloo
 	var used = layer.get_used_cells()
 	
 	for dir : Vector2i in NEIGHBOR_DIRECTIONS:
-		var oppositeDir = -dir
+		var oppositeDir = -Vector2(dir)
 		
 		var neighborPos = loc + dir
 		
@@ -1275,8 +1279,9 @@ func CanPlaceTile(tileIndex : int, rot : float, loc : Vector2i, layer : MazeFloo
 		var neighborTileIndex = layer.get_cell_atlas_coords(neighborPos).x
 		var neightborDat : TileData = atlasData[neighborTileIndex] 
 		
-		var finalDir = Helper.rotate_vector2i(dir, rot)
+		var finalDir = Helper.rotate_vector2i(dir, -rot)
 		var neightborAlt = layer.get_cell_alternative_tile(neighborPos)
+			
 		var finalOppositeDir = Helper.rotate_vector2i(oppositeDir, -Helper.GetRotationFromAltTile(neightborAlt))
 		
 		if (dat.get_custom_data("Walls").has(finalDir)):

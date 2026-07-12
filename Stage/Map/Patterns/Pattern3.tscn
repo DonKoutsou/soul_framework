@@ -7,22 +7,43 @@
 
 [sub_resource type="Resource" id="Resource_tj1bn"]
 script = ExtResource("3_gfm5s")
-Transform = Transform3D(0.86828876, -0.3844733, -0.31345642, 0.49605912, 0.6729719, 0.5486658, 0, -0.6318933, 0.7750554, 2.546544, 0.6261161, 4.264816)
+Transform = Transform3D(0.83636177, 0, 0.5481779, 0, 1, 0, -0.5481779, 0, 0.83636177, 1.1139452, 0.113391876, 1.0449346)
+
+[sub_resource type="Resource" id="Resource_rofo6"]
+script = ExtResource("3_gfm5s")
+Transform = Transform3D(0.9225024, 0, 0.38599136, 0, 1, 0, -0.38599136, 0, 0.9225024, 4.4695973, 0.113391876, 2.9869785)
+
+[sub_resource type="Resource" id="Resource_gfm5s"]
+script = ExtResource("3_gfm5s")
+Transform = Transform3D(0.9225024, 0, 0.38599136, 0, 1, 0, -0.38599136, 0, 0.9225024, 3.0656714, 0.113391876, 4.557565)
 
 [node name="MapGenerator2" unique_id=1573063644 node_paths=PackedStringArray("Floors") instance=ExtResource("1_tj1bn")]
 Floors = [NodePath("Floor_0")]
 Props = Dictionary[Mesh, Array]({
-ExtResource("2_rofo6"): [SubResource("Resource_tj1bn")]
+ExtResource("2_rofo6"): [SubResource("Resource_tj1bn"), SubResource("Resource_rofo6"), SubResource("Resource_gfm5s")]
 })
 
 [node name="MAZE" parent="Floor_0" parent_id_path=PackedInt32Array(1743688447) index="0" unique_id=817992180]
 tile_map_data = PackedByteArray("AAAAAAAACgACAAAAAFAAAAIACgACAAAAAAAAAAEACgABAAAAAAACAAAACgACAAAAADABAAAACgABAAAAAFACAAIACgACAAAAAGABAAIACgAFAAAAAGACAAEACgABAAAAADABAAEACgAAAAAAAAA=")
 
+[node name="MAP_INFO" parent="Floor_0" parent_id_path=PackedInt32Array(1743688447) index="2" unique_id=1043461689]
+tile_map_data = PackedByteArray("AAACAAAAAAABAAAAAAA=")
+
 [node name="ExtraProps" parent="." index="1" unique_id=1450707516]
 visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ExtraProps" index="0" unique_id=1175628570]
-transform = Transform3D(0.86828876, -0.3844733, -0.31345642, 0.49605912, 0.6729719, 0.5486658, 0, -0.6318933, 0.7750554, 2.546544, 0.6261161, 4.264816)
+transform = Transform3D(0.83636177, 0, 0.5481779, 0, 1, 0, -0.5481779, 0, 0.83636177, 1.1139452, 0.113391876, 1.0449346)
+mesh = ExtResource("2_rofo6")
+script = ExtResource("4_gfyqq")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ExtraProps" index="1" unique_id=901909956]
+transform = Transform3D(0.9225024, 0, 0.38599136, 0, 1, 0, -0.38599136, 0, 0.9225024, 4.4695973, 0.113391876, 2.9869785)
+mesh = ExtResource("2_rofo6")
+script = ExtResource("4_gfyqq")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="ExtraProps" index="2" unique_id=207976857]
+transform = Transform3D(0.9225024, 0, 0.38599136, 0, 1, 0, -0.38599136, 0, 0.9225024, 3.0656714, 0.113391876, 4.557565)
 mesh = ExtResource("2_rofo6")
 script = ExtResource("4_gfyqq")
 

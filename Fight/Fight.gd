@@ -294,7 +294,7 @@ func EV_OutgoingParried(attackWeight : float) -> void:
 
 func EV_IncommingBlocked(BlockedDamage : int) -> void:
 	var FightingMonster = CurrentMosters[0]
-	GetPlayer().ControllingCharacter.DamageFatigue(BlockedDamage * 2)
+	GetPlayer().ControllingCharacter.DamageFatigue(BlockedDamage)
 	#PlayerCamera.start_shake(0.02,0.3, false, false)
 	#WorldTimeManager.Instance.FreezeTime()
 	var Data : Dictionary = {
@@ -308,7 +308,7 @@ func EV_IncommingBlocked(BlockedDamage : int) -> void:
 func EV_OutgoingBlocked(BlockedDamage : int) -> void:
 	#Fight.GetEnemy().Recoil()
 	#WorldTimeManager.Instance.FreezeTime()
-	CurrentMosters[0].DamageFatigue(BlockedDamage * 2)
+	CurrentMosters[0].DamageFatigue(BlockedDamage)
 	#PlayerCamera.start_shake(0.02,0.3, false, false)
 
 func EV_OutgoingAvoided() -> void:
