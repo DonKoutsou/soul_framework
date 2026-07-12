@@ -3,43 +3,46 @@ extends Map
 
 class_name RandomisedMap
 
-
 @export var active : bool = true
 
-##The generated map will not surpass this value
-@export var mapSize : Vector2i = Vector2i(40, 40)
 
-##Enables the generation to use patterns stored inside the maze tileset
-@export var usePatterns : bool = true
+##Kicks of the generation of the map
+@export_tool_button("Generate Map", "3D") var RegenerateAction = CollapseMap
 
-##
-@export var guidePaths : bool = true
+##Clears tilemaps of any configured tile
+@export_tool_button("Clear Map", "Clear") var clear = CleanMap
 
-@export var patternPadding : int = 4
+@export_tool_button("Run Once", "CombineLines") var run = collapseNext
 
-##Seed used for the generation
-@export var collapseSeed : int = -1
+@export_group("Settings")
+@export var generationSpeed : float = 0.1
 
 ##Ammount of collapses that happen in one frame
 @export var collapseAmmountPerFrame : int = 10
 
-##Used for debug
-@export var drawAStar : bool = false
+##Seed used for the generation
+@export var collapseSeed : int = -1
+
+##The generated map will not surpass this value
+@export var mapSize : Vector2i = Vector2i(40, 40)
 
 ##Only floors set up here will be generated
 @export var floorsToGenerate : PackedInt32Array = []
 
-##Kicks of the generation of the map
-@export_tool_button("Generate Map") var RegenerateAction = CollapseMap
-
-##Clears tilemaps of any configured tile
-@export_tool_button("Clear Map") var clear = CleanMap
-
-@export_tool_button("Run Once") var run = collapseNext
-
-@export var generationSpeed : float = 0.1
-
+##
+@export var guidePaths : bool = true
+@export_subgroup("Patterns")
+##Enables the generation to use patterns stored inside the maze tileset
+@export var usePatterns : bool = true
+@export var patternPadding : int = 4
 @export_file("*.tscn") var Patterns : Array[String]
+@export_subgroup("Abort Settings")
+@export var AbortOnCellIssolation : bool = true
+@export var AbortOnRoomWithNoExit : bool = true
+@export var AbortOnNoPathToRoom : bool = true
+@export_subgroup("Debug Settings")
+##Used for debug
+@export var drawAStar : bool = false
 
 const NEIGHBOR_DIRECTIONS : Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 const ROTATIONS : Array[float] = [0, PI/2, PI, -PI/2]
@@ -83,6 +86,7 @@ enum CELL_ABORT_REASON{
 	NO_OWNER_FOUND,
 	ROOM_HAS_NO_EXITS,
 	ROOM_GOT_SECLUDED,
+	ISSOLATED_TILE,
 }
 
 func _ready() -> void:
@@ -197,13 +201,13 @@ func collapseNext() -> void:
 		var cellPos = possible[randomIndex]
 		var TwoDcellPos = Helper.Vector3ITo2(cellPos)
 		
-		CellCollapsed(TwoDcellPos)
-		
+		var disconnected = CellCollapsed(TwoDcellPos)
+		#print(var_to_str(disconnected))
 		var collapsed : Array[Vector2i]
 		PropagateContrains(TwoDcellPos, collapsed)
 		collapsed.push_front(TwoDcellPos)
 		
-		var abortReason : CELL_ABORT_REASON = GetAbortReason(collapsed)
+		var abortReason : CELL_ABORT_REASON = GetAbortReason(collapsed, disconnected)
 			
 		if (abortReason != CELL_ABORT_REASON.NONE):
 			#print("broken room {0}".format([var_to_str(room)]))
@@ -220,7 +224,7 @@ func collapseNext() -> void:
 
 			mandatoryCollapses = prevMandatory
 			
-			print("CELL ABORTED | REASON ---> {0}".format([CELL_ABORT_REASON.keys()[abortReason]]))
+			print("CELL ABORTED {1} | REASON ---> {0}".format([CELL_ABORT_REASON.keys()[abortReason], var_to_str(cellPos)]))
 
 			break
 			
@@ -229,33 +233,49 @@ func collapseNext() -> void:
 		queue_redraw()
 
 #-----------------------------------------------------
-func GetAbortReason(collapsed : Array[Vector2i]) -> CELL_ABORT_REASON:
+func GetAbortReason(collapsed : Array[Vector2i], disconnected : Array[Vector2i]) -> CELL_ABORT_REASON:
 	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
 	
 	var abortReason : CELL_ABORT_REASON = CELL_ABORT_REASON.NONE
 	
-	for col in collapsed:
-		var ownerRooms : Array
-		#find the owner room of this cell
-		for room : Array in rooms:
-			for neighbor in NEIGHBOR_DIRECTIONS:
-				if (room.has(col + neighbor) and !layer.CantReach(col, neighbor, true)):
-					ownerRooms.append(room)
-					break
-		#if multiple owners exist we need to merge them since the cell bridges them.
-		if (ownerRooms.size() > 1):
-			var combined : Array
-			for g in ownerRooms:
-				combined.append_array(g)
-				rooms.erase(g)
-			rooms.append(combined)
-			combined.append(col)
-			print("Combined rooms")
-		else: if (ownerRooms.size() > 0):
-			ownerRooms[0].append(col)
-		else:
-			abortReason = CELL_ABORT_REASON.NO_OWNER_FOUND
+	if (AbortOnCellIssolation):
+		for dis in disconnected:
+			var triDPos = Helper.Vector2iTo3(dis, currentFloor)
+			var pointID = aStar.Astar.get_closest_point(triDPos)
+			var connections = aStar.Astar.get_point_connections(pointID)
+			var enabledConnections : PackedInt64Array = []
+			for g in connections:
+				if (!aStar.Astar.is_point_disabled(g)):
+					enabledConnections.append(g)
+			if (enabledConnections.size() <= 1):
+				#print(var_to_str(triDPos))
+				abortReason = CELL_ABORT_REASON.ISSOLATED_TILE
+				break
+	
+	
+	if (abortReason == CELL_ABORT_REASON.NONE):
+		for col in collapsed:
+			var ownerRooms : Array
+			#find the owner room of this cell
+			for room : Array in rooms:
+				for neighbor in NEIGHBOR_DIRECTIONS:
+					if (room.has(col + neighbor) and !layer.CantReach(col, neighbor, true)):
+						ownerRooms.append(room)
+						break
+			#if multiple owners exist we need to merge them since the cell bridges them.
+			if (ownerRooms.size() > 1):
+				var combined : Array
+				for g in ownerRooms:
+					combined.append_array(g)
+					rooms.erase(g)
+				rooms.append(combined)
+				combined.append(col)
+				print("Combined rooms")
+			else: if (ownerRooms.size() > 0):
+				ownerRooms[0].append(col)
+			else:
+				abortReason = CELL_ABORT_REASON.NO_OWNER_FOUND
 	
 	if (abortReason == CELL_ABORT_REASON.NONE and rooms.size() > 1 + PlacedRoomsWithNoExit.size()):
 		
@@ -291,11 +311,11 @@ func GetAbortReason(collapsed : Array[Vector2i]) -> CELL_ABORT_REASON:
 						haseAccessToAllRooms = false
 						break
 				
-				if (!haseAccessToAllRooms):
-					abortReason = CELL_ABORT_REASON.ROOM_HAS_NO_EXITS
+				if (!haseAccessToAllRooms and AbortOnNoPathToRoom):
+					abortReason = CELL_ABORT_REASON.ROOM_GOT_SECLUDED
 					break
 				continue
-			else:
+			else: if (AbortOnRoomWithNoExit):
 				abortReason = CELL_ABORT_REASON.ROOM_HAS_NO_EXITS
 				break
 			
@@ -681,8 +701,10 @@ func _progress_floor() -> void:
 	
 	if (!currentUsed.has(randomCell)):
 		var availableWeights : PackedFloat32Array = GetTileWeights(randomCell, true)
-
-		var picked = r.rand_weighted(availableWeights)
+		
+		var picked : int = 0
+		if (availableWeights.size() > 1):
+			picked = r.rand_weighted(availableWeights)
 		
 		var pickedTile : collapseTileData = tileData[picked]
 
@@ -712,7 +734,9 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 
 		var availableWeights : PackedFloat32Array = GetTileWeights(randomCell)
 		
-		var picked = r.rand_weighted(availableWeights)
+		var picked : int = 0
+		if (availableWeights.size() > 1):
+			picked = r.rand_weighted(availableWeights)
 		
 		var pickedTile : collapseTileData = tileData[picked]
 		
@@ -972,7 +996,9 @@ func can_place_map_pattern(mapPattern : Map_Pattern, patternPosition: Vector2i, 
 
 #-----------------------------------------------
 ##Called when a cell collapses meaning its possibilities have reached 1
-func CellCollapsed(cellPos : Vector2i) -> void:
+func CellCollapsed(cellPos : Vector2i) -> Array[Vector2i]:
+	var disconnected : Array[Vector2i] = []
+	
 	var TriDPos = Helper.Vector2iTo3(cellPos, currentFloor)
 	var cell = cellData[TriDPos]
 	var availableWeights : PackedFloat32Array
@@ -980,7 +1006,9 @@ func CellCollapsed(cellPos : Vector2i) -> void:
 	for tile : collapseTileData in cell.possibleTiles:
 		availableWeights.append(atlasData[tile.tileIndex].probability)
 	
-	var picked = r.rand_weighted(availableWeights)
+	var picked : int = 0
+	if (availableWeights.size() > 1):
+		picked = r.rand_weighted(availableWeights)
 	
 	var pickedTile : collapseTileData = cell.possibleTiles[picked]
 	
@@ -990,7 +1018,7 @@ func CellCollapsed(cellPos : Vector2i) -> void:
 
 	if(pickedTile.tileIndex == -1):
 		print("Wrong pick, something went wrong")
-		return
+		return disconnected
 	
 	var fl = GetFloor(currentFloor)
 	var layer : MazeFloorLayer = fl.GetLayer(FloorLayer.LayerType.MAZE)
@@ -1015,9 +1043,12 @@ func CellCollapsed(cellPos : Vector2i) -> void:
 		if (used.has(neightborPos)):
 			if (!layer.CantReach(cellPos, dir, true)):
 				continue
-			
 		
 		var exitPointID = aStar.Astar.get_closest_point(Helper.Vector2iTo3(neightborPos, currentFloor))
+		
+		if (!aStar.Astar.are_points_connected(collapsedCellID, exitPointID)):
+			continue
+		disconnected.append(neightborPos)
 		aStar.Astar.disconnect_points(collapsedCellID, exitPointID)
 		
 	for exit in newExits:
@@ -1036,6 +1067,7 @@ func CellCollapsed(cellPos : Vector2i) -> void:
 			currentExits.append(TriDExis)
 	
 	collapse_history.append(TriDPos)
+	return disconnected
 
 #-------------------------------------------
 ##Returns the positions of the neighboring cells
