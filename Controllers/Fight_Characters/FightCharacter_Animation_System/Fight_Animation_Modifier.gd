@@ -419,7 +419,7 @@ func ProgressAnimation(animIndex : int, delta : float) -> void:
 			
 #---------------------------------------------
 func OnAnimationFinished(animName : String) -> void:
-	print("Finished : {0}".format([animName]))
+	#print("Finished : {0}".format([animName]))
 	AnimationFinished.emit(animName)
 
 #---------------------------------------------

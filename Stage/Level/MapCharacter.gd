@@ -37,7 +37,11 @@ func DoDialogue(Diag : String) -> void:
 
 func ConfigureCharacter(character : Character) -> void:
 	Char = character
-	var vis : PackedScene = await Helper.Instance.LoadThreaded(character.Visuals).Finished
+	var vis : PackedScene
+	if (Helper.Instance != null):
+		vis = await Helper.Instance.LoadThreaded(character.Visuals).Finished
+	else:
+		vis = load(character.Visuals)
 	var visuals = vis.instantiate()
 	ApplyVisualsToSkeleton(visuals)
 
