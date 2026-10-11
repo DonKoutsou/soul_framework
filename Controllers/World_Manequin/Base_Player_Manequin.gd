@@ -574,7 +574,7 @@ func HandleWalk(event: InputEvent) -> void:
 	
 	var newCell = mapData.cells[Helper.PlayerPositionToMap(NewPosition)]
 	
-	if (newCell.Custom_Data.has("Movable")):
+	if (newCell.Custom_Data.has("Movable") and !NoClip):
 		var PushDirection : Vector3i = Vector3(NewPosition).direction_to(Vector3(PlayerPos))
 		if (CantMoveFurther(PushDirection) or HoldingPosition == Vector3i.ZERO):
 			MessageBox.RegisterEvent("Way is blocked", false)

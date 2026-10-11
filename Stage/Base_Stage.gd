@@ -144,6 +144,9 @@ func SpawnFight() -> void:
 	
 
 func _input(event: InputEvent) -> void:
+	if (CommandLine.Typing):
+		return
+		
 	if (CurrentFreeCam != null):
 		CurrentFreeCam.ProcessInput(event)
 		return
@@ -171,6 +174,8 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	if (Engine.is_editor_hint()):
+		return
+	if (CommandLine.Typing):
 		return
 	var FinalDelta = delta * WorldTimeManager.GameFrameTimeMulti
 	
