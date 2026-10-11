@@ -11,7 +11,6 @@ class_name UIManager
 @export var InventoryScene : PackedScene
 @export var PauseM : PackedScene
 @export var SettingsMenuScene : PackedScene
-@export var CheatMenu : PackedScene
 
 @export_group("Nodes")
 @export var MiniMp : Minimap
@@ -46,9 +45,6 @@ func _ready() -> void:
 	Inv.AssistanceItem.connect(OnAssistanceToggled)
 	Inv.RequestClose.connect(ToggleInventory)
 	InputManager.Instance.PausePressed.connect(PausePressed)
-	if (OS.is_debug_build()):
-		var cheats = CheatMenu.instantiate()
-		add_child(cheats)
 
 func PausePressed() -> void:
 	if (SettingsM != null):

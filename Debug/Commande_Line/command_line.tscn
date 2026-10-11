@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://d0iiqaijsg1y1"]
+
+[ext_resource type="Script" uid="uid://djw0qatbronxr" path="res://Engine/Debug/Commande_Line/command_line.gd" id="2_3camo"]
+[ext_resource type="AudioStream" uid="uid://go44ob4w7tiw" path="res://Engine/Debug/Commande_Line/maximize_003.ogg" id="2_awlg2"]
+[ext_resource type="AudioStream" uid="uid://cmq5bl418sbcm" path="res://Engine/Debug/Commande_Line/minimize_003.ogg" id="3_xqq1c"]
+
+[node name="CommandLine" type="PanelContainer" unique_id=1154400603 node_paths=PackedStringArray("Text", "RecomendationParent", "HistoryLabel")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 194.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_3camo")
+Text = NodePath("MarginContainer/VBoxContainer/TextEdit")
+CommandListConfiguration = Dictionary[PackedStringArray, String]({
+PackedStringArray("Freecam"): "Freecam",
+PackedStringArray("Respawn Enemies"): "RespawnEnemies",
+PackedStringArray("Shake"): "Shake",
+PackedStringArray("NoClip"): "NoClip",
+PackedStringArray("Water", "Walk"): "WaterWalk",
+PackedStringArray("Lava", "Walk"): "LavaWalk",
+PackedStringArray("Gap", "Walk"): "GapWalk",
+PackedStringArray("Redo", "Map"): "RedoMap",
+PackedStringArray("Set", "Hp"): "SetHp",
+PackedStringArray("Set", "Mana"): "SetMana",
+PackedStringArray("Upgrade", "Hp"): "UpgradeHP",
+PackedStringArray("Upgrade", "Mana"): "UpgradeMana",
+PackedStringArray("Upgrade", "Stamina"): "UpgradeStamina"
+})
+RecomendationParent = NodePath("MarginContainer/VBoxContainer/TextEdit/VBoxContainer")
+HistoryLabel = NodePath("MarginContainer/VBoxContainer/PanelContainer/RichTextLabel")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1490083418]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=259234709]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1833009837]
+visible = false
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=504438264]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1103346464]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "X"
+icon_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=371588058]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/PanelContainer" unique_id=296971418]
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/paragraph_separation = 10
+bbcode_enabled = true
+scroll_following = true
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer" unique_id=740363938]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 24
+placeholder_text = "Enter Command"
+scroll_fit_content_height = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TextEdit" unique_id=1536794461]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="In" type="AudioStreamPlayer" parent="." unique_id=1096894166]
+stream = ExtResource("2_awlg2")
+volume_db = -5.0
+pitch_scale = 2.55
+
+[node name="Out" type="AudioStreamPlayer" parent="." unique_id=954481863]
+stream = ExtResource("3_xqq1c")
+volume_db = -5.0
+pitch_scale = 2.55
+
+[connection signal="button_down" from="MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="OnMoveButtonDown"]
+[connection signal="button_up" from="MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="OnMoveButtonUp"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Button2" to="." method="OnCloseButtonPressed"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/TextEdit" to="." method="OnCommandLineFocused"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/TextEdit" to="." method="OnCommandEntered"]
+[connection signal="text_set" from="MarginContainer/VBoxContainer/TextEdit" to="." method="HandleCommand"]

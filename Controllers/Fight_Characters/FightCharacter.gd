@@ -497,7 +497,7 @@ func Damage(DamageAmm : int, Direction : AtackSide, _ShakeAmm : float, AtackWeig
 		
 	if (Blocking):
 		AudioManager.Instance.PlaySound(CurrentWeapon.WeaponClashSound, -5, 0.1, 0.6)
-		AtackBlocked.emit(DamageAmm / 2)
+		AtackBlocked.emit(DamageAmm / 2.0)
 		Recoil(Direction, true, AtackWeight)
 		return 0
 	

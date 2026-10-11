@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://purdosvq2xdp" path="res://Engine/Settings/settings.tscn" id="4_h5t5g"]
 [ext_resource type="PackedScene" uid="uid://db3mah6gf2gqg" path="res://Engine/Stage/Map/Minimap/Minimap.tscn" id="4_pwm6i"]
 [ext_resource type="PackedScene" uid="uid://dglmivlkftc77" path="res://Engine/UI/Inventory/Inventory.tscn" id="5_0cbwa"]
-[ext_resource type="PackedScene" uid="uid://ba83u0ygnks3h" path="res://Engine/Debug/Cheat/CheatMenu.tscn" id="5_ur5k7"]
 [ext_resource type="PackedScene" uid="uid://b63snluv13jfb" path="res://Engine/UI/character_sheet.tscn" id="5_wflq5"]
+[ext_resource type="PackedScene" uid="uid://d0iiqaijsg1y1" path="res://Engine/Debug/Commande_Line/command_line.tscn" id="10_h5t5g"]
 [ext_resource type="PackedScene" uid="uid://b5vjfchiemu6t" path="res://Engine/Dialogue/dialogue_box.tscn" id="13_xtsij"]
 
 [node name="UIManager" type="CanvasLayer" unique_id=151584909 node_paths=PackedStringArray("MiniMp", "CharacterSheetPlecement", "DiedLabel", "Diag", "MBox")]
@@ -20,7 +20,6 @@ CharacterSheetScene = ExtResource("5_wflq5")
 InventoryScene = ExtResource("5_0cbwa")
 PauseM = ExtResource("3_qdedj")
 SettingsMenuScene = ExtResource("4_h5t5g")
-CheatMenu = ExtResource("5_ur5k7")
 MiniMp = NodePath("Minimap")
 CharacterSheetPlecement = NodePath("VBoxContainer/CharacterSheets")
 DiedLabel = NodePath("DiedLabel")
@@ -75,3 +74,5 @@ size_flags_vertical = 0
 
 [node name="DialogueBox" parent="." unique_id=257815825 instance=ExtResource("13_xtsij")]
 visible = false
+
+[node name="CommandLine" parent="." unique_id=1154400603 instance=ExtResource("10_h5t5g")]
