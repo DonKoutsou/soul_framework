@@ -10,6 +10,8 @@ class_name Helper
 static var Instance : Helper
 static var r : Rand
 
+static var fileQueue : Dictionary[String, SignalObject]
+
 var FakeLoadingHappening : bool = false
 
 var loadProg : float
@@ -284,12 +286,16 @@ static func get_node_aabb(node : Node, exclude_top_level_transform: bool = true)
 	return bounds
 
 func LoadThreaded(File : String) -> SignalObject:
+	#In case we are already loading file, return that
+	if (fileQueue.has(File)):
+		return fileQueue[File]
+		
 	var Sign = SignalObject.new()
 	LoadingProgress.value = 0
 	#var t = Thread.new()
 	ResourceLoader.load_threaded_request(File, "", true, ResourceLoader.CACHE_MODE_REUSE)
 	
-	CallLater(_CheckForFinishedLoad.bind(Sign, File), 0.01)
+	fileQueue[File] = Sign
 	
 	LoadingUI.visible = true
 	BlackLoadingRect.visible = false
@@ -316,6 +322,18 @@ func UpdateLoadingProgress(newProg : float) -> void:
 			loadTw.kill()
 		loadTw = create_tween()
 		loadTw.tween_property(LoadingProgress, "value", newProg, 0.5)
+
+func _process(_delta: float) -> void:
+	var keys = fileQueue.keys()
+	for fileIndex in range(fileQueue.size() - 1, -1, -1):
+		var file : String = keys[fileIndex]
+		var Status = ResourceLoader.load_threaded_get_status(file)
+		if (Status == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED):
+			_LoadFinished(fileQueue[file], ResourceLoader.load_threaded_get(file))
+			fileQueue.erase(file)
+		if (Status == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED):
+			_LoadFinished(fileQueue[file], null)
+			fileQueue.erase(file)
 
 var DotAmmount : int = 0
 var d = 0.2
