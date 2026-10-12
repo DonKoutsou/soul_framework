@@ -7,9 +7,9 @@ var Locks : Dictionary[Vector3i, LockData]
 var MasterLocks : Array[Vector3i]
 var Cracks : Dictionary[Vector3i, Vector2]
 var Blocks : Array[Vector3i]
-var r : RandomNumberGenerator
+var r : Rand
 
-static func NewData(rand : RandomNumberGenerator) -> TempGenerationData:
+static func NewData(rand : Rand) -> TempGenerationData:
 	var newData = TempGenerationData.new()
 	newData.r = rand
 	return newData

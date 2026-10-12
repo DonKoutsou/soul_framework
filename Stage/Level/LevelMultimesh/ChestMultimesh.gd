@@ -6,7 +6,7 @@ class_name ChestMultimesh
 func _ready() -> void:
 	collider = BoxShape3D.new()
 
-func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void:
 	var cell = Data.cells[pos]
 	
 	if (!cell.HasData("Chest")):

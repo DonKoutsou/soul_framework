@@ -16,7 +16,7 @@ func UpdateColliderSize() -> void:
 		collider.backface_collision = true
 
 
-func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void:
 	var cell = Data.cells[pos]
 	
 	if (!cell.HasData("House")):

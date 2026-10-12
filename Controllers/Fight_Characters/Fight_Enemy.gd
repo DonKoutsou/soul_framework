@@ -28,7 +28,7 @@ var FlowPos : float
 
 signal DeathAnimFin
 
-var monsterR : RandomNumberGenerator
+var monsterR : Rand
 
 ##Array of arrays containing AtackSides
 var ComboCatalogue : Array[Array]
@@ -38,7 +38,7 @@ var CurrentCombo : Array[AtackSide]
 #------------------------------------------------------------------------------
 func _ready() -> void:
 	super()
-	monsterR = RandomNumberGenerator.new()
+	monsterR = Rand.NewRand()
 	var pl : Player = Target
 	LookAtNode.target_node = LookAtNode.get_path_to(pl.Cam)
 	GenerateCombos()
@@ -287,7 +287,7 @@ func GetCharacterActions() -> Callable:
 			ActionWeights.append(1)
 		#return DoNothing
 		
-	return ActionList[monsterR.rand_weighted(ActionWeights)]
+	return ActionList[monsterR.RandWeighted(ActionWeights)]
 
 
 #------------------------------------------------------------------------------

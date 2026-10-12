@@ -40,7 +40,7 @@ metadata/_custom_type_script = "uid://bimcho1qxuxmi"
 
 [node name="MapGenerator2" unique_id=1137801381 node_paths=PackedStringArray("Floors") instance=ExtResource("1_jgcsq")]
 LevelName = 8
-RandomSeed = 12
+RandomSeed = 998
 DecorationProbability = 50
 Floors = [NodePath("Floor_-1"), NodePath("Floor_0"), NodePath("Floor_1"), NodePath("Floor_2")]
 LeverCatalogue = Array[ExtResource("2_k4mbp")]([SubResource("Resource_y3mcc")])

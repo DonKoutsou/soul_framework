@@ -42,6 +42,8 @@ func _ready() -> void:
 func StartGame() -> void:
 	Menu.PlayIntro()
 	
+	Rand.customSeed = randi()
+	
 	var StageSc = await Helper.Instance.LoadThreaded(StageScene).Finished
 	GameInstance = StageSc.instantiate() as Stage
 	

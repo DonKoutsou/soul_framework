@@ -2,7 +2,7 @@
 extends LevelMultimesh
 class_name ItemMultimesh
 
-func ProcessPosition(Data : MapData, pos : Vector3i, r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, r : Rand = null) -> void:
 	var cell = Data.cells[pos]
 	var realPos = Helper.MapToPlayerPosition(pos)
 	
@@ -24,7 +24,7 @@ func ProcessPosition(Data : MapData, pos : Vector3i, r : RandomNumberGenerator =
 		printerr("Item {0} has wronlgly configured model".format([it.ItemName]))
 	
 	var spawnPos = Transform3D(Basis().rotated(Vector3(0,0,1), 0.3), Vector3(realPos) + Vector3(0,0.5,0))
-	spawnPos = spawnPos.rotated_local(Vector3(0,1,0), r.randf_range(0, PI * 2))
+	spawnPos = spawnPos.rotated_local(Vector3(0,1,0), r.RandFRange(0, PI * 2))
 	
 	
 	AddSpawn(modelRID, pos, spawnPos, 0, null, matRID)

@@ -10,7 +10,7 @@ func _ready() -> void:
 func UpdateColliderSize() -> void:
 	collider.size = geometry.get_aabb().size
 
-func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void:
 	var Offset = geometry.get_aabb().position + (collider.size / 2)
 	var cell = Data.GetCell(pos)
 	if (cell.Custom_Data.has("Lever")):

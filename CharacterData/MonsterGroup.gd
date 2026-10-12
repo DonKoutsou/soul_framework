@@ -23,7 +23,7 @@ var PickedDecorations : Dictionary[String, int] = {
 
 var variant_index : int = 0
 
-func RegisterMonster(monster : Monster, r : RandomNumberGenerator, drop : Item = null) -> void:
+func RegisterMonster(monster : Monster, r : Rand, drop : Item = null) -> void:
 	Mon = monster
 	Drop = drop
 	Init(r)
@@ -64,14 +64,14 @@ func BuffNextAtackSpeed(Amm : float, Source : String = "") -> void:
 	#else:
 		#MessageBox.RegisterEvent("{0}'s next atack got sped up by {1}".format([Mon.MonsterName, Amm]))
 
-func Init(r : RandomNumberGenerator) -> void:
-	variant_index = r.randi_range(0, 2)
+func Init(r : Rand) -> void:
+	variant_index = r.RandIRange(0, 2)
 	CurrentHP = Mon.GetStat(CharacterStat.STATS.MAX_HP)
 	CharacterWeapon = load(Mon.MonsterWeapons.pick_random())
 	if (Mon.Materials.size() > 0):
 		PickedMat = load(Mon.Materials.pick_random())
 	for DecoType : String in Mon.DecorationAmm.keys():
-		PickedDecorations[DecoType] = randi_range(0, Mon.DecorationAmm.size())
+		PickedDecorations[DecoType] = r.RandIRange(0, Mon.DecorationAmm.size())
 
 func GetStatContainer(StatName : CharacterStat.STATS) -> CharacterStat:
 	return Mon.GetStatContainer(StatName)

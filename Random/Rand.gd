@@ -3,11 +3,12 @@ extends RefCounted
 class_name Rand
 
 static var customSeed : int = -1
+static var InstanceRandom : Rand
 
 var r : Xoroshiro128
 var mut : Mutex
 
-static var InstanceRandom : Rand
+var personalSeed : int = -1
 
 #----------------------------------------
 func GetState() -> Dictionary:
@@ -19,7 +20,7 @@ func GetState() -> Dictionary:
 #----------------------------------------
 func Init(state : Dictionary = {}) -> void:
 	r = Xoroshiro128.new()
-	r.set_seed(customSeed)
+	r.set_seed(personalSeed)
 	if (state.size() > 0):
 		r.set_state(state)
 	mut = Mutex.new()
@@ -82,8 +83,11 @@ func shuffle_array(arr: Array) -> void:
 		arr[j] = temp
 
 #----------------------------------------
-static func NewRand(state : Dictionary = {}) -> Rand:
+static func NewRand(state : Dictionary = {}, s : int = -1) -> Rand:
 	var rand = Rand.new()
+	if (s == -1):
+		s = customSeed
+	rand.personalSeed = s
 	rand.Init(state)
 	print("Started new random with state {0}".format([rand.GetState()]))
 	return rand
@@ -91,6 +95,7 @@ static func NewRand(state : Dictionary = {}) -> Rand:
 #----------------------------------------
 static func NewStaticRand(state : Dictionary = {}) -> void:
 	var rand = Rand.new()
+	rand.personalSeed = customSeed
 	rand.Init(state)
 	InstanceRandom = rand
 	print("Started new static random with state {0}".format([rand.GetState()]))

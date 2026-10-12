@@ -8,7 +8,7 @@ class_name Helper
 @export var VersionLabel : Label
 
 static var Instance : Helper
-static var r : RandomNumberGenerator
+static var r : Rand
 
 var FakeLoadingHappening : bool = false
 
@@ -20,7 +20,7 @@ func _ready() -> void:
 	LoadingUI.visible = false
 	BlackLoadingRect.visible = false
 	set_physics_process(false)
-	r = RandomNumberGenerator.new()
+	r = Rand.NewRand()
 	VersionLabel.text = "Demo v{0}".format([ProjectSettings.get_setting("application/config/version")])
 	
 
@@ -219,8 +219,8 @@ static func rotate_vector3i(vec: Vector3i, angle_radians: float, axis: Vector3i)
 			push_error("Invalid axis specified!")
 			return vec  # No rotation if invalid axis
 
-static func GetRandomRotationSnapped(rand : RandomNumberGenerator = RandomNumberGenerator.new()) -> float:
-	var index = rand.randi_range(0,4)
+static func GetRandomRotationSnapped(rand : Rand) -> float:
+	var index = rand.RandIRange(0,4)
 	var RandRot : float = 0
 	match(index):
 		0:

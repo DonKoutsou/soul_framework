@@ -109,7 +109,7 @@ func OnCommandEntered() -> void:
 
 func Focus() -> void:
 	Text.grab_focus()
-	Text.text = ""
+	Text.clear()
 	
 func HandleCommand(Command : String) -> String:
 	

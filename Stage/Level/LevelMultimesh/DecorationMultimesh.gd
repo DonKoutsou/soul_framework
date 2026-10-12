@@ -6,7 +6,7 @@ class_name DecorationMultimesh
 @export var SnapRotation : bool = false
 @export var AllowOnCeiling : bool = false
 
-func ProcessPosition(Data : MapData, pos : Vector3i, r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, r : Rand = null) -> void:
 	var cell = Data.cells[pos]
 	var ammSpawned : int = 0
 	if (cell.Custom_Data.has("Decorations")):
@@ -20,7 +20,7 @@ func ProcessPosition(Data : MapData, pos : Vector3i, r : RandomNumberGenerator =
 					Trans = Trans.rotated_local(Vector3(0,1,0), rot)
 				else:
 				
-					Trans = Trans.rotated_local(Vector3(0,1,0), r.randf_range(-PI * 2, PI * 2))
+					Trans = Trans.rotated_local(Vector3(0,1,0), r.RandFRange(-PI * 2, PI * 2))
 				#M.unlock()
 			if (AllowOnCeiling and cell.spawnCeiling):
 				Trans = Trans.rotated_local(Vector3(0,0,1), PI)

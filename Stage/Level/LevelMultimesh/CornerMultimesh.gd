@@ -2,7 +2,7 @@
 extends LevelMultimesh
 class_name CornerMultimesh
 
-func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void:
 	var cell = Data.cells[pos]
 	var spawnamm : int = 0
 	

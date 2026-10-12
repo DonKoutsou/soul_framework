@@ -10,7 +10,7 @@ func _ready() -> void:
 func UpdateColliderSize() -> void:
 	collider.size = geometry.get_aabb().size
 
-func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void:
 
 	var cell = Data.GetCell(pos)
 	

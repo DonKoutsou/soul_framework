@@ -89,9 +89,12 @@ static func ToggleFreecam() -> void:
 		CurrentFreeCam = null
 
 func _ready() -> void:
-	
 	if (Engine.is_editor_hint()):
 		return
+	
+	
+	Rand.NewStaticRand()
+	
 	StreesVignette.set_shader_parameter("outerRadius", 2.0)
 	Isntance = self
 
@@ -177,6 +180,7 @@ func _process(delta: float) -> void:
 		return
 	if (CommandLine.Typing):
 		return
+		
 	var FinalDelta = delta * WorldTimeManager.GameFrameTimeMulti
 	
 	if (CurrentFreeCam != null):

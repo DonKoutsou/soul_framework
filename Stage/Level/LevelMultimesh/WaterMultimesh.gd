@@ -9,7 +9,7 @@ func _ready() -> void:
 func UpdateColliderSize() -> void:
 	collider.size = Level.CurrentWorldScale
 
-func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void:
 
 	var cell : CellData = Data.cells[pos]
 	var realPos : Vector3i = Helper.MapToPlayerPosition(pos)

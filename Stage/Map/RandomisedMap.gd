@@ -123,13 +123,13 @@ func generate_maze(spawnMons : bool) -> void:
 	if (Engine.is_editor_hint()):
 		if (finised):
 			super(spawnMons)
-			Data.MetaData["GenerationSeed"] = r.seed
+			Data.MetaData["GenerationSeed"] = Rand.customSeed
 			return
 	else:
 		CleanMap()
 		CollapseMap()
 		super(spawnMons)
-		Data.MetaData["GenerationSeed"] = r.seed
+		Data.MetaData["GenerationSeed"] = Rand.customSeed
 
 #---------------------------------------------
 var i : float = 0.1
@@ -431,8 +431,7 @@ func CleanMap() -> void:
 		for layer : TileMapLayer in fl.GetLayers():
 			layer.clear()
 	for g in PropParent.get_children():
-		g.queue_free()
-	
+		g.call_deferred("queue_free")	
 
 #----------------------------------------------------
 ##Starts the generation of the map
@@ -451,15 +450,7 @@ func CollapseMap() -> void:
 	
 	_update_atlas_data()
 	
-
-	#-1 is default seed value
-	if (collapseSeed != -1):
-		Rand.customSeed = collapseSeed
-		print("[[MAP GENERATION STARTED]] with configured seed : {0}".format([collapseSeed]))
-	else:
-		print("[[MAP GENERATION STARTED]] with new random seed :{0}".format([Rand.customSeed]))
-	
-	r = Rand.NewRand()
+	r = Rand.NewRand({}, collapseSeed)
 	
 	if (usePatterns):
 		_place_patterns()

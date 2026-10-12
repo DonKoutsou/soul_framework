@@ -2,7 +2,7 @@
 extends LevelMultimesh
 class_name DuggableMultimesh
 
-func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void:
 	var cell = Data.cells[pos]
 	var realPos = Helper.MapToPlayerPosition(pos)
 	if (cell.type == CellData.CELLTYPE.DUGGABLE):

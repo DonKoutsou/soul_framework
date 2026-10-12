@@ -10,7 +10,7 @@ func UpdateColliderSize() -> void:
 	var CurrentWorldScale = Level.CurrentWorldScale
 	collider.size = CurrentWorldScale
 
-func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void:
 	var cell = Data.cells[pos]
 	var realPos = Helper.MapToPlayerPosition(pos)
 	if (cell.type == CellData.CELLTYPE.GAP):

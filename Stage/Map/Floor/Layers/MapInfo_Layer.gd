@@ -14,7 +14,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 			#Locks.append(Pos)
 		#Breakable obstacle
 		1:
-			var T = Transform3D(Basis().rotated(Vector3(0,1,0), tempData.r.randf_range(-PI * 2, PI * 2)), Pos * map.WorldScale)
+			var T = Transform3D(Basis().rotated(Vector3(0,1,0), tempData.r.RandFRange(-PI * 2, PI * 2)), Pos * map.WorldScale)
 			cellDat.Custom_Data["Breakable"] = T
 			tempLayerData.SpawnDeco = false
 		#Master Lock
@@ -22,7 +22,7 @@ func HandleCell(cellDat : CellData, Pos : Vector3i, map : Map, tempLayerData : T
 			tempData.MasterLocks.append(Pos)
 		#3 Soft Breakable obstacle
 		3:
-			var T = Transform3D(Basis().rotated(Vector3(0,1,0), tempData.r.randf_range(-PI * 2, PI * 2)), Pos * map.WorldScale)
+			var T = Transform3D(Basis().rotated(Vector3(0,1,0), tempData.r.RandFRange(-PI * 2, PI * 2)), Pos * map.WorldScale)
 			cellDat.Custom_Data["SoftBreakable"] = T
 		#Closed door, either to be unlocked by switch/lever or to stay closed
 		4:

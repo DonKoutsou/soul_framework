@@ -241,12 +241,13 @@ func ThreadedGenerationFinished() -> void:
 func generate_maze(spawnMons : bool) -> void:
 	Data = MapData.new()
 	
-	var r = RandomNumberGenerator.new()
 	Data.RandomSeed = RandomSeed
-	r.state = hash(RandomSeed)
-	Data.RandomState = 1
+	
+	var r = Rand.NewRand({}, RandomSeed)
+	
+	Data.RandomState = r.GetState()
+	
 	Data.DecorationProbability = DecorationProbability
-
 
 	Data.level = levelScene
 	Data.MapDir = scene_file_path
@@ -374,7 +375,7 @@ func generate_maze(spawnMons : bool) -> void:
 	if (SpawnBackWalls):
 		for index in Data.cells.size() / 10.0:
 			
-			var RandomIndex = r.randi_range(0, Data.cells.size() - 1)
+			var RandomIndex = r.RandIRange(0, Data.cells.size() - 1)
 			var Pos = Data.cells.keys()[RandomIndex]
 			var cell : CellData = Data.cells[Pos]
 			
@@ -389,8 +390,11 @@ func generate_maze(spawnMons : bool) -> void:
 				if (g.Cracked):
 					continue
 				availableWalls.append(g)
-
-			var BackWallCandidate : WallData = availableWalls[r.randi_range(0, availableWalls.size() - 1)]
+			
+			if (availableWalls.size() == 0):
+				continue
+			
+			var BackWallCandidate : WallData = availableWalls[r.RandIRange(0, availableWalls.size() - 1)]
 			
 			#Find the opposite direction
 			var oppositedirection = Vector3.LEFT.rotated(Vector3(0,1,0),BackWallCandidate.WallTransform.basis.orthonormalized().get_euler().y)
@@ -445,12 +449,11 @@ func generate_maze(spawnMons : bool) -> void:
 	var wallVariantAmm = Walls.size() / 2.0
 	#apply a random variant index
 	for index in wallVariantAmm:
-		var RandomIndex = r.randi_range(0, Walls.size() - 1)
+		var RandomIndex = r.RandIRange(0, Walls.size() - 1)
 		var wall : WallData = Walls[RandomIndex]
 		Walls.remove_at(RandomIndex)
-		wall.VariantIndex = r.randi_range(1, 2)
-	#store random
-	Data.SaveRandomState(r.get_state())
+		wall.VariantIndex = r.RandIRange(1, 2)
+
 	call_deferred("ThreadedGenerationFinished")
 
 #----------------------- EDITOR -----------------------------#

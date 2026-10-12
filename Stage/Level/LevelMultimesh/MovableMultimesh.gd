@@ -18,7 +18,7 @@ func Proc(delta : float) -> void:
 	if (is_instance_valid(MovableTween) and MovableTween.is_valid()):
 		MovableTween.custom_step(delta)
 
-func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void:
 
 	var cell = Data.cells[pos]
 	var realPos = Helper.MapToPlayerPosition(pos)

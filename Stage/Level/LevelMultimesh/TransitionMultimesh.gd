@@ -4,7 +4,7 @@ class_name TransitionMultimesh
 
 const Neighbors : Array[Vector3i] = [Vector3i.LEFT, Vector3i.RIGHT, Vector3i.FORWARD, Vector3i.BACK]
 
-func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void:
 	var cell = Data.GetCell(pos)
 	if (cell.type == CellData.CELLTYPE.EXIT):
 		#find door 

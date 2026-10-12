@@ -13,12 +13,12 @@ class_name MapData
 
 @export var MapDir : String
 @export var level : String
-@export var RandomSeed : int
-@export var RandomState : int
 
 @export var DecorationProbability : int = 100
 @export var MetaData : Dictionary[String, Variant]
 
+@export var RandomSeed : int
+@export var RandomState : Dictionary
 
 func GetCell(pos : Vector3i) -> CellData:
 	if (cells.has(pos)):
@@ -44,14 +44,10 @@ func get_points_in_square(center: Vector3i, distance: int) -> Array[Vector3i]:
 
 	return points
 
-
-func SaveRandomState(NewStage : int) -> void:
-	RandomState = NewStage
+func SaveRandomState(NewState : Dictionary) -> void:
+	RandomState = NewState
 	#print("Saved Random State of {0}".format([NewStage]))
 
-func GetRandomGenerator() -> RandomNumberGenerator:
-	var r = RandomNumberGenerator.new()
-	r.seed = RandomSeed
-	r.set_state(RandomState)
-	#print("Created new generator with Seed {0} and State {1}".format([RandomSeed, RandomState]))
+func GetRandomGenerator() -> Rand:
+	var r = Rand.NewRand(RandomState, RandomSeed)
 	return r

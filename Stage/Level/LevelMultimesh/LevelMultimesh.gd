@@ -91,7 +91,7 @@ func AddSpawn(mesh : RID, pos : Vector3i, loc : Transform3D, index : int, collis
 	if (matOverride.get_id() != 0):
 		RenderingServer.instance_geometry_set_material_override(Instance, matOverride)
 
-func Update(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
+func Update(Data : MapData, positions : Array[Vector3i], r : Rand = null) -> void:
 	Sc = get_world_3d().scenario
 	RemoveOldSpawns(positions)
 	
@@ -104,19 +104,19 @@ func Update(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerat
 	
 	#var Dat = Data.GetDataForLayerType(MultimeshType)
 
-func AwaitAndStart(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
+func AwaitAndStart(Data : MapData, positions : Array[Vector3i], r : Rand = null) -> void:
 	if (threadTaskID >= 0):
 		WorkerThreadPool.wait_for_task_completion(threadTaskID)
 	threadTaskID = WorkerThreadPool.add_task(Process.bind(Data, positions, r))
 
-func Process(Data : MapData, positions : Array[Vector3i], r : RandomNumberGenerator = null) -> void:
+func Process(Data : MapData, positions : Array[Vector3i], r : Rand = null) -> void:
 	for mapPos : Vector3i in positions:
 		if (spawnList.has(mapPos)):
 			continue
 		ProcessPosition(Data, mapPos, r)
 	call_deferred("Finish")
 
-@abstract func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void
+@abstract func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void
 
 func Finish() -> void:
 	#print("finished updating {0}".format([get_script().get_global_name()]))

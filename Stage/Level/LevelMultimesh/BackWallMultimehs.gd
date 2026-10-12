@@ -6,7 +6,7 @@ func _ready() -> void:
 	collider = Level.CurrentWallCollider.create_trimesh_shape()
 	collider.backface_collision = true
 
-func ProcessPosition(Data : MapData, pos : Vector3i, _r : RandomNumberGenerator = null) -> void:
+func ProcessPosition(Data : MapData, pos : Vector3i, _r : Rand = null) -> void:
 	var cell = Data.cells[pos]
 	var spawnAmm : int = 0
 	
