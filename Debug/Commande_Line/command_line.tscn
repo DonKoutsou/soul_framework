@@ -4,6 +4,17 @@
 [ext_resource type="AudioStream" uid="uid://go44ob4w7tiw" path="res://Engine/Debug/Commande_Line/maximize_003.ogg" id="2_awlg2"]
 [ext_resource type="AudioStream" uid="uid://cmq5bl418sbcm" path="res://Engine/Debug/Commande_Line/minimize_003.ogg" id="3_xqq1c"]
 
+[sub_resource type="Theme" id="Theme_awlg2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_affph"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awlg2"]
+bg_color = Color(0.06359216, 0.06359217, 0.06359212, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqq1c"]
+bg_color = Color(0.071769424, 0.071769424, 0.071769364, 1)
+
 [node name="CommandLine" type="PanelContainer" unique_id=1154400603 node_paths=PackedStringArray("Text", "RecomendationParent", "HistoryLabel")]
 anchors_preset = 10
 anchor_right = 1.0
@@ -11,6 +22,8 @@ offset_bottom = 194.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = SubResource("Theme_awlg2")
+theme_override_styles/panel = SubResource("StyleBoxFlat_affph")
 script = ExtResource("2_3camo")
 Text = NodePath("MarginContainer/VBoxContainer/TextEdit")
 CommandListConfiguration = Dictionary[PackedStringArray, String]({
@@ -33,8 +46,6 @@ HistoryLabel = NodePath("MarginContainer/VBoxContainer/PanelContainer/RichTextLa
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1490083418]
 layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_right = 15
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=259234709]
 layout_mode = 2
@@ -58,20 +69,24 @@ icon_alignment = 1
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=371588058]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_awlg2")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/PanelContainer" unique_id=296971418]
 custom_minimum_size = Vector2(0, 130)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/paragraph_separation = 10
+theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
+scroll_active = false
 scroll_following = true
 
 [node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer" unique_id=740363938]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_xqq1c")
 placeholder_text = "Enter Command"
 scroll_fit_content_height = true
 

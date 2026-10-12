@@ -8,6 +8,7 @@ uniform sampler2D curve : repeat_disable, hint_default_white;
 
 instance uniform vec3 instancePos;
 instance uniform vec3 instanceRot;
+instance uniform float size = 10;
 
 varying vec2 clip;
 varying vec2 mesh_uv;
@@ -134,10 +135,11 @@ void vertex(){
 
 	UV.x = (UV.x + INSTANCE_CUSTOM.w-1.0 - 2.0)/(INSTANCE_CUSTOM.z-1.0);
 
-	float h = textureLod(curve, vec2(UV.x), 0.0).x;//h=1.0;
+	float h = textureLod(curve, vec2(UV.x), 0.0).x;//
+	h = min(h, size);
 
 	VERTEX = mix(a,b,(UV.y-0.5)*h + 0.5);
-
+	
 
 	clip.x = dot(VERTEX - INV_VIEW_MATRIX[3].xyz,cross(my_model_matrix[1].xyz - INV_VIEW_MATRIX[3].xyz,my_model_matrix[2].xyz - INV_VIEW_MATRIX[3].xyz));
 	clip.y = dot(VERTEX - INV_VIEW_MATRIX[3].xyz,cross(my_model_matrix[3].xyz - INV_VIEW_MATRIX[3].xyz,my_model_matrix[0].xyz - INV_VIEW_MATRIX[3].xyz));

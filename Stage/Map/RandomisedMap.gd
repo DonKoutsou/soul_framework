@@ -71,7 +71,7 @@ var rooms : Array
 
 var aStar : MapGeneratorAstar
 
-var r : RandomNumberGenerator
+var r : Rand
 
 var finised : bool = false
 
@@ -197,7 +197,7 @@ func collapseNext() -> void:
 		if (possible.size() == 0):
 			break
 		
-		var randomIndex = r.randi_range(0, possible.size() - 1)
+		var randomIndex = r.RandIRange(0, possible.size() - 1)
 		var cellPos = possible[randomIndex]
 		var TwoDcellPos = Helper.Vector3ITo2(cellPos)
 		
@@ -451,14 +451,15 @@ func CollapseMap() -> void:
 	
 	_update_atlas_data()
 	
-	r = RandomNumberGenerator.new()
+
 	#-1 is default seed value
 	if (collapseSeed != -1):
-		r.seed = collapseSeed
+		Rand.customSeed = collapseSeed
 		print("[[MAP GENERATION STARTED]] with configured seed : {0}".format([collapseSeed]))
 	else:
-		r.randomize()
-		print("[[MAP GENERATION STARTED]] with new random seed :{0}".format([r.seed]))
+		print("[[MAP GENERATION STARTED]] with new random seed :{0}".format([Rand.customSeed]))
+	
+	r = Rand.NewRand()
 	
 	if (usePatterns):
 		_place_patterns()
@@ -477,14 +478,14 @@ func CollapseMap() -> void:
 #---------------------------------------------
 ##Runs after map is ready to add any details, enemies etc...
 func _add_finishing_touches() -> void:
-	var spawnFloorIndex = floorsToGenerate[r.randi_range(0, floorsToGenerate.size() - 1)]
+	var spawnFloorIndex = floorsToGenerate[r.RandIRange(0, floorsToGenerate.size() - 1)]
 	var spawnFloor = GetFloor(spawnFloorIndex)
 	var spawnmapInfoLayer = spawnFloor.GetLayer(FloorLayer.LayerType.MAP_INFO)
 	var spawnmazeLayer = spawnFloor.GetLayer(FloorLayer.LayerType.MAZE)
 	var spawnFloorUsed = spawnmazeLayer.get_used_cells()
 	spawnFloorUsed.sort()
 	
-	var spawnIndex = r.randi_range(0, spawnFloorUsed.size() - 1)
+	var spawnIndex = r.RandIRange(0, spawnFloorUsed.size() - 1)
 	var spawnPos = spawnFloorUsed[spawnIndex]
 	var triDSpawnPos = Helper.Vector2iTo3(spawnPos, spawnFloorIndex)
 	
@@ -499,7 +500,7 @@ func _add_finishing_touches() -> void:
 	var availableRoomsToLock = PlacedRooms.duplicate()
 	
 	while RoomToLock.size() < 3 and availableRoomsToLock.size() > 0:
-		var randIndex = r.randi_range(0, availableRoomsToLock.size() - 1)
+		var randIndex = r.RandIRange(0, availableRoomsToLock.size() - 1)
 		var randomRoom = availableRoomsToLock.pop_at(randIndex)
 		
 		if (randomRoom.has(triDSpawnPos)):
@@ -538,7 +539,7 @@ func _add_finishing_touches() -> void:
 			var fl = GetFloor(doorPos.y)
 			var itemLayer = fl.GetLayer(FloorLayer.LayerType.ITEMS)
 			
-			var randomTileIndex = r.randi_range(0, randomRoom.size() - 1)
+			var randomTileIndex = r.RandIRange(0, randomRoom.size() - 1)
 			var randomTile = Helper.Vector3ITo2(randomRoom[randomTileIndex])
 			itemLayer.set_cell(randomTile, 0, Vector2i(0,0))
 		
@@ -550,10 +551,10 @@ func _add_finishing_touches() -> void:
 	var availableRoomsToPutKey = PlacedRooms.duplicate()
 	#find place to add keys
 	while PlacedKeys < RoomToLock.size() and availableRoomsToPutKey.size() > 0:
-		var randIndex = r.randi_range(0, availableRoomsToPutKey.size() - 1)
+		var randIndex = r.RandIRange(0, availableRoomsToPutKey.size() - 1)
 		var randomRoom = availableRoomsToPutKey.pop_at(randIndex)
 		
-		var randomTileIndex = r.randi_range(0, randomRoom.size() - 1)
+		var randomTileIndex = r.RandIRange(0, randomRoom.size() - 1)
 		var randomPos : Vector3 = randomRoom[randomTileIndex]
 		
 		var randomTileID = aStar.Astar.get_closest_point(randomPos)
@@ -569,9 +570,9 @@ func _add_finishing_touches() -> void:
 	
 	#find possible doors
 	while possibleDoors.size() < 20:
-		var floorIndex = generatedFloors[r.randi_range(0, generatedFloors.size() - 1)]
+		var floorIndex = generatedFloors[r.RandIRange(0, generatedFloors.size() - 1)]
 		
-		var randomPos = Vector3i(r.randi_range(0, mapSize.x -1), floorIndex, r.randi_range(0, mapSize.y - 1))
+		var randomPos = Vector3i(r.RandIRange(0, mapSize.x -1), floorIndex, r.RandIRange(0, mapSize.y - 1))
 		if (!cellData.has(randomPos) or possibleLockedDoors.has(randomPos)):
 			continue
 		var randomCell : collapseCellData = cellData[randomPos]
@@ -587,7 +588,7 @@ func _add_finishing_touches() -> void:
 			var infoUsed = InfoLayer.get_used_cells()
 			
 			#find opposite door
-			var randomDoor = dat.get_custom_data("DoorWalls")[r.randi_range(0, doorAmm - 1)].rotated(randomTile.tileRotation)
+			var randomDoor = dat.get_custom_data("DoorWalls")[r.RandIRange(0, doorAmm - 1)].rotated(randomTile.tileRotation)
 			var oppositeDoor = randomPos + Vector3i(randomDoor.x, 0, randomDoor.y)
 			var oppositeCell : collapseCellData = cellData[oppositeDoor]
 			var oppositeTile = oppositeCell.possibleTiles[0]
@@ -628,7 +629,7 @@ func _add_finishing_touches() -> void:
 		used.sort()
 		
 		for g in (mapSize.x * mapSize.y) / 100:
-			var monIndex = r.randi_range(0, used.size() - 1)
+			var monIndex = r.RandIRange(0, used.size() - 1)
 			monsterLayer.set_cell(used[monIndex], 0, Vector2i(0,0))
 		
 		var usedInfo = mapInfoLayer.get_used_cells()
@@ -697,7 +698,7 @@ func _progress_floor() -> void:
 	
 	var currentUsed = l.get_used_cells()
 	
-	var randomCell = used[r.randi_range(0, used.size() - 1)]
+	var randomCell = used[r.RandIRange(0, used.size() - 1)]
 	
 	lastInfoLayer.set_cell(randomCell, 0, Vector2i(17, 0))
 	
@@ -708,7 +709,7 @@ func _progress_floor() -> void:
 		
 		var picked : int = 0
 		if (availableWeights.size() > 1):
-			picked = r.rand_weighted(availableWeights)
+			picked = r.RandWeighted(availableWeights)
 		
 		var pickedTile : collapseTileData = tileData[picked]
 
@@ -734,13 +735,13 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 	
 	#if we dont have ant used, add a random one to initialise the collapse from there
 	if (Usedcells.size() == 0):
-		var randomCell = Vector2i(r.randi_range(0, mapSize.x - 1), r.randi_range(0, mapSize.y - 1))
+		var randomCell = Vector2i(r.RandIRange(0, mapSize.x - 1), r.RandIRange(0, mapSize.y - 1))
 
 		var availableWeights : PackedFloat32Array = GetTileWeights(randomCell)
 		
 		var picked : int = 0
 		if (availableWeights.size() > 1):
-			picked = r.rand_weighted(availableWeights)
+			picked = r.RandWeighted(availableWeights)
 		
 		var pickedTile : collapseTileData = tileData[picked]
 		
@@ -876,7 +877,7 @@ func _place_patterns() -> void:
 	
 	while (paterns.size() > 0):
 		#pick random pattern
-		var index = r.randi_range(0, paterns.size() - 1)
+		var index = r.RandIRange(0, paterns.size() - 1)
 		var pickedPattern : Map_Pattern = paterns[index]
 		
 		
@@ -893,19 +894,19 @@ func _place_patterns() -> void:
 				allowedFloors.append(g)
 
 		#pick one of the allowed floors randomly
-		var pickedFloorIndex = allowedFloors[r.randi_range(0, allowedFloors.size() - 1)]
-		var randomPosition = Vector2i(r.randi_range(1 + patternPadding, mapSize.x - 1 - patternPadding - pickedPattern.GetSize().x), r.randi_range(1 + patternPadding, mapSize.y - 1 - patternPadding - pickedPattern.GetSize().y))
+		var pickedFloorIndex = allowedFloors[r.RandIRange(0, allowedFloors.size() - 1)]
+		var randomPosition = Vector2i(r.RandIRange(1 + patternPadding, mapSize.x - 1 - patternPadding - pickedPattern.GetSize().x), r.RandIRange(1 + patternPadding, mapSize.y - 1 - patternPadding - pickedPattern.GetSize().y))
 		
 		#pick a random rotation
-		var rot = r.randi_range(0, 3)
+		var rot = r.RandIRange(0, 3)
 		
 		#try to find a place
 		var maxTries : int = 5
 		var foudPlace = can_place_map_pattern(pickedPattern, randomPosition, pickedFloorIndex, rot)
 		while (!foudPlace and maxTries > 0):
-			randomPosition = Vector2i(r.randi_range(1 + patternPadding, mapSize.x - 1 - patternPadding - pickedPattern.GetSize().x), r.randi_range(1 + patternPadding, mapSize.y - 1 - patternPadding - pickedPattern.GetSize().y))
-			pickedFloorIndex = allowedFloors[r.randi_range(0, allowedFloors.size() - 1)]
-			rot = r.randi_range(0, 3)
+			randomPosition = Vector2i(r.RandIRange(1 + patternPadding, mapSize.x - 1 - patternPadding - pickedPattern.GetSize().x), r.RandIRange(1 + patternPadding, mapSize.y - 1 - patternPadding - pickedPattern.GetSize().y))
+			pickedFloorIndex = allowedFloors[r.RandIRange(0, allowedFloors.size() - 1)]
+			rot = r.RandIRange(0, 3)
 			foudPlace = can_place_map_pattern(pickedPattern, randomPosition, pickedFloorIndex, rot)
 			maxTries -= 1
 		
@@ -1012,7 +1013,7 @@ func CellCollapsed(cellPos : Vector2i) -> Array[Vector2i]:
 	
 	var picked : int = 0
 	if (availableWeights.size() > 1):
-		picked = r.rand_weighted(availableWeights)
+		picked = r.RandWeighted(availableWeights)
 	
 	var pickedTile : collapseTileData = cell.possibleTiles[picked]
 	

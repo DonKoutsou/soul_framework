@@ -25,6 +25,7 @@ func _process(_delta: float) -> void:
 		update = false
 
 var toggleTw : Tween
+var prevMouseState : Input.MouseMode
 
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("CommandLine")):
@@ -39,12 +40,15 @@ func _input(event: InputEvent) -> void:
 			toggleTw.finished.connect(Focus)
 			Typing = true
 			$In.play()
+			prevMouseState = Input.mouse_mode
+			InputManager.ChangeMouse(Input.MOUSE_MODE_VISIBLE)
 		else:
 			toggleTw = create_tween()
 			toggleTw.tween_property(self, "size", Vector2(size.x, 0), 0.1)
 			toggleTw.finished.connect(hide)
 			Typing = false
 			$Out.play()
+			InputManager.ChangeMouse(prevMouseState)
 
 func UpdateText() -> void:
 	var t : String = " \n \n \n \n \n \n \n \n \n \n \n"
@@ -324,11 +328,11 @@ func OnCommandLineFocused() -> void:
 	UpdateRecomendations()
 		
 func AddRecomendation(RecText : String) -> void:
-	var butn = Button.new()
-	butn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	var butn = Label.new()
+
 	butn.autowrap_mode = TextServer.AUTOWRAP_WORD
 	#butn.custom_minimum_size.x = RecomendationParent.size.x - 80
-	butn.connect("pressed", RecomendationPressed.bind(RecText))
+	#butn.connect("pressed", RecomendationPressed.bind(RecText))
 	RecomendationParent.add_child(butn)
 	butn.text = RecText
 
