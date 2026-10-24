@@ -65,8 +65,8 @@ func ProcessFatigue(character : FightCharacter,delta : float) -> void:
 	if (!character.ControllingCharacter.IsAlive() or character.IsStunned()):
 		return
 		
-	if (character.IsCharged() or character.IsCharging() or character.IsAttacking()):
-		character.ControllingCharacter.HealFatigue(delta * 12)
+	if (character.IsCharged() or character.IsCharging() or character.IsAttacking() or character.IsBlocking()):
+		character.ControllingCharacter.HealFatigue(delta * 8)
 	else :
 		character.ControllingCharacter.HealFatigue(delta * 16)
 

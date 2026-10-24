@@ -170,6 +170,7 @@ func Parry() -> void:
 	StartingParry = true
 	#SetParry(true)
 	UpdateState(CharacterState.PARRY)
+	ControllingCharacter.DamageFatigue(1, "", false)
 	ParryCooldDown = 0.3
 
 func GetFightName() -> String:
@@ -415,7 +416,7 @@ func Duck(Direction : AtackSide) -> void:
 	
 	DuckCoolDown = 0.3
 	AudioManager.Instance.PlaySound(AudioManager.Sound.EVADE, -15, 0.1, 1)
-	ControllingCharacter.DamageFatigue(2, "", false)
+	ControllingCharacter.DamageFatigue(1, "", false)
 	CharacterDucked.emit(Direction)
 #----------------------------------------------------
 func UnDuck(Direction : AtackSide) -> bool:
