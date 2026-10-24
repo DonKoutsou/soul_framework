@@ -125,7 +125,8 @@ func StartFight() -> void:
 	GetPlayer().InFight = true
 	FightWorld.EnemyIntroAnim()
 	
-	InteractionCast.Instance.ToggleVisibility(false)
+	if (InteractionCast.Instance):
+		InteractionCast.Instance.ToggleVisibility(false)
 	FightStared.emit()
 
 func EnemyDefeated() -> void:
@@ -171,7 +172,8 @@ func IntroFinished() -> void:
 	TutorialManager.Instance.PlayTextInstruction(TutorialManager.TutorialTypes.FIGHT)
 	TutorialMan.IndicateGrab(false)
 	MusicManager.Instance.PlayerMusic(MusicManager.Music.FIGHT)
-	Stage.CurrentWorld.ToggleAmbientSound(false)
+	if (Stage.CurrentWorld):
+		Stage.CurrentWorld.ToggleAmbientSound(false)
 
 func _on_tutorial_manager_tutorial_finished() -> void:
 	TutorialToggled.emit(false, true)

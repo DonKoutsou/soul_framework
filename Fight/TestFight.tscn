@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://q73j87kflpa1"]
+
+[ext_resource type="PackedScene" uid="uid://bdk7tkd10dc1i" path="res://Engine/Fight/Fight.tscn" id="1_logmf"]
+[ext_resource type="Script" uid="uid://bh7bfhsfkqb0o" path="res://Engine/Fight/TestFight.gd" id="2_pplfv"]
+[ext_resource type="Resource" uid="uid://bu0ac0ug66vsv" path="res://Engine/CharacterData/Monsters/TestGroup.tres" id="3_k532x"]
+[ext_resource type="Resource" uid="uid://cf6lnsj7aebuc" path="res://Engine/CharacterData/DummyPlayer.tres" id="4_ytvtf"]
+[ext_resource type="Script" uid="uid://do5l2r88uu4eu" path="res://Engine/Managers/world_time_manager.gd" id="5_tf1eg"]
+[ext_resource type="PackedScene" uid="uid://dlobhi4jyff4g" path="res://Engine/UI/ui_manager.tscn" id="6_1vcxg"]
+
+[node name="FightScene" unique_id=183399807 instance=ExtResource("1_logmf")]
+script = ExtResource("2_pplfv")
+en = ExtResource("3_k532x")
+pl = ExtResource("4_ytvtf")
+
+[node name="Node" type="Node" parent="." index="3" unique_id=268161118]
+script = ExtResource("5_tf1eg")
+
+[node name="UIManager" parent="." index="4" unique_id=151584909 instance=ExtResource("6_1vcxg")]

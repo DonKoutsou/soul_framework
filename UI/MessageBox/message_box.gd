@@ -20,6 +20,8 @@ func _exit_tree() -> void:
 	Events.clear()
 
 static func RegisterEvent(EventText : String, Stack : bool = true, Important : bool = false) -> void:
+	if (!TextContainer):
+		return
 	if (!Stack):
 		if (Events.has(EventText)):
 			return
