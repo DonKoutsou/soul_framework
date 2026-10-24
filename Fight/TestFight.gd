@@ -7,6 +7,7 @@ class_name TestFight
 
 func _ready() -> void:
 	super()
+	InputManager.ChangeMouse(Input.MouseMode.MOUSE_MODE_HIDDEN)
 	en.CurrentHP = en.GetStat(CharacterStat.STATS.MAX_HP)
 	pl.CurrentHP = pl.GetStat(CharacterStat.STATS.MAX_HP)
 	

@@ -454,13 +454,11 @@ func Recoil(Dir : AtackSide = AtackSide.MIDDLE, HitConnected : bool = false, Mag
 	
 	#if (Magnitude < 0.5):
 		#return
-	
-		
-	if (ControllingCharacter.currentPoise > 0):
-		return
-		
+
 	CancelHits()
 	StopParry(true)
+	#if (ControllingCharacter.currentPoise > 0):
+		#return
 	
 	Retaliate = false
 	if (Can_Retaliate):
