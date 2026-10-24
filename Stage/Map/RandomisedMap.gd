@@ -117,7 +117,9 @@ func loadFinished() -> void:
 	loaded = true
 	LoadingFinised.emit()
 	
-
+func StartGenerationThread(SpawnMonsterOverride : bool = SpawnMonsters) -> void:
+	CleanMap()
+	generationThreadTaskID = WorkerThreadPool.add_task(generate_maze.bind(SpawnMonsterOverride))
 #---------------------------------------------
 func generate_maze(spawnMons : bool) -> void:
 	if (Engine.is_editor_hint()):
@@ -126,10 +128,10 @@ func generate_maze(spawnMons : bool) -> void:
 			Data.MetaData["GenerationSeed"] = Rand.customSeed
 			return
 	else:
-		CleanMap()
+		collapseSeed = Rand.customSeed
 		CollapseMap()
 		super(spawnMons)
-		Data.MetaData["GenerationSeed"] = Rand.customSeed
+		Data.MetaData["GenerationSeed"] = collapseSeed
 
 #---------------------------------------------
 var i : float = 0.1
@@ -839,12 +841,20 @@ func _init_layer(layer : MazeFloorLayer) -> void:
 	
 	aStar.Add(star)
 	
+func GetFloorAmm() -> int:
+	return floorsToGenerate.size()
 
-
+func GetFloorIndexes() -> Array[int]:
+	var indexes : Array[int] = []
+	for g : FloorLayer in Floors:
+		if (floorsToGenerate.has(g.FloorNumber)):
+			indexes.append(g.FloorNumber)
+	return indexes
 #-----------------------------------------------------
 ##Places parrents to all floors before generation starts
 func _place_patterns() -> void:
 	var paterns : Array[Map_Pattern]
+	var floorAmm = GetFloorAmm()
 	#check what patterns we can actually place, if pattern has more floors than we do skip it
 	for pat in Patterns:
 		var patternFile : PackedScene = load(pat)
@@ -855,7 +865,7 @@ func _place_patterns() -> void:
 		var maxFloor = patternExtents.y
 		var floorRange = abs(maxFloor - minFloor)
 		
-		if (floorRange <= GetFloorAmm()):
+		if (floorRange < floorAmm):
 			#add_child(loadedPattern)
 			loadedPattern.StoreLayers()
 			loadedPattern.StorePatterns()

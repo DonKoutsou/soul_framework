@@ -231,6 +231,7 @@ func LoadMapData(MData : MapData) -> void:
 	loaded = true
 
 func StartGenerationThread(SpawnMonsterOverride : bool = SpawnMonsters) -> void:
+	
 	generationThreadTaskID = WorkerThreadPool.add_task(generate_maze.bind(SpawnMonsterOverride))
 
 

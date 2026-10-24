@@ -26,13 +26,10 @@ tile_map_data = PackedByteArray("AAAEAAEACgABAAAAAAAFAAMACgACAAAAAAAEAAAACgACAAA
 [node name="MAP_INFO" parent="Floor_-1" index="2" unique_id=1043461689]
 tile_map_data = PackedByteArray("AAAEAAEAAAARAAAAAAA=")
 
-[node name="Floor_0" parent="." index="1" unique_id=1743688447]
-visible = false
-
-[node name="MAZE" parent="Floor_0" index="0" unique_id=817992180]
+[node name="MAZE" parent="Floor_0" parent_id_path=PackedInt32Array(1743688447) index="0" unique_id=817992180]
 tile_map_data = PackedByteArray("AAAAAAAACgACAAAAAFAAAAIACgACAAAAAAAAAAEACgABAAAAAAACAAAACgABAAAAAFADAAAACgABAAAAAFAEAAAACgABAAAAAFAFAAAACgACAAAAADABAAAACgABAAAAAFAFAAIACgACAAAAAGAEAAIACgABAAAAAGADAAIACgAFAAAAAGACAAIACgABAAAAAGABAAIACgABAAAAAGAFAAEACgABAAAAADAEAAEACgAAAAAAAAADAAEACgAAAAAAAAACAAEACgAAAAAAAAABAAEACgAAAAAAAAA=")
 
-[node name="MAP_INFO" parent="Floor_0" index="2" unique_id=1043461689]
+[node name="MAP_INFO" parent="Floor_0" parent_id_path=PackedInt32Array(1743688447) index="2" unique_id=1043461689]
 tile_map_data = PackedByteArray("AAAEAAEAAAASAAAAAAA=")
 
 [node name="ExtraProps" parent="." index="2" unique_id=1450707516]
